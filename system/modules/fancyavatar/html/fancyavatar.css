@@ -1,0 +1,28 @@
+.fancyavatar {
+	position: relative;
+	border: 1px solid #eee;
+	padding: 10px;
+	background-position: 11px 11px;
+	background-repeat: no-repeat;
+	min-width: 105px;
+}
+ 
+.fancyavatar a {
+	position: absolute;
+	padding: 0;
+	text-align: left;
+}
+
+.fancyavatar a.upload {
+	left: 6px;
+	right: 25px;
+	bottom: 1px;
+	line-height: 22px;
+	display: block;
+}
+
+a.delete {
+	bottom: 0px;
+	right: 4px;
+	line-height: 16px;
+}
