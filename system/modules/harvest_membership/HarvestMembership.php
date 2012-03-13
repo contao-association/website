@@ -95,7 +95,7 @@ class HarvestMembership extends Frontend
 					break;
 				
 				case 'members':
-					$objMembers = $this->Database->execute("SELECT COUNT(*) AS total FROM tl_members WHERE login='1' AND disable=''");
+					$objMembers = $this->Database->execute("SELECT COUNT(*) AS total FROM tl_member WHERE login='1' AND disable=''");
 					return (int) $objMembers->total;
 					break;
 			}
