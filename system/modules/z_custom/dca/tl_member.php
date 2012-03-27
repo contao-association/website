@@ -22,8 +22,8 @@
 /**
  * Listing
  */
-array_insert($GLOBALS['TL_DCA']['tl_member']['list']['label']['fields'], 2, array('company'));
-$GLOBALS['TL_DCA']['tl_member']['list']['label']['format'] = '%s %s (%s) <span style="color:#b3b3b3; padding-left:3px;">[%s]</span>';
+$GLOBALS['TL_DCA']['tl_member']['list']['label']['fields'] = array('icon', 'company', 'firstname', 'lastname');
+
 
 /**
  * Fields
