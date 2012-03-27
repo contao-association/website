@@ -107,7 +107,7 @@ class HarvestMembership extends Frontend
 	
 	public function createNewUser($intId, $arrData)
 	{
-		if (is_array($arrData['harvest_membership'])/* && $this->arrConfig['harvest_enabled']*/)
+		if (is_array($arrData['harvest_membership']))
 		{
 			$arrData['id'] = $intId;
 			
