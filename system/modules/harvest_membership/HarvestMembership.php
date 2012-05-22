@@ -69,7 +69,7 @@ class HarvestMembership extends Frontend
 			switch( $arrTag[1] )
 			{
 				case 'payments_received':
-					$strCacheFile = TL_ROOT . '/system/tmp/' . md5('harvest-payments_received-'.mktime(0,0,0));
+					$strCacheFile = TL_ROOT . '/system/tmp/' . md5('harvest-payments_received-'.mktime(date('H'),0,0));
 					
 					if (is_file($strCacheFile))
 					{
