@@ -77,13 +77,21 @@ class HarvestMembership extends Frontend
 					}
 					else
 					{
-						$intTotal = 0;
+						// Start with CHF converted to EUR
+						$intTotal = 3560;
+						
 						$objInvoices = $this->HaPi->getInvoices();
 						
 						if ($objInvoices->isSuccess())
 						{
 							foreach( $objInvoices->data as $objInvoice )
 							{
+								// Only count Euro
+								if (strpos($objInvoice->currency, 'EUR') === false)
+								{
+									continue;
+								}
+								
 								$intTotal += (int)$objInvoice->amount;
 							}
 							
