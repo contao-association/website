@@ -32,7 +32,7 @@ class FormMembership extends FormRadioButton
 		$this->strTemplate = TL_MODE == 'BE' ? 'be_widget_rdo' : 'form_radio';
 		
 		// Generate options
-		$strCurrency = 'CHF';
+		$strCurrency = 'EUR';
 		
 		$arrMemberships = array();
 		

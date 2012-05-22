@@ -69,7 +69,7 @@ class HarvestMembership extends Frontend
 			switch( $arrTag[1] )
 			{
 				case 'payments_received':
-					$strCacheFile = TL_ROOT . '/system/tmp/' . md5('harvest-payments_received-'.mktime(0,0,0));
+					$strCacheFile = TL_ROOT . '/system/tmp/' . md5('harvest-payments_received-'.mktime(date('H'),0,0));
 					
 					if (is_file($strCacheFile))
 					{
@@ -77,13 +77,21 @@ class HarvestMembership extends Frontend
 					}
 					else
 					{
-						$intTotal = 0;
+						// Start with CHF converted to EUR
+						$intTotal = 3560;
+						
 						$objInvoices = $this->HaPi->getInvoices();
 						
 						if ($objInvoices->isSuccess())
 						{
 							foreach( $objInvoices->data as $objInvoice )
 							{
+								// Only count Euro
+								if (strpos($objInvoice->currency, 'EUR') === false)
+								{
+									continue;
+								}
+								
 								$intTotal += (int)$objInvoice->amount;
 							}
 							
@@ -95,7 +103,7 @@ class HarvestMembership extends Frontend
 					break;
 				
 				case 'members':
-					$objMembers = $this->Database->execute("SELECT COUNT(*) AS total FROM tl_member WHERE login='1' AND disable=''");
+					$objMembers = $this->Database->execute("SELECT COUNT(*) AS total FROM tl_member");
 					return (int) $objMembers->total;
 					break;
 			}
