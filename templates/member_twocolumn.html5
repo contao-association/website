@@ -1,0 +1,54 @@
+
+<!-- indexer::stop -->
+<div class="<?php echo $this->class; ?><?php if (!$this->tableless): ?> tableform<?php endif; ?> block"<?php echo $this->cssID; ?><?php if ($this->style): ?> style="<?php echo $this->style; ?>"<?php endif; ?>>
+<?php if ($this->headline): ?>
+
+<<?php echo $this->hl; ?>><?php echo $this->headline; ?></<?php echo $this->hl; ?>>
+<?php endif; ?>
+
+<form action="<?php echo $this->action; ?>" id="<?php echo $this->formId; ?>" method="post" enctype="<?php echo $this->enctype; ?>">
+<div class="formbody">
+<input type="hidden" name="FORM_SUBMIT" value="<?php echo $this->formId; ?>">
+<input type="hidden" name="REQUEST_TOKEN" value="{{request_token}}">
+
+<?php if($this->membership): ?>
+<div class="membership">
+<?php if (!$this->tableless): ?>
+<table>
+<?php endif; ?>
+<?php foreach ($this->membership as $field) echo $field; ?>
+<?php if (!$this->tableless): ?>
+</table>
+<?php endif; ?>
+</div>
+<?php endif; ?>
+
+<div class="left_column">
+<?php if (!$this->tableless): ?>
+<table>
+<?php endif; ?>
+<?php foreach ($this->left_column as $field) echo $field; ?>
+<?php if (!$this->tableless): ?>
+</table>
+<?php endif; ?>
+</div>
+
+<div class="right_column">
+<?php if (!$this->tableless): ?>
+<table>
+<?php endif; ?>
+<?php foreach ($this->right_column as $field) echo $field; ?>
+<?php echo $this->captcha; ?>
+<?php if (!$this->tableless): ?>
+</table>
+<?php endif; ?>
+</div>
+<div class="clear">&nbsp;</div>
+<div class="submit_container">
+  <input type="submit" class="submit" value="<?php echo $this->slabel; ?>">
+</div>
+</div>
+</form>
+
+</div>
+<!-- indexer::continue -->
