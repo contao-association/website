@@ -156,7 +156,8 @@ class HarvestMembership extends Frontend
 			$this->log(('Unable to generate Harvest membership for member ID '.$arrMember['id'].' (no membership found)'), __METHOD__, TL_ERROR);
 			return;
 		}
-		
+
+		$arrMember = $this->prepareData($arrMember);
 		$arrCountries = $this->getCountries();
 		
 		$strAddress = sprintf("%s%s\n%s %s%s",
@@ -247,6 +248,31 @@ kind,description,quantity,unit_price,amount,taxed,taxed2,project_id
 		$this->Database->prepare("UPDATE tl_member SET groups=? WHERE id=?")->execute(serialize($arrGroups), $arrMember['id']);
 		
 		$this->killCache();
+	}
+	
+	
+	/**
+	 * Decode all entities in the data
+	 * @param array
+	 * @return array
+	 */
+	public function prepareData(array $arrData)
+	{
+		$this->import('String');
+		
+		foreach( $arrData as $k => $v )
+		{
+			if (is_string($v))
+			{
+				$arrData[$k] = $this->String->decodeEntities($v);
+			}
+			elseif (is_array($v))
+			{
+				$arrData[$k] = $this->prepareData($v);
+			}
+		}
+		
+		return $arrData;
 	}
 	
 	
