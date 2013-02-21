@@ -1,0 +1,130 @@
+<!-- indexer::stop -->
+	<?php if (!$this->hideForm): ?>
+	<div id="votebox_votes" class="<?php echo $this->class; ?>">
+<p class="votes"><span id="votebox_ajax_votecount"><?php echo $this->arrIdea['voteCount']; ?></span></p>
+		<form action="<?php echo $this->vote_action; ?>" id="<?php echo $this->vote_formId; ?>" method="post">
+			<div class="formbody">
+				<input type="hidden" name="FORM_SUBMIT" value="<?php echo $this->vote_formId; ?>">
+				<input type="hidden" name="REQUEST_TOKEN" value="<?php echo REQUEST_TOKEN; ?>">
+              <img id="votebox_too_many_votes" width="157" height="142" src="tl_files/layout/thumbs_red.png" class="submit vote<?php if (!$this->tooManyVotes): ?> invisible<?php endif; ?>">
+                <img id="votebox_vote" width="157" height="142" src="tl_files/layout/thumbs_grey.png" class="submit vote<?php if ($this->hasVoted || $this->tooManyVotes): ?> invisible<?php endif; ?>">
+                <img id="votebox_unvote" width="157" height="142" src="tl_files/layout/thumbs_green.png" class="submit unvote<?php if (!$this->hasVoted || $this->tooManyVotes): ?> invisible<?php endif; ?>">
+					<p id="votebox_success" class="success" style="<?php echo $this->successStyle; ?>"><?php echo $this->lblSuccessfullyVoted; ?></p>
+		             <p id="votebox_unsuccess" class="unsuccess" style="<?php echo $this->unsuccessStyle; ?>"><?php echo $this->lblSuccessfullyUnvoted; ?></p>
+              		<p id="votebox_too_many_votes_msg" class="too_many_votes" style="<?php echo $this->tooManyVotesStyle; ?>"><?php echo $this->lblTooManyVotes; ?></p>
+</div>
+		</form>
+	</div>
+	<?php endif; ?>
+	<!-- indexer::continue -->
+<h2><?php echo $this->arrIdea['title']; ?></h2>
+<div class="idea">
+	
+	<p class="cr_date"><?php echo $this->arrIdea['creation_date']; ?>, <?php echo $this->arrIdea['firstname']; ?> <?php echo $this->arrIdea['lastname']; ?></p>
+	<div class="text"><?php echo $this->arrIdea['text']; ?></div>
+</div>
+
+<script>
+window.addEvent('domready', function() {
+	// register a request event on the ajax link
+	var hooked = false;
+	var sendRequest = function(e) {
+		e.preventDefault();
+		if (!hooked) {
+			document.id('<?php echo $this->vote_formId; ?>').set('send', {
+				onComplete: function(response) {
+					if (response == 'too_many_votes') {
+                        document.id('votebox_too_many_votes_msg').setStyle('display', 'block');
+                        document.id('votebox_success').setStyle('display', 'none');
+                        document.id('votebox_unsuccess').setStyle('display', 'none');
+					}
+					else if (response == 'successfully_voted') {
+						document.id('votebox_votes').removeClass('notYetVoted').addClass('hasVoted');
+						document.id('votebox_success').setStyle('display', 'block');
+						document.id('votebox_unsuccess').setStyle('display', 'none');
+						document.id('votebox_too_many_votes_msg').setStyle('display', 'none');
+						document.id('votebox_ajax_votecount').set('text', document.id('votebox_ajax_votecount').get('text').toInt() + 1);
+						document.id('votebox_unvote').removeClass('invisible');
+						document.id('votebox_vote').addClass('invisible');
+					}
+					else {
+						document.id('votebox_votes').removeClass('hasVoted').addClass('notYetVoted');
+						document.id('votebox_success').setStyle('display', 'none');
+                        document.id('votebox_too_many_votes_msg').setStyle('display', 'none');
+						document.id('votebox_unsuccess').setStyle('display', 'block');
+						document.id('votebox_ajax_votecount').set('text', document.id('votebox_ajax_votecount').get('text').toInt() - 1);
+						document.id('votebox_unvote').addClass('invisible');
+						document.id('votebox_vote').removeClass('invisible');
+					}
+				}
+			});
+			
+			hooked = true;
+		}
+
+		document.id('<?php echo $this->vote_formId; ?>').send();
+	}
+
+	document.id('votebox_vote').addEvent('click', sendRequest);
+	document.id('votebox_unvote').addEvent('click', sendRequest);
+    document.id('votebox_too_many_votes').addEvent('click', sendRequest);
+});
+</script>
+
+
+<?php if ($this->allowComments && ($this->comments || !$this->requireLogin)): ?>
+
+<div class="ce_comments block">
+
+<<?php echo $this->hlc; ?>><?php echo $this->addComment; ?></<?php echo $this->hlc; ?>>
+<?php foreach ($this->comments as $comment) echo $comment; ?>
+<?php echo $this->pagination; ?>
+<?php if (!$this->requireLogin): ?>
+
+<!-- indexer::stop -->
+<div class="form">
+<?php if ($this->confirm): ?>
+
+<p class="confirm"><?php echo $this->confirm; ?></p>
+<?php else: ?>
+
+<form action="<?php echo $this->action; ?>" id="<?php echo $this->formId; ?>" method="post">
+<div class="formbody">
+<input type="hidden" name="FORM_SUBMIT" value="<?php echo $this->formId; ?>">
+<input type="hidden" name="REQUEST_TOKEN" value="<?php echo REQUEST_TOKEN; ?>">
+<div class="widget">
+  <?php echo $this->fields['name']->generateWithError(); ?> <?php echo $this->fields['name']->generateLabel(); ?> 
+</div>
+<div class="widget">
+  <?php echo $this->fields['email']->generateWithError(); ?> <?php echo $this->fields['email']->generateLabel(); ?> 
+</div>
+<div class="widget">
+  <?php echo $this->fields['website']->generateWithError(); ?> <?php echo $this->fields['website']->generateLabel(); ?> 
+</div>
+<?php if (isset($this->fields['captcha'])): ?>
+<div class="widget">
+  <?php echo $this->fields['captcha']->generateWithError(); ?> <label for="ctrl_captcha"><?php echo $this->fields['captcha']->generateQuestion(); ?><span class="mandatory">*</span></label>
+</div>
+<?php endif; ?>
+<div class="widget">
+  <?php echo $this->fields['comment']->generateWithError(); ?> <label for="ctrl_<?php echo $this->fields['comment']->id; ?>" class="invisible"><?php echo $this->fields['comment']->label; ?></label>
+</div>
+<div class="submit_container">
+  <input type="submit" class="submit" value="<?php echo $this->submit; ?>">
+</div>
+</div>
+</form>
+<?php if ($this->hasError): ?>
+
+<script>
+window.scrollTo(null, ($('<?php echo $this->formId; ?>').getElement('p.error').getPosition().y - 20));
+</script>
+<?php endif; ?>
+<?php endif; ?>
+
+</div>
+<!-- indexer::continue -->
+<?php endif; ?>
+
+</div>
+<?php endif; ?>

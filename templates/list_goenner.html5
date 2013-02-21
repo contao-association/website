@@ -9,9 +9,9 @@
 <?php foreach ($this->tbody as $class=>$row): ?>
 <?php $name = ($row['company']['raw'] == '' ? $row['firstname']['content'].' '.$row['lastname']['content'] : $row['company']['content']); ?>
 <?php if($row['website']['raw'] != ''): ?>
-<a class="goenner" href="<?php echo (strpos($row['website']['raw'], 'http') === false ? 'http://' : '') . specialchars($row['website']['raw']); ?>" target="_blank">
+<a class="goenner<?php if(!is_file(TL_ROOT . '/' . $row['avatar']['raw'])): ?> empty<?php endif; ?>" href="<?php echo (strpos($row['website']['raw'], 'http') === false ? 'http://' : '') . specialchars($row['website']['raw']); ?>" target="_blank">
 <?php else: ?>
-<div class="goenner">
+<div class="goenner<?php if(!is_file(TL_ROOT . '/' . $row['avatar']['raw'])): ?> empty<?php endif; ?>">
 <?php endif; ?>
 <?php if(is_file(TL_ROOT . '/' . $row['avatar']['raw'])): ?>
 <img src="<?php echo specialchars($row['avatar']['raw']); ?>" alt="Avatar von <?php echo $name; ?>" width="100" height="100" />

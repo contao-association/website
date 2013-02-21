@@ -1,0 +1,8 @@
+<?php foreach($this->arrIdeas as $arrIdea): ?>
+	<div class="idea">
+        <p class="votes"><?php echo $arrIdea['voteCount']; ?></p>
+		<p class="title"><?php echo $arrIdea['title']; ?></p>
+		<p class="author_date"><?php echo $arrIdea['firstname']; ?> <?php echo $arrIdea['lastname']; ?> um <?php echo $arrIdea['creation_date']; ?></p>
+		<a class="readon" href="<?php echo $arrIdea['reader_url']; ?>">Idee lesen, kommentieren, abstimmen…</a>
+	</div>
+<?php endforeach; ?>
