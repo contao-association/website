@@ -1,3 +1,6 @@
 [submodule "system/modules/votebox"]
 	path = system/modules/votebox
 	url = git@github.com:terminal42/contao-votebox.git
+[submodule "system/modules/haste"]
+	path = system/modules/haste
+	url = https://github.com/codefog/contao-haste.git
