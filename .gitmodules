@@ -1,0 +1,3 @@
+[submodule "system/modules/votebox"]
+	path = system/modules/votebox
+	url = git@github.com:terminal42/contao-votebox.git
