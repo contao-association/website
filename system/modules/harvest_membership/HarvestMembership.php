@@ -38,23 +38,6 @@ class HarvestMembership extends Frontend
     {
         parent::__construct();
 
-        $this->import('Encryption');
-
-        require_once TL_ROOT . '/plugins/HaPi/HarvestAPI.php';
-        require_once TL_ROOT . '/plugins/HaPi/Harvest/Abstract.php';
-        require_once TL_ROOT . '/plugins/HaPi/Harvest/Result.php';
-        require_once TL_ROOT . '/plugins/HaPi/Harvest/Exception.php';
-        require_once TL_ROOT . '/plugins/HaPi/Harvest/Client.php';
-        require_once TL_ROOT . '/plugins/HaPi/Harvest/Contact.php';
-        require_once TL_ROOT . '/plugins/HaPi/Harvest/Invoice.php';
-        require_once TL_ROOT . '/plugins/HaPi/Harvest/InvoiceItemCategory.php';
-        require_once TL_ROOT . '/plugins/HaPi/Harvest/InvoiceMessage.php';
-
-        $this->HaPi = new HarvestAPI();
-        $this->HaPi->setUser($GLOBALS['TL_CONFIG']['harvest_user']);
-        $this->HaPi->setPassword($this->Encryption->decrypt($GLOBALS['TL_CONFIG']['harvest_password']));
-        $this->HaPi->setAccount($GLOBALS['TL_CONFIG']['harvest_account']);
-
         global $objPage;
         $this->arrConfig = $this->Database->execute("SELECT * FROM tl_page WHERE id=".(int)$objPage->rootId)->fetchAssoc();
     }
@@ -156,7 +139,7 @@ kind,description,quantity,unit_price,amount,taxed,taxed2,project_id
             'harvest_membership'    => $this->Input->post('harvest_membership'),
         );
 
-        $strName = $this->generateClientName($arrMember, $this->getSubscription($arrMember));
+        $strName = $this->generateClientName($arrMember, Harvest::getSubscription($arrMember));
         $intId = array_search($strName, $this->getClientLookupTable());
 
         if ($intId !== false && $intId != $dc->activeRecord->harvest_client_id) {
@@ -192,7 +175,7 @@ kind,description,quantity,unit_price,amount,taxed,taxed2,project_id
 
         // Prevent duplicate members in frontend, reset if necessary
         if (TL_MODE == 'FE' && is_array($_SESSION['OLD_MEMBER_DATA'])) {
-            $strName = $this->generateClientName($arrMember, $this->getSubscription($arrMember));
+            $strName = $this->generateClientName($arrMember, Harvest::getSubscription($arrMember));
             $intId = array_search($strName, $this->getClientLookupTable());
 
             if ($intId !== false && $intId != $arrMember['harvest_client_id']) {
@@ -205,47 +188,19 @@ kind,description,quantity,unit_price,amount,taxed,taxed2,project_id
             }
         }
 
-        $objResult = $this->HaPi->getClient($arrMember['harvest_client_id']);
+        $objResult = Harvest::getClient($arrMember['harvest_client_id']);
 
         if ($objResult->isSuccess()) {
             $objClient = $this->prepareClient($arrMember, $objResult->data);
-            $this->HaPi->updateClient($objClient);
+            Harvest::updateClient($objClient);
         }
 
-        $objResult = $this->HaPi->getContact($arrMember['harvest_id']);
+        $objResult = Harvest::getContact($arrMember['harvest_id']);
 
         if ($objResult->isSuccess()) {
             $objContact = $this->prepareContact($arrMember, $objResult->data);
-            $this->HaPi->updateContact($objContact);
-        }
-    }
-
-    /**
-     * Generate subscription configuration
-     * @param   array
-     * @return  array|false
-     */
-    public function getSubscription($arrMember)
-    {
-        $arrSubscription = false;
-
-        foreach (deserialize($GLOBALS['TL_CONFIG']['harvest_memberships'], true) as $i => $arrConfig)
-        {
-            if ($arrMember['harvest_membership']['membership'] == $arrConfig['group'])
-            {
-                if ($arrConfig['custom'] && $arrMember['harvest_membership']['custom_'.$i] > $arrConfig['price'])
-                {
-                    $arrConfig['price'] = $arrMember['harvest_membership']['custom_'.$i];
+            Harvest::updateContact($objContact);
                 }
-
-                $arrConfig['price'] = number_format($arrConfig['price'], 2);
-
-                $arrSubscription = $arrConfig;
-                break;
-            }
-        }
-
-        return $arrSubscription;
     }
 
     /**
@@ -270,7 +225,7 @@ kind,description,quantity,unit_price,amount,taxed,taxed2,project_id
     public function getClientLookupTable()
     {
         $arrResult = array();
-        $objResult = $this->HaPi->getClients();
+        $objResult = Harvest::getClients();
 
         if (!$objResult->isSuccess()) {
             $this->log('Unable to retrieve clients from Harvest (Error '.$objResult->code.')', __METHOD__, TL_ERROR);
@@ -299,17 +254,17 @@ kind,description,quantity,unit_price,amount,taxed,taxed2,project_id
 
         if (($intId = array_search($strName, $arrClients)) !== false) {
 
-            $objResult = $this->HaPi->getClient($intId);
+            $objResult = Harvest::getClient($intId);
 
             if ($objResult->isSuccess()) {
                 $objClient = $this->prepareClient($arrMember, $objResult->data);
-                $this->HaPi->updateClient($objClient);
+                Harvest::updateClient($objClient);
             }
 
             return $intId;
         }
 
-        $objResult = $this->HaPi->createClient($this->prepareClient($arrMember));
+        $objResult = Harvest::createClient($this->prepareClient($arrMember));
 
         if (!$objResult->isSuccess())
         {
@@ -328,7 +283,7 @@ kind,description,quantity,unit_price,amount,taxed,taxed2,project_id
      */
     protected function createContact($intClient, $arrMember)
     {
-        $objResult = $this->HaPi->getClientContacts($intClient);
+        $objResult = Harvest::getClientContacts($intClient);
 
         if ($objResult->isSuccess()) {
 
@@ -336,14 +291,14 @@ kind,description,quantity,unit_price,amount,taxed,taxed2,project_id
                 if ($objContact->first_name == $arrMember['firstname'] && $objContact->last_name == $arrMember['lastname']) {
 
                     // Update existing data, it must be exactly the same as in Contao
-                    $this->HaPi->updateContact($this->prepareContact($arrMember, $objContact));
+                    Harvest::updateContact($this->prepareContact($arrMember, $objContact));
 
                     return $objContact->id;
                 }
             }
         }
 
-        $objResult = $this->HaPi->createContact($this->prepareContact($arrMember));
+        $objResult = Harvest::createContact($this->prepareContact($arrMember));
 
         if (!$objResult->isSuccess())
         {
@@ -366,7 +321,7 @@ kind,description,quantity,unit_price,amount,taxed,taxed2,project_id
             $objClient = new Harvest_Client();
         }
 
-        $arrSubscription = $this->getSubscription($arrMember);
+        $arrSubscription = Harvest::getSubscription($arrMember);
 
         $objClient->name = $this->generateClientName($arrMember, $arrSubscription);
 
@@ -416,28 +371,6 @@ kind,description,quantity,unit_price,amount,taxed,taxed2,project_id
         $objContact->fax = $arrMember['fax'];
 
         return $objContact;
-    }
-
-    /**
-     * Decode all entities in the data
-     * @param array
-     * @return array
-     */
-    protected function prepareData(array $arrData)
-    {
-        foreach( $arrData as $k => $v )
-        {
-            if (is_string($v))
-            {
-                $arrData[$k] = String::getInstance()->decodeEntities($v);
-            }
-            elseif (is_array($v))
-            {
-                $arrData[$k] = $this->prepareData($v);
-            }
-        }
-
-        return $arrData;
     }
 }
 
