@@ -117,7 +117,7 @@ kind,description,quantity,unit_price,amount,taxed,taxed2,project_id
         while ($objMembers->next()) {
             $arrMember = $objMembers->row();
             $intInvoice = $this->createMembershipInvoice($arrMember, Harvest::getSubscription($arrMember));
-            $objInvoice->sendRecurringInvoiceMail($intInvoice, $arrMember);
+            $this->sendRecurringInvoiceMail($intInvoice, $arrMember);
         }
     }
 
