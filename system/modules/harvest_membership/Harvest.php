@@ -134,4 +134,39 @@ class Harvest
 
         return static::$arrCache['getSubscription'][$arrMember['id']];
     }
+
+    /**
+     * Generate client name from member and subscription data
+     * @param   array
+     * @param   array
+     * @return  string
+     */
+    public static function generateClientName($arrMember, $arrSubscription)
+    {
+        if ($arrSubscription['company']) {
+            return htmlspecialchars(($arrMember['company'] ? $arrMember['company'] : ($arrMember['firstname'].' '.$arrMember['lastname'])));
+        } else {
+            return htmlspecialchars($arrMember['firstname'].' '.$arrMember['lastname']);
+        }
+    }
+
+    /**
+     * Get list of Harvest client names, ID is array key
+     * @return  array
+     */
+    public static function getClientLookupTable()
+    {
+        $arrResult = array();
+        $objResult = Harvest::getClients();
+
+        if (!$objResult->isSuccess()) {
+            return array();
+        }
+
+        foreach ($objResult->data as $objClient) {
+            $arrResult[(int) $objClient->id] = (string) $objClient->name;
+        }
+
+        return $arrResult;
+    }
 }

@@ -27,10 +27,8 @@ class ModuleHarvestRegistration extends ModuleRegistration
      */
     protected function createNewUser($arrMember)
     {
-        $objAPI = new HarvestMembership();
-
-        $strName = $objAPI->generateClientName($arrMember, $objAPI->getSubscription($arrMember));
-        $intId = array_search($strName, $objAPI->getClientLookupTable());
+        $strName = Harvest::generateClientName($arrMember, Harvest::getSubscription($arrMember));
+        $intId = array_search($strName, Harvest::getClientLookupTable());
 
         if ($intId !== false) {
             $this->Template->error = $GLOBALS['TL_LANG']['ERR']['harvestDuplicate'];

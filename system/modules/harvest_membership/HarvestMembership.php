@@ -87,8 +87,8 @@ class HarvestMembership extends Controller
             'harvest_membership'    => $this->Input->post('harvest_membership'),
         );
 
-        $strName = $this->generateClientName($arrMember, Harvest::getSubscription($arrMember));
-        $intId = array_search($strName, $this->getClientLookupTable());
+        $strName = Harvest::generateClientName($arrMember, Harvest::getSubscription($arrMember));
+        $intId = array_search($strName, Harvest::getClientLookupTable());
 
         if ($intId !== false && $intId != $dc->activeRecord->harvest_client_id) {
             throw new Exception('Mitglied bereits vorhanden.');
@@ -123,8 +123,8 @@ class HarvestMembership extends Controller
 
         // Prevent duplicate members in frontend, reset if necessary
         if (TL_MODE == 'FE' && is_array($_SESSION['OLD_MEMBER_DATA'])) {
-            $strName = $this->generateClientName($arrMember, Harvest::getSubscription($arrMember));
-            $intId = array_search($strName, $this->getClientLookupTable());
+            $strName = Harvest::generateClientName($arrMember, Harvest::getSubscription($arrMember));
+            $intId = array_search($strName, Harvest::getClientLookupTable());
 
             if ($intId !== false && $intId != $arrMember['harvest_client_id']) {
                 $_SESSION['PERSONALDATA_ERROR'] = $GLOBALS['TL_LANG']['ERR']['harvestDuplicate'];
@@ -152,42 +152,6 @@ class HarvestMembership extends Controller
     }
 
     /**
-     * Generate client name from member and subscription data
-     * @param   array
-     * @param   array
-     * @return  string
-     */
-    public function generateClientName($arrMember, $arrSubscription)
-    {
-        if ($arrSubscription['company']) {
-            return htmlspecialchars(($arrMember['company'] ? $arrMember['company'] : ($arrMember['firstname'].' '.$arrMember['lastname'])));
-        } else {
-            return htmlspecialchars($arrMember['firstname'].' '.$arrMember['lastname']);
-        }
-    }
-
-    /**
-     * Get list of Harvest client names, ID is array key
-     * @return  array
-     */
-    public function getClientLookupTable()
-    {
-        $arrResult = array();
-        $objResult = Harvest::getClients();
-
-        if (!$objResult->isSuccess()) {
-            $this->log('Unable to retrieve clients from Harvest (Error '.$objResult->code.')', __METHOD__, TL_ERROR);
-            return array();
-        }
-
-        foreach ($objResult->data as $objClient) {
-            $arrResult[(int) $objClient->id] = (string) $objClient->name;
-        }
-
-        return $arrResult;
-    }
-
-    /**
      * Search for client ID on Harvest, create client if none exists
      * @param   array   tl_member data
      * @param   array   subscription configuration
@@ -196,9 +160,9 @@ class HarvestMembership extends Controller
     protected function createClient($arrMember, $arrSubscription)
     {
         $arrCountries = $this->getCountries();
-        $arrClients = $this->getClientLookupTable();
+        $arrClients = Harvest::getClientLookupTable();
 
-        $strName = $this->generateClientName($arrMember, $arrSubscription);
+        $strName = Harvest::generateClientName($arrMember, $arrSubscription);
 
         if (($intId = array_search($strName, $arrClients)) !== false) {
 
@@ -271,7 +235,7 @@ class HarvestMembership extends Controller
 
         $arrSubscription = Harvest::getSubscription($arrMember);
 
-        $objClient->name = $this->generateClientName($arrMember, $arrSubscription);
+        $objClient->name = Harvest::generateClientName($arrMember, $arrSubscription);
 
         if ($arrSubscription['company']) {
             $objClient->details = sprintf("%s%s\n%s %s%s",
