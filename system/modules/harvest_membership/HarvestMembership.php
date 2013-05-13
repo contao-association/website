@@ -21,19 +21,10 @@
 class HarvestMembership extends Controller
 {
 
-    /**
-     * Invoice Config
-     * @var array
-     */
-    protected $arrConfig;
-
-
     public function __construct()
     {
         parent::__construct();
 
-        global $objPage;
-        $this->arrConfig = $this->Database->execute("SELECT * FROM tl_page WHERE id=".(int)$objPage->rootId)->fetchAssoc();
         $this->import('Database');
 
         // Make sure Harvest classes are available
@@ -45,82 +36,39 @@ class HarvestMembership extends Controller
      * @param   int
      * @param   array
      */
-    public function invoiceNewUser($intId, $arrData)
+    public function createAndInvoiceNewClient($intId, $arrMember)
     {
-        if (is_array($arrData['harvest_membership']))
-        {
-            $arrData['id'] = $intId;
+        if (is_array($arrData['harvest_membership'])) {
 
-            $this->generateInvoice($arrData);
+            $arrMember['id'] = $intId;
+
+            $arrMember = Harvest::prepareData($arrMember);
+            $arrSubscription = Harvest::getSubscription($arrMember);
+
+            if ($arrSubscription === false) {
+                $this->log(('Unable to generate Harvest client for member ID '.$arrMember['id'].' (no membership found)'), __METHOD__, TL_ERROR);
+                return;
+            }
+
+            $arrMember['harvest_client_id'] = $this->createClient($arrMember, $arrSubscription);
+            $arrMember['harvest_id'] = $this->createContact($arrMember['harvest_client_id'], $arrMember);
+
+            if ($arrMember['harvest_client_id'] < 1 || $arrMember['harvest_id'] < 1) {
+                $this->log('Error creating client/contact in Harvest for member ID '.$arrMember['id'], __METHOD__, TL_ERROR);
+                return;
+            }
+
+            // Assign member to the designated groups
+            $arrGroups = deserialize($arrMember['groups'], true);
+            $arrGroups[] = $arrSubscription['group'];
+            $this->Database->prepare("UPDATE tl_member SET harvest_client_id=?, harvest_id=?, groups=? WHERE id=?")->execute($arrMember['harvest_client_id'], $arrMember['harvest_id'], serialize($arrGroups), $arrMember['id']);
+
+            $objInvoice = new HarvestInvoice();
+            $intInvoice = $objInvoice->createMembershipInvoice($arrMember, $arrSubscription);
+            $objInvoice->sendInvoice($intInvoice, $arrMember['email']);
         }
     }
 
-
-    public function generateInvoice($arrMember)
-    {
-        $arrSubscription = $this->getSubscription($arrMember);
-
-        if ($arrSubscription == false)
-        {
-            $this->log(('Unable to generate Harvest membership for member ID '.$arrMember['id'].' (no membership found)'), __METHOD__, TL_ERROR);
-            return;
-        }
-
-        $arrMember = $this->prepareData($arrMember);
-        $intClient = $this->createClient($arrMember, $arrSubscription);
-        $intContact = $this->createContact($intClient, $arrMember);
-
-        if ($intClient < 1 || $intContact < 1) {
-            return;
-        }
-
-        // Create invoice
-        $objInvoice = new Harvest_Invoice();
-        $objInvoice->issued_at = date('Y-m-d');
-        $objInvoice->due_at = date('Y-m-d', strtotime('+'.$this->arrConfig['harvest_due'].' days'));
-        $objInvoice->due_at_human_format = 'custom'; //'NET '.$this->arrConfig['harvest_due']; //sprintf('%s Tage', $this->arrConfig['harvest_due']);
-        $objInvoice->client_id = $intClient;
-        $objInvoice->number = $arrMember['id'] . '/' . date('Y');
-        $objInvoice->kind = 'free_form';
-        $objInvoice->purchase_order = $arrMember['id'];
-        $objInvoice->notes = $this->arrConfig['harvest_notes'];
-        $objInvoice->csv_line_items =
-'
-kind,description,quantity,unit_price,amount,taxed,taxed2,project_id
-'.$this->arrConfig['harvest_category'].',' . sprintf($this->arrConfig['harvest_format'], $arrSubscription['label']) . ',1.00,' . $arrSubscription['price'] . ',' . $arrSubscription['price'] . ',false,false,1
-  ';
-
-        $objResult = $this->HaPi->createInvoice($objInvoice);
-
-        if (!$objResult->isSuccess())
-        {
-            $this->log('Unable to create Harvest invoice for member ID '.$arrMember['id'].' (Error '.$objResult->code.')', __METHOD__, TL_ERROR);
-            return;
-        }
-
-        $intInvoice = $objResult->data;
-
-        $objMessage = new Harvest_InvoiceMessage();
-        $objMessage->invoice_id = $intInvoice;
-        $objMessage->attach_pdf = true;
-        $objMessage->send_me_a_copy = true;
-        $objMessage->include_pay_pal_link = true;
-        $objMessage->recipients = $arrMember['email'];
-        $objMessage->body = $this->arrConfig['harvest_message'];
-
-        $objResult = $this->HaPi->sendInvoiceMessage($intInvoice, $objMessage);
-
-        if (!$objResult->isSuccess())
-        {
-            $this->log('Unable to send Harvest invoice to member ID '.$arrMember['id'].' (Error '.$objResult->code.')', __METHOD__, TL_ERROR);
-            return;
-        }
-
-        // Mitglied der entsprechenden Gruppe zuweisen
-        $arrGroups = deserialize($arrMember['groups'], true);
-        $arrGroups[] = $arrSubscription['group'];
-        $this->Database->prepare("UPDATE tl_member SET harvest_client_id=?, harvest_id=?, groups=? WHERE id=?")->execute($intClient, $intContact, serialize($arrGroups), $arrMember['id']);
-    }
 
     /**
      * Prevent duplicate member name in Harvest when submitting backend fields
@@ -198,7 +146,7 @@ kind,description,quantity,unit_price,amount,taxed,taxed2,project_id
         if ($objResult->isSuccess()) {
             $objContact = $this->prepareContact($arrMember, $objResult->data);
             Harvest::updateContact($objContact);
-                }
+        }
     }
 
     /**
