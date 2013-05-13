@@ -214,28 +214,9 @@ kind,description,quantity,unit_price,amount,taxed,taxed2,project_id
 
         $strName = $this->generateClientName($arrMember, $arrSubscription);
 
-        if ($arrSubscription['company']) {
-            $strAddress = sprintf("%s%s\n%s %s%s",
-                                ($arrMember['company'] ? $arrMember['firstname'].' '.$arrMember['lastname']."\n" : ''),
-                                $arrMember['street'],
-                                $arrMember['postal'],
-                                $arrMember['city'],
-                                ($arrMember['country'] == 'ch' ? '' : "\n".$arrCountries[$arrMember['country']]));
-        } else {
-            $strAddress = sprintf("%s%s\n%s %s%s",
-                                ($arrMember['company'] ? $arrMember['company']."\n" : ''),
-                                $arrMember['street'],
-                                $arrMember['postal'],
-                                $arrMember['city'],
-                                ($arrMember['country'] == 'ch' ? '' : "\n".$arrCountries[$arrMember['country']]));
         }
 
-        // Create client
-        $objClient = new Harvest_Client();
-        $objClient->name = $strName;
-        $objClient->details = htmlspecialchars($strAddress);
-
-        $objResult = $this->HaPi->createClient($objClient);
+        $objResult = $this->HaPi->createClient($this->prepareClient($arrMember));
 
         if (!$objResult->isSuccess())
         {
@@ -254,17 +235,8 @@ kind,description,quantity,unit_price,amount,taxed,taxed2,project_id
      */
     protected function createClientContact($intClient, $arrMember)
     {
-        // Create contact for this client
-        $objContact = new Harvest_Contact();
-        $objContact->first_name = $arrMember['firstname'];
-        $objContact->last_name = $arrMember['lastname'];
-        $objContact->email = $arrMember['email'];
-        $objContact->phone_office = $arrMember['phone'];
-        $objContact->phone_mobile = $arrMember['mobile'];
-        $objContact->fax = $arrMember['fax'];
-        $objContact->client_id = $intClient;
 
-        $objResult = $this->HaPi->createContact($objContact);
+        $objResult = $this->HaPi->createContact($this->prepareContact($arrMember));
 
         if (!$objResult->isSuccess())
         {
@@ -273,6 +245,71 @@ kind,description,quantity,unit_price,amount,taxed,taxed2,project_id
         }
 
         return (int) $objResult->data;
+    }
+
+    /**
+     * Create/update Harvest client object from member data
+     * @param   array
+     * @param   object
+     * @return  object
+     */
+    protected function prepareClient($arrMember, $objClient=null)
+    {
+        if (null === $objClient) {
+            $objClient = new Harvest_Client();
+        }
+
+        $arrSubscription = $this->getSubscription($arrMember);
+
+        $objClient->name = $this->generateClientName($arrMember, $arrSubscription);
+
+        if ($arrSubscription['company']) {
+            $objClient->details = sprintf("%s%s\n%s %s%s",
+                ($arrMember['company'] ? $arrMember['firstname'].' '.$arrMember['lastname']."\n" : ''),
+                $arrMember['street'],
+                $arrMember['postal'],
+                $arrMember['city'],
+                ($arrMember['country'] == 'ch' ? '' : "\n".$arrCountries[$arrMember['country']])
+            );
+
+        } else {
+            $objClient->details = sprintf("%s%s\n%s %s%s",
+                ($arrMember['company'] ? $arrMember['company']."\n" : ''),
+                $arrMember['street'],
+                $arrMember['postal'],
+                $arrMember['city'],
+                ($arrMember['country'] == 'ch' ? '' : "\n".$arrCountries[$arrMember['country']])
+            );
+        }
+
+        return $objClient;
+    }
+
+    /**
+     * Update a Harvest contact from member data
+     * @param   array
+     * @param   object
+     * @return  object
+     */
+    protected function prepareContact($arrMember, $objContact=null)
+    {
+        if (null === $objContact) {
+            if ($arrMember['harvest_client_id'] < 1) {
+                throw new Exception('Member must have a Harvest client ID to generate Harvest contact.');
+            }
+
+            $objContact = new Harvest_Contact();
+            $objContact->client_id = $arrMember['harvest_client_id'];
+        }
+
+        $objContact->first_name = $arrMember['firstname'];
+        $objContact->last_name = $arrMember['lastname'];
+        $objContact->email = $arrMember['email'];
+        $objContact->phone_office = $arrMember['phone'];
+        $objContact->phone_mobile = $arrMember['mobile'];
+        $objContact->fax = $arrMember['fax'];
+
+        return $objContact;
     }
 
     /**
