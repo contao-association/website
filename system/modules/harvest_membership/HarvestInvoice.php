@@ -156,7 +156,7 @@ kind,description,quantity,unit_price,amount,taxed,taxed2,project_id
 
         $intPage = (is_object($objPage) ? (int) $objPage->rootId : 0);
 
-        return $this->Database->prepare("SELECT * FROM tl_page WHERE id=? OR language=? OR fallback='1'")
+        return $this->Database->prepare("SELECT * FROM tl_page WHERE type='root' AND (id=? OR language=? OR fallback='1')")
                               ->limit(1)
                               ->execute($intPage, $strLanguage)
                               ->fetchAssoc();
