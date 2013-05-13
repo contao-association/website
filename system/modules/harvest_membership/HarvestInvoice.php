@@ -122,6 +122,31 @@ kind,description,quantity,unit_price,amount,taxed,taxed2,project_id
     }
 
     /**
+     * Automatically enable members if registration invoice has been paid
+     */
+    public function activateMembers()
+    {
+        // Only retrieve 10 members to prevent performance issues with the API
+        $objMembers = $this->Database->execute("SELECT * FROM tl_member WHERE disable='1' AND harvest_invoice>0 LIMIT 10");
+
+        while ($objMembers->next()) {
+            $objResult = Harvest::getInvoice($objMembers->harvest_invoice);
+
+            if ($objResult->isSuccess() && $objResult->data->paid) {
+                $this->Database->prepare("UPDATE tl_member SET disable='', harvest_invoice=0 WHERE id=?")->executeUncached($objMembers->id);
+
+                $objInvoice = $objResult->data;
+                $arrRoot = $this->getRootPage($objMembers->language);
+
+                try {
+                    $objEmail = new EmailTemplate($arrRoot['harvest_mail_activated'], $arrRoot['language']);
+                    $objEmail->send($objMembers->email, $this->getInvoiceTokens($objMembers->row(), $objInvoice));
+                } catch (Exception $e) {}
+            }
+        }
+    }
+
+    /**
      * Get invoice config from page settings
      * @param   string
      */
