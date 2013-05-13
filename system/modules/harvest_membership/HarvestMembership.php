@@ -38,7 +38,7 @@ class HarvestMembership extends Controller
      */
     public function createAndInvoiceNewClient($intId, $arrMember)
     {
-        if (is_array($arrData['harvest_membership'])) {
+        if (is_array($arrMember['harvest_membership'])) {
 
             $arrMember['id'] = $intId;
 
