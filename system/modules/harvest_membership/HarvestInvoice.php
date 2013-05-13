@@ -111,6 +111,7 @@ kind,description,quantity,unit_price,amount,taxed,taxed2,project_id
                        AND DATE_FORMAT(FROM_UNIXTIME(dateAdded),'%m-%d') = '02-29'
                 )
                 AND DATE_FORMAT(FROM_UNIXTIME(dateAdded),'%Y-%m-%d') != DATE_FORMAT(NOW(),'%Y-%m-%d')
+                AND disable=''
              )"
         );
 
