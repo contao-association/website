@@ -138,31 +138,6 @@ kind,description,quantity,unit_price,amount,taxed,taxed2,project_id
         $this->Database->prepare("UPDATE tl_member SET harvest_client_id=?, harvest_id=?, groups=? WHERE id=?")->execute($intClient, $intContact, serialize($arrGroups), $arrMember['id']);
     }
 
-
-    /**
-     * Decode all entities in the data
-     * @param array
-     * @return array
-     */
-    public function prepareData(array $arrData)
-    {
-        foreach( $arrData as $k => $v )
-        {
-            if (is_string($v))
-            {
-                $arrData[$k] = $this->String->decodeEntities($v);
-            }
-            elseif (is_array($v))
-            {
-                $arrData[$k] = $this->prepareData($v);
-            }
-        }
-
-        return $arrData;
-    }
-
-
-
     /**
      * Generate subscription configuration
      * @param   array
@@ -298,6 +273,28 @@ kind,description,quantity,unit_price,amount,taxed,taxed2,project_id
         }
 
         return (int) $objResult->data;
+    }
+
+    /**
+     * Decode all entities in the data
+     * @param array
+     * @return array
+     */
+    protected function prepareData(array $arrData)
+    {
+        foreach( $arrData as $k => $v )
+        {
+            if (is_string($v))
+            {
+                $arrData[$k] = $this->String->decodeEntities($v);
+            }
+            elseif (is_array($v))
+            {
+                $arrData[$k] = $this->prepareData($v);
+            }
+        }
+
+        return $arrData;
     }
 }
 
