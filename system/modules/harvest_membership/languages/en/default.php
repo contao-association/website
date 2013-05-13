@@ -19,6 +19,12 @@
 
 
 /**
+ * Errors
+ */
+$GLOBALS['TL_LANG']['ERR']['harvestDuplicate'] = '<strong>Ein Mitglied mit diesem Namen ist bereits vorhanden.</strong><br>Du kannst nicht zweimal mit demselben Vor-/Nachnamen (z.B. Aktivmitglied & Gönner) oder zwei Gönner für dieselbe Firma registrieren.';
+
+
+/**
  * Number format for Switzerland
  */
 $GLOBALS['TL_LANG']['MSC']['decimalSeparator']   = '.';

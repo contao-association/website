@@ -33,7 +33,7 @@ class ModuleHarvestRegistration extends ModuleRegistration
         $intId = array_search($strName, $objAPI->getClientLookupTable());
 
         if ($intId !== false) {
-            $this->Template->error = '<strong>Ein Mitglied mit diesem Namen ist bereits vorhanden.</strong><br>Du kannst nicht zweimal mit demselben Vor-/Nachnamen (z.B. Aktivmitglied & Gönner) oder zwei Gönner für dieselbe Firma registrieren.';
+            $this->Template->error = $GLOBALS['TL_LANG']['ERR']['harvestDuplicate'];
             return;
         }
 
