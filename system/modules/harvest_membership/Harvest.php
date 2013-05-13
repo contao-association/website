@@ -22,13 +22,40 @@ class Harvest
 {
 
     /**
+     * API result caching
+     * @var array
+     */
+    private static $arrCache = array();
+
+    /**
      * Magically call HarvestAPI methods and return result
+     * Caches single result lookups for better performance
      */
     public static function __callStatic($name, $arguments)
     {
-        $objAPI = static::getAPI();
+        switch ($name)
+        {
+            case 'getInvoice':
+            case 'getClient':
+            case 'getContact':
+                if (isset(static::$arrCache[$name][$arguments[0]])) {
+                    return static::$arrCache[$name][$arguments[0]];
+                }
+                $blnCache = true;
+                break;
 
-        return call_user_func_array(array($objAPI, $name), $arguments);
+            default:
+                $blnCache = false;
+                break;
+        }
+
+        $varResult = call_user_func_array(array(static::getAPI(), $name), $arguments);
+
+        if (true === $blnCache) {
+            static::$arrCache[$name][$arguments[0]] = $varResult;
+        }
+
+        return $varResult;
     }
 
     /**
@@ -84,24 +111,27 @@ class Harvest
      */
     public static function getSubscription(array $arrMember)
     {
-        $arrSubscription = false;
+        if (!isset(static::$arrCache['getSubscription'][$arrMember['id']])) {
 
-        foreach (deserialize($GLOBALS['TL_CONFIG']['harvest_memberships'], true) as $i => $arrConfig)
-        {
-            if ($arrMember['harvest_membership']['membership'] == $arrConfig['group'])
+            static::$arrCache['getSubscription'][$arrMember['id']] = false;
+
+            foreach (deserialize($GLOBALS['TL_CONFIG']['harvest_memberships'], true) as $i => $arrConfig)
             {
-                if ($arrConfig['custom'] && $arrMember['harvest_membership']['custom_'.$i] > $arrConfig['price'])
+                if ($arrMember['harvest_membership']['membership'] == $arrConfig['group'])
                 {
-                    $arrConfig['price'] = $arrMember['harvest_membership']['custom_'.$i];
+                    if ($arrConfig['custom'] && $arrMember['harvest_membership']['custom_'.$i] > $arrConfig['price'])
+                    {
+                        $arrConfig['price'] = $arrMember['harvest_membership']['custom_'.$i];
+                    }
+
+                    $arrConfig['price'] = number_format($arrConfig['price'], 2);
+
+                    static::$arrCache['getSubscription'][$arrMember['id']] = $arrConfig;
+                    break;
                 }
-
-                $arrConfig['price'] = number_format($arrConfig['price'], 2);
-
-                $arrSubscription = $arrConfig;
-                break;
             }
         }
 
-        return $arrSubscription;
+        return static::$arrCache['getSubscription'][$arrMember['id']];
     }
 }
