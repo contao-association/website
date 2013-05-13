@@ -39,7 +39,7 @@ class HarvestInvoice extends Controller
      */
     public function createMembershipInvoice($arrMember, $arrSubscription)
     {
-        $arrConfig = $this->getInvoiceConfig();
+        $arrConfig = $this->getRootPage($arrMember['language']);
 
         // Create invoice
         $objInvoice = new Harvest_Invoice();
@@ -94,10 +94,19 @@ kind,description,quantity,unit_price,amount,taxed,taxed2,project_id
     }
 
 
-    protected function getInvoiceConfig()
+    /**
+     * Get invoice config from page settings
+     * @param   string
+     */
+    protected function getRootPage($strLanguage)
     {
         global $objPage;
 
-        return $this->Database->execute("SELECT * FROM tl_page WHERE id=" . (int) $objPage->rootId)->fetchAssoc();
+        $intPage = (is_object($objPage) ? (int) $objPage->rootId : 0);
+
+        return $this->Database->prepare("SELECT * FROM tl_page WHERE id=? OR language=? OR fallback='1'")
+                              ->limit(1)
+                              ->execute($intPage, $strLanguage)
+                              ->fetchAssoc();
     }
 }
