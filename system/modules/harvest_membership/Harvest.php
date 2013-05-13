@@ -101,7 +101,7 @@ class Harvest
             return $varData;
         }
 
-        return String::getInstance()->decodeEntities($v);
+        return String::getInstance()->decodeEntities($varData);
     }
 
     /**
