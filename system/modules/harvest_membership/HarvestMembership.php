@@ -37,7 +37,9 @@ class HarvestMembership extends Frontend
     public function __construct()
     {
         parent::__construct();
+
         $this->import('Encryption');
+        $this->import('String');
 
         require_once TL_ROOT . '/plugins/HaPi/HarvestAPI.php';
         require_once TL_ROOT . '/plugins/HaPi/Harvest/Abstract.php';
@@ -252,8 +254,6 @@ kind,description,quantity,unit_price,amount,taxed,taxed2,project_id
      */
     public function prepareData(array $arrData)
     {
-        $this->import('String');
-
         foreach( $arrData as $k => $v )
         {
             if (is_string($v))
