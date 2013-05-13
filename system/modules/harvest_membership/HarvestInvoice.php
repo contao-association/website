@@ -68,31 +68,14 @@ kind,description,quantity,unit_price,amount,taxed,taxed2,project_id
     }
 
     /**
-     * Send invoice to client
+     * Send email template for new invoices
      * @param   int     Harvest invoice ID
-     * @param   string  Email address of recipient
-     * @param   bool    Send recurring message
+     * @param   array   tl_member data
      */
-    public function sendInvoice($intId, $strRecipient, $blnRecurring=false)
+    public function sendNewInvoiceMail($intInvoice, $arrMember)
     {
-        $objMessage = new Harvest_InvoiceMessage();
-        $objMessage->invoice_id = $intInvoice;
-        $objMessage->attach_pdf = true;
-        $objMessage->send_me_a_copy = true;
-        $objMessage->include_pay_pal_link = true;
-        $objMessage->recipients = $strRecipient;
-        $objMessage->body = $arrConfig['harvest_message'];
-
-        $objResult = Harvest::sendInvoiceMessage($intInvoice, $objMessage);
-
-        if (!$objResult->isSuccess()) {
-            $this->log('Unable to send Harvest invoice to '.$strRecipient.' (Error '.$objResult->code.')', __METHOD__, TL_ERROR);
-            return false;
-        }
-
-        return true;
+        $this->sendInvoiceMail($intInvoice, $arrMember, 'harvest_mail_new');
     }
-
 
     /**
      * Get invoice config from page settings
@@ -108,5 +91,55 @@ kind,description,quantity,unit_price,amount,taxed,taxed2,project_id
                               ->limit(1)
                               ->execute($intPage, $strLanguage)
                               ->fetchAssoc();
+    }
+
+    /**
+     * Generate the list of simple tokens for email templates
+     * @param   array
+     * @param   object
+     * @return  array
+     */
+    protected function getInvoiceTokens($arrMember, $objInvoice)
+    {
+        $arrConfig = $this->getRootPage($arrMember['language']);
+        $strDateFormat = $arrConfig['dateFormat'] ?: $GLOBALS['TL_CONFIG']['dateFormat'];
+
+        $arrTokens = $arrMember;
+        $arrTokens['invoice_amount'] = $this->getFormattedNumber($objInvoice->amount);
+        $arrTokens['invoice_number'] = $objInvoice->number;
+        $arrTokens['invoice_issued_at'] = $this->parseDate($strDateFormat, strtotime($objInvoice->issued_at));
+        $arrTokens['invoice_due_at'] = $this->parseDate($strDateFormat, strtotime($objInvoice->due_at));
+        $arrTokens['invoice_url'] = 'https://' . $GLOBALS['TL_CONFIG']['harvest_account'] . '.harvestapp.com/client/invoices/' . $objInvoice->client_key;
+
+        return $arrTokens;
+    }
+
+    /**
+     * Send invoice mail to client
+     * @param   int     Harvest invoice ID
+     * @param   array   tl_member data
+     * @param   string  Name of template ID key in tl_page
+     */
+    protected function sendInvoiceMail($intInvoice, $arrMember, $strTemplateKey)
+    {
+        $objResult = Harvest::getInvoice($intInvoice);
+
+        if ($objResult->isSuccess()) {
+            $objInvoice = $objResult->data;
+            $arrRoot = $this->getRootPage($arrMember['language']);
+
+            try {
+                $objEmail = new EmailTemplate($arrRoot[$strTemplateKey], $arrRoot['language']);
+                $objEmail->send($arrMember['email'], $this->getInvoiceTokens($arrMember, $objInvoice));
+
+                Harvest::createSentInvoiceMessage($objInvoice->id, new Harvest_InvoiceMessage());
+
+                return true;
+            } catch (Exception $e) {}
+        }
+
+        $this->log('Unable to send invoice email to "' . $arrMember['email'] . '" (Invoice ID ' . $intInvoice . ')', __METHOD__, TL_ERROR);
+
+        return false;
     }
 }

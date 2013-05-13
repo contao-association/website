@@ -61,7 +61,7 @@ class HarvestMembership extends Controller
             // Create and send membership invoice
             $objInvoice = new HarvestInvoice();
             $intInvoice = $objInvoice->createMembershipInvoice($arrMember, $arrSubscription);
-            $objInvoice->sendInvoice($intInvoice, $arrMember['email']);
+            $objInvoice->sendNewInvoiceMail($intInvoice, $arrMember);
 
             // Assign member to the designated groups
             $arrGroups = deserialize($arrMember['groups'], true);
