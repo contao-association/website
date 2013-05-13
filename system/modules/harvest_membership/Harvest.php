@@ -31,6 +31,33 @@ class Harvest
         return call_user_func_array(array($objAPI, $name), $arguments);
     }
 
+    /**
+     * Retrieve cached instance of HarvestAPI
+     * @return  object
+     */
+    public static function getAPI()
+    {
+        static $objAPI;
+
+        if (null === $objAPI) {
+            require_once TL_ROOT . '/plugins/HaPi/HarvestAPI.php';
+            require_once TL_ROOT . '/plugins/HaPi/Harvest/Abstract.php';
+            require_once TL_ROOT . '/plugins/HaPi/Harvest/Result.php';
+            require_once TL_ROOT . '/plugins/HaPi/Harvest/Exception.php';
+            require_once TL_ROOT . '/plugins/HaPi/Harvest/Client.php';
+            require_once TL_ROOT . '/plugins/HaPi/Harvest/Contact.php';
+            require_once TL_ROOT . '/plugins/HaPi/Harvest/Invoice.php';
+            require_once TL_ROOT . '/plugins/HaPi/Harvest/InvoiceItemCategory.php';
+            require_once TL_ROOT . '/plugins/HaPi/Harvest/InvoiceMessage.php';
+
+            $objAPI = new HarvestAPI();
+            $objAPI->setUser($GLOBALS['TL_CONFIG']['harvest_user']);
+            $objAPI->setPassword(Encryption::getInstance()->decrypt($GLOBALS['TL_CONFIG']['harvest_password']));
+            $objAPI->setAccount($GLOBALS['TL_CONFIG']['harvest_account']);
+        }
+
+        return $objAPI;
+    }
 
     /**
      * Decode all entities in the data
@@ -76,33 +103,5 @@ class Harvest
         }
 
         return $arrSubscription;
-    }
-
-    /**
-     * Retrieve cached instance of HarvestAPI
-     * @return  object
-     */
-    private static function getAPI()
-    {
-        static $objAPI;
-
-        if (null === $objAPI) {
-            require_once TL_ROOT . '/plugins/HaPi/HarvestAPI.php';
-            require_once TL_ROOT . '/plugins/HaPi/Harvest/Abstract.php';
-            require_once TL_ROOT . '/plugins/HaPi/Harvest/Result.php';
-            require_once TL_ROOT . '/plugins/HaPi/Harvest/Exception.php';
-            require_once TL_ROOT . '/plugins/HaPi/Harvest/Client.php';
-            require_once TL_ROOT . '/plugins/HaPi/Harvest/Contact.php';
-            require_once TL_ROOT . '/plugins/HaPi/Harvest/Invoice.php';
-            require_once TL_ROOT . '/plugins/HaPi/Harvest/InvoiceItemCategory.php';
-            require_once TL_ROOT . '/plugins/HaPi/Harvest/InvoiceMessage.php';
-
-            $objAPI = new HarvestAPI();
-            $objAPI->setUser($GLOBALS['TL_CONFIG']['harvest_user']);
-            $objAPI->setPassword(Encryption::getInstance()->decrypt($GLOBALS['TL_CONFIG']['harvest_password']));
-            $objAPI->setAccount($GLOBALS['TL_CONFIG']['harvest_account']);
-        }
-
-        return $objAPI;
     }
 }

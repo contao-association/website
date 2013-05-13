@@ -18,14 +18,8 @@
  */
 
 
-class HarvestMembership extends Frontend
+class HarvestMembership extends Controller
 {
-
-    /**
-     * Harvest API object
-     * @var object
-     */
-    protected $HaPi;
 
     /**
      * Invoice Config
@@ -40,6 +34,10 @@ class HarvestMembership extends Frontend
 
         global $objPage;
         $this->arrConfig = $this->Database->execute("SELECT * FROM tl_page WHERE id=".(int)$objPage->rootId)->fetchAssoc();
+        $this->import('Database');
+
+        // Make sure Harvest classes are available
+        Harvest::getAPI();
     }
 
     /**
