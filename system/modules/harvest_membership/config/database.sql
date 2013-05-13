@@ -7,9 +7,9 @@
 -- *                                                        *
 -- **********************************************************
 
--- 
+--
 -- Table `tl_member`
--- 
+--
 
 CREATE TABLE `tl_member` (
   `harvest_membership` varchar(255) NOT NULL default '',
@@ -18,9 +18,9 @@ CREATE TABLE `tl_member` (
 
 -- --------------------------------------------------------
 
--- 
+--
 -- Table `tl_page`
--- 
+--
 
 CREATE TABLE `tl_page` (
   `harvest_memberships` blob NULL,

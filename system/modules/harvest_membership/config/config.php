@@ -1,21 +1,20 @@
-<?php if (!defined('TL_ROOT')) die('You cannot access this file directly!');
+<?php
 
 /**
  * Contao Open Source CMS
- * Copyright (C) 2005-2011 Leo Feyer
+ * Copyright (C) 2005-2012 Leo Feyer
  *
  * Formerly known as TYPOlight Open Source CMS.
- * 
+ *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
  *
  *
  * PHP version 5
- * @copyright  Contao Verein Schweiz 2011
- * @author     Andreas Schempp <andreas.schempp@iserv.ch>
+ * @copyright  Contao Association 2011-2013
+ * @author     Andreas Schempp <andreas.schempp@terminal42.ch>
  * @license    commercial
- * @version    $Id: $
  */
 
 
@@ -24,8 +23,8 @@
  */
 $GLOBALS['BE_MOD']['system']['harvest_membership'] = array
 (
-	'tables'			=> array('tl_harvest_settings'),
-	'icon'				=> 'system/modules/harvest_membership/html/icon.gif',
+    'tables'            => array('tl_harvest_settings'),
+    'icon'                => 'system/modules/harvest_membership/html/icon.gif',
 );
 
 
