@@ -19,6 +19,11 @@
 
 
 /**
+ * Config
+ */
+$GLOBALS['TL_DCA']['tl_member']['config']['onsubmit_callback'][] = array('HarvestMembership', 'updateMember');
+
+/**
  * Palettes
  */
 $GLOBALS['TL_DCA']['tl_member']['subpalettes']['login'] .= ',harvest_membership';
@@ -33,3 +38,10 @@ $GLOBALS['TL_DCA']['tl_member']['fields']['harvest_membership'] = array
     'inputType'            => 'membership',
     'eval'                => array('mandatory'=>true, 'feEditable'=>true, 'feGroup'=>'login', 'tl_class'=>'clr'),
 );
+
+// In backend, data must not be submitted if duplicate record is found
+if (TL_MODE == 'BE') {
+    $GLOBALS['TL_DCA']['tl_member']['fields']['firstname']['save_callback'][] = array('HarvestMembership', 'preventDuplicateMember');
+    $GLOBALS['TL_DCA']['tl_member']['fields']['lastname']['save_callback'][] = array('HarvestMembership', 'preventDuplicateMember');
+    $GLOBALS['TL_DCA']['tl_member']['fields']['company']['save_callback'][] = array('HarvestMembership', 'preventDuplicateMember');
+}

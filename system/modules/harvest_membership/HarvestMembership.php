@@ -139,6 +139,59 @@ kind,description,quantity,unit_price,amount,taxed,taxed2,project_id
     }
 
     /**
+     * Prevent duplicate member name in Harvest when submitting backend fields
+     * @param   mixed
+     * @param   DataContainer
+     * @return  mixed
+     */
+    public function preventDuplicateMember($varValue, $dc)
+    {
+        $arrMember = array(
+            'company'               => $this->Input->post('company'),
+            'firstname'             => $this->Input->post('firstname'),
+            'lastname'              => $this->Input->post('lastname'),
+            'harvest_membership'    => $this->Input->post('harvest_membership'),
+        );
+
+        $strName = $this->generateClientName($arrMember, $this->getSubscription($arrMember));
+        $intId = array_search($strName, $this->getClientLookupTable());
+
+        if ($intId !== false && $intId != $dc->activeRecord->harvest_client_id) {
+            throw new Exception('Mitglied bereits vorhanden.');
+        }
+
+        return $varValue;
+    }
+
+    /**
+     * Update Harvest client and contact when saving a member
+     * @param   DataContainer|FrontendUser
+     */
+    public function updateMember($dc)
+    {
+        $arrMember = (TL_MODE == 'BE' ? $dc->activeRecord->row() : $dc->getData());
+
+        // Cannot update without Harvest link
+        if ($arrMember['harvest_client_id'] < 1 || $arrMember['harvest_id'] < 1) {
+            return;
+        }
+
+        $objResult = $this->HaPi->getClient($arrMember['harvest_client_id']);
+
+        if ($objResult->isSuccess()) {
+            $objClient = $this->prepareClient($arrMember, $objResult->data);
+            $this->HaPi->updateClient($objClient);
+        }
+
+        $objResult = $this->HaPi->getContact($arrMember['harvest_id']);
+
+        if ($objResult->isSuccess()) {
+            $objContact = $this->prepareContact($arrMember, $objResult->data);
+            $this->HaPi->updateContact($objContact);
+        }
+    }
+
+    /**
      * Generate subscription configuration
      * @param   array
      * @return  array|false
