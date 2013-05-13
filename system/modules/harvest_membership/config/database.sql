@@ -33,4 +33,3 @@ CREATE TABLE `tl_page` (
   `harvest_notes` text NULL,
   `harvest_message` text NULL,
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
-

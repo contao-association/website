@@ -25,34 +25,34 @@ $GLOBALS['TL_DCA']['tl_page']['palettes']['root'] .= ';{harvest_legend:hide},har
 
 $GLOBALS['TL_DCA']['tl_page']['fields']['harvest_due'] = array
 (
-    'label'            => &$GLOBALS['TL_LANG']['tl_page']['harvest_due'],
-    'exclude'        => true,
-    'inputType'        => 'text',
-    'eval'            => array('mandatory'=>true, 'maxlength'=>3, 'rgxp'=>'digit', 'tl_class'=>'w50'),
+    'label'                => &$GLOBALS['TL_LANG']['tl_page']['harvest_due'],
+    'exclude'              => true,
+    'inputType'            => 'text',
+    'eval'                 => array('mandatory'=>true, 'maxlength'=>3, 'rgxp'=>'digit', 'tl_class'=>'w50'),
 );
 
 $GLOBALS['TL_DCA']['tl_page']['fields']['harvest_category'] = array
 (
-    'label'            => &$GLOBALS['TL_LANG']['tl_page']['harvest_category'],
-    'exclude'        => true,
-    'inputType'        => 'text',
-    'eval'            => array('mandatory'=>true, 'maxlength'=>32, 'tl_class'=>'w50'),
+    'label'                => &$GLOBALS['TL_LANG']['tl_page']['harvest_category'],
+    'exclude'              => true,
+    'inputType'            => 'text',
+    'eval'                 => array('mandatory'=>true, 'maxlength'=>32, 'tl_class'=>'w50'),
 );
 
 $GLOBALS['TL_DCA']['tl_page']['fields']['harvest_format'] = array
 (
-    'label'            => &$GLOBALS['TL_LANG']['tl_page']['harvest_format'],
-    'exclude'        => true,
-    'inputType'        => 'text',
-    'eval'            => array('mandatory'=>true, 'maxlength'=>255, 'tl_class'=>'clr long'),
+    'label'                => &$GLOBALS['TL_LANG']['tl_page']['harvest_format'],
+    'exclude'              => true,
+    'inputType'            => 'text',
+    'eval'                 => array('mandatory'=>true, 'maxlength'=>255, 'tl_class'=>'clr long'),
 );
 
 $GLOBALS['TL_DCA']['tl_page']['fields']['harvest_notes'] = array
 (
-    'label'            => &$GLOBALS['TL_LANG']['tl_page']['harvest_notes'],
-    'exclude'        => true,
-    'inputType'        => 'textarea',
-    'eval'            => array('style'=>'height:80px', 'decodeEntities'=>true, 'tl_class'=>'clr'),
+    'label'                => &$GLOBALS['TL_LANG']['tl_page']['harvest_notes'],
+    'exclude'              => true,
+    'inputType'            => 'textarea',
+    'eval'                 => array('style'=>'height:80px', 'decodeEntities'=>true, 'tl_class'=>'clr'),
 );
 
 $GLOBALS['TL_DCA']['tl_page']['fields']['harvest_message'] = array
