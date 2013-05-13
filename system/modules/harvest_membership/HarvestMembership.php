@@ -74,25 +74,7 @@ class HarvestMembership extends Frontend
 
     public function generateInvoice($arrMember)
     {
-        $arrSubscription = false;
-
-        foreach( deserialize($GLOBALS['TL_CONFIG']['harvest_memberships'], true) as $i => $arrConfig )
-        {
-            if ($arrMember['harvest_membership']['membership'] == $arrConfig['group'])
-            {
-                $arrConfig['price'];
-
-                if ($arrConfig['custom'] && $arrMember['harvest_membership']['custom_'.$i] > $arrConfig['price'])
-                {
-                    $arrConfig['price'] = $arrMember['harvest_membership']['custom_'.$i];
-                }
-
-                $arrConfig['price'] = number_format($arrConfig['price'], 2);
-
-                $arrSubscription = $arrConfig;
-                break;
-            }
-        }
+        $arrSubscription = $this->getSubscription($arrMember);
 
         if ($arrSubscription == false)
         {
@@ -180,6 +162,34 @@ kind,description,quantity,unit_price,amount,taxed,taxed2,project_id
     }
 
 
+
+    /**
+     * Generate subscription configuration
+     * @param   array
+     * @return  array|false
+     */
+    public function getSubscription($arrMember)
+    {
+        $arrSubscription = false;
+
+        foreach (deserialize($GLOBALS['TL_CONFIG']['harvest_memberships'], true) as $i => $arrConfig)
+        {
+            if ($arrMember['harvest_membership']['membership'] == $arrConfig['group'])
+            {
+                if ($arrConfig['custom'] && $arrMember['harvest_membership']['custom_'.$i] > $arrConfig['price'])
+                {
+                    $arrConfig['price'] = $arrMember['harvest_membership']['custom_'.$i];
+                }
+
+                $arrConfig['price'] = number_format($arrConfig['price'], 2);
+
+                $arrSubscription = $arrConfig;
+                break;
+            }
+        }
+
+        return $arrSubscription;
+    }
 
     /**
      * Generate client name from member and subscription data
