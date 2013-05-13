@@ -32,7 +32,6 @@ $GLOBALS['BE_MOD']['system']['harvest_membership'] = array
  * Hooks
  */
 $GLOBALS['TL_HOOKS']['createNewUser'][] = array('HarvestMembership', 'createNewUser');
-$GLOBALS['TL_HOOKS']['replaceInsertTags'][] = array('HarvestMembership', 'replaceTag');
 
 
 /**

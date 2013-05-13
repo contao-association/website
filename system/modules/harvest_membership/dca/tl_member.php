@@ -33,6 +33,3 @@ $GLOBALS['TL_DCA']['tl_member']['fields']['harvest_membership'] = array
     'inputType'            => 'membership',
     'eval'                => array('mandatory'=>true, 'feEditable'=>true, 'feGroup'=>'login', 'tl_class'=>'clr'),
 );
-
-$GLOBALS['TL_DCA']['tl_member']['fields']['disable']['save_callback'][] = array('HarvestMembership', 'killCache');
-

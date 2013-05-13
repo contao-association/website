@@ -61,59 +61,6 @@ class HarvestMembership extends Frontend
     }
 
 
-    public function replaceTag($strTag)
-    {
-        $arrTag = trimsplit('::', $strTag);
-
-        if ($arrTag[0] == 'harvest')
-        {
-            switch( $arrTag[1] )
-            {
-                case 'payments_received':
-                    $strCacheFile = TL_ROOT . '/system/tmp/' . md5('harvest-payments_received-'.mktime(date('H'),0,0));
-
-                    if (is_file($strCacheFile))
-                    {
-                        $intTotal = file_get_contents($strCacheFile);
-                    }
-                    else
-                    {
-                        // Start with CHF converted to EUR
-                        $intTotal = 3560;
-
-                        $objInvoices = $this->HaPi->getInvoices();
-
-                        if ($objInvoices->isSuccess())
-                        {
-                            foreach( $objInvoices->data as $objInvoice )
-                            {
-                                // Only count Euro
-                                if (strpos($objInvoice->currency, 'EUR') === false)
-                                {
-                                    continue;
-                                }
-
-                                $intTotal += (int)$objInvoice->amount;
-                            }
-
-                            file_put_contents($strCacheFile, $intTotal);
-                        }
-                    }
-
-                    return number_format($intTotal, 0, '.', "'") . '.–';
-                    break;
-
-                case 'members':
-                    $objMembers = $this->Database->execute("SELECT COUNT(*) AS total FROM tl_member");
-                    return (int) $objMembers->total;
-                    break;
-            }
-        }
-
-        return false;
-    }
-
-
     public function createNewUser($intId, $arrData)
     {
         if (is_array($arrData['harvest_membership']))
@@ -207,8 +154,6 @@ kind,description,quantity,unit_price,amount,taxed,taxed2,project_id
         $arrGroups = deserialize($arrMember['groups'], true);
         $arrGroups[] = $arrSubscription['group'];
         $this->Database->prepare("UPDATE tl_member SET harvest_client_id=?, harvest_id=?, groups=? WHERE id=?")->execute($intClient, $intContact, serialize($arrGroups), $arrMember['id']);
-
-        $this->killCache();
     }
 
 
@@ -235,18 +180,6 @@ kind,description,quantity,unit_price,amount,taxed,taxed2,project_id
     }
 
 
-    public function killCache($varValue, $dc)
-    {
-        $strCacheFile = 'system/tmp/' . md5('harvest-payments_received-'.mktime(0,0,0));
-
-        if (is_file(TL_ROOT . '/' . $strCacheFile))
-        {
-            $this->import('Files');
-            $this->Files->delete($strCacheFile);
-        }
-
-        return $varValue;
-    }
 
     /**
      * Generate client name from member and subscription data
