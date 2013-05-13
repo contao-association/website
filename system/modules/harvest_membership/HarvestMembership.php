@@ -84,7 +84,7 @@ class HarvestMembership extends Frontend
 
         $arrMember = $this->prepareData($arrMember);
         $intClient = $this->createClient($arrMember, $arrSubscription);
-        $intContact = $this->createClientContact($intClient, $arrMember);
+        $intContact = $this->createContact($intClient, $arrMember);
 
         if ($intClient < 1 || $intContact < 1) {
             return;
@@ -323,7 +323,7 @@ kind,description,quantity,unit_price,amount,taxed,taxed2,project_id
      * @param   array   tl_member record data
      * @return  int     ID of the contact record
      */
-    protected function createClientContact($intClient, $arrMember)
+    protected function createContact($intClient, $arrMember)
     {
         $objResult = $this->HaPi->getClientContacts($intClient);
 
@@ -375,7 +375,6 @@ kind,description,quantity,unit_price,amount,taxed,taxed2,project_id
                 $arrMember['city'],
                 ($arrMember['country'] == 'ch' ? '' : "\n".$arrCountries[$arrMember['country']])
             );
-
         } else {
             $objClient->details = sprintf("%s%s\n%s %s%s",
                 ($arrMember['company'] ? $arrMember['company']."\n" : ''),
