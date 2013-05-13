@@ -42,6 +42,12 @@ $GLOBALS['TL_HOOKS']['updatePersonalData'][] = array('HarvestMembership', 'updat
 
 
 /**
+ * Cron Jobs
+ */
+$GLOBALS['TL_CRON']['daily'][] = array('HarvestInvoice', 'sendRecurringInvoices');
+
+
+/**
  * Form fields
  */
 $GLOBALS['BE_FFL']['membership'] = 'FormMembership';

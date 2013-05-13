@@ -78,6 +78,50 @@ kind,description,quantity,unit_price,amount,taxed,taxed2,project_id
     }
 
     /**
+     * Send email template for recurring invoices
+     * @param   int     Harvest invoice ID
+     * @param   array   tl_member data
+     */
+    public function sendRecurringInvoiceMail($intInvoice, $arrMember)
+    {
+        $this->sendInvoiceMail($intInvoice, $arrMember, 'harvest_mail_recurring');
+    }
+
+    /**
+     * Send recurring invoices
+     */
+    public function sendRecurringInvoices()
+    {
+        // Find members which have been added today some time ago
+        // @see http://stackoverflow.com/a/2218577
+        $objMembers = $this->Database->query(
+            "SELECT *
+             FROM tl_member
+             WHERE (
+                DATE_FORMAT(FROM_UNIXTIME(dateAdded),'%m-%d') = DATE_FORMAT(NOW(),'%m-%d')
+                OR (
+                       (
+                           DATE_FORMAT(NOW(),'%Y') % 4 <> 0
+                           OR (
+                                   DATE_FORMAT(NOW(),'%Y') % 100 = 0
+                                   AND DATE_FORMAT(NOW(),'%Y') % 400 <> 0
+                               )
+                       )
+                       AND DATE_FORMAT(NOW(),'%m-%d') = '03-01'
+                       AND DATE_FORMAT(FROM_UNIXTIME(dateAdded),'%m-%d') = '02-29'
+                )
+                AND DATE_FORMAT(FROM_UNIXTIME(dateAdded),'%Y-%m-%d') != DATE_FORMAT(NOW(),'%Y-%m-%d')
+             )"
+        );
+
+        while ($objMembers->next()) {
+            $arrMember = $objMembers->row();
+            $intInvoice = $this->createMembershipInvoice($arrMember, Harvest::getSubscription($arrMember));
+            $objInvoice->sendRecurringInvoiceMail($intInvoice, $arrMember);
+        }
+    }
+
+    /**
      * Get invoice config from page settings
      * @param   string
      */
