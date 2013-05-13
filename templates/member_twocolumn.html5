@@ -23,9 +23,9 @@
 </div>
 <?php endif; ?>
 
-<?php if($this->error): ?>
-<p class="message error"><?php echo $this->error; ?></p>
-<?php endif; ?>
+<?php if($this->error || $_SESSION['PERSONALDATA_ERROR']): ?>
+<p class="message error"><?php echo $this->error . $_SESSION['PERSONALDATA_ERROR']; ?></p>
+<?php endif; unset($_SESSION['PERSONALDATA_ERROR']); ?>
 
 <div class="left_column">
 <?php if (!$this->tableless): ?>

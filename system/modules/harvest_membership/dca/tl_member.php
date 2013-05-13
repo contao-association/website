@@ -23,6 +23,10 @@
  */
 $GLOBALS['TL_DCA']['tl_member']['config']['onsubmit_callback'][] = array('HarvestMembership', 'updateMember');
 
+if (TL_MODE == 'FE') {
+    $GLOBALS['TL_DCA']['tl_member']['config']['onload_callback'][] = array('HarvestMembership', 'backupInSession');
+}
+
 /**
  * Palettes
  */

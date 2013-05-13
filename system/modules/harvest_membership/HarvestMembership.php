@@ -164,6 +164,17 @@ kind,description,quantity,unit_price,amount,taxed,taxed2,project_id
     }
 
     /**
+     * Create a member data backup in the session
+     * @param   FrontendUser
+     */
+    public function backupInSession()
+    {
+        if (FE_USER_LOGGED_IN === true) {
+            $_SESSION['OLD_MEMBER_DATA'] = FrontendUser::getInstance()->getData();
+        }
+    }
+
+    /**
      * Update Harvest client and contact when saving a member
      * @param   DataContainer|FrontendUser
      */
@@ -174,6 +185,21 @@ kind,description,quantity,unit_price,amount,taxed,taxed2,project_id
         // Cannot update without Harvest link
         if ($arrMember['harvest_client_id'] < 1 || $arrMember['harvest_id'] < 1) {
             return;
+        }
+
+        // Prevent duplicate members in frontend, reset if necessary
+        if (TL_MODE == 'FE' && is_array($_SESSION['OLD_MEMBER_DATA'])) {
+            $strName = $this->generateClientName($arrMember, $this->getSubscription($arrMember));
+            $intId = array_search($strName, $this->getClientLookupTable());
+
+            if ($intId !== false && $intId != $arrMember['harvest_client_id']) {
+                $_SESSION['PERSONALDATA_ERROR'] = $GLOBALS['TL_LANG']['ERR']['harvestDuplicate'];
+
+                $this->Database->prepare("UPDATE tl_member SET firstname=?, lastname=?, company=? WHERE id=?")->executeUncached($_SESSION['OLD_MEMBER_DATA']['firstname'], $_SESSION['OLD_MEMBER_DATA']['lastname'], $_SESSION['OLD_MEMBER_DATA']['company'], $arrMember['id']);
+
+                unset($_SESSION['OLD_MEMBER_DATA']);
+                return;
+            }
         }
 
         $objResult = $this->HaPi->getClient($arrMember['harvest_client_id']);
