@@ -207,6 +207,27 @@ kind,description,quantity,unit_price,amount,taxed,taxed2,project_id
     }
 
     /**
+     * Get list of Harvest client names, ID is array key
+     * @return  array
+     */
+    public function getClientLookupTable()
+    {
+        $arrResult = array();
+        $objResult = $this->HaPi->getClients();
+
+        if (!$objResult->isSuccess()) {
+            $this->log('Unable to retrieve clients from Harvest (Error '.$objResult->code.')', __METHOD__, TL_ERROR);
+            return array();
+        }
+
+        foreach ($objResult->data as $objClient) {
+            $arrResult[(int) $objClient->id] = (string) $objClient->name;
+        }
+
+        return $arrResult;
+    }
+
+    /**
      * Search for client ID on Harvest, create client if none exists
      * @param   array   tl_member data
      * @param   array   subscription configuration
