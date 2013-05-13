@@ -115,6 +115,8 @@ class Harvest
 
             static::$arrCache['getSubscription'][$arrMember['id']] = false;
 
+            $arrMember['harvest_membership'] = deserialize($arrMember['harvest_membership'], true);
+
             foreach (deserialize($GLOBALS['TL_CONFIG']['harvest_memberships'], true) as $i => $arrConfig)
             {
                 if ($arrMember['harvest_membership']['membership'] == $arrConfig['group'])
