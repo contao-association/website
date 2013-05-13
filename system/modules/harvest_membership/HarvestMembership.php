@@ -59,8 +59,12 @@ class HarvestMembership extends Frontend
         $this->arrConfig = $this->Database->execute("SELECT * FROM tl_page WHERE id=".(int)$objPage->rootId)->fetchAssoc();
     }
 
-
-    public function createNewUser($intId, $arrData)
+    /**
+     * Create and send invoice to new users
+     * @param   int
+     * @param   array
+     */
+    public function invoiceNewUser($intId, $arrData)
     {
         if (is_array($arrData['harvest_membership']))
         {

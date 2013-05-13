@@ -37,7 +37,7 @@ $GLOBALS['FE_MOD']['user']['harvest_registration'] = 'ModuleHarvestRegistration'
 /**
  * Hooks
  */
-$GLOBALS['TL_HOOKS']['createNewUser'][] = array('HarvestMembership', 'createNewUser');
+$GLOBALS['TL_HOOKS']['createNewUser'][] = array('HarvestMembership', 'invoiceNewUser');
 $GLOBALS['TL_HOOKS']['updatePersonalData'][] = array('HarvestMembership', 'updateMember');
 
 
