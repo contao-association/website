@@ -154,45 +154,10 @@ class HarvestMembership extends Frontend
         }
 
         $arrMember = $this->prepareData($arrMember);
-        $arrCountries = $this->getCountries();
+        $intClient = $this->createClient($arrMember);
+        $intContact = $this->createClientContact($intClient, $arrMember);
 
-        $strAddress = sprintf("%s%s\n%s %s%s",
-                            ($arrMember['company'] ? $arrMember['firstname'].' '.$arrMember['lastname']."\n" : ''),
-                            $arrMember['street'],
-                            $arrMember['postal'],
-                            $arrMember['city'],
-                            ($arrMember['country'] == 'ch' ? '' : "\n".$arrCountries[$arrMember['country']]));
-
-        // Create client
-        $objClient = new Harvest_Client();
-        $objClient->name = htmlspecialchars(($arrMember['company'] ? $arrMember['company'] : ($arrMember['firstname'].' '.$arrMember['lastname'])));
-        $objClient->details = htmlspecialchars($strAddress);
-
-        $objResult = $this->HaPi->createClient($objClient);
-
-        if (!$objResult->isSuccess())
-        {
-            $this->log(('Unable to create Harvest client for member ID '.$arrMember['id'].' (Error '.$objResult->code.')'), __METHOD__, TL_ERROR);
-            return;
-        }
-
-        $intClient = $objResult->data;
-
-        // Create contact for this client
-        $objContact = new Harvest_Contact();
-        $objContact->first_name = $arrMember['firstname'];
-        $objContact->last_name = $arrMember['lastname'];
-        $objContact->email = $arrMember['email'];
-        $objContact->phone_office = $arrMember['phone'];
-        $objContact->phone_mobile = $arrMember['mobile'];
-        $objContact->fax = $arrMember['fax'];
-        $objContact->client_id = $intClient;
-
-        $objResult = $this->HaPi->createContact($objContact);
-
-        if (!$objResult->isSuccess())
-        {
-            $this->log(('Unable to create Harvest client for member ID '.$arrMember['id'].' (Error '.$objResult->code.')'), __METHOD__, TL_ERROR);
+        if ($intClient < 1 || $intContact < 1) {
             return;
         }
 
@@ -241,7 +206,7 @@ kind,description,quantity,unit_price,amount,taxed,taxed2,project_id
         // Mitglied der entsprechenden Gruppe zuweisen
         $arrGroups = deserialize($arrMember['groups'], true);
         $arrGroups[] = $arrSubscription['group'];
-        $this->Database->prepare("UPDATE tl_member SET groups=? WHERE id=?")->execute(serialize($arrGroups), $arrMember['id']);
+        $this->Database->prepare("UPDATE tl_member SET harvest_client_id=?, harvest_id=?, groups=? WHERE id=?")->execute($intClient, $intContact, serialize($arrGroups), $arrMember['id']);
 
         $this->killCache();
     }
@@ -281,6 +246,67 @@ kind,description,quantity,unit_price,amount,taxed,taxed2,project_id
         }
 
         return $varValue;
+    }
+
+    /**
+     * Search for client ID on Harvest, create client if none exists
+     * @param   array   tl_member data
+     * @return  int     ID of the client record
+     */
+    protected function createClient($arrMember)
+    {
+        $arrCountries = $this->getCountries();
+
+        $strAddress = sprintf("%s%s\n%s %s%s",
+                            ($arrMember['company'] ? $arrMember['firstname'].' '.$arrMember['lastname']."\n" : ''),
+                            $arrMember['street'],
+                            $arrMember['postal'],
+                            $arrMember['city'],
+                            ($arrMember['country'] == 'ch' ? '' : "\n".$arrCountries[$arrMember['country']]));
+
+        // Create client
+        $objClient = new Harvest_Client();
+        $objClient->name = htmlspecialchars(($arrMember['company'] ? $arrMember['company'] : ($arrMember['firstname'].' '.$arrMember['lastname'])));
+        $objClient->details = htmlspecialchars($strAddress);
+
+        $objResult = $this->HaPi->createClient($objClient);
+
+        if (!$objResult->isSuccess())
+        {
+            $this->log(('Unable to create Harvest client for member ID '.$arrMember['id'].' (Error '.$objResult->code.')'), __METHOD__, TL_ERROR);
+            return 0;
+        }
+
+        return (int) $objResult->data;
+    }
+
+    /**
+     * Create client contact in Harvest if it does not yet exist
+     * @param   int     Harvest client ID
+     * @param   array   tl_member record data
+     * @return  int     ID of the contact record
+     */
+    protected function createClientContact($intClient, $arrMember)
+    {
+        // Create contact for this client
+        $objContact = new Harvest_Contact();
+        $objContact->first_name = $arrMember['firstname'];
+        $objContact->last_name = $arrMember['lastname'];
+        $objContact->email = $arrMember['email'];
+        $objContact->phone_office = $arrMember['phone'];
+        $objContact->phone_mobile = $arrMember['mobile'];
+        $objContact->fax = $arrMember['fax'];
+        $objContact->client_id = $intClient;
+
+        $objResult = $this->HaPi->createContact($objContact);
+
+        if (!$objResult->isSuccess())
+        {
+            $this->log(('Unable to create Harvest client for member ID '.$arrMember['id'].' (Error '.$objResult->code.')'), __METHOD__, TL_ERROR);
+            return 0;
+        }
+
+        return (int) $objResult->data;
     }
 }
 
