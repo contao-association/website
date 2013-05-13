@@ -249,6 +249,21 @@ kind,description,quantity,unit_price,amount,taxed,taxed2,project_id
     }
 
     /**
+     * Generate client name from member and subscription data
+     * @param   array
+     * @param   array
+     * @return  string
+     */
+    public function generateClientName($arrMember, $arrSubscription)
+    {
+        if ($arrSubscription['company']) {
+            return htmlspecialchars(($arrMember['company'] ? $arrMember['company'] : ($arrMember['firstname'].' '.$arrMember['lastname'])));
+        } else {
+            return htmlspecialchars($arrMember['firstname'].' '.$arrMember['lastname']);
+        }
+    }
+
+    /**
      * Search for client ID on Harvest, create client if none exists
      * @param   array   tl_member data
      * @param   array   subscription configuration
@@ -258,8 +273,9 @@ kind,description,quantity,unit_price,amount,taxed,taxed2,project_id
     {
         $arrCountries = $this->getCountries();
 
+        $strName = $this->generateClientName($arrMember, $arrSubscription);
+
         if ($arrSubscription['company']) {
-            $strName = htmlspecialchars(($arrMember['company'] ? $arrMember['company'] : ($arrMember['firstname'].' '.$arrMember['lastname'])));
             $strAddress = sprintf("%s%s\n%s %s%s",
                                 ($arrMember['company'] ? $arrMember['firstname'].' '.$arrMember['lastname']."\n" : ''),
                                 $arrMember['street'],
@@ -267,7 +283,6 @@ kind,description,quantity,unit_price,amount,taxed,taxed2,project_id
                                 $arrMember['city'],
                                 ($arrMember['country'] == 'ch' ? '' : "\n".$arrCountries[$arrMember['country']]));
         } else {
-            $strName = htmlspecialchars($arrMember['firstname'].' '.$arrMember['lastname']);
             $strAddress = sprintf("%s%s\n%s %s%s",
                                 ($arrMember['company'] ? $arrMember['company']."\n" : ''),
                                 $arrMember['street'],
