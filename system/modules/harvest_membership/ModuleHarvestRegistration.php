@@ -31,8 +31,12 @@ class ModuleHarvestRegistration extends ModuleRegistration
         $intId = array_search($strName, Harvest::getClientLookupTable());
 
         if ($intId !== false) {
-            $this->Template->error = $GLOBALS['TL_LANG']['ERR']['harvestDuplicate'];
-            return;
+
+            // Check if client ID is used by any member, otherwise we can take it
+            if ($this->Database->prepare("SELECT COUNT(*) AS in_use FROM tl_member WHERE harvest_client_id=?")->execute($intId)->in_use) {
+                $this->Template->error = $GLOBALS['TL_LANG']['ERR']['harvestDuplicate'];
+                return;
+            }
         }
 
         parent::createNewUser($arrMember);
