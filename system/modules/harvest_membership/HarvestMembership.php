@@ -58,14 +58,16 @@ class HarvestMembership extends Controller
                 return;
             }
 
-            // Assign member to the designated groups
-            $arrGroups = deserialize($arrMember['groups'], true);
-            $arrGroups[] = $arrSubscription['group'];
-            $this->Database->prepare("UPDATE tl_member SET harvest_client_id=?, harvest_id=?, groups=? WHERE id=?")->execute($arrMember['harvest_client_id'], $arrMember['harvest_id'], serialize($arrGroups), $arrMember['id']);
-
+            // Create and send membership invoice
             $objInvoice = new HarvestInvoice();
             $intInvoice = $objInvoice->createMembershipInvoice($arrMember, $arrSubscription);
             $objInvoice->sendInvoice($intInvoice, $arrMember['email']);
+
+            // Assign member to the designated groups
+            $arrGroups = deserialize($arrMember['groups'], true);
+            $arrGroups[] = $arrSubscription['group'];
+            $this->Database->prepare("UPDATE tl_member SET harvest_client_id=?, harvest_id=?, harvest_invoice=?, groups=?, language=? WHERE id=?")
+                           ->executeUncached($arrMember['harvest_client_id'], $arrMember['harvest_id'], $intInvoice, serialize($arrGroups), $GLOBALS['TL_LANGUAGE'], $arrMember['id']);
         }
     }
 
