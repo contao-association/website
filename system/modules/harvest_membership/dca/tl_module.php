@@ -12,19 +12,13 @@
  *
  *
  * PHP version 5
- * @copyright  Contao Association 2011-2013
+ * @copyright  Contao Association 2013
  * @author     Andreas Schempp <andreas.schempp@terminal42.ch>
  * @license    commercial
  */
 
 
 /**
- * Backend modules
+ * Palettes
  */
-$GLOBALS['TL_LANG']['MOD']['harvest_membership'] = array('Harvest-Konfiguration');
-
-
-/**
- * Frontend modules
- */
-$GLOBALS['TL_LANG']['FMD']['harvest_registration'] = array('Registrierung (Harvest)');
+$GLOBALS['TL_DCA']['tl_module']['palettes']['harvest_registration'] = &$GLOBALS['TL_DCA']['tl_module']['palettes']['registration'];

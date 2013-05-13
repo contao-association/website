@@ -29,6 +29,12 @@ $GLOBALS['BE_MOD']['system']['harvest_membership'] = array
 
 
 /**
+ * Frontend modules
+ */
+$GLOBALS['FE_MOD']['user']['harvest_registration'] = 'ModuleHarvestRegistration';
+
+
+/**
  * Hooks
  */
 $GLOBALS['TL_HOOKS']['createNewUser'][] = array('HarvestMembership', 'createNewUser');

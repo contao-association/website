@@ -23,6 +23,10 @@
 </div>
 <?php endif; ?>
 
+<?php if($this->error): ?>
+<p class="message error"><?php echo $this->error; ?></p>
+<?php endif; ?>
+
 <div class="left_column">
 <?php if (!$this->tableless): ?>
 <table>
