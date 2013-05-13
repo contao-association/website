@@ -39,7 +39,6 @@ class HarvestMembership extends Frontend
         parent::__construct();
 
         $this->import('Encryption');
-        $this->import('String');
 
         require_once TL_ROOT . '/plugins/HaPi/HarvestAPI.php';
         require_once TL_ROOT . '/plugins/HaPi/Harvest/Abstract.php';
@@ -426,7 +425,7 @@ kind,description,quantity,unit_price,amount,taxed,taxed2,project_id
         {
             if (is_string($v))
             {
-                $arrData[$k] = $this->String->decodeEntities($v);
+                $arrData[$k] = String::getInstance()->decodeEntities($v);
             }
             elseif (is_array($v))
             {
