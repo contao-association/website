@@ -211,9 +211,20 @@ kind,description,quantity,unit_price,amount,taxed,taxed2,project_id
     protected function createClient($arrMember, $arrSubscription)
     {
         $arrCountries = $this->getCountries();
+        $arrClients = $this->getClientLookupTable();
 
         $strName = $this->generateClientName($arrMember, $arrSubscription);
 
+        if (($intId = array_search($strName, $arrClients)) !== false) {
+
+            $objResult = $this->HaPi->getClient($intId);
+
+            if ($objResult->isSuccess()) {
+                $objClient = $this->prepareClient($arrMember, $objResult->data);
+                $this->HaPi->updateClient($objClient);
+            }
+
+            return $intId;
         }
 
         $objResult = $this->HaPi->createClient($this->prepareClient($arrMember));
@@ -235,6 +246,20 @@ kind,description,quantity,unit_price,amount,taxed,taxed2,project_id
      */
     protected function createClientContact($intClient, $arrMember)
     {
+        $objResult = $this->HaPi->getClientContacts($intClient);
+
+        if ($objResult->isSuccess()) {
+
+            foreach ($objResult->data as $objContact) {
+                if ($objContact->first_name == $arrMember['firstname'] && $objContact->last_name == $arrMember['lastname']) {
+
+                    // Update existing data, it must be exactly the same as in Contao
+                    $this->HaPi->updateContact($this->prepareContact($arrMember, $objContact));
+
+                    return $objContact->id;
+                }
+            }
+        }
 
         $objResult = $this->HaPi->createContact($this->prepareContact($arrMember));
 
