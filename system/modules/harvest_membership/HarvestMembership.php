@@ -140,11 +140,6 @@ class HarvestMembership extends Frontend
 
                 $arrConfig['price'] = number_format($arrConfig['price'], 2);
 
-                if (!$arrConfig['company'])
-                {
-                    $arrMember['company'] = '';
-                }
-
                 $arrSubscription = $arrConfig;
                 break;
             }

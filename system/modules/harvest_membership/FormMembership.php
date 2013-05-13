@@ -41,13 +41,12 @@ class FormMembership extends FormRadioButton
 
             $arrMemberships[] = array
             (
-                'value'            => $arrConfig['group'],
-                'label'            => sprintf('%s (%s%s)', $arrConfig['label'], ($arrConfig['custom'] ? 'ab ' : ''), $strPrice),
-                'default'        => $arrConfig['default'],
-                'price'            => $arrConfig['price'],
-                'custom'        => $arrConfig['custom'],
-                'formatted'        => $strPrice,
-                'company'        => $arrConfig['company'],
+                'value'     => $arrConfig['group'],
+                'label'     => sprintf('%s (%s%s)', $arrConfig['label'], ($arrConfig['custom'] ? 'ab ' : ''), $strPrice),
+                'default'   => $arrConfig['default'],
+                'price'     => $arrConfig['price'],
+                'custom'    => $arrConfig['custom'],
+                'formatted' => $strPrice,
             );
         }
 
@@ -90,13 +89,12 @@ class FormMembership extends FormRadioButton
 
         foreach ($this->arrOptions as $i=>$arrOption)
         {
-            $arrOptions[] = sprintf('<span><input type="radio" name="%s[membership]" id="opt_%s_membership" class="%sradio" value="%s"%s%s%s%s> <label for="opt_%s_membership">%s</label>%s</span>',
+            $arrOptions[] = sprintf('<span><input type="radio" name="%s[membership]" id="opt_%s_membership" class="%sradio" value="%s"%s%s%s> <label for="opt_%s_membership">%s</label>%s</span>',
                                      $this->strName,
                                      $this->strId.'_'.$i,
                                      (TL_MODE == 'BE' ? 'tl_' : ''),
                                      specialchars($arrOption['value']),
                                      $this->isChecked($arrOption),
-                                     ' onclick="$(\'ctrl_company\')'.($arrOption['company'] ? ".set('disabled', false)" : ".set('disabled', true).set('value', '')").'"',
                                      $this->getAttributes(),
                                      (TL_MODE == 'BE' ? ' onfocus="Backend.getScrollOffset();"' : ''),
                                      $this->strId.'_'.$i,
@@ -120,8 +118,7 @@ class FormMembership extends FormRadioButton
         return sprintf('<fieldset id="ctrl_%s" class="%sradio_container%s"><legend>%s%s</legend>%s</fieldset>%s'."
 <script>
 window.addEvent('domready', function() {
-    new Membership('ctrl_%s');" . ((empty($this->varValue) || $this->arrOptions[$this->varValue['membership']]['company']) ? "
-    $('ctrl_company').set('disabled', true);" : '') . "
+    new Membership('ctrl_%s');
 });
 </script>",
                         $this->strId,
