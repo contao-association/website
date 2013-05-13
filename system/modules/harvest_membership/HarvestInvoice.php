@@ -201,7 +201,10 @@ kind,description,quantity,unit_price,amount,taxed,taxed2,project_id
                 $objEmail = new EmailTemplate($arrRoot[$strTemplateKey], $arrRoot['language']);
                 $objEmail->send($arrMember['email'], $this->getInvoiceTokens($arrMember, $objInvoice));
 
-                Harvest::createSentInvoiceMessage($objInvoice->id, new Harvest_InvoiceMessage());
+                $objMessage = new Harvest_InvoiceMessage();
+                $objMessage->body = '';
+
+                Harvest::createSentInvoiceMessage($objInvoice->id, $objMessage);
 
                 return true;
             } catch (Exception $e) {}
