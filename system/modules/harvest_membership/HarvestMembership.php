@@ -154,7 +154,7 @@ class HarvestMembership extends Frontend
         }
 
         $arrMember = $this->prepareData($arrMember);
-        $intClient = $this->createClient($arrMember);
+        $intClient = $this->createClient($arrMember, $arrSubscription);
         $intContact = $this->createClientContact($intClient, $arrMember);
 
         if ($intClient < 1 || $intContact < 1) {
@@ -251,22 +251,34 @@ kind,description,quantity,unit_price,amount,taxed,taxed2,project_id
     /**
      * Search for client ID on Harvest, create client if none exists
      * @param   array   tl_member data
+     * @param   array   subscription configuration
      * @return  int     ID of the client record
      */
-    protected function createClient($arrMember)
+    protected function createClient($arrMember, $arrSubscription)
     {
         $arrCountries = $this->getCountries();
 
-        $strAddress = sprintf("%s%s\n%s %s%s",
-                            ($arrMember['company'] ? $arrMember['firstname'].' '.$arrMember['lastname']."\n" : ''),
-                            $arrMember['street'],
-                            $arrMember['postal'],
-                            $arrMember['city'],
-                            ($arrMember['country'] == 'ch' ? '' : "\n".$arrCountries[$arrMember['country']]));
+        if ($arrSubscription['company']) {
+            $strName = htmlspecialchars(($arrMember['company'] ? $arrMember['company'] : ($arrMember['firstname'].' '.$arrMember['lastname'])));
+            $strAddress = sprintf("%s%s\n%s %s%s",
+                                ($arrMember['company'] ? $arrMember['firstname'].' '.$arrMember['lastname']."\n" : ''),
+                                $arrMember['street'],
+                                $arrMember['postal'],
+                                $arrMember['city'],
+                                ($arrMember['country'] == 'ch' ? '' : "\n".$arrCountries[$arrMember['country']]));
+        } else {
+            $strName = htmlspecialchars($arrMember['firstname'].' '.$arrMember['lastname']);
+            $strAddress = sprintf("%s%s\n%s %s%s",
+                                ($arrMember['company'] ? $arrMember['company']."\n" : ''),
+                                $arrMember['street'],
+                                $arrMember['postal'],
+                                $arrMember['city'],
+                                ($arrMember['country'] == 'ch' ? '' : "\n".$arrCountries[$arrMember['country']]));
+        }
 
         // Create client
         $objClient = new Harvest_Client();
-        $objClient->name = htmlspecialchars(($arrMember['company'] ? $arrMember['company'] : ($arrMember['firstname'].' '.$arrMember['lastname'])));
+        $objClient->name = $strName;
         $objClient->details = htmlspecialchars($strAddress);
 
         $objResult = $this->HaPi->createClient($objClient);

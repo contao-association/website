@@ -100,6 +100,12 @@ $GLOBALS['TL_DCA']['tl_harvest_settings'] = array
                         'inputType'                => 'checkbox',
                         'options'                => array('1'=>'Mindestpreis'),
                     ),
+                    'company' => array
+                    (
+                        'label'         => array(''),
+                        'inputType'     => 'checkbox',
+                        'options'       => array('1'=>'Firmenname'),
+                    ),
                 ),
             ),
         ),

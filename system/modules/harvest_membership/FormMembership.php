@@ -47,6 +47,7 @@ class FormMembership extends FormRadioButton
                 'price'     => $arrConfig['price'],
                 'custom'    => $arrConfig['custom'],
                 'formatted' => $strPrice,
+                'company'   => $arrConfig['company'],
             );
         }
 
