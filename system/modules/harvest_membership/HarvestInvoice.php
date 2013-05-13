@@ -132,7 +132,7 @@ kind,description,quantity,unit_price,amount,taxed,taxed2,project_id
         while ($objMembers->next()) {
             $objResult = Harvest::getInvoice($objMembers->harvest_invoice);
 
-            if ($objResult->isSuccess() && $objResult->data->paid) {
+            if ($objResult->isSuccess() && $objResult->data->state == 'paid') {
                 $this->Database->prepare("UPDATE tl_member SET disable='', harvest_invoice=0 WHERE id=?")->executeUncached($objMembers->id);
 
                 $objInvoice = $objResult->data;
