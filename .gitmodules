@@ -4,3 +4,6 @@
 [submodule "system/modules/haste"]
 	path = system/modules/haste
 	url = https://github.com/codefog/contao-haste.git
+[submodule "system/modules/mailtemplates"]
+	path = system/modules/mailtemplates
+	url = git@github.com:terminal42/contao-mailtemplates.git
