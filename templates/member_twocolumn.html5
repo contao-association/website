@@ -28,10 +28,6 @@
 <table>
 <?php if($this->type == 'personalData'): ?>
   <tr>
-    <td class="col_0 col_first"><label>{{label::tl_member:company:0}}</label></td>
-    <td class="col_1 col_last"><?php echo FrontendUser::getInstance()->company ?: '-'; ?></td>
-  </tr>
-  <tr>
     <td class="col_0 col_first"><label>{{label::tl_member:firstname:0}}</label></td>
     <td class="col_1 col_last"><?php echo FrontendUser::getInstance()->firstname; ?></td>
   </tr>
