@@ -25,7 +25,9 @@ $GLOBALS['TL_LANG']['tl_page']['harvest_due']               = array('Rechnung f�
 $GLOBALS['TL_LANG']['tl_page']['harvest_category']          = array('Artikel-Kategorie', 'Geben Sie den Namen der Kategorie ein, wie er in Harvest vorhanden ist.');
 $GLOBALS['TL_LANG']['tl_page']['harvest_format']            = array('Zeilen-Format', 'Geben Sie die gewünschte Zeile für die Rechnung ein. Verwenden Sie %s als Platzhalter für den Abo-Namen.');
 $GLOBALS['TL_LANG']['tl_page']['harvest_notes']             = array('Rechnungshinweise', 'Diese Hinweise werden auf der Rechnung angezeigt.');
-$GLOBALS['TL_LANG']['tl_page']['harvest_message']        = array('E-Mail Nachricht', 'Die Rechnung wird mit dem folgenden Text an das Mitglied gesendet.');
+$GLOBALS['TL_LANG']['tl_page']['harvest_mail_new']          = array('Vorlage für neue Rechnung', 'Wählen Sie eine Email Vorlage für Rechnungen an neue Mitglieder.');
+$GLOBALS['TL_LANG']['tl_page']['harvest_mail_recurring']    = array('Vorlage für wiederkehrende Rechnung', 'Wählen Sie eine Email Vorlage für wiederkehrende Rechnungen.');
+$GLOBALS['TL_LANG']['tl_page']['harvest_mail_activated']    = array('Vorlage für Kontoaktivierung', 'Wählen Sie eine Email Vorlage zur Benachrichtigung bei Kontoaktivierung.');
 
 
 /**

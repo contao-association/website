@@ -31,5 +31,7 @@ CREATE TABLE `tl_page` (
   `harvest_category` varchar(32) NOT NULL default '',
   `harvest_format` varchar(255) NOT NULL default '',
   `harvest_notes` text NULL,
-  `harvest_message` text NULL,
+  `harvest_mail_new` int(10) unsigned NOT NULL default '0',
+  `harvest_mail_recurring` int(10) unsigned NOT NULL default '0',
+  `harvest_mail_activated` int(10) unsigned NOT NULL default '0',
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;

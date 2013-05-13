@@ -21,7 +21,7 @@
 /**
  * Palettes
  */
-$GLOBALS['TL_DCA']['tl_page']['palettes']['root'] .= ';{harvest_legend:hide},harvest_due,harvest_category,harvest_format,harvest_notes,harvest_message';
+$GLOBALS['TL_DCA']['tl_page']['palettes']['root'] .= ';{harvest_legend:hide},harvest_due,harvest_category,harvest_format,harvest_notes,harvest_mail_new,harvest_mail_recurring,harvest_mail_activated';
 
 $GLOBALS['TL_DCA']['tl_page']['fields']['harvest_due'] = array
 (
@@ -55,11 +55,26 @@ $GLOBALS['TL_DCA']['tl_page']['fields']['harvest_notes'] = array
     'eval'                 => array('style'=>'height:80px', 'decodeEntities'=>true, 'tl_class'=>'clr'),
 );
 
-$GLOBALS['TL_DCA']['tl_page']['fields']['harvest_message'] = array
+$GLOBALS['TL_DCA']['tl_page']['fields']['harvest_mail_new'] = array
 (
-    'label'            => &$GLOBALS['TL_LANG']['tl_page']['harvest_message'],
-    'exclude'        => true,
-    'inputType'        => 'textarea',
-    'eval'            => array('style'=>'height:80px', 'tl_class'=>'clr'),
+	'label'                => &$GLOBALS['TL_LANG']['tl_page']['harvest_mail_new'],
+	'inputType'            => 'select',
+	'options_callback'     => array('EmailTemplateHelper', 'getMailTemplates'),
+	'eval'                 => array('mandatory'=>true, 'includeBlankOption'=>true, 'tl_class'=>'w50'),
 );
 
+$GLOBALS['TL_DCA']['tl_page']['fields']['harvest_mail_recurring'] = array
+(
+	'label'                => &$GLOBALS['TL_LANG']['tl_page']['harvest_mail_recurring'],
+	'inputType'            => 'select',
+	'options_callback'     => array('EmailTemplateHelper', 'getMailTemplates'),
+	'eval'                 => array('mandatory'=>true, 'includeBlankOption'=>true, 'tl_class'=>'w50'),
+);
+
+$GLOBALS['TL_DCA']['tl_page']['fields']['harvest_mail_activated'] = array
+(
+	'label'                => &$GLOBALS['TL_LANG']['tl_page']['harvest_mail_activated'],
+	'inputType'            => 'select',
+	'options_callback'     => array('EmailTemplateHelper', 'getMailTemplates'),
+	'eval'                 => array('mandatory'=>true, 'includeBlankOption'=>true, 'tl_class'=>'w50'),
+);
