@@ -24,7 +24,7 @@
     .tableImagesScale img	{width: 267px!important; height: 141px!important; border-radius: 4px!important;}
     
     table table             { background-color: #FFF; border: 1px solid #d3d3d3; border-top: 0; }
-    table table td          { padding:20px; }
+    table table td          { padding:10px 20px; }
     .headlinePad            { height:10px !important; background-color: #000; }
     
     h2                      { font-size:20px; color: #686868; font-weight:bold; line-height:24px; vertical-align:top; margin:0 0 20px 0;}
@@ -152,7 +152,7 @@
 
 							<tr>
 								<td class="textPad" style="font-size:20px;background-color:#ed7825;">
-								<p style="margin:0;color:#FFF;font-family:Helvetica, Arial, sans-serif;font-weight:bold;">Informationen f&uuml;r Sprecher</p>
+                                  <p style="margin:0;color:#FFF;font-family:Helvetica, Arial, sans-serif;font-weight:bold;">{{newsletter::subject}}</p>
 								</td>
 							</tr>
 							<tr>
