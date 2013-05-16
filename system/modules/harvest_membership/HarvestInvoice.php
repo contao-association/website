@@ -74,7 +74,7 @@ kind,description,quantity,unit_price,amount,taxed,taxed2,project_id
      */
     public function sendNewInvoiceMail($intInvoice, $arrMember)
     {
-        $this->sendInvoiceMail($intInvoice, $arrMember, 'harvest_mail_new');
+        return $this->sendInvoiceMail($intInvoice, $arrMember, 'harvest_mail_new');
     }
 
     /**
@@ -84,7 +84,7 @@ kind,description,quantity,unit_price,amount,taxed,taxed2,project_id
      */
     public function sendRecurringInvoiceMail($intInvoice, $arrMember)
     {
-        $this->sendInvoiceMail($intInvoice, $arrMember, 'harvest_mail_recurring');
+        return $this->sendInvoiceMail($intInvoice, $arrMember, 'harvest_mail_recurring');
     }
 
     /**
@@ -203,9 +203,12 @@ kind,description,quantity,unit_price,amount,taxed,taxed2,project_id
                 $objEmail->send($arrMember['email'], $this->getInvoiceTokens($arrMember, $objInvoice));
 
                 $objMessage = new Harvest_InvoiceMessage();
-                $objMessage->body = '';
+                $objMessage->invoice_id = $objInvoice->id;
+                $objMessage->attach_pdf = true;
+                $objMessage->recipients = $GLOBALS['TL_ADMIN_EMAIL'];
+                $objMessage->body = 'Rechnung #' . $objInvoice->number;
 
-                Harvest::createSentInvoiceMessage($objInvoice->id, $objMessage);
+                Harvest::sendInvoiceMessage($objInvoice->id, $objMessage);
 
                 return true;
             } catch (Exception $e) {}
