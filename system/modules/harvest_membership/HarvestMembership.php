@@ -159,7 +159,6 @@ class HarvestMembership extends Controller
      */
     protected function createClient($arrMember, $arrSubscription)
     {
-        $arrCountries = $this->getCountries();
         $arrClients = Harvest::getClientLookupTable();
 
         $strName = Harvest::generateClientName($arrMember, $arrSubscription);
@@ -233,6 +232,7 @@ class HarvestMembership extends Controller
             $objClient = new Harvest_Client();
         }
 
+        $arrCountries = $this->getCountries();
         $arrSubscription = Harvest::getSubscription($arrMember);
 
         $objClient->name = Harvest::generateClientName($arrMember, $arrSubscription);
