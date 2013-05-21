@@ -205,7 +205,7 @@ kind,description,quantity,unit_price,amount,taxed,taxed2,project_id
                 $objMessage = new Harvest_InvoiceMessage();
                 $objMessage->invoice_id = $objInvoice->id;
                 $objMessage->attach_pdf = true;
-                $objMessage->recipients = $GLOBALS['TL_ADMIN_EMAIL'];
+                $objMessage->recipients = $GLOBALS['TL_CONFIG']['adminEmail'];
                 $objMessage->body = 'Rechnung #' . $objInvoice->number;
 
                 Harvest::sendInvoiceMessage($objInvoice->id, $objMessage);
