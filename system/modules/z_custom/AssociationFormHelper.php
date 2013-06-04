@@ -20,10 +20,11 @@
 
 class AssociationFormHelper extends System
 {
-    public function processFormData($arrData, $arrForm, $arrFiles, $arrLabels, $objForm)
+    public function processFormData($arrData, $arrForm, $arrFiles, $arrLabels)
     {
         $objStartTime = new Date($arrData['startDate'], $GLOBALS['TL_CONFIG']['datimFormat']);
         $objEndTime = new Date($arrData['endDate'], $GLOBALS['TL_CONFIG']['datimFormat']);
+
         $arrSet = array
         (
             'pid'       => 1,
@@ -39,7 +40,7 @@ class AssociationFormHelper extends System
         if ($arrData['url']) {
             $url = $arrData['url'];
 
-            if (!(strpos($url, 'http://') !== false)) {
+            if (strpos($url, 'http://') !== 0 && strpos($url, 'https://') !== 0) {
                 $url = 'http://' . $url;
             }
 
