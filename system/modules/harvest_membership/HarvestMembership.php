@@ -235,23 +235,23 @@ class HarvestMembership extends Controller
         $arrCountries = $this->getCountries();
         $arrSubscription = Harvest::getSubscription($arrMember);
 
-        $objClient->name = Harvest::generateClientName($arrMember, $arrSubscription);
+        $objClient->name = ampersand(Harvest::generateClientName($arrMember, $arrSubscription));
 
         if ($arrSubscription['company']) {
-            $objClient->details = sprintf("%s%s\n%s %s%s",
+            $objClient->details = ampersand(sprintf("%s%s\n%s %s%s",
                 ($arrMember['company'] ? $arrMember['firstname'].' '.$arrMember['lastname']."\n" : ''),
                 $arrMember['street'],
                 $arrMember['postal'],
                 $arrMember['city'],
-                ($arrMember['country'] == 'ch' ? '' : "\n".$arrCountries[$arrMember['country']])
+                ($arrMember['country'] == 'ch' ? '' : "\n".$arrCountries[$arrMember['country']]))
             );
         } else {
-            $objClient->details = sprintf("%s%s\n%s %s%s",
+            $objClient->details = ampersand(sprintf("%s%s\n%s %s%s",
                 ($arrMember['company'] ? $arrMember['company']."\n" : ''),
                 $arrMember['street'],
                 $arrMember['postal'],
                 $arrMember['city'],
-                ($arrMember['country'] == 'ch' ? '' : "\n".$arrCountries[$arrMember['country']])
+                ($arrMember['country'] == 'ch' ? '' : "\n".$arrCountries[$arrMember['country']]))
             );
         }
 
