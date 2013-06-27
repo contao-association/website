@@ -25,6 +25,8 @@
 
     table table             { background-color: #FFF; border: 1px solid #d3d3d3; border-top: 0; }
     table table td          { padding:10px 20px; }
+    table.clean, table table.clean { background:none; border:0; }
+    table.clean td, table table.clean td { padding:0; }
     .headlinePad            { height:10px !important; background-color: #000; }
 
     h2                      { font-size:20px; color: #686868; font-weight:bold; line-height:24px; vertical-align:top; margin:0 0 20px 0;}
