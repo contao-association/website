@@ -181,6 +181,11 @@ kind,description,quantity,unit_price,amount,taxed,taxed2,project_id
         $arrTokens['invoice_due_at'] = $this->parseDate($strDateFormat, strtotime($objInvoice->due_at));
         $arrTokens['invoice_url'] = 'https://' . $GLOBALS['TL_CONFIG']['harvest_account'] . '.harvestapp.com/client/invoices/' . $objInvoice->client_key;
 
+        // Enrich member data / email tokens
+        $arrSubscription = Harvest::getSubscription($arrMember);
+        $arrTokens['subscription_label'] = $arrSubscription['label'];
+        $arrTokens['subscription_price'] = $arrSubscription['price'];
+
         return $arrTokens;
     }
 
