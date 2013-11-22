@@ -30,3 +30,11 @@ $GLOBALS['TL_LANG']['ERR']['harvestDuplicate'] = '<strong>Ein Mitglied mit diese
 $GLOBALS['TL_LANG']['MSC']['decimalSeparator']   = '.';
 $GLOBALS['TL_LANG']['MSC']['thousandsSeparator'] = "'";
 
+
+/**
+ * Harvest invoices states
+ */
+$GLOBALS['TL_LANG']['HAPI']['open'] = 'Offen';
+$GLOBALS['TL_LANG']['HAPI']['partial'] = 'Teilbezahlt';
+$GLOBALS['TL_LANG']['HAPI']['paid'] = 'Bezahlt';
+$GLOBALS['TL_LANG']['HAPI']['late'] = 'Überfällig';

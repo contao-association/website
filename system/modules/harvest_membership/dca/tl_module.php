@@ -22,3 +22,4 @@
  * Palettes
  */
 $GLOBALS['TL_DCA']['tl_module']['palettes']['harvest_registration'] = &$GLOBALS['TL_DCA']['tl_module']['palettes']['registration'];
+$GLOBALS['TL_DCA']['tl_module']['palettes']['harvest_invoices'] = '{title_legend},name,headline,type;{protected_legend:hide},protected;{expert_legend:hide},guests,cssID,space';

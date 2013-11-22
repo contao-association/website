@@ -28,3 +28,4 @@ $GLOBALS['TL_LANG']['MOD']['harvest_membership'] = array('Harvest-Konfiguration'
  * Frontend modules
  */
 $GLOBALS['TL_LANG']['FMD']['harvest_registration'] = array('Registrierung (Harvest)');
+$GLOBALS['TL_LANG']['FMD']['harvest_invoices'] = array('Rechnungen (Harvest)');

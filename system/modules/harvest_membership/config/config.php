@@ -32,6 +32,7 @@ $GLOBALS['BE_MOD']['system']['harvest_membership'] = array
  * Frontend modules
  */
 $GLOBALS['FE_MOD']['user']['harvest_registration'] = 'ModuleHarvestRegistration';
+$GLOBALS['FE_MOD']['user']['harvest_invoices'] = 'ModuleHarvestInvoices';
 
 
 /**
