@@ -18,8 +18,8 @@
 </tr>
 </thead>
 <tbody>
-<?php foreach ($this->invoices as $invoice): ?>
-<tr class="<?php echo $invoice->state; ?>">
+<?php $i=0; foreach ($this->invoices as $invoice): ?>
+<tr class="<?php echo $invoice->state; ?> <?php echo ($i++%2) ? 'odd' : 'even'; ?>">
     <td class="col_0 col_first"><?php echo $invoice->number; ?></td>
     <td class="col_1"><?php echo $invoice->issued_at; ?></td>
     <td class="col_2"><?php echo $invoice->due_at; ?></td>
