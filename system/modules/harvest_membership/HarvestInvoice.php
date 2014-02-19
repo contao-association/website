@@ -92,6 +92,8 @@ kind,description,quantity,unit_price,amount,taxed,taxed2,project_id
      */
     public function sendRecurringInvoices()
     {
+        $time = time();
+
         // Find members which have been added today some time ago
         // @see http://stackoverflow.com/a/2218577
         $objMembers = $this->Database->query(
@@ -112,6 +114,8 @@ kind,description,quantity,unit_price,amount,taxed,taxed2,project_id
                 )
                 AND DATE_FORMAT(FROM_UNIXTIME(dateAdded),'%Y-%m-%d') != DATE_FORMAT(NOW(),'%Y-%m-%d')
                 AND disable=''
+                AND (start='' OR start<$time)
+                AND (stop='' OR stop>$time)
              )"
         );
 
