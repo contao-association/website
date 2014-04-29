@@ -115,6 +115,7 @@ class HarvestMembership extends Controller
     public function updateMember($dc)
     {
         $arrMember = (TL_MODE == 'BE' ? $dc->activeRecord->row() : $dc->getData());
+        $arrMember = Harvest::prepareData($arrMember);
 
         // Cannot update without Harvest link
         if ($arrMember['harvest_client_id'] < 1 || $arrMember['harvest_id'] < 1) {
