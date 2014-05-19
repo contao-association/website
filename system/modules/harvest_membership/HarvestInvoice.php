@@ -96,28 +96,28 @@ kind,description,quantity,unit_price,amount,taxed,taxed2,project_id
 
         // Find members which have been added today some time ago
         // @see http://stackoverflow.com/a/2218577
-        $objMembers = $this->Database->query(
-            "SELECT *
-             FROM tl_member
-             WHERE (
+        $objMembers = $this->Database->query("
+            SELECT *
+            FROM tl_member
+            WHERE (
                 DATE_FORMAT(FROM_UNIXTIME(dateAdded),'%m-%d') = DATE_FORMAT(NOW(),'%m-%d')
                 OR (
-                       (
-                           DATE_FORMAT(NOW(),'%Y') % 4 <> 0
-                           OR (
-                                   DATE_FORMAT(NOW(),'%Y') % 100 = 0
-                                   AND DATE_FORMAT(NOW(),'%Y') % 400 <> 0
-                               )
-                       )
-                       AND DATE_FORMAT(NOW(),'%m-%d') = '03-01'
-                       AND DATE_FORMAT(FROM_UNIXTIME(dateAdded),'%m-%d') = '02-29'
+                    (
+                        DATE_FORMAT(NOW(),'%Y') % 4 <> 0
+                        OR (
+                            DATE_FORMAT(NOW(),'%Y') % 100 = 0
+                            AND DATE_FORMAT(NOW(),'%Y') % 400 <> 0
+                        )
+                    )
+                    AND DATE_FORMAT(NOW(),'%m-%d') = '03-01'
+                    AND DATE_FORMAT(FROM_UNIXTIME(dateAdded),'%m-%d') = '02-29'
                 )
                 AND DATE_FORMAT(FROM_UNIXTIME(dateAdded),'%Y-%m-%d') != DATE_FORMAT(NOW(),'%Y-%m-%d')
                 AND disable=''
                 AND (start='' OR start<$time)
                 AND (stop='' OR stop>$time)
-             )"
-        );
+            )
+        ");
 
         while ($objMembers->next()) {
             $arrMember = $objMembers->row();
