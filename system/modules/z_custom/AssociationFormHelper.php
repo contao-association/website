@@ -22,6 +22,11 @@ class AssociationFormHelper extends System
 {
     public function processFormData($arrData, $arrForm, $arrFiles, $arrLabels)
     {
+        // Only handle calendar form
+        if ($arrForm['id'] != 2) {
+            return;
+        }
+
         $objStartTime = new Date($arrData['startDate'], $GLOBALS['TL_CONFIG']['datimFormat']);
         $objEndTime = new Date($arrData['endDate'], $GLOBALS['TL_CONFIG']['datimFormat']);
 
