@@ -58,7 +58,7 @@ class MemberLog extends Controller
 
         // Compute the difference
         foreach ($arrData as $k => $v) {
-            if ($_SESSION['MEMBER_LOG_DATA'][$k] != $v) {
+            if ($_SESSION['MEMBER_LOG_DATA'][$k] != $v && $k != 'password') {
                 $arrDifference[$k] = array
                 (
                     'old' => $_SESSION['MEMBER_LOG_DATA'][$k],
@@ -166,6 +166,9 @@ class MemberLog extends Controller
 
         // No need to store the tstamp
         unset($arrDifference['tstamp']);
+
+        // Do not store password for security reasons
+        unset($arrDifference['password']);
 
         if (empty($arrDifference)) {
             return;
