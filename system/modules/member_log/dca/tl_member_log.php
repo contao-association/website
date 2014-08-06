@@ -40,7 +40,7 @@ $GLOBALS['TL_DCA']['tl_member_log'] = array
             'fields'                  => array('dateAdded DESC'),
             'headerFields'            => array('company', 'firstname', 'lastname', 'email'),
             'flag'                    => 8,
-            'panelLayout'             => 'filter,search,limit',
+            'panelLayout'             => 'filter;search,limit',
             'child_record_callback'   => array('tl_member_log', 'generateLabel')
         ),
         'operations' => array
@@ -72,6 +72,7 @@ $GLOBALS['TL_DCA']['tl_member_log'] = array
         'user' => array
         (
             'label'                   => &$GLOBALS['TL_LANG']['tl_member_log']['user'],
+            'filter'                  => true,
         ),
         'data' => array
         (
