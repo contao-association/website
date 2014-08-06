@@ -19,6 +19,7 @@ CREATE TABLE `tl_member_log` (
   `pid` int(10) unsigned NOT NULL default '0',
   `tstamp` int(10) unsigned NOT NULL default '0',
   `dateAdded` int(10) unsigned NOT NULL default '0',
+  `user` int(10) unsigned NOT NULL default '0',
   `data` mediumblob NULL,
   `type` varchar(32) NOT NULL default '',
   `text` text NULL,

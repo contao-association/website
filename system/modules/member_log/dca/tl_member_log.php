@@ -21,6 +21,10 @@ $GLOBALS['TL_DCA']['tl_member_log'] = array
         'dataContainer'               => 'Table',
         'ptable'                      => 'tl_member',
         'enableVersioning'            => true,
+        'onload_callback' => array
+        (
+            array('tl_member_log', 'checkPermission')
+        ),
         'onsubmit_callback' => array
         (
             array('tl_member_log', 'storeNoteData')
@@ -36,18 +40,8 @@ $GLOBALS['TL_DCA']['tl_member_log'] = array
             'fields'                  => array('dateAdded DESC'),
             'headerFields'            => array('username', 'email', 'firstname', 'lastname'),
             'flag'                    => 8,
-            'panelLayout'             => 'filter;search,limit',
+            'panelLayout'             => 'filter,search,limit',
             'child_record_callback'   => array('tl_member_log', 'generateLabel')
-        ),
-        'global_operations' => array
-        (
-            'all' => array
-            (
-                'label'               => &$GLOBALS['TL_LANG']['MSC']['all'],
-                'href'                => 'act=select',
-                'class'               => 'header_edit_all',
-                'attributes'          => 'onclick="Backend.getScrollOffset()" accesskey="e"'
-            )
         ),
         'operations' => array
         (
@@ -57,19 +51,6 @@ $GLOBALS['TL_DCA']['tl_member_log'] = array
                 'href'                => 'act=edit',
                 'icon'                => 'edit.gif',
                 'button_callback'     => array('tl_member_log', 'editButton')
-            ),
-            'delete' => array
-            (
-                'label'               => &$GLOBALS['TL_LANG']['tl_member_log']['delete'],
-                'href'                => 'act=delete',
-                'icon'                => 'delete.gif',
-                'attributes'          => 'onclick="if(!confirm(\'' . $GLOBALS['TL_LANG']['MSC']['deleteConfirm'] . '\'))return false;Backend.getScrollOffset()"'
-            ),
-            'show' => array
-            (
-                'label'               => &$GLOBALS['TL_LANG']['tl_member_log']['show'],
-                'href'                => 'act=show',
-                'icon'                => 'show.gif'
             )
         )
     ),
@@ -87,6 +68,10 @@ $GLOBALS['TL_DCA']['tl_member_log'] = array
         (
             'label'                   => &$GLOBALS['TL_LANG']['tl_member_log']['dateAdded'],
             'flag'                    => 8,
+        ),
+        'user' => array
+        (
+            'label'                   => &$GLOBALS['TL_LANG']['tl_member_log']['user'],
         ),
         'data' => array
         (
@@ -121,6 +106,34 @@ class tl_member_log extends Backend
 {
 
     /**
+     * Check permissinos to edit table tl_member_log
+     */
+    public function checkPermission()
+    {
+        if ($this->Input->get('act') == '') {
+            return;
+        }
+
+        // Allow to create
+        if ($this->Input->get('act') == 'create') {
+            return;
+        }
+
+        // Allow to edit but only notes
+        if ($this->Input->get('act') == 'edit') {
+            $objLog = $this->Database->prepare("SELECT id FROM tl_member_log WHERE id=? AND (type='' OR type='note')")
+                                     ->limit(1)
+                                     ->execute($this->Input->get('id'));
+
+            if ($objLog->numRows) {
+                return;
+            }
+        }
+
+        $this->redirect('contao/main.php?act=error');
+    }
+
+    /**
      * Store the note data
      * @param DataContainer
      */
@@ -131,8 +144,8 @@ class tl_member_log extends Backend
                            ->execute(time(), $dc->id);
         }
 
-        $this->Database->prepare("UPDATE tl_member_log SET type='note' WHERE id=?")
-                       ->execute($dc->id);
+        $this->Database->prepare("UPDATE tl_member_log SET type='note', user=? WHERE id=?")
+                       ->execute(BackendUser::getInstance()->id, $dc->id);
     }
 
     /**
@@ -146,12 +159,20 @@ class tl_member_log extends Backend
 
         switch ($arrRow['type']) {
             case 'note':
-                $strText = sprintf($GLOBALS['TL_LANG']['tl_member_log']['label_note'], nl2br($arrRow['text']));
+                $strText = nl2br($arrRow['text']);
                 break;
 
             case 'personal_data':
-                $arrDifference = array();
                 $arrData = deserialize($arrRow['data'], true);
+                $strText = '<table class="tl_listing">
+<thead>
+    <tr>
+        <th class="tl_folder_tlist">' . $GLOBALS['TL_LANG']['tl_member_log']['label_personal_data_field'] . '</th>
+        <th class="tl_folder_tlist">' . $GLOBALS['TL_LANG']['tl_member_log']['label_personal_data_old'] . '</th>
+        <th class="tl_folder_tlist">' . $GLOBALS['TL_LANG']['tl_member_log']['label_personal_data_new'] . '</th>
+    </tr>
+</thead>
+<tbody>';
 
                 // Compute the difference
                 foreach ($arrData as $field => $difference) {
@@ -159,18 +180,41 @@ class tl_member_log extends Backend
                         continue;
                     }
 
-                    $arrDifference[] = $GLOBALS['TL_DCA']['tl_member']['fields'][$field]['label'][0] . ' [<em>"' . $difference['old'] . '"</em> -> <em>"' . $difference['new'] . '"</em>]';
+                    $strText .= '<tr>
+    <td class="tl_file_list">' . $GLOBALS['TL_DCA']['tl_member']['fields'][$field]['label'][0] . '</td>
+    <td class="tl_file_list">' . (($difference['old'] === '') ? '-' : $difference['old']) . '</td>
+    <td class="tl_file_list">' . (($difference['new'] === '') ? '-' : $difference['new']) . '</td>
+</tr>';
                 }
 
-                $strText = sprintf($GLOBALS['TL_LANG']['tl_member_log']['label_personal_data'], '<br>' . implode('<br>', $arrDifference));
+                $strText .= '</tbody></table>';
                 break;
 
             case 'registration':
-                $strText = sprintf($GLOBALS['TL_LANG']['tl_member_log']['label_registration'], $this->parseDate($GLOBALS['TL_CONFIG']['datimFormat'], $arrRow['data']));
+                $strText = $this->parseDate($GLOBALS['TL_CONFIG']['datimFormat'], $arrRow['data']);
                 break;
         }
 
-        return '<span style="padding-left:3px;color:#b3b3b3;">[' . $this->parseDate($GLOBALS['TL_CONFIG']['datimFormat'], $arrRow['dateAdded']) . ']</span> ' . $strText;
+        $strUser = '';
+
+        // Get the user info
+        if ($arrRow['user']) {
+            $objUser = $this->Database->prepare("SELECT * FROM tl_user WHERE id=?")
+                                      ->limit(1)
+                                      ->execute($arrRow['user']);
+
+            if ($objUser->numRows) {
+                $strUser = sprintf($GLOBALS['TL_LANG']['tl_member_log']['label_user'], $objUser->name, $objUser->id);
+            } else {
+                $strUser = sprintf($GLOBALS['TL_LANG']['tl_member_log']['label_user_deleted'], $arrRow['user']);
+            }
+        }
+
+        return '
+<div class="cte_type"><span class="tl_green"><strong>' . $GLOBALS['TL_DCA']['tl_member_log']['fields']['type']['reference'][$arrRow['type']] . ' - ' . $this->parseDate($GLOBALS['TL_CONFIG']['datimFormat'], $arrRow['dateAdded']) . '</strong>' . ($strUser ? (' - ' . $strUser) : '') . '</span></div>
+<div class="limit_height' . (!$GLOBALS['TL_CONFIG']['doNotCollapse'] ? ' h64' : '') . '">
+' . $strText . '
+</div>';
     }
 
     /**

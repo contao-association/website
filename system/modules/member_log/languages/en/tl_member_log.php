@@ -14,6 +14,8 @@
  */
 $GLOBALS['TL_LANG']['tl_member_log']['text']      = array('Note', 'Please enter the note.');
 $GLOBALS['TL_LANG']['tl_member_log']['dateAdded'] = array('Date created');
+$GLOBALS['TL_LANG']['tl_member_log']['user']      = array('User');
+$GLOBALS['TL_LANG']['tl_member_log']['type']      = array('Type');
 $GLOBALS['TL_LANG']['tl_member_log']['data']      = array('Data');
 
 
@@ -34,15 +36,15 @@ $GLOBALS['TL_LANG']['tl_member_log']['type']['registration']  = 'Registration';
 /**
  * Labels
  */
-$GLOBALS['TL_LANG']['tl_member_log']['label_note']          = 'Note: %s';
-$GLOBALS['TL_LANG']['tl_member_log']['label_personal_data'] = 'Personal data updated: %s';
-$GLOBALS['TL_LANG']['tl_member_log']['label_registration']  = 'Registration date: %s';
+$GLOBALS['TL_LANG']['tl_member_log']['label_personal_data_field'] = 'Field';
+$GLOBALS['TL_LANG']['tl_member_log']['label_personal_data_old']   = 'Old value';
+$GLOBALS['TL_LANG']['tl_member_log']['label_personal_data_new']   = 'New value';
+$GLOBALS['TL_LANG']['tl_member_log']['label_user']                = '%s (ID: %s)';
+$GLOBALS['TL_LANG']['tl_member_log']['label_user_deleted']        = 'anonymous (ID: %s)';
 
 
 /**
  * Buttons
  */
-$GLOBALS['TL_LANG']['tl_member_log']['new']    = array('New note', 'Create a new note');
-$GLOBALS['TL_LANG']['tl_member_log']['show']   = array('Log details', 'Show the details of log ID %s');
-$GLOBALS['TL_LANG']['tl_member_log']['edit']   = array('Edit note', 'Edit note ID %s');
-$GLOBALS['TL_LANG']['tl_member_log']['delete'] = array('Delete log', 'Delete log ID %s');
+$GLOBALS['TL_LANG']['tl_member_log']['new']  = array('New note', 'Create a new note');
+$GLOBALS['TL_LANG']['tl_member_log']['edit'] = array('Edit note', 'Edit note ID %s');

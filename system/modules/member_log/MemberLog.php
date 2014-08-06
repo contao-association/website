@@ -112,13 +112,12 @@ class MemberLog extends Controller
                                             ->limit(1)
                                             ->execute($dc->id);
 
-        $time = time();
-
         $arrSet = array
         (
             'pid' => $dc->id,
-            'tstamp' => $time,
-            'dateAdded' => $time,
+            'tstamp' => $objMember->dateAdded,
+            'dateAdded' => $objMember->dateAdded,
+            'user' => BackendUser::getInstance()->id,
             'type' => 'registration',
             'data' => $objMember->dateAdded
         );
@@ -179,6 +178,7 @@ class MemberLog extends Controller
             'pid' => $intId,
             'tstamp' => $time,
             'dateAdded' => $time,
+            'user' => BackendUser::getInstance()->id,
             'type' => 'personal_data',
             'data' => serialize($arrDifference)
         );
