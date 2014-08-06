@@ -230,6 +230,10 @@ class tl_member_log extends Backend
      */
     public function editButton($row, $href, $label, $title, $icon, $attributes)
     {
-        return ($row['type'] == 'note') ? '<a href="'.$this->addToUrl($href.'&amp;id='.$row['id']).'" title="'.specialchars($title).'"'.$attributes.'>'.$this->generateImage($icon, $label).'</a> ' : $this->generateImage(preg_replace('/\.gif$/i', '_.gif', $icon)).' ';
+        if ($row['type'] != 'note') {
+            return '';
+        }
+
+        return  '<a href="'.$this->addToUrl($href.'&amp;id='.$row['id']).'" title="'.specialchars($title).'"'.$attributes.'>'.$this->generateImage($icon, $label).'</a> ';
     }
 }
