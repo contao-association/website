@@ -28,5 +28,5 @@ $GLOBALS['TL_DCA']['tl_member']['list']['operations']['log'] = array
 (
     'label'               => &$GLOBALS['TL_LANG']['tl_member']['log'],
     'href'                => 'table=tl_member_log',
-    'icon'                => 'log.gif'
+    'icon'                => 'system/modules/member_log/assets/icon.png'
 );
