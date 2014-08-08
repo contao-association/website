@@ -19,13 +19,11 @@ class MemberLog extends Controller
      */
     public function logNewUser($intId, $arrData)
     {
-        $time = time();
-
         $arrSet = array
         (
             'pid' => $intId,
-            'tstamp' => $time,
-            'dateAdded' => $time,
+            'tstamp' => $arrData['dateAdded'],
+            'dateAdded' => $arrData['dateAdded'],
             'type' => 'registration',
             'data' => $arrData['dateAdded']
         );
