@@ -183,8 +183,8 @@ class tl_member_log extends Backend
 
                     $strText .= '<tr>
     <td class="tl_file_list">' . $GLOBALS['TL_DCA']['tl_member']['fields'][$field]['label'][0] . '</td>
-    <td class="tl_file_list">' . (($difference['old'] === '') ? '-' : $difference['old']) . '</td>
-    <td class="tl_file_list">' . (($difference['new'] === '') ? '-' : $difference['new']) . '</td>
+    <td class="tl_file_list">' . $this->prepareDiffValue($difference['old']) . '</td>
+    <td class="tl_file_list">' . $this->prepareDiffValue($difference['new']) . '</td>
 </tr>';
                 }
 
@@ -216,6 +216,26 @@ class tl_member_log extends Backend
 <div class="limit_height' . (!$GLOBALS['TL_CONFIG']['doNotCollapse'] ? ' h64' : '') . '">
 ' . $strText . '
 </div>';
+    }
+
+    /**
+     * Prepare the diff value
+     * @param mixed
+     * @return mixed
+     */
+    protected function prepareDiffValue($varValue)
+    {
+        if ($varValue === '') {
+            return '-';
+        }
+
+        $tmp = deserialize($varValue);
+
+        if (is_array($tmp)) {
+            return implode(', ', $tmp);
+        }
+
+        return $varValue;
     }
 
     /**
