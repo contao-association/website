@@ -19,26 +19,29 @@ class TasksReminder extends System
 
     public function sendReminders()
     {
-        $this->loadLanguageFile('default');
-
-        $objTasks = Database::getInstance()->prepare("SELECT * FROM tl_task WHERE deadline<=?")
-                                           ->execute(time());
+        $objTasks = Database::getInstance()->prepare("
+          SELECT * FROM  (
+              SELECT t.id, t.title, t.deadline, s.status, s.progress, u.email, u.language
+              FROM tl_task t
+              JOIN tl_task_status s ON t.id=s.pid
+              JOIN tl_user u ON s.assignedTo=u.id
+              ORDER BY s.tstamp DESC
+          ) as tasks
+          GROUP BY tasks.id
+          HAVING deadline<=? AND ((status!='completed' AND status!='declined') OR progress<100)
+        ")->execute(time());
 
         while ($objTasks->next()) {
-            $objStatus = Database::getInstance()->prepare("SELECT *, (SELECT email FROM tl_user WHERE tl_user.id=tl_task_status.assignedTo) AS email FROM tl_task_status WHERE pid=? ORDER BY tstamp DESC")
-                                                ->limit(1)
-                                                ->execute($objTasks->id);
 
-            if (!$objStatus->numRows || $objStatus->status == 'completed') {
-                continue;
-            }
+            // Load language file for the user
+            $this->loadLanguageFile('tasks_reminder', $objTasks->language, true);
 
             $objEmail = new Email();
             $objEmail->from = $GLOBALS['TL_ADMIN_EMAIL'];
             $objEmail->fromName = $GLOBALS['TL_ADMIN_NAME'];
             $objEmail->subject = sprintf($GLOBALS['TL_LANG']['MSC']['tasks_reminder_subject'], $GLOBALS['TL_CONFIG']['websiteTitle'], $objTasks->id);
             $objEmail->text = sprintf($GLOBALS['TL_LANG']['MSC']['tasks_reminder_text'], $objTasks->title, $objTasks->id, $GLOBALS['TL_CONFIG']['websiteTitle'], $GLOBALS['TL_CONFIG']['websiteTitle']);
-            $objEmail->sendTo($objStatus->email);
+            $objEmail->sendTo($objTasks->email);
         }
     }
 }
