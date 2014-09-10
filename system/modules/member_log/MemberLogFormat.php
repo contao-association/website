@@ -98,35 +98,39 @@ class MemberLogFormat extends Controller
             $varValue = empty($varValue) ? array(0) : $varValue;
             $objKey = $this->Database->execute("SELECT " . $chunks[1] . " AS value FROM " . $chunks[0] . " WHERE id IN (" . implode(',', array_map('intval', (array) $varValue)) . ")");
 
-            return implode(', ', $objKey->fetchEach('value'));
+            $varValue = implode(', ', $objKey->fetchEach('value'));
 
         } elseif (is_array($varValue)) {
             foreach ($varValue as $kk => $vv) {
                 $varValue[$kk] = $this->dcaValue($strTable, $strField, $vv);
             }
 
-            return implode(', ', $varValue);
+            $varValue = implode(', ', $varValue);
 
         } elseif ($GLOBALS['TL_DCA'][$strTable]['fields'][$strField]['eval']['rgxp'] == 'date') {
-            return $this->date($varValue);
+            $varValue = $this->date($varValue);
 
         } elseif ($GLOBALS['TL_DCA'][$strTable]['fields'][$strField]['eval']['rgxp'] == 'time') {
-            return $this->time($varValue);
+            $varValue = $this->time($varValue);
 
         } elseif ($GLOBALS['TL_DCA'][$strTable]['fields'][$strField]['eval']['rgxp'] == 'datim' || in_array($GLOBALS['TL_DCA'][$strTable]['fields'][$strField]['flag'], array(5, 6, 7, 8, 9, 10)) || $strField == 'tstamp') {
-            return $this->datim($varValue);
+            $varValue = $this->datim($varValue);
 
         } elseif ($GLOBALS['TL_DCA'][$strTable]['fields'][$strField]['inputType'] == 'checkbox' && !$GLOBALS['TL_DCA'][$strTable]['fields'][$strField]['eval']['multiple']) {
-            return strlen($varValue) ? $GLOBALS['TL_LANG']['MSC']['yes'] : $GLOBALS['TL_LANG']['MSC']['no'];
+            $varValue = strlen($varValue) ? $GLOBALS['TL_LANG']['MSC']['yes'] : $GLOBALS['TL_LANG']['MSC']['no'];
 
         } elseif ($GLOBALS['TL_DCA'][$strTable]['fields'][$strField]['inputType'] == 'textarea' && ($GLOBALS['TL_DCA'][$strTable]['fields'][$strField]['eval']['allowHtml'] || $GLOBALS['TL_DCA'][$strTable]['fields'][$strField]['eval']['preserveTags'])) {
-            return specialchars($varValue);
+            $varValue = specialchars($varValue);
 
         } elseif (is_array($GLOBALS['TL_DCA'][$strTable]['fields'][$strField]['reference'])) {
-            return isset($GLOBALS['TL_DCA'][$strTable]['fields'][$strField]['reference'][$varValue]) ? ((is_array($GLOBALS['TL_DCA'][$strTable]['fields'][$strField]['reference'][$varValue])) ? $GLOBALS['TL_DCA'][$strTable]['fields'][$strField]['reference'][$varValue][0] : $GLOBALS['TL_DCA'][$strTable]['fields'][$strField]['reference'][$varValue]) : $varValue;
+            $varValue = isset($GLOBALS['TL_DCA'][$strTable]['fields'][$strField]['reference'][$varValue]) ? ((is_array($GLOBALS['TL_DCA'][$strTable]['fields'][$strField]['reference'][$varValue])) ? $GLOBALS['TL_DCA'][$strTable]['fields'][$strField]['reference'][$varValue][0] : $GLOBALS['TL_DCA'][$strTable]['fields'][$strField]['reference'][$varValue]) : $varValue;
 
         } elseif ($GLOBALS['TL_DCA'][$strTable]['fields'][$strField]['eval']['isAssociative'] || array_is_assoc($GLOBALS['TL_DCA'][$strTable]['fields'][$strField]['options'])) {
-            return isset($GLOBALS['TL_DCA'][$strTable]['fields'][$strField]['options'][$varValue]) ? ((is_array($GLOBALS['TL_DCA'][$strTable]['fields'][$strField]['options'][$varValue])) ? $GLOBALS['TL_DCA'][$strTable]['fields'][$strField]['options'][$varValue][0] : $GLOBALS['TL_DCA'][$strTable]['fields'][$strField]['options'][$varValue]) : $varValue;
+            $varValue = isset($GLOBALS['TL_DCA'][$strTable]['fields'][$strField]['options'][$varValue]) ? ((is_array($GLOBALS['TL_DCA'][$strTable]['fields'][$strField]['options'][$varValue])) ? $GLOBALS['TL_DCA'][$strTable]['fields'][$strField]['options'][$varValue][0] : $GLOBALS['TL_DCA'][$strTable]['fields'][$strField]['options'][$varValue]) : $varValue;
+        }
+
+        if ($varValue === '') {
+            return '-';
         }
 
         return $varValue;
