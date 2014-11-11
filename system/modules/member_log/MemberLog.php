@@ -181,7 +181,8 @@ class MemberLog extends Controller
             'dateAdded' => $time,
             'user' => BackendUser::getInstance()->id,
             'type' => 'personal_data',
-            'data' => serialize($arrDifference)
+            'data' => serialize($arrDifference),
+            'text' => $this->Input->post('member_log_note'),
         );
 
         Database::getInstance()->prepare("INSERT INTO tl_member_log %s")

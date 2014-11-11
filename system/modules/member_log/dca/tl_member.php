@@ -10,6 +10,11 @@
  */
 
 /**
+ * Load the tl_member_log language file
+ */
+$this->loadLanguageFile('tl_member_log');
+
+/**
  * Add child table to tl_member
  */
 $GLOBALS['TL_DCA']['tl_member']['config']['ctable'][] = 'tl_member_log';
@@ -30,3 +35,36 @@ $GLOBALS['TL_DCA']['tl_member']['list']['operations']['log'] = array
     'href'                => 'table=tl_member_log',
     'icon'                => 'system/modules/member_log/assets/icon.png'
 );
+
+/**
+ * Update the tl_member palettes
+ */
+$GLOBALS['TL_DCA']['tl_member']['palettes']['default'] .= ';{log_legend},member_log_note';
+
+/**
+ * Add fields to tl_member
+ */
+$GLOBALS['TL_DCA']['tl_member']['fields']['member_log_note'] = array
+(
+    'label'                   => &$GLOBALS['TL_LANG']['tl_member_log']['text'],
+    'exclude'                 => true,
+    'inputType'               => 'textarea',
+    'eval'                    => array('doNotSaveEmpty'=>true),
+    'save_callback'           => array
+    (
+        array('tl_member_member_log', 'getLogNote')
+    ),
+);
+
+class tl_member_member_log extends Backend
+{
+
+    /**
+     * Do not save the log note
+     * @return null
+     */
+    public function getLogNote()
+    {
+        return null;
+    }
+}

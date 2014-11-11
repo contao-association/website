@@ -166,7 +166,13 @@ class tl_member_log extends Backend
 
             case 'personal_data':
                 $arrData = deserialize($arrRow['data'], true);
-                $strText = '<table class="tl_listing">
+                $strText = '';
+
+                if ($arrRow['text']) {
+                    $strText .= '<p>' . nl2br($arrRow['text']) . '</p>';
+                }
+
+                $strText .= '<table class="tl_listing">
 <thead>
     <tr>
         <th class="tl_folder_tlist">' . $GLOBALS['TL_LANG']['tl_member_log']['label_personal_data_field'] . '</th>

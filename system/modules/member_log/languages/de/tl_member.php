@@ -13,3 +13,8 @@
  * Buttons
  */
 $GLOBALS['TL_LANG']['tl_member']['log'] = array('Historie &amp; Notizen ansehen', 'Historie &amp; Notizen für Mitglied ID %s ansehen');
+
+/**
+ * Legends
+ */
+$GLOBALS['TL_LANG']['tl_member']['log_legend'] = 'Log settings';
