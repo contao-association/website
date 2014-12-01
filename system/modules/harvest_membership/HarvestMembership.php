@@ -36,8 +36,10 @@ class HarvestMembership extends Controller
      * @param   int
      * @param   array
      */
-    public function createAndInvoiceNewClient($intId, $arrMember)
+    public function createAndInvoiceNewClient($intId, &$arrMemberData)
     {
+        $arrMember = $arrMemberData;
+
         if (is_array($arrMember['harvest_membership'])) {
 
             $arrMember['id'] = $intId;
@@ -68,6 +70,9 @@ class HarvestMembership extends Controller
             $arrGroups[] = $arrSubscription['group'];
             $this->Database->prepare("UPDATE tl_member SET harvest_client_id=?, harvest_id=?, harvest_invoice=?, groups=?, language=? WHERE id=?")
                            ->executeUncached($arrMember['harvest_client_id'], $arrMember['harvest_id'], $intInvoice, serialize($arrGroups), $GLOBALS['TL_LANGUAGE'], $arrMember['id']);
+
+            // Update member groups so other modules like associategroups can perform actions
+            $arrMemberData['groups'] = serialize($arrGroups);
         }
     }
 

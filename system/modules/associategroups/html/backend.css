@@ -1,0 +1,6 @@
+.header_sync_all {
+	background-image: url(sync.png);
+	background-position: left center;
+	background-repeat: no-repeat;
+	padding: 2px 0 3px 20px;
+}

@@ -18,5 +18,4 @@
  */
 
 
-$GLOBALS['TL_HOOKS']['createNewUser'][] = array('AssociationAvisotaHelper', 'addToList');
 $GLOBALS['TL_HOOKS']['processFormData'][] = array('AssociationFormHelper', 'processFormData');
