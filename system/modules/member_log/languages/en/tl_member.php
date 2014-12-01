@@ -13,3 +13,8 @@
  * Buttons
  */
 $GLOBALS['TL_LANG']['tl_member']['log'] = array('View logs', 'View logs of member ID %s');
+
+/**
+ * Legends
+ */
+$GLOBALS['TL_LANG']['tl_member']['log_legend'] = 'Log settings';
