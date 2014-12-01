@@ -37,8 +37,9 @@ $GLOBALS['FE_MOD']['user']['harvest_invoices'] = 'ModuleHarvestInvoices';
 
 /**
  * Hooks
+ * createNewUser Hook must be the first in array because we adjust groups and successive modules need that info
  */
-$GLOBALS['TL_HOOKS']['createNewUser'][] = array('HarvestMembership', 'createAndInvoiceNewClient');
+array_insert($GLOBALS['TL_HOOKS']['createNewUser'], 0, array(array('HarvestMembership', 'createAndInvoiceNewClient')));
 $GLOBALS['TL_HOOKS']['updatePersonalData'][] = array('HarvestMembership', 'updateMember');
 
 
