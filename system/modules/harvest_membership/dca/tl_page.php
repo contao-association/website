@@ -78,3 +78,11 @@ $GLOBALS['TL_DCA']['tl_page']['fields']['harvest_mail_activated'] = array
 	'options_callback'     => array('EmailTemplateHelper', 'getMailTemplates'),
 	'eval'                 => array('mandatory'=>true, 'includeBlankOption'=>true, 'tl_class'=>'w50'),
 );
+
+$GLOBALS['TL_DCA']['tl_page']['fields']['harvest_mail_paid'] = array
+(
+    'label'                => &$GLOBALS['TL_LANG']['tl_page']['harvest_mail_paid'],
+    'inputType'            => 'select',
+    'options_callback'     => array('EmailTemplateHelper', 'getMailTemplates'),
+    'eval'                 => array('mandatory'=>true, 'includeBlankOption'=>true, 'tl_class'=>'w50'),
+);

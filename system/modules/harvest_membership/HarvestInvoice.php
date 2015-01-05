@@ -160,6 +160,79 @@ kind,description,quantity,unit_price,amount,taxed,taxed2,project_id
     }
 
     /**
+     * Send email confirmation for invoice payments
+     */
+    public function notifyPayments()
+    {
+        $this->Database->lockTables(
+            array(
+                'tl_lock'   => 'WRITE',
+                'tl_member' => 'READ',
+                'tl_page'   => 'READ',
+            )
+        );
+
+        $lastRun = (int) $this->Database->prepare(
+            "SELECT tstamp FROM tl_lock WHERE name=?"
+        )->limit(1)->executeUncached('harvest_payments')->tstamp;
+
+        // Don't start job from 1970…
+        if (0 === $lastRun) {
+            return;
+        }
+
+        Harvest::getAPI();
+        $objFilter                = new Harvest_Invoice_Filter();
+        $objFilter->status        = Harvest_Invoice_Filter::PAID;
+        $objFilter->updated_since = date('Y-m-d H:i', $lastRun);
+        $objResult                = Harvest::getInvoices($objFilter);
+
+        if ($objResult->isSuccess()) {
+
+            /** @var Harvest_Invoice $objInvoice */
+            foreach ($objResult->data as $objInvoice) {
+
+                $objMember = $this->Database->prepare(
+                    "SELECT * FROM tl_member WHERE harvest_client_id=?"
+                )->execute($objInvoice->client_id);
+
+                // Do not send payment confirmation for first invoice (account activation)
+                if (!$objMember->numRows || $objInvoice->id == $objMember->harvest_invoice) {
+                    continue;
+                }
+
+                $objPayments = Harvest::getInvoicePayments($objInvoice->id);
+
+                if (!$objPayments->isSuccess()) {
+                    continue;
+                }
+
+                foreach ($objPayments->data as $objPayment) {
+                    if (strtotime($objPayment->paid_at) >= $lastRun) {
+                        $arrRoot = $this->getRootPage($objMember->language);
+
+                        try {
+                            $objEmail = new EmailTemplate($arrRoot['harvest_mail_paid'], $arrRoot['language']);
+                            $objEmail->send($objMember->email, $this->getInvoiceTokens($objMember->row(), $objInvoice));
+                        } catch (Exception $e) {}
+
+                        break;
+                    }
+                }
+            }
+
+            $this->Database->prepare(
+                "UPDATE tl_lock SET tstamp=? WHERE name=?"
+            )->executeUncached(
+                strtotime('+1 hour', $lastRun),
+                'harveest_payments'
+            );
+        }
+
+        $this->Database->unlockTables();
+    }
+
+    /**
      * Get invoice config from page settings
      *
      * @param string $strLanguage

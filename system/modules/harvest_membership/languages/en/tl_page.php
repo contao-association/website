@@ -28,6 +28,7 @@ $GLOBALS['TL_LANG']['tl_page']['harvest_notes']             = array('Rechnungshi
 $GLOBALS['TL_LANG']['tl_page']['harvest_mail_new']          = array('Vorlage für neue Rechnung', 'Wählen Sie eine Email Vorlage für Rechnungen an neue Mitglieder.');
 $GLOBALS['TL_LANG']['tl_page']['harvest_mail_recurring']    = array('Vorlage für wiederkehrende Rechnung', 'Wählen Sie eine Email Vorlage für wiederkehrende Rechnungen.');
 $GLOBALS['TL_LANG']['tl_page']['harvest_mail_activated']    = array('Vorlage für Kontoaktivierung', 'Wählen Sie eine Email Vorlage zur Benachrichtigung bei Kontoaktivierung.');
+$GLOBALS['TL_LANG']['tl_page']['harvest_mail_paid']         = array('Vorlage für Zahlung', 'Wählen Sie eine Email Vorlage zur Benachrichtigung beim bezahlen einer Rechnung.');
 
 
 /**
