@@ -90,7 +90,10 @@ class FormMembership extends FormRadioButton
 
         foreach ($this->arrOptions as $i=>$arrOption)
         {
-            $arrOptions[] = sprintf('<span><input type="radio" name="%s[membership]" id="opt_%s_membership" class="%sradio" value="%s"%s%s%s> <label for="opt_%s_membership">%s</label>%s</span>',
+            $arrOptions[] = sprintf(<<<'TAG'
+<span><input type="radio" name="%s[membership]" id="opt_%s_membership" class="%sradio" value="%s"%s%s%s> <label for="opt_%s_membership">%s</label>%s</span>
+TAG
+,
                                      $this->strName,
                                      $this->strId.'_'.$i,
                                      (TL_MODE == 'BE' ? 'tl_' : ''),
@@ -100,7 +103,10 @@ class FormMembership extends FormRadioButton
                                      (TL_MODE == 'BE' ? ' onfocus="Backend.getScrollOffset();"' : ''),
                                      $this->strId.'_'.$i,
                                      $arrOption['label'],
-                                     ($arrOption['custom'] ? sprintf('</span><br><span class="custom_container" id="opt_%s_custom_container"><label for="opt_%s_custom">Eigener Betrag:</label> <input type="text" name="%s[custom_%s] id="opt_%s_custom class="%stext" value="%s">',
+                                     ($arrOption['custom'] ? sprintf(<<<'TAG'
+</span><br><span class="custom_container" id="opt_%s_custom_container"><label for="opt_%s_custom">Eigener Betrag:</label> <input type="text" name="%s[custom_%s] id="opt_%s_custom class="%stext" value="%s">
+TAG
+,
                                                                          $this->strId.'_'.$i,
                                                                          $this->strId.'_'.$i,
                                                                          $this->strName,

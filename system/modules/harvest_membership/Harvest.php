@@ -18,6 +18,26 @@
  */
 
 
+/**
+ * Class Harvest
+ *
+ * @method static Harvest_Result getClients
+ * @method static Harvest_Result getClient
+ * @method static Harvest_Result createClient
+ * @method static Harvest_Result updateClient
+ * @method static Harvest_Result getClientContacts
+ * @method static Harvest_Result getContact
+ * @method static Harvest_Result createContact
+ * @method static Harvest_Result updateContact
+ * @method static Harvest_Result getInvoices
+ * @method static Harvest_Result getInvoice
+ * @method static Harvest_Result createInvoice
+ * @method static Harvest_Result getInvoicePayments($invoice_id)
+ * @method static Harvest_Result getInvoicePayment
+ * @method static Harvest_Result createInvoicePayment
+ * @method static Harvest_Result deleteInvoicePayment
+ * @method static Harvest_Result sendInvoiceMessage
+ */
 class Harvest
 {
 
@@ -30,6 +50,11 @@ class Harvest
     /**
      * Magically call HarvestAPI methods and return result
      * Caches single result lookups for better performance
+     *
+     * @param string $name
+     * @param array  $arguments
+     *
+     * @return mixed
      */
     public static function __callStatic($name, $arguments)
     {
@@ -67,15 +92,25 @@ class Harvest
         static $objAPI;
 
         if (null === $objAPI) {
+            /** @noinspection PhpIncludeInspection */
             require_once TL_ROOT . '/plugins/HaPi/HarvestAPI.php';
+            /** @noinspection PhpIncludeInspection */
             require_once TL_ROOT . '/plugins/HaPi/Harvest/Abstract.php';
+            /** @noinspection PhpIncludeInspection */
             require_once TL_ROOT . '/plugins/HaPi/Harvest/Result.php';
+            /** @noinspection PhpIncludeInspection */
             require_once TL_ROOT . '/plugins/HaPi/Harvest/Exception.php';
+            /** @noinspection PhpIncludeInspection */
             require_once TL_ROOT . '/plugins/HaPi/Harvest/Client.php';
+            /** @noinspection PhpIncludeInspection */
             require_once TL_ROOT . '/plugins/HaPi/Harvest/Contact.php';
+            /** @noinspection PhpIncludeInspection */
             require_once TL_ROOT . '/plugins/HaPi/Harvest/Invoice.php';
+            /** @noinspection PhpIncludeInspection */
             require_once TL_ROOT . '/plugins/HaPi/Harvest/InvoiceItemCategory.php';
+            /** @noinspection PhpIncludeInspection */
             require_once TL_ROOT . '/plugins/HaPi/Harvest/InvoiceMessage.php';
+            /** @noinspection PhpIncludeInspection */
             require_once TL_ROOT . '/plugins/HaPi/Harvest/Invoice/Filter.php';
 
             $objAPI = new HarvestAPI();

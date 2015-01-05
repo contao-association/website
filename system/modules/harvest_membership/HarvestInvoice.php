@@ -33,9 +33,11 @@ class HarvestInvoice extends Controller
 
     /**
      * Create new invoice
-     * @param   array   tl_member data
-     * @param   array   subscription data (see Harvest::getSubscription)
-     * @return  int     ID of the new Harvest invoice
+     *
+     * @param array $arrMember       tl_member data
+     * @param array $arrSubscription subscription data (see Harvest::getSubscription)
+     *
+     * @return int                   ID of the new Harvest invoice
      */
     public function createMembershipInvoice($arrMember, $arrSubscription)
     {
@@ -69,8 +71,11 @@ kind,description,quantity,unit_price,amount,taxed,taxed2,project_id
 
     /**
      * Send email template for new invoices
-     * @param   int     Harvest invoice ID
-     * @param   array   tl_member data
+     *
+     * @param int   $intInvoice Harvest invoice ID
+     * @param array $arrMember  tl_member data
+     *
+     * @return bool
      */
     public function sendNewInvoiceMail($intInvoice, $arrMember)
     {
@@ -79,8 +84,11 @@ kind,description,quantity,unit_price,amount,taxed,taxed2,project_id
 
     /**
      * Send email template for recurring invoices
-     * @param   int     Harvest invoice ID
-     * @param   array   tl_member data
+     *
+     * @param int   $intInvoice Harvest invoice ID
+     * @param array $arrMember  tl_member data
+     *
+     * @return bool
      */
     public function sendRecurringInvoiceMail($intInvoice, $arrMember)
     {
@@ -153,7 +161,10 @@ kind,description,quantity,unit_price,amount,taxed,taxed2,project_id
 
     /**
      * Get invoice config from page settings
-     * @param   string
+     *
+     * @param string $strLanguage
+     *
+     * @return array
      */
     protected function getRootPage($strLanguage)
     {
@@ -169,9 +180,11 @@ kind,description,quantity,unit_price,amount,taxed,taxed2,project_id
 
     /**
      * Generate the list of simple tokens for email templates
-     * @param   array
-     * @param   object
-     * @return  array
+     *
+     * @param array  $arrMember
+     * @param object $objInvoice
+     *
+     * @return array
      */
     protected function getInvoiceTokens($arrMember, $objInvoice)
     {
@@ -195,9 +208,12 @@ kind,description,quantity,unit_price,amount,taxed,taxed2,project_id
 
     /**
      * Send invoice mail to client
-     * @param   int     Harvest invoice ID
-     * @param   array   tl_member data
-     * @param   string  Name of template ID key in tl_page
+     *
+     * @param int    $intInvoice     Harvest invoice ID
+     * @param array  $arrMember      tl_member data
+     * @param string $strTemplateKey Name of template ID key in tl_page
+     *
+     * @return bool
      */
     protected function sendInvoiceMail($intInvoice, $arrMember, $strTemplateKey)
     {

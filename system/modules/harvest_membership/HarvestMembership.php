@@ -33,8 +33,9 @@ class HarvestMembership extends Controller
 
     /**
      * Create and send invoice to new users
-     * @param   int
-     * @param   array
+     *
+     * @param int   $intId
+     * @param array $arrMemberData
      */
     public function createAndInvoiceNewClient($intId, &$arrMemberData)
     {
@@ -79,9 +80,12 @@ class HarvestMembership extends Controller
 
     /**
      * Prevent duplicate member name in Harvest when submitting backend fields
-     * @param   mixed
-     * @param   DataContainer
-     * @return  mixed
+     *
+     * @param mixed  $varValue
+     * @param object $dc
+     *
+     * @return mixed
+     * @throws Exception
      */
     public function preventDuplicateMember($varValue, $dc)
     {
@@ -104,7 +108,6 @@ class HarvestMembership extends Controller
 
     /**
      * Create a member data backup in the session
-     * @param   FrontendUser
      */
     public function backupInSession()
     {
@@ -115,7 +118,8 @@ class HarvestMembership extends Controller
 
     /**
      * Update Harvest client and contact when saving a member
-     * @param   DataContainer|FrontendUser
+     *
+     * @param DataContainer|FrontendUser $dc
      */
     public function updateMember($dc)
     {
@@ -159,9 +163,11 @@ class HarvestMembership extends Controller
 
     /**
      * Search for client ID on Harvest, create client if none exists
-     * @param   array   tl_member data
-     * @param   array   subscription configuration
-     * @return  int     ID of the client record
+     *
+     * @param array $arrMember       tl_member data
+     * @param array $arrSubscription subscription configuration
+     *
+     * @return int                   ID of the client record
      */
     protected function createClient($arrMember, $arrSubscription)
     {
@@ -194,9 +200,11 @@ class HarvestMembership extends Controller
 
     /**
      * Create client contact in Harvest if it does not yet exist
-     * @param   int     Harvest client ID
-     * @param   array   tl_member record data
-     * @return  int     ID of the contact record
+     *
+     * @param int   $intClient Harvest client ID
+     * @param array $arrMember tl_member record data
+     *
+     * @return int             ID of the contact record
      */
     protected function createContact($intClient, $arrMember)
     {
@@ -228,9 +236,11 @@ class HarvestMembership extends Controller
 
     /**
      * Create/update Harvest client object from member data
-     * @param   array
-     * @param   object
-     * @return  object
+     *
+     * @param array  $arrMember
+     * @param object $objClient
+     *
+     * @return object
      */
     protected function prepareClient($arrMember, $objClient=null)
     {
@@ -266,11 +276,14 @@ class HarvestMembership extends Controller
 
     /**
      * Update a Harvest contact from member data
-     * @param   array
-     * @param   object
-     * @return  object
+     *
+     * @param array  $arrMember
+     * @param object $objContact
+     *
+     * @return object
+     * @throws Exception
      */
-    protected function prepareContact($arrMember, $objContact=null)
+    protected function prepareContact($arrMember, $objContact = null)
     {
         if (null === $objContact) {
             if ($arrMember['harvest_client_id'] < 1) {

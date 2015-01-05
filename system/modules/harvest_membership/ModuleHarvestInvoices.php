@@ -12,7 +12,7 @@
  *
  *
  * PHP version 5
- * @copyright  terminal42 gmbh 2013
+ * @copyright  Contao Association 2013-2015
  * @author     Andreas Schempp <andreas.schempp@terminal42.ch>
  * @license    http://opensource.org/licenses/lgpl-3.0.html
  */
@@ -56,7 +56,8 @@ class ModuleHarvestInvoices extends Module
     protected function compile()
     {
         if (!$this->User->harvest_client_id) {
-            return $this->message('Ihr Konto wurde im Rechnungssystem nicht gefunden.');
+            $this->message('Ihr Konto wurde im Rechnungssystem nicht gefunden.');
+            return;
         }
 
         Harvest::getAPI();
@@ -65,7 +66,8 @@ class ModuleHarvestInvoices extends Module
         $objResult = Harvest::getInvoices($objFilter);
 
         if (!$objResult->isSuccess()) {
-            return $this->message('Bei der Kommunikation mit dem Rechnungssystem ist ein Fehler aufgetreten.');
+            $this->message('Bei der Kommunikation mit dem Rechnungssystem ist ein Fehler aufgetreten.');
+            return;
         }
 
         $arrInvoices = array();
@@ -100,7 +102,8 @@ class ModuleHarvestInvoices extends Module
         }
 
         if (empty($arrInvoices)) {
-            return $this->message('Es wurden keine Rechnungen gefunden.', 'empty');
+            $this->message('Es wurden keine Rechnungen gefunden.', 'empty');
+            return;
         }
 
         $this->Template->invoices = $objResult->data;

@@ -15,7 +15,7 @@ CREATE TABLE `tl_member` (
   `harvest_membership` varchar(255) NOT NULL default '',
   `harvest_id` int(10) unsigned NOT NULL default '0',
   `harvest_client_id` int(10) unsigned NOT NULL default '0',
-  `harvest_invoice` int(10) unsigned NOT NULL default '0',
+  `harvest_invoice` int(10) unsigned NOT NULL default '0'
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
 
@@ -33,5 +33,5 @@ CREATE TABLE `tl_page` (
   `harvest_notes` text NULL,
   `harvest_mail_new` int(10) unsigned NOT NULL default '0',
   `harvest_mail_recurring` int(10) unsigned NOT NULL default '0',
-  `harvest_mail_activated` int(10) unsigned NOT NULL default '0',
+  `harvest_mail_activated` int(10) unsigned NOT NULL default '0'
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
