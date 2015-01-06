@@ -47,6 +47,7 @@ $GLOBALS['TL_HOOKS']['updatePersonalData'][] = array('HarvestMembership', 'updat
  * Cron Jobs
  */
 $GLOBALS['TL_CRON']['daily'][] = array('HarvestInvoice', 'sendRecurringInvoices');
+$GLOBALS['TL_CRON']['hourly'][] = array('HarvestInvoice', 'notifyPayments'); // MUST be before activateMembers
 $GLOBALS['TL_CRON']['hourly'][] = array('HarvestInvoice', 'activateMembers');
 
 

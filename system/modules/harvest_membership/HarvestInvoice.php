@@ -188,6 +188,7 @@ kind,description,quantity,unit_price,amount,taxed,taxed2,project_id
         $objResult                = Harvest::getInvoices($objFilter);
 
         if ($objResult->isSuccess()) {
+            $stop = strtotime('+1 hour', $lastRun);
 
             /** @var Harvest_Invoice $objInvoice */
             foreach ($objResult->data as $objInvoice) {
@@ -208,7 +209,9 @@ kind,description,quantity,unit_price,amount,taxed,taxed2,project_id
                 }
 
                 foreach ($objPayments->data as $objPayment) {
-                    if (strtotime($objPayment->paid_at) >= $lastRun) {
+                    $paid = strtotime($objPayment->paid_at);
+
+                    if ($paid >= $lastRun && $paid < $stop) {
                         $arrRoot = $this->getRootPage($objMember->language);
 
                         try {
@@ -223,10 +226,7 @@ kind,description,quantity,unit_price,amount,taxed,taxed2,project_id
 
             $this->Database->prepare(
                 "UPDATE tl_lock SET tstamp=? WHERE name=?"
-            )->executeUncached(
-                strtotime('+1 hour', $lastRun),
-                'harveest_payments'
-            );
+            )->executeUncached($stop, 'harveest_payments');
         }
 
         $this->Database->unlockTables();
