@@ -216,7 +216,9 @@ kind,description,quantity,unit_price,amount,taxed,taxed2,project_id
 
                         try {
                             $objEmail = new EmailTemplate($arrRoot['harvest_mail_paid'], $arrRoot['language']);
-                            $objEmail->send($objMember->email, $this->getInvoiceTokens($objMember->row(), $objInvoice));
+                            // $objEmail->send($objMember->email, $this->getInvoiceTokens($objMember->row(), $objInvoice));
+                            // FIXME: enable for live sending
+                            $objEmail->send('andreas@schempp.ch', $this->getInvoiceTokens($objMember->row(), $objInvoice));
                         } catch (Exception $e) {}
 
                         break;
