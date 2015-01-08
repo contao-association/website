@@ -164,14 +164,6 @@ kind,description,quantity,unit_price,amount,taxed,taxed2,project_id
      */
     public function notifyPayments()
     {
-        $this->Database->lockTables(
-            array(
-                'tl_lock'   => 'WRITE',
-                'tl_member' => 'READ',
-                'tl_page'   => 'READ',
-            )
-        );
-
         $lastRun = (int) $this->Database->prepare(
             "SELECT tstamp FROM tl_lock WHERE name=?"
         )->limit(1)->executeUncached('harvest_payments')->tstamp;
@@ -181,14 +173,21 @@ kind,description,quantity,unit_price,amount,taxed,taxed2,project_id
             return;
         }
 
+        $lastRun = DateTime::createFromFormat('YmdH', $lastRun, new DateTimeZone('UTC'));
+        $stop = clone $lastRun;
+        $stop = $stop->add(new DateInterval('PT1H'));
+
+        if ($stop->getTimestamp() > DateTime::createFromFormat('U', time(), new DateTimeZone('UTC'))->getTimestamp()) {
+            return;
+        }
+
         Harvest::getAPI();
         $objFilter                = new Harvest_Invoice_Filter();
         $objFilter->status        = Harvest_Invoice_Filter::PAID;
-        $objFilter->updated_since = date('Y-m-d H:i', $lastRun);
+        $objFilter->updated_since = $lastRun->format('Y-m-d H:i');
         $objResult                = Harvest::getInvoices($objFilter);
 
         if ($objResult->isSuccess()) {
-            $stop = strtotime('+1 hour', $lastRun);
 
             /** @var Harvest_Invoice $objInvoice */
             foreach ($objResult->data as $objInvoice) {
@@ -209,9 +208,9 @@ kind,description,quantity,unit_price,amount,taxed,taxed2,project_id
                 }
 
                 foreach ($objPayments->data as $objPayment) {
-                    $paid = strtotime($objPayment->paid_at);
+                    $created = new DateTime($objPayment->created_at, new DateTimeZone('UTC'));
 
-                    if ($paid >= $lastRun && $paid < $stop) {
+                    if ($created->getTimestamp() >= $lastRun->getTimestamp() && $created->getTimestamp() < $stop->getTimestamp()) {
                         $arrRoot = $this->getRootPage($objMember->language);
 
                         try {
@@ -228,10 +227,8 @@ kind,description,quantity,unit_price,amount,taxed,taxed2,project_id
 
             $this->Database->prepare(
                 "UPDATE tl_lock SET tstamp=? WHERE name=?"
-            )->executeUncached($stop, 'harveest_payments');
+            )->execute($stop->format('YmdH'), 'harvest_payments');
         }
-
-        $this->Database->unlockTables();
     }
 
     /**

@@ -112,6 +112,8 @@ class Harvest
             require_once TL_ROOT . '/plugins/HaPi/Harvest/InvoiceMessage.php';
             /** @noinspection PhpIncludeInspection */
             require_once TL_ROOT . '/plugins/HaPi/Harvest/Invoice/Filter.php';
+            /** @noinspection PhpIncludeInspection */
+            require_once TL_ROOT . '/plugins/HaPi/Harvest/Payment.php';
 
             $objAPI = new HarvestAPI();
             $objAPI->setUser($GLOBALS['TL_CONFIG']['harvest_user']);
