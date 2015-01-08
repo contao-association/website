@@ -33,9 +33,11 @@ class HarvestInvoice extends Controller
 
     /**
      * Create new invoice
-     * @param   array   tl_member data
-     * @param   array   subscription data (see Harvest::getSubscription)
-     * @return  int     ID of the new Harvest invoice
+     *
+     * @param array $arrMember       tl_member data
+     * @param array $arrSubscription subscription data (see Harvest::getSubscription)
+     *
+     * @return int                   ID of the new Harvest invoice
      */
     public function createMembershipInvoice($arrMember, $arrSubscription)
     {
@@ -69,8 +71,11 @@ kind,description,quantity,unit_price,amount,taxed,taxed2,project_id
 
     /**
      * Send email template for new invoices
-     * @param   int     Harvest invoice ID
-     * @param   array   tl_member data
+     *
+     * @param int   $intInvoice Harvest invoice ID
+     * @param array $arrMember  tl_member data
+     *
+     * @return bool
      */
     public function sendNewInvoiceMail($intInvoice, $arrMember)
     {
@@ -79,8 +84,11 @@ kind,description,quantity,unit_price,amount,taxed,taxed2,project_id
 
     /**
      * Send email template for recurring invoices
-     * @param   int     Harvest invoice ID
-     * @param   array   tl_member data
+     *
+     * @param int   $intInvoice Harvest invoice ID
+     * @param array $arrMember  tl_member data
+     *
+     * @return bool
      */
     public function sendRecurringInvoiceMail($intInvoice, $arrMember)
     {
@@ -152,8 +160,83 @@ kind,description,quantity,unit_price,amount,taxed,taxed2,project_id
     }
 
     /**
+     * Send email confirmation for invoice payments
+     */
+    public function notifyPayments()
+    {
+        $lastRun = (int) $this->Database->prepare(
+            "SELECT tstamp FROM tl_lock WHERE name=?"
+        )->limit(1)->executeUncached('harvest_payments')->tstamp;
+
+        // Don't start job from 1970…
+        if (0 === $lastRun) {
+            return;
+        }
+
+        $lastRun = DateTime::createFromFormat('YmdH', $lastRun, new DateTimeZone('UTC'));
+        $stop = clone $lastRun;
+        $stop = $stop->add(new DateInterval('PT1H'));
+
+        if ($stop->getTimestamp() > DateTime::createFromFormat('U', time(), new DateTimeZone('UTC'))->getTimestamp()) {
+            return;
+        }
+
+        Harvest::getAPI();
+        $objFilter                = new Harvest_Invoice_Filter();
+        $objFilter->status        = Harvest_Invoice_Filter::PAID;
+        $objFilter->updated_since = $lastRun->format('Y-m-d H:i');
+        $objResult                = Harvest::getInvoices($objFilter);
+
+        if ($objResult->isSuccess()) {
+
+            /** @var Harvest_Invoice $objInvoice */
+            foreach ($objResult->data as $objInvoice) {
+
+                $objMember = $this->Database->prepare(
+                    "SELECT * FROM tl_member WHERE harvest_client_id=?"
+                )->execute($objInvoice->client_id);
+
+                // Do not send payment confirmation for first invoice (account activation)
+                if (!$objMember->numRows || $objInvoice->id == $objMember->harvest_invoice) {
+                    continue;
+                }
+
+                $objPayments = Harvest::getInvoicePayments($objInvoice->id);
+
+                if (!$objPayments->isSuccess()) {
+                    continue;
+                }
+
+                foreach ($objPayments->data as $objPayment) {
+                    $created = new DateTime($objPayment->created_at, new DateTimeZone('UTC'));
+
+                    if ($created->getTimestamp() >= $lastRun->getTimestamp() && $created->getTimestamp() < $stop->getTimestamp()) {
+                        $arrRoot = $this->getRootPage($objMember->language);
+
+                        try {
+                            $objEmail = new EmailTemplate($arrRoot['harvest_mail_paid'], $arrRoot['language']);
+                            $objEmail->send($objMember->email, $this->getInvoiceTokens($objMember->row(), $objInvoice, $objPayment));
+                        } catch (Exception $e) {
+                            $this->log('Unable to send payment mail: ' . $e->getMessage(), __METHOD__, TL_ERROR);
+                        }
+
+                        break;
+                    }
+                }
+            }
+
+            $this->Database->prepare(
+                "UPDATE tl_lock SET tstamp=? WHERE name=?"
+            )->execute($stop->format('YmdH'), 'harvest_payments');
+        }
+    }
+
+    /**
      * Get invoice config from page settings
-     * @param   string
+     *
+     * @param string $strLanguage
+     *
+     * @return array
      */
     protected function getRootPage($strLanguage)
     {
@@ -169,11 +252,14 @@ kind,description,quantity,unit_price,amount,taxed,taxed2,project_id
 
     /**
      * Generate the list of simple tokens for email templates
-     * @param   array
-     * @param   object
-     * @return  array
+     *
+     * @param array  $arrMember
+     * @param object $objInvoice
+     * @param object $objPayment
+     *
+     * @return array
      */
-    protected function getInvoiceTokens($arrMember, $objInvoice)
+    protected function getInvoiceTokens($arrMember, $objInvoice, $objPayment = null)
     {
         $arrConfig = $this->getRootPage($arrMember['language']);
         $strDateFormat = $arrConfig['dateFormat'] ?: $GLOBALS['TL_CONFIG']['dateFormat'];
@@ -185,6 +271,14 @@ kind,description,quantity,unit_price,amount,taxed,taxed2,project_id
         $arrTokens['invoice_due_at'] = $this->parseDate($strDateFormat, strtotime($objInvoice->due_at));
         $arrTokens['invoice_url'] = 'https://' . $GLOBALS['TL_CONFIG']['harvest_account'] . '.harvestapp.com/client/invoices/' . $objInvoice->client_key;
 
+        if (null !== $objPayment) {
+            $arrTokens['payment_amount'] = $this->getFormattedNumber($objPayment->amount);
+            $arrTokens['payment_created_at'] = $this->parseDate($strDateFormat, strtotime($objPayment->created_at));
+            $arrTokens['payment_paid_at'] = $this->parseDate($strDateFormat, strtotime($objPayment->paid_at));
+            $arrTokens['payment_recorded_by'] = $objPayment->recorded_by;
+            $arrTokens['payment_paypal_id'] = $objPayment->pay_pal_transaction_id;
+        }
+
         // Enrich member data / email tokens
         $arrSubscription = Harvest::getSubscription($arrMember);
         $arrTokens['subscription_label'] = $arrSubscription['label'];
@@ -195,9 +289,12 @@ kind,description,quantity,unit_price,amount,taxed,taxed2,project_id
 
     /**
      * Send invoice mail to client
-     * @param   int     Harvest invoice ID
-     * @param   array   tl_member data
-     * @param   string  Name of template ID key in tl_page
+     *
+     * @param int    $intInvoice     Harvest invoice ID
+     * @param array  $arrMember      tl_member data
+     * @param string $strTemplateKey Name of template ID key in tl_page
+     *
+     * @return bool
      */
     protected function sendInvoiceMail($intInvoice, $arrMember, $strTemplateKey)
     {

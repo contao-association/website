@@ -21,7 +21,7 @@
 /**
  * Palettes
  */
-$GLOBALS['TL_DCA']['tl_page']['palettes']['root'] .= ';{harvest_legend:hide},harvest_due,harvest_category,harvest_format,harvest_notes,harvest_mail_new,harvest_mail_recurring,harvest_mail_activated';
+$GLOBALS['TL_DCA']['tl_page']['palettes']['root'] .= ';{harvest_legend:hide},harvest_due,harvest_category,harvest_format,harvest_notes,harvest_mail_new,harvest_mail_recurring,harvest_mail_activated,harvest_mail_paid';
 
 $GLOBALS['TL_DCA']['tl_page']['fields']['harvest_due'] = array
 (
@@ -77,4 +77,12 @@ $GLOBALS['TL_DCA']['tl_page']['fields']['harvest_mail_activated'] = array
 	'inputType'            => 'select',
 	'options_callback'     => array('EmailTemplateHelper', 'getMailTemplates'),
 	'eval'                 => array('mandatory'=>true, 'includeBlankOption'=>true, 'tl_class'=>'w50'),
+);
+
+$GLOBALS['TL_DCA']['tl_page']['fields']['harvest_mail_paid'] = array
+(
+    'label'                => &$GLOBALS['TL_LANG']['tl_page']['harvest_mail_paid'],
+    'inputType'            => 'select',
+    'options_callback'     => array('EmailTemplateHelper', 'getMailTemplates'),
+    'eval'                 => array('mandatory'=>true, 'includeBlankOption'=>true, 'tl_class'=>'w50'),
 );
