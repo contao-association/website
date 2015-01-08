@@ -215,10 +215,10 @@ kind,description,quantity,unit_price,amount,taxed,taxed2,project_id
 
                         try {
                             $objEmail = new EmailTemplate($arrRoot['harvest_mail_paid'], $arrRoot['language']);
-                            // $objEmail->send($objMember->email, $this->getInvoiceTokens($objMember->row(), $objInvoice));
-                            // FIXME: enable for live sending
-                            $objEmail->send('andreas@schempp.ch', $this->getInvoiceTokens($objMember->row(), $objInvoice));
-                        } catch (Exception $e) {}
+                            $objEmail->send($objMember->email, $this->getInvoiceTokens($objMember->row(), $objInvoice, $objPayment));
+                        } catch (Exception $e) {
+                            $this->log('Unable to send payment mail: ' . $e->getMessage(), __METHOD__, TL_ERROR);
+                        }
 
                         break;
                     }
@@ -255,10 +255,11 @@ kind,description,quantity,unit_price,amount,taxed,taxed2,project_id
      *
      * @param array  $arrMember
      * @param object $objInvoice
+     * @param object $objPayment
      *
      * @return array
      */
-    protected function getInvoiceTokens($arrMember, $objInvoice)
+    protected function getInvoiceTokens($arrMember, $objInvoice, $objPayment = null)
     {
         $arrConfig = $this->getRootPage($arrMember['language']);
         $strDateFormat = $arrConfig['dateFormat'] ?: $GLOBALS['TL_CONFIG']['dateFormat'];
@@ -269,6 +270,14 @@ kind,description,quantity,unit_price,amount,taxed,taxed2,project_id
         $arrTokens['invoice_issued_at'] = $this->parseDate($strDateFormat, strtotime($objInvoice->issued_at));
         $arrTokens['invoice_due_at'] = $this->parseDate($strDateFormat, strtotime($objInvoice->due_at));
         $arrTokens['invoice_url'] = 'https://' . $GLOBALS['TL_CONFIG']['harvest_account'] . '.harvestapp.com/client/invoices/' . $objInvoice->client_key;
+
+        if (null !== $objPayment) {
+            $arrTokens['payment_amount'] = $this->getFormattedNumber($objPayment->amount);
+            $arrTokens['payment_created_at'] = $this->parseDate($strDateFormat, strtotime($objPayment->created_at));
+            $arrTokens['payment_paid_at'] = $this->parseDate($strDateFormat, strtotime($objPayment->paid_at));
+            $arrTokens['payment_recorded_by'] = $objPayment->recorded_by;
+            $arrTokens['payment_paypal_id'] = $objPayment->pay_pal_transaction_id;
+        }
 
         // Enrich member data / email tokens
         $arrSubscription = Harvest::getSubscription($arrMember);
