@@ -20,12 +20,13 @@
 
 class HarvestInvoice extends Controller
 {
+    private $db;
 
     public function __construct()
     {
         parent::__construct();
 
-        $this->import('Database');
+        $this->db = Database::getInstance();
 
         // Make sure Harvest classes are available
         Harvest::getAPI();
@@ -104,7 +105,7 @@ kind,description,quantity,unit_price,amount,taxed,taxed2,project_id
 
         // Find members which have been added today some time ago
         // @see http://stackoverflow.com/a/2218577
-        $objMembers = $this->Database->query("
+        $objMembers = $this->db->query("
             SELECT *
             FROM tl_member
             WHERE (
@@ -140,13 +141,13 @@ kind,description,quantity,unit_price,amount,taxed,taxed2,project_id
     public function activateMembers()
     {
         // Only retrieve 10 members to prevent performance issues with the API
-        $objMembers = $this->Database->execute("SELECT * FROM tl_member WHERE disable='1' AND harvest_invoice>0 LIMIT 10");
+        $objMembers = $this->db->execute("SELECT * FROM tl_member WHERE disable='1' AND harvest_invoice>0 LIMIT 10");
 
         while ($objMembers->next()) {
             $objResult = Harvest::getInvoice($objMembers->harvest_invoice);
 
             if ($objResult->isSuccess() && $objResult->data->state == 'paid') {
-                $this->Database->prepare("UPDATE tl_member SET disable='', harvest_invoice=0 WHERE id=?")->executeUncached($objMembers->id);
+                $this->db->prepare("UPDATE tl_member SET disable='', harvest_invoice=0 WHERE id=?")->executeUncached($objMembers->id);
 
                 $objInvoice = $objResult->data;
                 $arrRoot = $this->getRootPage($objMembers->language);
@@ -164,7 +165,7 @@ kind,description,quantity,unit_price,amount,taxed,taxed2,project_id
      */
     public function notifyPayments()
     {
-        $lastRun = (int) $this->Database->prepare(
+        $lastRun = (int) $this->db->prepare(
             "SELECT tstamp FROM tl_lock WHERE name=?"
         )->limit(1)->executeUncached('harvest_payments')->tstamp;
 
@@ -192,7 +193,7 @@ kind,description,quantity,unit_price,amount,taxed,taxed2,project_id
             /** @var Harvest_Invoice $objInvoice */
             foreach ($objResult->data as $objInvoice) {
 
-                $objMember = $this->Database->prepare(
+                $objMember = $this->db->prepare(
                     "SELECT * FROM tl_member WHERE harvest_client_id=?"
                 )->execute($objInvoice->client_id);
 
@@ -225,7 +226,7 @@ kind,description,quantity,unit_price,amount,taxed,taxed2,project_id
                 }
             }
 
-            $this->Database->prepare(
+            $this->db->prepare(
                 "UPDATE tl_lock SET tstamp=? WHERE name=?"
             )->execute($stop->format('YmdH'), 'harvest_payments');
         }
@@ -244,7 +245,7 @@ kind,description,quantity,unit_price,amount,taxed,taxed2,project_id
 
         $intPage = (is_object($objPage) ? (int) $objPage->rootId : 0);
 
-        return $this->Database->prepare("SELECT * FROM tl_page WHERE type='root' AND (id=? OR language=? OR fallback='1')")
+        return $this->db->prepare("SELECT * FROM tl_page WHERE type='root' AND (id=? OR language=? OR fallback='1')")
                               ->limit(1)
                               ->execute($intPage, $strLanguage)
                               ->fetchAssoc();
