@@ -81,7 +81,7 @@ kind,description,quantity,unit_price,amount,taxed,taxed2,project_id
                 $arrSubscription['account']
             );
         } catch (\Exception $e) {
-            \System::log($e->getMessage(), __METHOD__, TL_ERROR);
+            $this->log($e->getMessage(), __METHOD__, TL_ERROR);
         }
 
         return $objResult->data;
@@ -173,7 +173,7 @@ kind,description,quantity,unit_price,amount,taxed,taxed2,project_id
                     $objEmail = new EmailTemplate($arrRoot['harvest_mail_activated'], $arrRoot['language']);
                     $objEmail->send($objMembers->email, $this->getInvoiceTokens($objMembers->row(), $objInvoice));
                 } catch (Exception $e) {
-                    \System::log($e->getMessage(), __METHOD__, TL_ERROR);
+                    $this->log($e->getMessage(), __METHOD__, TL_ERROR);
                 }
             }
         }
