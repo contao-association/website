@@ -33,7 +33,7 @@ $GLOBALS['TL_DCA']['tl_harvest_settings'] = array
     // Palettes
     'palettes' => array
     (
-        'default'                       => '{account_legend:hide},harvest_account,harvest_user,harvest_password;{memberships_legend},harvest_memberships',
+        'default'                       => '{account_legend:hide},harvest_account,harvest_user,harvest_password;{memberships_legend},harvest_memberships;{fibu3_legend},fibu3_apikey',
     ),
 
     // Fields
@@ -88,26 +88,38 @@ $GLOBALS['TL_DCA']['tl_harvest_settings'] = array
                         'inputType'     => 'text',
                         'eval'          => array('rgxp'=>'digit', 'style'=>'width:40px;text-align:center'),
                     ),
+                    'account' => array
+                    (
+                        'label'         => array('FIBU-Konto'),
+                        'inputType'     => 'text',
+                        'eval'          => array('rgxp'=>'digit', 'minlength'=>4, 'maxlength'=>4, 'style'=>'width:60px;text-align:center'),
+                    ),
                     'default' => array
                     (
                         'label'         => array(''),
                         'inputType'     => 'checkbox',
-                        'options'       => array('1'=>'Standardwert'),
+                        'options'       => array('1'=>'Standard'),
                     ),
                     'custom' => array
                     (
                         'label'         => array(''),
                         'inputType'     => 'checkbox',
-                        'options'       => array('1'=>'Mindestpreis'),
+                        'options'       => array('1'=>'Ab-Preis'),
                     ),
                     'company' => array
                     (
                         'label'         => array(''),
                         'inputType'     => 'checkbox',
-                        'options'       => array('1'=>'Firmenname'),
+                        'options'       => array('1'=>'Firma'),
                     ),
                 ),
             ),
+        ),
+        'fibu3_apikey' => array
+        (
+            'label'                     => &$GLOBALS['TL_LANG']['tl_harvest_settings']['fibu3_apikey'],
+            'inputType'                 => 'text',
+            'eval'                      => array('mandatory'=>true, 'tl_class'=>'long'),
         ),
     ),
 );
