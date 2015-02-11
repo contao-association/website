@@ -38,6 +38,7 @@ $GLOBALS['TL_LANG']['tl_harvest_settings']['edit']    = 'Harvest Schnittstellen-
 /**
  * Legends
  */
-$GLOBALS['TL_LANG']['tl_harvest_settings']['account_legend']         = 'Benutzerkonto';
-$GLOBALS['TL_LANG']['tl_harvest_settings']['memberships_legend']    = 'Mitgliedschaften';
+$GLOBALS['TL_LANG']['tl_harvest_settings']['account_legend']     = 'Benutzerkonto';
+$GLOBALS['TL_LANG']['tl_harvest_settings']['memberships_legend'] = 'Mitgliedschaften';
+$GLOBALS['TL_LANG']['tl_harvest_settings']['fibu3_legend']       = 'FIBU3 Buchhaltung';
 
