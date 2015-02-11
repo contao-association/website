@@ -155,7 +155,9 @@ kind,description,quantity,unit_price,amount,taxed,taxed2,project_id
                 try {
                     $objEmail = new EmailTemplate($arrRoot['harvest_mail_activated'], $arrRoot['language']);
                     $objEmail->send($objMembers->email, $this->getInvoiceTokens($objMembers->row(), $objInvoice));
-                } catch (Exception $e) {}
+                } catch (Exception $e) {
+                    \System::log($e->getMessage(), __METHOD__, TL_ERROR);
+                }
             }
         }
     }
