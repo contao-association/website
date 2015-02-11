@@ -26,6 +26,7 @@ $GLOBALS['TL_LANG']['tl_harvest_settings']['harvest_user']          = array('Ben
 $GLOBALS['TL_LANG']['tl_harvest_settings']['harvest_password']      = array('Passwort', 'Geben Sie Ihr Harvest-Passwort ein.');
 $GLOBALS['TL_LANG']['tl_harvest_settings']['harvest_memberships']   = array('Mitgliedschaften', 'Konfigurieren Sie Ihre Mitgliedschafts-Optionen.');
 $GLOBALS['TL_LANG']['tl_harvest_settings']['fibu3_apikey']          = array('FIBU3 API-Key', 'Geben Sie den FIBU3 API-Key ein.');
+$GLOBALS['TL_LANG']['tl_harvest_settings']['fibu3_period']          = array('Rechnungsperiode', 'Rechnungen ausserhalb der Periode werden NICHT gebucht.');
 
 
 /**

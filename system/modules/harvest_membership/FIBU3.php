@@ -13,16 +13,24 @@ class FIBU3
 {
     private $baseUrl = 'https://www.fibu3.ch/rest/api/v1/';
     private $apiKey;
+    private $periodStart;
+    private $periodEnd;
 
 
-    public function __construct($apiKey)
+    public function __construct($apiKey, \DateTimeInterface $periodStart, \DateTimeInterface $periodEnd)
     {
-        $this->apiKey = $apiKey;
+        $this->apiKey      = $apiKey;
+        $this->periodStart = $periodStart;
+        $this->periodEnd   = $periodEnd;
     }
 
 
-    public function book($text, \DateTime $receiptDate, $amount, $sollAccount, $habenAccount)
+    public function book($text, \DateTimeInterface $receiptDate, $amount, $sollAccount, $habenAccount)
     {
+        if ($receiptDate < $this->periodStart || $receiptDate > $this->periodEnd) {
+            throw new \OutOfRangeException('Invoice date is out of booking period.');
+        }
+
         $data = array(
             'text'               => $text,
             'vatCode'            => '',

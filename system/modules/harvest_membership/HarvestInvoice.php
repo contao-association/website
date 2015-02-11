@@ -27,8 +27,14 @@ class HarvestInvoice extends Controller
     {
         parent::__construct();
 
+        $period = deserialize($GLOBALS['TL_CONFIG']['fibu3_period']);
+
         $this->db = Database::getInstance();
-        $this->fibu3 = new FIBU3($GLOBALS['TL_CONFIG']['fibu3_apikey']);
+        $this->fibu3 = new FIBU3(
+            $GLOBALS['TL_CONFIG']['fibu3_apikey'],
+            DateTime::createFromFormat($GLOBALS['TL_CONFIG']['dateFormat'], $period[0]),
+            DateTime::createFromFormat($GLOBALS['TL_CONFIG']['dateFormat'], $period[1])
+        );
 
         // Make sure Harvest classes are available
         Harvest::getAPI();
