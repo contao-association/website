@@ -63,7 +63,7 @@ class FIBU3
             }
         }
 
-        return $lastNumber;
+        return $lastNumber + 1;
     }
 
 
