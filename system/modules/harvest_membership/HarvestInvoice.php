@@ -20,12 +20,21 @@
 
 class HarvestInvoice extends Controller
 {
+    private $db;
+    private $fibu3;
 
     public function __construct()
     {
         parent::__construct();
 
-        $this->import('Database');
+        $period = deserialize($GLOBALS['TL_CONFIG']['fibu3_period']);
+
+        $this->db = Database::getInstance();
+        $this->fibu3 = new FIBU3(
+            $GLOBALS['TL_CONFIG']['fibu3_apikey'],
+            DateTime::createFromFormat($GLOBALS['TL_CONFIG']['dateFormat'], $period[0]),
+            DateTime::createFromFormat($GLOBALS['TL_CONFIG']['dateFormat'], $period[1])
+        );
 
         // Make sure Harvest classes are available
         Harvest::getAPI();
@@ -43,13 +52,16 @@ class HarvestInvoice extends Controller
     {
         $arrConfig = $this->getRootPage($arrMember['language']);
 
+        $invoiceId   = $arrMember['id'] . '/' . date('Y');
+        $invoiceDate = new DateTime();
+
         // Create invoice
         $objInvoice = new Harvest_Invoice();
-        $objInvoice->issued_at = date('Y-m-d');
+        $objInvoice->issued_at = $invoiceDate->format('Y-m-d');
         $objInvoice->due_at = date('Y-m-d', strtotime('+'.$arrConfig['harvest_due'].' days'));
         $objInvoice->due_at_human_format = 'custom';
         $objInvoice->client_id = $arrMember['harvest_client_id'];
-        $objInvoice->number = $arrMember['id'] . '/' . date('Y');
+        $objInvoice->number = $invoiceId;
         $objInvoice->kind = 'free_form';
         $objInvoice->purchase_order = $arrMember['id'];
         $objInvoice->notes = $arrConfig['harvest_notes'];
@@ -64,6 +76,18 @@ kind,description,quantity,unit_price,amount,taxed,taxed2,project_id
         if (!$objResult->isSuccess()) {
             $this->log('Unable to create Harvest invoice for member ID '.$arrMember['id'].' (Error '.$objResult->code.')', __METHOD__, TL_ERROR);
             return 0;
+        }
+
+        try {
+            $this->fibu3->book(
+                sprintf('%s - %s', $invoiceId, Harvest::generateClientName($arrMember, $arrSubscription)),
+                $invoiceDate,
+                $arrSubscription['price'],
+                '1100',
+                $arrSubscription['account']
+            );
+        } catch (\Exception $e) {
+            $this->log($e->getMessage(), __METHOD__, TL_ERROR);
         }
 
         return $objResult->data;
@@ -104,7 +128,7 @@ kind,description,quantity,unit_price,amount,taxed,taxed2,project_id
 
         // Find members which have been added today some time ago
         // @see http://stackoverflow.com/a/2218577
-        $objMembers = $this->Database->query("
+        $objMembers = $this->db->query("
             SELECT *
             FROM tl_member
             WHERE (
@@ -140,13 +164,13 @@ kind,description,quantity,unit_price,amount,taxed,taxed2,project_id
     public function activateMembers()
     {
         // Only retrieve 10 members to prevent performance issues with the API
-        $objMembers = $this->Database->execute("SELECT * FROM tl_member WHERE disable='1' AND harvest_invoice>0 LIMIT 10");
+        $objMembers = $this->db->execute("SELECT * FROM tl_member WHERE disable='1' AND harvest_invoice>0 LIMIT 10");
 
         while ($objMembers->next()) {
             $objResult = Harvest::getInvoice($objMembers->harvest_invoice);
 
             if ($objResult->isSuccess() && $objResult->data->state == 'paid') {
-                $this->Database->prepare("UPDATE tl_member SET disable='', harvest_invoice=0 WHERE id=?")->executeUncached($objMembers->id);
+                $this->db->prepare("UPDATE tl_member SET disable='', harvest_invoice=0 WHERE id=?")->executeUncached($objMembers->id);
 
                 $objInvoice = $objResult->data;
                 $arrRoot = $this->getRootPage($objMembers->language);
@@ -154,7 +178,9 @@ kind,description,quantity,unit_price,amount,taxed,taxed2,project_id
                 try {
                     $objEmail = new EmailTemplate($arrRoot['harvest_mail_activated'], $arrRoot['language']);
                     $objEmail->send($objMembers->email, $this->getInvoiceTokens($objMembers->row(), $objInvoice));
-                } catch (Exception $e) {}
+                } catch (Exception $e) {
+                    $this->log($e->getMessage(), __METHOD__, TL_ERROR);
+                }
             }
         }
     }
@@ -164,7 +190,7 @@ kind,description,quantity,unit_price,amount,taxed,taxed2,project_id
      */
     public function notifyPayments()
     {
-        $lastRun = (int) $this->Database->prepare(
+        $lastRun = (int) $this->db->prepare(
             "SELECT tstamp FROM tl_lock WHERE name=?"
         )->limit(1)->executeUncached('harvest_payments')->tstamp;
 
@@ -192,7 +218,7 @@ kind,description,quantity,unit_price,amount,taxed,taxed2,project_id
             /** @var Harvest_Invoice $objInvoice */
             foreach ($objResult->data as $objInvoice) {
 
-                $objMember = $this->Database->prepare(
+                $objMember = $this->db->prepare(
                     "SELECT * FROM tl_member WHERE harvest_client_id=?"
                 )->execute($objInvoice->client_id);
 
@@ -225,7 +251,7 @@ kind,description,quantity,unit_price,amount,taxed,taxed2,project_id
                 }
             }
 
-            $this->Database->prepare(
+            $this->db->prepare(
                 "UPDATE tl_lock SET tstamp=? WHERE name=?"
             )->execute($stop->format('YmdH'), 'harvest_payments');
         }
@@ -244,7 +270,7 @@ kind,description,quantity,unit_price,amount,taxed,taxed2,project_id
 
         $intPage = (is_object($objPage) ? (int) $objPage->rootId : 0);
 
-        return $this->Database->prepare("SELECT * FROM tl_page WHERE type='root' AND (id=? OR language=? OR fallback='1')")
+        return $this->db->prepare("SELECT * FROM tl_page WHERE type='root' AND (id=? OR language=? OR fallback='1')")
                               ->limit(1)
                               ->execute($intPage, $strLanguage)
                               ->fetchAssoc();
