@@ -17,7 +17,7 @@ class FIBU3
     private $periodEnd;
 
 
-    public function __construct($apiKey, \DateTimeInterface $periodStart, \DateTimeInterface $periodEnd)
+    public function __construct($apiKey, \DateTime $periodStart, \DateTime $periodEnd)
     {
         $this->apiKey      = $apiKey;
         $this->periodStart = $periodStart;
@@ -25,7 +25,7 @@ class FIBU3
     }
 
 
-    public function book($text, \DateTimeInterface $receiptDate, $amount, $sollAccount, $habenAccount)
+    public function book($text, \DateTime $receiptDate, $amount, $sollAccount, $habenAccount)
     {
         if ($receiptDate < $this->periodStart || $receiptDate > $this->periodEnd) {
             throw new \OutOfRangeException('Invoice date is out of booking period.');
