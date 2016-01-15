@@ -49,6 +49,9 @@ class HarvestMembership extends Controller
             $arrSubscription = Harvest::getSubscription($arrMember);
 
             if ($arrSubscription === false) {
+                $GLOBALS['SENTRY_CLIENT']->getIdent(
+                    $GLOBALS['SENTRY_CLIENT']->captureMessage('Unable to generate Harvest client for member ID '.$arrMember['id'].' (no membership found)')
+                );
                 $this->log(('Unable to generate Harvest client for member ID '.$arrMember['id'].' (no membership found)'), __METHOD__, TL_ERROR);
                 return;
             }
@@ -57,6 +60,9 @@ class HarvestMembership extends Controller
             $arrMember['harvest_id'] = $this->createContact($arrMember['harvest_client_id'], $arrMember);
 
             if ($arrMember['harvest_client_id'] < 1 || $arrMember['harvest_id'] < 1) {
+                $GLOBALS['SENTRY_CLIENT']->getIdent(
+                    $GLOBALS['SENTRY_CLIENT']->captureMessage('Error creating client/contact in Harvest for member ID '.$arrMember['id'])
+                );
                 $this->log('Error creating client/contact in Harvest for member ID '.$arrMember['id'], __METHOD__, TL_ERROR);
                 return;
             }
@@ -191,6 +197,9 @@ class HarvestMembership extends Controller
 
         if (!$objResult->isSuccess())
         {
+            $GLOBALS['SENTRY_CLIENT']->getIdent(
+                $GLOBALS['SENTRY_CLIENT']->captureMessage('Unable to create Harvest client for member ID '.$arrMember['id'].' (Error '.$objResult->code.')')
+            );
             $this->log(('Unable to create Harvest client for member ID '.$arrMember['id'].' (Error '.$objResult->code.')'), __METHOD__, TL_ERROR);
             return 0;
         }
@@ -227,6 +236,9 @@ class HarvestMembership extends Controller
 
         if (!$objResult->isSuccess())
         {
+            $GLOBALS['SENTRY_CLIENT']->getIdent(
+                $GLOBALS['SENTRY_CLIENT']->captureMessage('Unable to create Harvest client for member ID '.$arrMember['id'].' (Error '.$objResult->code.')')
+            );
             $this->log(('Unable to create Harvest client for member ID '.$arrMember['id'].' (Error '.$objResult->code.')'), __METHOD__, TL_ERROR);
             return 0;
         }

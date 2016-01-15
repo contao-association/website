@@ -77,7 +77,7 @@ class ModuleHarvestInvoices extends Module
             switch ($objInvoice->state) {
                 case 'draft':
                 case 'closed':
-                    continue;
+                    continue(2);
 
                 case 'open':
                 case 'partial':

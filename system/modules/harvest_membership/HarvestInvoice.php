@@ -74,6 +74,9 @@ kind,description,quantity,unit_price,amount,taxed,taxed2,project_id
         $objResult = Harvest::createInvoice($objInvoice);
 
         if (!$objResult->isSuccess()) {
+            $GLOBALS['SENTRY_CLIENT']->getIdent(
+                $GLOBALS['SENTRY_CLIENT']->captureMessage('Unable to create Harvest invoice for member ID '.$arrMember['id'].' (Error '.$objResult->code.')')
+            );
             $this->log('Unable to create Harvest invoice for member ID '.$arrMember['id'].' (Error '.$objResult->code.')', __METHOD__, TL_ERROR);
             return 0;
         }
@@ -87,6 +90,7 @@ kind,description,quantity,unit_price,amount,taxed,taxed2,project_id
                 $arrSubscription['account']
             );
         } catch (\Exception $e) {
+            $GLOBALS['SENTRY_CLIENT']->getIdent($GLOBALS['SENTRY_CLIENT']->captureException($e));
             $this->log($e->getMessage(), __METHOD__, TL_ERROR);
         }
 
@@ -179,6 +183,7 @@ kind,description,quantity,unit_price,amount,taxed,taxed2,project_id
                     $objEmail = new EmailTemplate($arrRoot['harvest_mail_activated'], $arrRoot['language']);
                     $objEmail->send($objMembers->email, $this->getInvoiceTokens($objMembers->row(), $objInvoice));
                 } catch (Exception $e) {
+                    $GLOBALS['SENTRY_CLIENT']->getIdent($GLOBALS['SENTRY_CLIENT']->captureException($e));
                     $this->log($e->getMessage(), __METHOD__, TL_ERROR);
                 }
             }
@@ -243,6 +248,7 @@ kind,description,quantity,unit_price,amount,taxed,taxed2,project_id
                             $objEmail = new EmailTemplate($arrRoot['harvest_mail_paid'], $arrRoot['language']);
                             $objEmail->send($objMember->email, $this->getInvoiceTokens($objMember->row(), $objInvoice, $objPayment));
                         } catch (Exception $e) {
+                            $GLOBALS['SENTRY_CLIENT']->getIdent($GLOBALS['SENTRY_CLIENT']->captureException($e));
                             $this->log('Unable to send payment mail: ' . $e->getMessage(), __METHOD__, TL_ERROR);
                         }
 
@@ -343,9 +349,14 @@ kind,description,quantity,unit_price,amount,taxed,taxed2,project_id
                 Harvest::sendInvoiceMessage($objInvoice->id, $objMessage);
 
                 return true;
-            } catch (Exception $e) {}
+            } catch (Exception $e) {
+                $GLOBALS['SENTRY_CLIENT']->getIdent($GLOBALS['SENTRY_CLIENT']->captureException($e));
+            }
         }
 
+        $GLOBALS['SENTRY_CLIENT']->getIdent(
+            $GLOBALS['SENTRY_CLIENT']->captureMessage('Unable to send invoice email to "' . $arrMember['email'] . '" (Invoice ID ' . $intInvoice . ')')
+        );
         $this->log('Unable to send invoice email to "' . $arrMember['email'] . '" (Invoice ID ' . $intInvoice . ')', __METHOD__, TL_ERROR);
 
         return false;
