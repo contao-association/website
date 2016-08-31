@@ -30,9 +30,9 @@
     .headlinePad            { height:10px !important; background-color: #000; }
 
     h2                      { font-size:20px; color: #686868; font-weight:bold; line-height:24px; vertical-align:top; margin:0 0 20px 0;}
-    h3                      { font-size: 16px; color: #f7a940; margin: 0;}
+    h3                      { font-size: 16px; color: #f47c00; margin: 0;}
 
-    a                       { color: #d67128; }
+    a                       { color: #f47c00; }
       .ce_gallery table       { border:none; width:100% }
       .ce_gallery td          { margin:0; padding:0; text-align:center }
 
@@ -155,7 +155,7 @@
 							</tr>
 
 							<tr>
-								<td class="textPad" style="font-size:20px;background-color:#f7a940;">
+								<td class="textPad" style="font-size:20px;background-color:#f47c00;">
                                   <p style="margin:0;color:#FFF;font-family:Helvetica, Arial, sans-serif;font-weight:bold;">{{newsletter::subject}}</p>
 								</td>
 							</tr>
