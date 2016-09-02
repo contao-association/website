@@ -171,7 +171,7 @@
 
 							<tr>
 								<td style="font-size: 13px; color: #FFF; font-weight: normal; text-align: left; font-family: Helvetica, Arial, sans-serif; line-height: 24px; vertical-align: top; background-color: #424242;">
-                                  Contao Association / Sonnhalderain 15 / CH - 3250 Lyss<br />
+                                  Contao Association / CH - 3250 Lyss<br />
 
 
             <!-- <?php if (!isset($GLOBALS['objPage'])): ?><div id="unsubscribe">{{newsletter::unsubscribe::html}}</div><?php endif ?> -->
