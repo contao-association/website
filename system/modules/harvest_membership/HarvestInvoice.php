@@ -75,7 +75,16 @@ kind,description,quantity,unit_price,amount,taxed,taxed2,project_id
 
         if (!$objResult->isSuccess()) {
             $GLOBALS['SENTRY_CLIENT']->getIdent(
-                $GLOBALS['SENTRY_CLIENT']->captureMessage('Unable to create Harvest invoice for member ID '.$arrMember['id'].' (Error '.$objResult->code.')')
+                $GLOBALS['SENTRY_CLIENT']->captureMessage(
+                    'Unable to create Harvest invoice for member ID %s',
+                    [$arrMember['id']],
+                    [
+                        'code'    => $objResult->code,
+                        'data'    => $objResult->data,
+                        'headers' => $objResult->headers,
+                        'user'    => $arrMember
+                    ]
+                )
             );
             $this->log('Unable to create Harvest invoice for member ID '.$arrMember['id'].' (Error '.$objResult->code.')', __METHOD__, TL_ERROR);
             return 0;
@@ -158,7 +167,10 @@ kind,description,quantity,unit_price,amount,taxed,taxed2,project_id
         while ($objMembers->next()) {
             $arrMember = $objMembers->row();
             $intInvoice = $this->createMembershipInvoice($arrMember, Harvest::getSubscription($arrMember));
-            $this->sendRecurringInvoiceMail($intInvoice, $arrMember);
+
+            if ($intInvoice > 0) {
+                $this->sendRecurringInvoiceMail($intInvoice, $arrMember);
+            }
         }
     }
 
