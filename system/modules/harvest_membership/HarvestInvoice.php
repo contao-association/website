@@ -79,10 +79,12 @@ kind,description,quantity,unit_price,amount,taxed,taxed2,project_id
                     'Unable to create Harvest invoice for member ID %s',
                     [$arrMember['id']],
                     [
-                        'code'    => $objResult->code,
-                        'data'    => $objResult->data,
-                        'headers' => $objResult->headers,
-                        'user'    => $arrMember
+                        'user'  => $arrMember,
+                        'extra' => [
+                            'code'    => $objResult->code,
+                            'data'    => $objResult->data,
+                            'headers' => $objResult->headers,
+                        ],
                     ]
                 )
             );
