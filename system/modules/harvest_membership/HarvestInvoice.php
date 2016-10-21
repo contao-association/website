@@ -62,7 +62,7 @@ class HarvestInvoice extends Controller
         $objInvoice->due_at_human_format = 'custom';
         $objInvoice->client_id = $arrMember['harvest_client_id'];
         $objInvoice->number = $invoiceId;
-        $objInvoice->kind = 'free_form';
+        $objInvoice->kind = 'free-form';
         $objInvoice->purchase_order = $arrMember['id'];
         $objInvoice->notes = $arrConfig['harvest_notes'];
         $objInvoice->csv_line_items =
