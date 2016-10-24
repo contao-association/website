@@ -81,6 +81,7 @@ kind,description,quantity,unit_price,amount,taxed,taxed2,project_id
                     [
                         'user'  => $arrMember,
                         'extra' => [
+                            'invoice' => $objInvoice->toXML(),
                             'code'    => $objResult->code,
                             'data'    => $objResult->data,
                             'headers' => $objResult->headers,
