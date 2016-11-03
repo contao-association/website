@@ -68,7 +68,7 @@ class HarvestInvoice extends Controller
         $objInvoice->csv_line_items =
 '
 kind,description,quantity,unit_price,amount,taxed,taxed2,project_id
-'.$arrConfig['harvest_category'].',' . sprintf($arrConfig['harvest_format'], $arrSubscription['label']) . ',1.00,' . $arrSubscription['price'] . ',' . $arrSubscription['price'] . ',false,false,1
+'.$arrConfig['harvest_category'].',' . sprintf($arrConfig['harvest_format'], $arrSubscription['label']) . ',1.00,' . $arrSubscription['price'] . ',' . $arrSubscription['price'] . ',false,false,
   ';
 
         $objResult = Harvest::createInvoice($objInvoice);
