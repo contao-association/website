@@ -1,0 +1,191 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+       "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+  <head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+  <meta name="Generator" content="Contao Open Source CMS">
+  <title><?php echo $this->title; ?></title>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+  <meta name="viewport" content="width=device-width; initial-scale=1.0; maximum-scale=1.0;">
+
+<!-- Inline stylesheet for newsletter -->
+
+    <style type="text/css">
+
+    .ReadMsgBody {width: 100%; background-color: #dfdfdf;} /* Hotmail Client-Hack */
+    .ExternalClass {width: 100%; background-color: #dfdfdf;}
+
+    body {width: 100%; background-color: #dfdfdf; margin:0; padding:0; font-family:Helvetica, Arial, sans-serif;font-size:13px; color: #272727; line-height: 20px; }
+    html {width: 100%;}
+
+    .tableHeaderScale img   {width: 580px!important; height: 290px!important; border-radius: 4px!important;}
+    .tableSmallImages img	{width: 170px!important; height: 109px!important; border-radius: 4px!important;}
+    .NoPadding img 			{width: 267px!important; height: 141px!important; border-radius: 4px!important;}
+    .tableImagesScale img	{width: 267px!important; height: 141px!important; border-radius: 4px!important;}
+
+    table table             { background-color: #FFF; border: 1px solid #d3d3d3; border-top: 0; }
+    table table td          { padding:10px 20px; }
+    table.clean, table table.clean { background:none; border:0; }
+    table.clean td, table table.clean td { padding:0; }
+    .headlinePad            { height:10px !important; background-color: #000; }
+
+    h2                      { font-size:20px; color: #686868; font-weight:bold; line-height:24px; vertical-align:top; margin:0 0 20px 0;}
+    h3                      { font-size: 16px; color: #f2963f; margin: 0;}
+
+    a                       { color: #f2963f; }
+      .ce_gallery table       { border:none; width:100% }
+      .ce_gallery td          { margin:0; padding:0; text-align:center }
+
+
+    @media only screen and (max-width: 640px) {
+
+        body                            {width:auto!important;}
+        table table                     {background-color: #FFF; width:440px!important; }
+		.fullWidth						{width: 100%!important; }
+		.mobileCenter					{width: 440px !important; text-align: center!important; }
+		.headerScale					{width: 440px!important; height: 200px!important; }
+		.tableHeaderScale img			{width: 440px!important; height: 200px!important; }
+		.eraseForMobile					{width:0; display:none !important;}
+		.navPad							{padding-right: 35px!important; padding-left: 35px; }
+		.headerBG						{width: 100%!important; height: 140px!important; }
+		.headlineFont					{font-size: 16px!important; }
+		/* .headlinePad					{height: 14px!important; } */
+		.textPad						{height: 6px!important; }
+		.smallImageScale				{width: 440px!important; height: 282px!important; }
+		.tableSmallImages img			{width: 440px!important; height: 282px!important; }
+		.imageScale1					{width: 440px!important; height: 230px!important; }
+		.textLineHeight					{line-height: 22px!important;font-family: Helvetica, Arial, sans-serif;}
+		.imageScale2					{width: 440px!important; height: 232px!important; margin-top: 10px!important; }
+		.tableImagesScale img			{width: 440px!important; height: 232px!important; margin-top: 10px!important; }
+		.NoPadding						{padding: 0px!important; }
+		.NoPadding img 					{width: 440px!important; height: 230px!important; }
+		.image2PadMobile				{padding-top: 30px!important;}
+		.scaledown 						{width: 361px!important; padding-left: 10px!important;  }
+		.scaleDownPlusIcon 				{width: 14px!important;  }
+		.mobilePad						{height: 45px!important; }
+		.mobilePad3						{height: 30px!important; }
+		.mobilePad2						{height: 0px!important; }
+		.mobilePad4						{height:10px!important; }
+		.mobilePad5						{height:20px!important; }
+		.addForMobile 					{ height: 15px; }
+		table[class=table200]			{width:146px !important; text-align: center!important;}
+		table[class=tablefull]			{width:100% !important; padding-top: 25px;}
+		.roundCounter					{width: 58px!important; height: 58px!important; text-align: center; }
+		.roundCornerHeadline			{padding-top: 10px!important; padding-left: 0px!important; text-align: center!important;}
+		.fontFooter						{font-size: 13px!important; text-align: center!important; line-height: 22px!important;}
+		.footerCenter					{text-align: center!important; padding-bottom: 5px!important; }
+		.ExtraPadForMobile				{width: 191px; background-color: #f7f7f7; }
+		.footerLogoPad					{text-align: center!important; padding-top: 20px!important;}
+		.footerScale					{width: 146px!important;}
+		.alignLeft						{text-align: center!important; line-height: 24px!important; }
+		}
+
+
+@media only screen and (max-width: 479px)
+		   {
+		body{width:auto!important;}
+
+		table table 					{background-color: #FFF; width: 280px!important; }
+		.fullWidth						{width: 100%!important;}
+		.mobileCenter					{width:280px !important; text-align: center!important; }
+		.headerScale					{width: 280px!important; height: 135px!important; }
+		.tableHeaderScale img			{width: 280px!important; height: 127px!important; }
+		.eraseForMobile					{width:0; display:none !important;}
+		.navPad							{padding-right: 15px!important; padding-left: 15px; }
+		/* .headerBG 						{width: 100%!important; height: 120px!important; background-color: #ffffff; background-image: url(images/header_bg.jpg); background-size: 100% 160px; background-repeat: no-repeat;} */
+		.headlineFont					{font-size: 20px!important; }
+		/* .headlinePad					{height: 14px!important; } */
+		.textPad						{height: 6px!important; }
+		.addForMobile 					{ height: 15px; }
+		.textLineHeight					{line-height: 22px!important;}
+		.smallImageScale				{width: 280px!important; height: 179px!important;}
+		.tableSmallImages img			{width: 280px!important; height: 179px!important; }
+		.imageScale1					{width: 280px!important; height: 150px!important; }
+		.imageScale2					{width: 280px!important; height: 148px!important;  margin-top: 15px!important;}								{width: 280px!important; height: 148px!important; border-radius: 4px!important; margin-top: 15px!important;}
+		.tableImagesScale img			{width: 280px!important; height: 148px!important;  margin-top: 15px!important;}
+		.NoPadding						{padding: 0px!important; }
+		.NoPadding img					{width: 280px!important; height: 150px!important; }
+		.image2PadMobile				{padding-top: 15px!important;}
+		.scaledown 						{width: 211px!important; padding-left: 10px!important;  }
+		.scaleDownPlusIcon 				{width: 14px!important;  }
+		.mobilePad						{height: 40px!important; }
+		.mobilePad2						{height: 10px!important; }
+		.mobilePad3						{height: 30px!important; }
+		.mobilePad4						{height: 20px!important; }
+		.mobilePad5						{height:15px!important; }
+
+		table[class=table200]			{width:93px !important; text-align: center!important;}
+		table[class=tablefull]			{width:100% !important; padding-top: 25px!important; }
+
+		.fontFooter						{font-size: 12px!important; text-align: center!important; line-height: 22px!important;}
+		.footerLogoPad					{text-align: center!important; padding-top: 20px!important;}
+
+		.headlineFont3					{text-align: center!important; width: 58px!important;}
+		.ExtraPadForMobile				{width: 111px; background-color: #f7f7f7; }
+		.footerScale					{width: 92px!important;}
+		.alignLeft						{text-align: center!important; line-height: 24px!important; }
+		}
+
+    </style>
+    </head>
+
+    <body leftmargin="0" topmargin="0" marginwidth="0" marginheight="0">
+
+			<!-- Wrapper of Header -->
+			<table class="fullWidth" width="100%" border="0" cellpadding="0" cellspacing="0" align="center">
+				<tr>
+					<td width="100%" valign="top">
+
+						<table width="580" border="0" cellpadding="0" cellspacing="0" align="center">
+
+							<!--
+							<tr>
+								<td class="headlinePad">
+				<?php if (!isset($GLOBALS['objPage'])): ?><div id="onlinelink"><a href="{{newsletter::href}}"><?php echo $GLOBALS['TL_LANG']['tl_avisota_newsletter']['online'] ?></a></div><?php endif ?>
+                                </td>
+							</tr>
+							-->
+
+
+							<tr>
+								<td class="headlineFont" style="font-size:20px; color: #686868; font-weight:bold; text-align:left; font-family:Helvetica, Arial, sans-serif; line-height:24px; vertical-align:top;">
+								    <img src="tl_files/newsletter/logo-ck2016.png" alt="Logo Contao Konferenz 2015" width="246" height="80">
+
+								    </td>
+							</tr>
+
+							<tr>
+								<td class="textPad" style="font-size:20px;background-color:#f2953f;">
+                                  <p style="margin:0;color:#FFF;font-family:Helvetica, Arial, sans-serif;font-weight:bold;">{{newsletter::subject}}</p>
+								</td>
+							</tr>
+							<tr>
+
+								<td style="vertical-align:top; padding-top:0; margin-top:0;" class="textLineHeight">
+    								<?php echo $this->body; ?>
+								</td>
+							</tr>
+							<tr>
+								<td height="40" style="font-size: 0;line-height: 0;border-collapse: collapse;">[nbsp]</td>
+							</tr>
+
+							<tr>
+								<td style="font-size: 13px; color: #FFF; font-weight: normal; text-align: left; font-family: Helvetica, Arial, sans-serif; line-height: 24px; vertical-align: top; background-color: #424242;">
+                                  Contao Association / CH - 3250 Lyss<br />
+
+
+            <!-- <?php if (!isset($GLOBALS['objPage'])): ?><div id="unsubscribe">{{newsletter::unsubscribe::html}}</div><?php endif ?> -->
+								</td>
+							</tr>
+
+						</table>
+
+					</td>
+				</tr>
+			</table><!-- End Header Mobile Wrapper -->
+
+
+
+    </body>
+
+</html>
