@@ -51,7 +51,7 @@ class FIBU3
         $request = $this->apiCall('listAccountingTransactions');
 
         if ($request->code != 200) {
-            throw new \LogicException('FIBU3 API-Call failed (' . $request->url . ')');
+            throw new \LogicException("FIBU3 API-Call failed\n\nRequest:\n" . $request->request . '\n\nResponse:\n' . $request->response);
         }
 
         $lastNumber = 0;
