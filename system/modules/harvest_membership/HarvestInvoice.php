@@ -21,20 +21,12 @@
 class HarvestInvoice extends Controller
 {
     private $db;
-    private $fibu3;
 
     public function __construct()
     {
         parent::__construct();
 
-        $period = deserialize($GLOBALS['TL_CONFIG']['fibu3_period']);
-
         $this->db = Database::getInstance();
-        $this->fibu3 = new FIBU3(
-            $GLOBALS['TL_CONFIG']['fibu3_apikey'],
-            DateTime::createFromFormat($GLOBALS['TL_CONFIG']['dateFormat'], $period[0]),
-            DateTime::createFromFormat($GLOBALS['TL_CONFIG']['dateFormat'], $period[1])
-        );
 
         // Make sure Harvest classes are available
         Harvest::getAPI();
@@ -91,19 +83,6 @@ kind,description,quantity,unit_price,amount,taxed,taxed2,project_id
             );
             $this->log('Unable to create Harvest invoice for member ID '.$arrMember['id'].' (Error '.$objResult->code.')', __METHOD__, TL_ERROR);
             return 0;
-        }
-
-        try {
-            $this->fibu3->book(
-                sprintf('%s - %s', $invoiceId, Harvest::generateClientName($arrMember, $arrSubscription)),
-                $invoiceDate,
-                $arrSubscription['price'],
-                '1100',
-                $arrSubscription['account']
-            );
-        } catch (\Exception $e) {
-            $GLOBALS['SENTRY_CLIENT']->getIdent($GLOBALS['SENTRY_CLIENT']->captureException($e));
-            $this->log($e->getMessage(), __METHOD__, TL_ERROR);
         }
 
         return $objResult->data;

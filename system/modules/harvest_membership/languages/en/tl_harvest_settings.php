@@ -25,8 +25,6 @@ $GLOBALS['TL_LANG']['tl_harvest_settings']['harvest_account']       = array('Kon
 $GLOBALS['TL_LANG']['tl_harvest_settings']['harvest_user']          = array('Benutzername (E-Mail)', 'Geben Sie Ihren Harvest-Benutzernamen ein.');
 $GLOBALS['TL_LANG']['tl_harvest_settings']['harvest_password']      = array('Passwort', 'Geben Sie Ihr Harvest-Passwort ein.');
 $GLOBALS['TL_LANG']['tl_harvest_settings']['harvest_memberships']   = array('Mitgliedschaften', 'Konfigurieren Sie Ihre Mitgliedschafts-Optionen.');
-$GLOBALS['TL_LANG']['tl_harvest_settings']['fibu3_apikey']          = array('FIBU3 API-Key', 'Geben Sie den FIBU3 API-Key ein.');
-$GLOBALS['TL_LANG']['tl_harvest_settings']['fibu3_period']          = array('Rechnungsperiode', 'Rechnungen ausserhalb der Periode werden NICHT gebucht.');
 
 
 /**
@@ -40,5 +38,4 @@ $GLOBALS['TL_LANG']['tl_harvest_settings']['edit']    = 'Harvest Schnittstellen-
  */
 $GLOBALS['TL_LANG']['tl_harvest_settings']['account_legend']     = 'Benutzerkonto';
 $GLOBALS['TL_LANG']['tl_harvest_settings']['memberships_legend'] = 'Mitgliedschaften';
-$GLOBALS['TL_LANG']['tl_harvest_settings']['fibu3_legend']       = 'FIBU3 Buchhaltung';
 
