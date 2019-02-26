@@ -85,6 +85,18 @@ kind,description,quantity,unit_price,amount,taxed,taxed2,project_id
             return 0;
         }
 
+        $objFilter = new Harvest_Invoice_Filter();
+        $objFilter->client = $arrMember['harvest_client_id'];
+        $objInvoices = Harvest::getInvoices($objFilter);
+
+        if ($objInvoices->isSuccess()) {
+            foreach ($objInvoices->data as $objInvoice) {
+                if ($objInvoice->number === $invoiceId) {
+                    return $objInvoice->id;
+                }
+            }
+        }
+
         return $objResult->data;
     }
 

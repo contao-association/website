@@ -256,6 +256,16 @@ class HarvestMembership extends Controller
             return 0;
         }
 
+        $objResult = Harvest::getClientContacts($intClient);
+
+        if ($objResult->isSuccess()) {
+            foreach ($objResult->data as $objContact) {
+                if ($objContact->first_name == $arrMember['firstname'] && $objContact->last_name == $arrMember['lastname']) {
+                    return $objContact->id;
+                }
+            }
+        }
+
         return (int) $objResult->data;
     }
 
