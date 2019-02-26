@@ -6,18 +6,20 @@
 /*                                                                          */
 /****************************************************************************/
 
+$preferences = Swift_Preferences::getInstance();
+
 // Sets the default charset so that setCharset() is not needed elsewhere
-Swift_Preferences::getInstance()
-	->setCharset($GLOBALS['TL_CONFIG']['characterSet']);
+$preferences->setCharset('utf-8');
 
 // Without these lines the default caching mechanism is "array" but this uses a lot of memory.
 // If possible, use a disk cache to enable attaching large attachments etc.
 // You can override the default temporary directory by setting the TMPDIR environment variable.
-if (!$GLOBALS['TL_CONFIG']['useFTP'])
-{
-	Swift_Preferences::getInstance()
-		->setTempDir(TL_ROOT . '/system/tmp')
-		->setCacheType('disk');
+if (@is_writable($tmpDir = sys_get_temp_dir())) {
+    $preferences->setTempDir($tmpDir)->setCacheType('disk');
 }
 
-Swift_Preferences::getInstance()->setQPDotEscape(false);
+// this should only be done when Swiftmailer won't use the native QP content encoder
+// see mime_deps.php
+if (PHP_VERSION_ID < 50407) {
+    $preferences->setQPDotEscape(false);
+}

@@ -10,8 +10,8 @@
 
 /**
  * Base class for Spools (implements time and message limits).
- * @package Swift
- * @author  Fabien Potencier
+ *
+ * @author Fabien Potencier
  */
 abstract class Swift_ConfigurableSpool implements Swift_Spool
 {
@@ -23,7 +23,8 @@ abstract class Swift_ConfigurableSpool implements Swift_Spool
 
     /**
      * Sets the maximum number of messages to send per flush.
-     * @param int $limit The limit
+     *
+     * @param int $limit
      */
     public function setMessageLimit($limit)
     {
@@ -32,6 +33,7 @@ abstract class Swift_ConfigurableSpool implements Swift_Spool
 
     /**
      * Gets the maximum number of messages to send per flush.
+     *
      * @return int The limit
      */
     public function getMessageLimit()
@@ -41,6 +43,7 @@ abstract class Swift_ConfigurableSpool implements Swift_Spool
 
     /**
      * Sets the time limit (in seconds) per flush.
+     *
      * @param int $limit The limit
      */
     public function setTimeLimit($limit)
@@ -50,6 +53,7 @@ abstract class Swift_ConfigurableSpool implements Swift_Spool
 
     /**
      * Gets the time limit (in seconds) per flush.
+     *
      * @return int The limit
      */
     public function getTimeLimit()

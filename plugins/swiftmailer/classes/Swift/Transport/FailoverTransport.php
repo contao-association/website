@@ -10,22 +10,19 @@
 
 /**
  * Contains a list of redundant Transports so when one fails, the next is used.
- * @package Swift
- * @subpackage Transport
+ *
  * @author Chris Corbyn
  */
 class Swift_Transport_FailoverTransport extends Swift_Transport_LoadBalancedTransport
 {
     /**
-     * Registered transport curently used.
+     * Registered transport currently used.
+     *
      * @var Swift_Transport
-     * @access private
      */
     private $_currentTransport;
 
-    /**
-     * Creates a new FailoverTransport.
-     */
+    // needed as __construct is called from elsewhere explicitly
     public function __construct()
     {
         parent::__construct();
@@ -33,26 +30,33 @@ class Swift_Transport_FailoverTransport extends Swift_Transport_LoadBalancedTran
 
     /**
      * Send the given Message.
+     *
      * Recipient/sender data will be retrieved from the Message API.
      * The return value is the number of recipients who were accepted for delivery.
+     *
      * @param Swift_Mime_Message $message
-     * @param string[] &$failedRecipients to collect failures by-reference
+     * @param string[]           $failedRecipients An array of failures by-reference
+     *
      * @return int
      */
     public function send(Swift_Mime_Message $message, &$failedRecipients = null)
     {
         $maxTransports = count($this->_transports);
         $sent = 0;
+        $this->_lastUsedTransport = null;
 
         for ($i = 0; $i < $maxTransports
-            && $transport = $this->_getNextTransport(); ++$i)
-        {
+            && $transport = $this->_getNextTransport(); ++$i) {
             try {
                 if (!$transport->isStarted()) {
                     $transport->start();
                 }
 
-                return $transport->send($message, $failedRecipients);
+                if ($sent = $transport->send($message, $failedRecipients)) {
+                    $this->_lastUsedTransport = $transport;
+
+                    return $sent;
+                }
             } catch (Swift_TransportException $e) {
                 $this->_killCurrentTransport();
             }
@@ -66,8 +70,6 @@ class Swift_Transport_FailoverTransport extends Swift_Transport_LoadBalancedTran
 
         return $sent;
     }
-
-    // -- Protected methods
 
     protected function _getNextTransport()
     {

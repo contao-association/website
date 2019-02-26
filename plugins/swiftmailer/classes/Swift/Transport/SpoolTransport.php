@@ -10,8 +10,8 @@
 
 /**
  * Stores Messages in a queue.
- * @package Swift
- * @author  Fabien Potencier
+ *
+ * @author Fabien Potencier
  */
 class Swift_Transport_SpoolTransport implements Swift_Transport
 {
@@ -32,8 +32,10 @@ class Swift_Transport_SpoolTransport implements Swift_Transport
 
     /**
      * Sets the spool object.
-     * @param  Swift_Spool                    $spool
-     * @return Swift_Transport_SpoolTransport
+     *
+     * @param Swift_Spool $spool
+     *
+     * @return $this
      */
     public function setSpool(Swift_Spool $spool)
     {
@@ -44,6 +46,7 @@ class Swift_Transport_SpoolTransport implements Swift_Transport
 
     /**
      * Get the spool object.
+     *
      * @return Swift_Spool
      */
     public function getSpool()
@@ -54,7 +57,7 @@ class Swift_Transport_SpoolTransport implements Swift_Transport
     /**
      * Tests if this Transport mechanism has started.
      *
-     * @return boolean
+     * @return bool
      */
     public function isStarted()
     {
@@ -79,9 +82,9 @@ class Swift_Transport_SpoolTransport implements Swift_Transport
      * Sends the given message.
      *
      * @param Swift_Mime_Message $message
-     * @param string[] &$failedRecipients to collect failures by-reference
+     * @param string[]           $failedRecipients An array of failures by-reference
      *
-     * @return int The number of sent emails
+     * @return int The number of sent e-mail's
      */
     public function send(Swift_Mime_Message $message, &$failedRecipients = null)
     {
@@ -95,7 +98,7 @@ class Swift_Transport_SpoolTransport implements Swift_Transport
         $success = $this->_spool->queueMessage($message);
 
         if ($evt) {
-            $evt->setResult($success ? Swift_Events_SendEvent::RESULT_SUCCESS : Swift_Events_SendEvent::RESULT_FAILED);
+            $evt->setResult($success ? Swift_Events_SendEvent::RESULT_SPOOLED : Swift_Events_SendEvent::RESULT_FAILED);
             $this->_eventDispatcher->dispatchEvent($evt, 'sendPerformed');
         }
 

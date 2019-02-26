@@ -10,8 +10,7 @@
 
 /**
  * A MIME entity, in a multipart message.
- * @package Swift
- * @subpackage Mime
+ *
  * @author Chris Corbyn
  */
 class Swift_Mime_SimpleMimeEntity implements Swift_Mime_MimeEntity
@@ -28,15 +27,15 @@ class Swift_Mime_SimpleMimeEntity implements Swift_Mime_MimeEntity
     /** The grammar to use for id validation */
     private $_grammar;
 
-    /** A mime bounary, if any is used */
+    /** A mime boundary, if any is used */
     private $_boundary;
 
     /** Mime types to be used based on the nesting level */
     private $_compositeRanges = array(
         'multipart/mixed' => array(self::LEVEL_TOP, self::LEVEL_MIXED),
         'multipart/alternative' => array(self::LEVEL_MIXED, self::LEVEL_ALTERNATIVE),
-        'multipart/related' => array(self::LEVEL_ALTERNATIVE, self::LEVEL_RELATED)
-        );
+        'multipart/related' => array(self::LEVEL_ALTERNATIVE, self::LEVEL_RELATED),
+    );
 
     /** A set of filter rules to define what level an entity should be nested at */
     private $_compoundLevelFilters = array();
@@ -60,8 +59,8 @@ class Swift_Mime_SimpleMimeEntity implements Swift_Mime_MimeEntity
     private $_alternativePartOrder = array(
         'text/plain' => 1,
         'text/html' => 2,
-        'multipart/related' => 3
-        );
+        'multipart/related' => 3,
+    );
 
     /** The CID of this entity */
     private $_id;
@@ -73,6 +72,7 @@ class Swift_Mime_SimpleMimeEntity implements Swift_Mime_MimeEntity
 
     /**
      * Create a new SimpleMimeEntity with $headers, $encoder and $cache.
+     *
      * @param Swift_Mime_HeaderSet      $headers
      * @param Swift_Mime_ContentEncoder $encoder
      * @param Swift_KeyCache            $cache
@@ -80,14 +80,12 @@ class Swift_Mime_SimpleMimeEntity implements Swift_Mime_MimeEntity
      */
     public function __construct(Swift_Mime_HeaderSet $headers, Swift_Mime_ContentEncoder $encoder, Swift_KeyCache $cache, Swift_Mime_Grammar $grammar)
     {
-        $this->_cacheKey = uniqid();
+        $this->_cacheKey = md5(uniqid(getmypid().mt_rand(), true));
         $this->_cache = $cache;
         $this->_headers = $headers;
         $this->_grammar = $grammar;
         $this->setEncoder($encoder);
-        $this->_headers->defineOrdering(
-            array('Content-Type', 'Content-Transfer-Encoding')
-            );
+        $this->_headers->defineOrdering(array('Content-Type', 'Content-Transfer-Encoding'));
 
         // This array specifies that, when the entire MIME document contains
         // $compoundLevel, then for each child within $level, if its Content-Type
@@ -106,9 +104,9 @@ class Swift_Mime_SimpleMimeEntity implements Swift_Mime_MimeEntity
             (self::LEVEL_ALTERNATIVE + self::LEVEL_RELATED) => array(
                 self::LEVEL_ALTERNATIVE => array(
                     'text/plain' => self::LEVEL_ALTERNATIVE,
-                    'text/html' => self::LEVEL_RELATED
-                    )
-                )
+                    'text/html' => self::LEVEL_RELATED,
+                    ),
+                ),
             );
 
         $this->_id = $this->getRandomId();
@@ -116,6 +114,7 @@ class Swift_Mime_SimpleMimeEntity implements Swift_Mime_MimeEntity
 
     /**
      * Generate a new Content-ID or Message-ID for this MIME entity.
+     *
      * @return string
      */
     public function generateId()
@@ -127,6 +126,7 @@ class Swift_Mime_SimpleMimeEntity implements Swift_Mime_MimeEntity
 
     /**
      * Get the {@link Swift_Mime_HeaderSet} for this entity.
+     *
      * @return Swift_Mime_HeaderSet
      */
     public function getHeaders()
@@ -136,8 +136,10 @@ class Swift_Mime_SimpleMimeEntity implements Swift_Mime_MimeEntity
 
     /**
      * Get the nesting level of this entity.
-     * @return int
+     *
      * @see LEVEL_TOP, LEVEL_MIXED, LEVEL_RELATED, LEVEL_ALTERNATIVE
+     *
+     * @return int
      */
     public function getNestingLevel()
     {
@@ -146,6 +148,7 @@ class Swift_Mime_SimpleMimeEntity implements Swift_Mime_MimeEntity
 
     /**
      * Get the Content-type of this entity.
+     *
      * @return string
      */
     public function getContentType()
@@ -155,8 +158,10 @@ class Swift_Mime_SimpleMimeEntity implements Swift_Mime_MimeEntity
 
     /**
      * Set the Content-type of this entity.
-     * @param  string                      $type
-     * @return Swift_Mime_SimpleMimeEntity
+     *
+     * @param string $type
+     *
+     * @return $this
      */
     public function setContentType($type)
     {
@@ -170,20 +175,24 @@ class Swift_Mime_SimpleMimeEntity implements Swift_Mime_MimeEntity
 
     /**
      * Get the CID of this entity.
+     *
      * The CID will only be present in headers if a Content-ID header is present.
+     *
      * @return string
      */
     public function getId()
     {
-        return $this->_headers->has($this->_getIdField())
-            ? current((array) $this->_getHeaderFieldModel($this->_getIdField()))
-            : $this->_id;
+        $tmp = (array) $this->_getHeaderFieldModel($this->_getIdField());
+
+        return $this->_headers->has($this->_getIdField()) ? current($tmp) : $this->_id;
     }
 
     /**
      * Set the CID of this entity.
-     * @param  string                      $id
-     * @return Swift_Mime_SimpleMimeEntity
+     *
+     * @param string $id
+     *
+     * @return $this
      */
     public function setId($id)
     {
@@ -197,7 +206,9 @@ class Swift_Mime_SimpleMimeEntity implements Swift_Mime_MimeEntity
 
     /**
      * Get the description of this entity.
+     *
      * This value comes from the Content-Description header if set.
+     *
      * @return string
      */
     public function getDescription()
@@ -207,9 +218,12 @@ class Swift_Mime_SimpleMimeEntity implements Swift_Mime_MimeEntity
 
     /**
      * Set the description of this entity.
+     *
      * This method sets a value in the Content-ID header.
-     * @param  string                      $description
-     * @return Swift_Mime_SimpleMimeEntity
+     *
+     * @param string $description
+     *
+     * @return $this
      */
     public function setDescription($description)
     {
@@ -222,6 +236,7 @@ class Swift_Mime_SimpleMimeEntity implements Swift_Mime_MimeEntity
 
     /**
      * Get the maximum line length of the body of this entity.
+     *
      * @return int
      */
     public function getMaxLineLength()
@@ -231,9 +246,12 @@ class Swift_Mime_SimpleMimeEntity implements Swift_Mime_MimeEntity
 
     /**
      * Set the maximum line length of lines in this body.
+     *
      * Though not enforced by the library, lines should not exceed 1000 chars.
-     * @param  int                         $length
-     * @return Swift_Mime_SimpleMimeEntity
+     *
+     * @param int $length
+     *
+     * @return $this
      */
     public function setMaxLineLength($length)
     {
@@ -244,7 +262,8 @@ class Swift_Mime_SimpleMimeEntity implements Swift_Mime_MimeEntity
 
     /**
      * Get all children added to this entity.
-     * @return array of Swift_Mime_Entity
+     *
+     * @return Swift_Mime_MimeEntity[]
      */
     public function getChildren()
     {
@@ -253,35 +272,34 @@ class Swift_Mime_SimpleMimeEntity implements Swift_Mime_MimeEntity
 
     /**
      * Set all children of this entity.
-     * @param  array                       $children      Swiift_Mime_Entity instances
-     * @param  int                         $compoundLevel For internal use only
-     * @return Swift_Mime_SimpleMimeEntity
+     *
+     * @param Swift_Mime_MimeEntity[] $children
+     * @param int                     $compoundLevel For internal use only
+     *
+     * @return $this
      */
     public function setChildren(array $children, $compoundLevel = null)
     {
-        //TODO: Try to refactor this logic
+        // TODO: Try to refactor this logic
 
-        $compoundLevel = isset($compoundLevel)
-            ? $compoundLevel
-            : $this->_getCompoundLevel($children)
-            ;
-
+        $compoundLevel = isset($compoundLevel) ? $compoundLevel : $this->_getCompoundLevel($children);
         $immediateChildren = array();
         $grandchildren = array();
         $newContentType = $this->_userContentType;
 
         foreach ($children as $child) {
             $level = $this->_getNeededChildLevel($child, $compoundLevel);
-            if (empty($immediateChildren)) { //first iteration
+            if (empty($immediateChildren)) {
+                //first iteration
                 $immediateChildren = array($child);
             } else {
                 $nextLevel = $this->_getNeededChildLevel($immediateChildren[0], $compoundLevel);
                 if ($nextLevel == $level) {
                     $immediateChildren[] = $child;
                 } elseif ($level < $nextLevel) {
-                    //Re-assign immediateChildren to grandchilden
+                    // Re-assign immediateChildren to grandchildren
                     $grandchildren = array_merge($grandchildren, $immediateChildren);
-                    //Set new children
+                    // Set new children
                     $immediateChildren = array($child);
                 } else {
                     $grandchildren[] = $child;
@@ -289,21 +307,20 @@ class Swift_Mime_SimpleMimeEntity implements Swift_Mime_MimeEntity
             }
         }
 
-        if (!empty($immediateChildren)) {
+        if ($immediateChildren) {
             $lowestLevel = $this->_getNeededChildLevel($immediateChildren[0], $compoundLevel);
 
-            //Determine which composite media type is needed to accomodate the
+            // Determine which composite media type is needed to accommodate the
             // immediate children
             foreach ($this->_compositeRanges as $mediaType => $range) {
-                if ($lowestLevel > $range[0]
-                    && $lowestLevel <= $range[1])
-                {
+                if ($lowestLevel > $range[0] && $lowestLevel <= $range[1]) {
                     $newContentType = $mediaType;
+
                     break;
                 }
             }
 
-            //Put any grandchildren in a subpart
+            // Put any grandchildren in a subpart
             if (!empty($grandchildren)) {
                 $subentity = $this->_createChild();
                 $subentity->_setNestingLevel($lowestLevel);
@@ -323,21 +340,22 @@ class Swift_Mime_SimpleMimeEntity implements Swift_Mime_MimeEntity
 
     /**
      * Get the body of this entity as a string.
+     *
      * @return string
      */
     public function getBody()
     {
-        return ($this->_body instanceof Swift_OutputByteStream)
-            ? $this->_readStream($this->_body)
-            : $this->_body;
+        return $this->_body instanceof Swift_OutputByteStream ? $this->_readStream($this->_body) : $this->_body;
     }
 
     /**
      * Set the body of this entity, either as a string, or as an instance of
      * {@link Swift_OutputByteStream}.
-     * @param  mixed                       $body
-     * @param  string                      $contentType optional
-     * @return Swift_Mime_SimpleMimeEntity
+     *
+     * @param mixed  $body
+     * @param string $contentType optional
+     *
+     * @return $this
      */
     public function setBody($body, $contentType = null)
     {
@@ -355,6 +373,7 @@ class Swift_Mime_SimpleMimeEntity implements Swift_Mime_MimeEntity
 
     /**
      * Get the encoder used for the body of this entity.
+     *
      * @return Swift_Mime_ContentEncoder
      */
     public function getEncoder()
@@ -364,8 +383,10 @@ class Swift_Mime_SimpleMimeEntity implements Swift_Mime_MimeEntity
 
     /**
      * Set the encoder used for the body of this entity.
-     * @param  Swift_Mime_ContentEncoder   $encoder
-     * @return Swift_Mime_SimpleMimeEntity
+     *
+     * @param Swift_Mime_ContentEncoder $encoder
+     *
+     * @return $this
      */
     public function setEncoder(Swift_Mime_ContentEncoder $encoder)
     {
@@ -382,12 +403,13 @@ class Swift_Mime_SimpleMimeEntity implements Swift_Mime_MimeEntity
 
     /**
      * Get the boundary used to separate children in this entity.
+     *
      * @return string
      */
     public function getBoundary()
     {
         if (!isset($this->_boundary)) {
-            $this->_boundary = '_=_swift_v4_' . time() . uniqid() . '_=_';
+            $this->_boundary = '_=_swift_v4_'.time().'_'.md5(getmypid().mt_rand().uniqid('', true)).'_=_';
         }
 
         return $this->_boundary;
@@ -395,9 +417,12 @@ class Swift_Mime_SimpleMimeEntity implements Swift_Mime_MimeEntity
 
     /**
      * Set the boundary used to separate children in this entity.
-     * @param  string                       $boundary
+     *
+     * @param string $boundary
+     *
      * @throws Swift_RfcComplianceException
-     * @return Swift_Mime_SimpleMimeEntity
+     *
+     * @return $this
      */
     public function setBoundary($boundary)
     {
@@ -410,6 +435,7 @@ class Swift_Mime_SimpleMimeEntity implements Swift_Mime_MimeEntity
     /**
      * Receive notification that the charset of this entity, or a parent entity
      * has changed.
+     *
      * @param string $charset
      */
     public function charsetChanged($charset)
@@ -420,6 +446,7 @@ class Swift_Mime_SimpleMimeEntity implements Swift_Mime_MimeEntity
     /**
      * Receive notification that the encoder of this entity or a parent entity
      * has changed.
+     *
      * @param Swift_Mime_ContentEncoder $encoder
      */
     public function encoderChanged(Swift_Mime_ContentEncoder $encoder)
@@ -429,31 +456,42 @@ class Swift_Mime_SimpleMimeEntity implements Swift_Mime_MimeEntity
 
     /**
      * Get this entire entity as a string.
+     *
      * @return string
      */
     public function toString()
     {
         $string = $this->_headers->toString();
+        $string .= $this->_bodyToString();
+
+        return $string;
+    }
+
+    /**
+     * Get this entire entity as a string.
+     *
+     * @return string
+     */
+    protected function _bodyToString()
+    {
+        $string = '';
+
         if (isset($this->_body) && empty($this->_immediateChildren)) {
             if ($this->_cache->hasKey($this->_cacheKey, 'body')) {
                 $body = $this->_cache->getString($this->_cacheKey, 'body');
             } else {
-                $body = "\r\n" . $this->_encoder->encodeString($this->getBody(), 0,
-                    $this->getMaxLineLength()
-                    );
-                $this->_cache->setString($this->_cacheKey, 'body', $body,
-                    Swift_KeyCache::MODE_WRITE
-                    );
+                $body = "\r\n".$this->_encoder->encodeString($this->getBody(), 0, $this->getMaxLineLength());
+                $this->_cache->setString($this->_cacheKey, 'body', $body, Swift_KeyCache::MODE_WRITE);
             }
             $string .= $body;
         }
 
         if (!empty($this->_immediateChildren)) {
             foreach ($this->_immediateChildren as $child) {
-                $string .= "\r\n\r\n--" . $this->getBoundary() . "\r\n";
+                $string .= "\r\n\r\n--".$this->getBoundary()."\r\n";
                 $string .= $child->toString();
             }
-            $string .= "\r\n\r\n--" . $this->getBoundary() . "--\r\n";
+            $string .= "\r\n\r\n--".$this->getBoundary()."--\r\n";
         }
 
         return $string;
@@ -462,9 +500,9 @@ class Swift_Mime_SimpleMimeEntity implements Swift_Mime_MimeEntity
     /**
      * Returns a string representation of this object.
      *
-     * @return string
-     *
      * @see toString()
+     *
+     * @return string
      */
     public function __toString()
     {
@@ -472,7 +510,8 @@ class Swift_Mime_SimpleMimeEntity implements Swift_Mime_MimeEntity
     }
 
     /**
-     * Write this entire entity to a {@link Swift_InputByteStream}.
+     * Write this entire entity to a {@see Swift_InputByteStream}.
+     *
      * @param Swift_InputByteStream
      */
     public function toByteStream(Swift_InputByteStream $is)
@@ -480,6 +519,16 @@ class Swift_Mime_SimpleMimeEntity implements Swift_Mime_MimeEntity
         $is->write($this->_headers->toString());
         $is->commit();
 
+        $this->_bodyToByteStream($is);
+    }
+
+    /**
+     * Write this entire entity to a {@link Swift_InputByteStream}.
+     *
+     * @param Swift_InputByteStream
+     */
+    protected function _bodyToByteStream(Swift_InputByteStream $is)
+    {
         if (empty($this->_immediateChildren)) {
             if (isset($this->_body)) {
                 if ($this->_cache->hasKey($this->_cacheKey, 'body')) {
@@ -495,13 +544,9 @@ class Swift_Mime_SimpleMimeEntity implements Swift_Mime_MimeEntity
                     if ($this->_body instanceof Swift_OutputByteStream) {
                         $this->_body->setReadPointer(0);
 
-                        $this->_encoder->encodeByteStream($this->_body, $is, 0,
-                            $this->getMaxLineLength()
-                            );
+                        $this->_encoder->encodeByteStream($this->_body, $is, 0, $this->getMaxLineLength());
                     } else {
-                        $is->write($this->_encoder->encodeString(
-                            $this->getBody(), 0, $this->getMaxLineLength()
-                            ));
+                        $is->write($this->_encoder->encodeString($this->getBody(), 0, $this->getMaxLineLength()));
                     }
 
                     if ($cacheIs) {
@@ -513,17 +558,16 @@ class Swift_Mime_SimpleMimeEntity implements Swift_Mime_MimeEntity
 
         if (!empty($this->_immediateChildren)) {
             foreach ($this->_immediateChildren as $child) {
-                $is->write("\r\n\r\n--" . $this->getBoundary() . "\r\n");
+                $is->write("\r\n\r\n--".$this->getBoundary()."\r\n");
                 $child->toByteStream($is);
             }
-            $is->write("\r\n\r\n--" . $this->getBoundary() . "--\r\n");
+            $is->write("\r\n\r\n--".$this->getBoundary()."--\r\n");
         }
     }
 
-    // -- Protected methods
-
     /**
-     * Get the name of the header that provides the ID of this entity */
+     * Get the name of the header that provides the ID of this entity.
+     */
     protected function _getIdField()
     {
         return 'Content-ID';
@@ -548,9 +592,9 @@ class Swift_Mime_SimpleMimeEntity implements Swift_Mime_MimeEntity
             $this->_headers->get($field)->setFieldBodyModel($model);
 
             return true;
-        } else {
-            return false;
         }
+
+        return false;
     }
 
     /**
@@ -572,9 +616,9 @@ class Swift_Mime_SimpleMimeEntity implements Swift_Mime_MimeEntity
             $this->_headers->get($field)->setParameter($parameter, $value);
 
             return true;
-        } else {
-            return false;
         }
+
+        return false;
     }
 
     /**
@@ -595,6 +639,8 @@ class Swift_Mime_SimpleMimeEntity implements Swift_Mime_MimeEntity
 
     /**
      * Get the KeyCache used in this entity.
+     *
+     * @return Swift_KeyCache
      */
     protected function _getCache()
     {
@@ -603,6 +649,7 @@ class Swift_Mime_SimpleMimeEntity implements Swift_Mime_MimeEntity
 
     /**
      * Get the grammar used for validation.
+     *
      * @return Swift_Mime_Grammar
      */
     protected function _getGrammar()
@@ -620,26 +667,23 @@ class Swift_Mime_SimpleMimeEntity implements Swift_Mime_MimeEntity
 
     /**
      * Returns a random Content-ID or Message-ID.
+     *
      * @return string
      */
     protected function getRandomId()
     {
-        $idLeft = time() . '.' . uniqid();
-        $idRight = !empty($_SERVER['SERVER_NAME'])
-            ? $_SERVER['SERVER_NAME']
-            : 'swift.generated';
-        $id = $idLeft . '@' . $idRight;
+        $idLeft = md5(getmypid().'.'.time().'.'.uniqid(mt_rand(), true));
+        $idRight = !empty($_SERVER['SERVER_NAME']) ? $_SERVER['SERVER_NAME'] : 'swift.generated';
+        $id = $idLeft.'@'.$idRight;
 
         try {
             $this->_assertValidId($id);
         } catch (Swift_RfcComplianceException $e) {
-            $id = $idLeft . '@swift.generated';
+            $id = $idLeft.'@swift.generated';
         }
 
         return $id;
     }
-
-    // -- Private methods
 
     private function _readStream(Swift_OutputByteStream $os)
     {
@@ -647,6 +691,8 @@ class Swift_Mime_SimpleMimeEntity implements Swift_Mime_MimeEntity
         while (false !== $bytes = $os->read(8192)) {
             $string .= $bytes;
         }
+
+        $os->setReadPointer(0);
 
         return $string;
     }
@@ -660,10 +706,7 @@ class Swift_Mime_SimpleMimeEntity implements Swift_Mime_MimeEntity
 
     private function _assertValidBoundary($boundary)
     {
-        if (!preg_match(
-            '/^[a-z0-9\'\(\)\+_\-,\.\/:=\?\ ]{0,69}[a-z0-9\'\(\)\+_\-,\.\/:=\?]$/Di',
-            $boundary))
-        {
+        if (!preg_match('/^[a-z0-9\'\(\)\+_\-,\.\/:=\?\ ]{0,69}[a-z0-9\'\(\)\+_\-,\.\/:=\?]$/Di', $boundary)) {
             throw new Swift_RfcComplianceException('Mime boundary set is not RFC 2046 compliant.');
         }
     }
@@ -702,19 +745,16 @@ class Swift_Mime_SimpleMimeEntity implements Swift_Mime_MimeEntity
         $realLevel = $child->getNestingLevel();
         $lowercaseType = strtolower($child->getContentType());
 
-        if (isset($filter[$realLevel])
-            && isset($filter[$realLevel][$lowercaseType]))
-        {
+        if (isset($filter[$realLevel]) && isset($filter[$realLevel][$lowercaseType])) {
             return $filter[$realLevel][$lowercaseType];
-        } else {
-            return $realLevel;
         }
+
+        return $realLevel;
     }
 
     private function _createChild()
     {
-        return new self($this->_headers->newInstance(),
-            $this->_encoder, $this->_cache, $this->_grammar);
+        return new self($this->_headers->newInstance(), $this->_encoder, $this->_cache, $this->_grammar);
     }
 
     private function _notifyEncoderChanged(Swift_Mime_ContentEncoder $encoder)
@@ -737,61 +777,70 @@ class Swift_Mime_SimpleMimeEntity implements Swift_Mime_MimeEntity
     {
         $shouldSort = false;
         foreach ($this->_immediateChildren as $child) {
-            //NOTE: This include alternative parts moved into a related part
+            // NOTE: This include alternative parts moved into a related part
             if ($child->getNestingLevel() == self::LEVEL_ALTERNATIVE) {
                 $shouldSort = true;
                 break;
             }
         }
 
-        //Sort in order of preference, if there is one
+        // Sort in order of preference, if there is one
         if ($shouldSort) {
-            usort($this->_immediateChildren, array($this, '_childSortAlgorithm'));
+            // Group the messages by order of preference
+            $sorted = array();
+            foreach ($this->_immediateChildren as $child) {
+                $type = $child->getContentType();
+                $level = array_key_exists($type, $this->_alternativePartOrder) ? $this->_alternativePartOrder[$type] : max($this->_alternativePartOrder) + 1;
+
+                if (empty($sorted[$level])) {
+                    $sorted[$level] = array();
+                }
+
+                $sorted[$level][] = $child;
+            }
+
+            ksort($sorted);
+
+            $this->_immediateChildren = array_reduce($sorted, 'array_merge', array());
         }
     }
-
-    private function _childSortAlgorithm($a, $b)
-    {
-        $typePrefs = array();
-        $types = array(
-            strtolower($a->getContentType()),
-            strtolower($b->getContentType())
-            );
-        foreach ($types as $type) {
-            $typePrefs[] = (array_key_exists($type, $this->_alternativePartOrder))
-                ? $this->_alternativePartOrder[$type]
-                : (max($this->_alternativePartOrder) + 1);
-        }
-
-        return ($typePrefs[0] >= $typePrefs[1]) ? 1 : -1;
-    }
-
-    // -- Destructor
 
     /**
      * Empties it's own contents from the cache.
      */
     public function __destruct()
     {
-        $this->_cache->clearAll($this->_cacheKey);
+        if ($this->_cache instanceof Swift_KeyCache) {
+            $this->_cache->clearAll($this->_cacheKey);
+        }
     }
 
     /**
      * Throws an Exception if the id passed does not comply with RFC 2822.
-     * @param  string                       $id
+     *
+     * @param string $id
+     *
      * @throws Swift_RfcComplianceException
      */
     private function _assertValidId($id)
     {
-        if (!preg_match(
-            '/^' . $this->_grammar->getDefinition('id-left') . '@' .
-            $this->_grammar->getDefinition('id-right') . '$/D',
-            $id
-            ))
-        {
-            throw new Swift_RfcComplianceException(
-                'Invalid ID given <' . $id . '>'
-                );
+        if (!preg_match('/^'.$this->_grammar->getDefinition('id-left').'@'.$this->_grammar->getDefinition('id-right').'$/D', $id)) {
+            throw new Swift_RfcComplianceException('Invalid ID given <'.$id.'>');
         }
+    }
+
+    /**
+     * Make a deep copy of object.
+     */
+    public function __clone()
+    {
+        $this->_headers = clone $this->_headers;
+        $this->_encoder = clone $this->_encoder;
+        $this->_cacheKey = md5(uniqid(getmypid().mt_rand(), true));
+        $children = array();
+        foreach ($this->_children as $pos => $child) {
+            $children[$pos] = clone $child;
+        }
+        $this->setChildren($children);
     }
 }

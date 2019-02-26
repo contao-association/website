@@ -10,15 +10,15 @@
 
 /**
  * Contains a list of redundant Transports so when one fails, the next is used.
- * @package Swift
- * @subpackage Transport
+ *
  * @author Chris Corbyn
  */
 class Swift_FailoverTransport extends Swift_Transport_FailoverTransport
 {
     /**
      * Creates a new FailoverTransport with $transports.
-     * @param array $transports
+     *
+     * @param Swift_Transport[] $transports
      */
     public function __construct($transports = array())
     {
@@ -33,8 +33,10 @@ class Swift_FailoverTransport extends Swift_Transport_FailoverTransport
 
     /**
      * Create a new FailoverTransport instance.
-     * @param  string                  $transports
-     * @return Swift_FailoverTransport
+     *
+     * @param Swift_Transport[] $transports
+     *
+     * @return self
      */
     public static function newInstance($transports = array())
     {

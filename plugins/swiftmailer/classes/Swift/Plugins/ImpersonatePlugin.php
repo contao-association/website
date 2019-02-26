@@ -1,4 +1,5 @@
 <?php
+
 /*
  * This file is part of SwiftMailer.
  * (c) 2009 Fabien Potencier
@@ -10,8 +11,6 @@
 /**
  * Replaces the sender of a message.
  *
- * @package Swift
- * @subpackage Plugins
  * @author Arjen Brouwer
  */
 class Swift_Plugins_ImpersonatePlugin implements Swift_Events_SendListener
@@ -19,8 +18,7 @@ class Swift_Plugins_ImpersonatePlugin implements Swift_Events_SendListener
     /**
      * The sender to impersonate.
      *
-     * @var String
-     * @access private
+     * @var string
      */
     private $_sender;
 
@@ -64,8 +62,8 @@ class Swift_Plugins_ImpersonatePlugin implements Swift_Events_SendListener
         $headers = $message->getHeaders();
 
         if ($headers->has('X-Swift-Return-Path')) {
-                $message->setReturnPath($headers->get('X-Swift-Return-Path')->getAddress());
-                $headers->removeAll('X-Swift-Return-Path');
+            $message->setReturnPath($headers->get('X-Swift-Return-Path')->getAddress());
+            $headers->removeAll('X-Swift-Return-Path');
         }
     }
 }

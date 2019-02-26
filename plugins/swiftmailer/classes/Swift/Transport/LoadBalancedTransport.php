@@ -9,28 +9,34 @@
  */
 
 /**
- * Redudantly and rotationally uses several Transports when sending.
+ * Redundantly and rotationally uses several Transports when sending.
  *
- * @package Swift
- * @subpackage Transport
  * @author Chris Corbyn
  */
 class Swift_Transport_LoadBalancedTransport implements Swift_Transport
 {
-    /** Transports which are deemed useless */
+    /**
+     * Transports which are deemed useless.
+     *
+     * @var Swift_Transport[]
+     */
     private $_deadTransports = array();
 
     /**
      * The Transports which are used in rotation.
      *
-     * @var array Swift_Transport
-     * @access protected
+     * @var Swift_Transport[]
      */
     protected $_transports = array();
 
     /**
-     * Creates a new LoadBalancedTransport.
+     * The Transport used in the last successful send operation.
+     *
+     * @var Swift_Transport
      */
+    protected $_lastUsedTransport = null;
+
+    // needed as __construct is called from elsewhere explicitly
     public function __construct()
     {
     }
@@ -38,7 +44,7 @@ class Swift_Transport_LoadBalancedTransport implements Swift_Transport
     /**
      * Set $transports to delegate to.
      *
-     * @param array $transports Swift_Transport
+     * @param Swift_Transport[] $transports
      */
     public function setTransports(array $transports)
     {
@@ -49,7 +55,7 @@ class Swift_Transport_LoadBalancedTransport implements Swift_Transport
     /**
      * Get $transports to delegate to.
      *
-     * @return array Swift_Transport
+     * @return Swift_Transport[]
      */
     public function getTransports()
     {
@@ -57,9 +63,19 @@ class Swift_Transport_LoadBalancedTransport implements Swift_Transport
     }
 
     /**
+     * Get the Transport used in the last successful send operation.
+     *
+     * @return Swift_Transport
+     */
+    public function getLastUsedTransport()
+    {
+        return $this->_lastUsedTransport;
+    }
+
+    /**
      * Test if this Transport mechanism has started.
      *
-     * @return boolean
+     * @return bool
      */
     public function isStarted()
     {
@@ -91,22 +107,24 @@ class Swift_Transport_LoadBalancedTransport implements Swift_Transport
      * The return value is the number of recipients who were accepted for delivery.
      *
      * @param Swift_Mime_Message $message
-     * @param string[] &$failedRecipients to collect failures by-reference
+     * @param string[]           $failedRecipients An array of failures by-reference
+     *
      * @return int
      */
     public function send(Swift_Mime_Message $message, &$failedRecipients = null)
     {
         $maxTransports = count($this->_transports);
         $sent = 0;
+        $this->_lastUsedTransport = null;
 
         for ($i = 0; $i < $maxTransports
-            && $transport = $this->_getNextTransport(); ++$i)
-        {
+            && $transport = $this->_getNextTransport(); ++$i) {
             try {
                 if (!$transport->isStarted()) {
                     $transport->start();
                 }
                 if ($sent = $transport->send($message, $failedRecipients)) {
+                    $this->_lastUsedTransport = $transport;
                     break;
                 }
             } catch (Swift_TransportException $e) {
@@ -135,13 +153,10 @@ class Swift_Transport_LoadBalancedTransport implements Swift_Transport
         }
     }
 
-    // -- Protected methods
-
     /**
      * Rotates the transport list around and returns the first instance.
      *
      * @return Swift_Transport
-     * @access protected
      */
     protected function _getNextTransport()
     {
@@ -154,8 +169,6 @@ class Swift_Transport_LoadBalancedTransport implements Swift_Transport
 
     /**
      * Tag the currently used (top of stack) transport as dead/useless.
-     *
-     * @access protected
      */
     protected function _killCurrentTransport()
     {

@@ -9,15 +9,15 @@
  */
 
 /**
- * SendmailTransport for sending mail through a sendmail/postfix (etc..) binary.
- * @package Swift
- * @subpackage Transport
+ * SendmailTransport for sending mail through a Sendmail/Postfix (etc..) binary.
+ *
  * @author Chris Corbyn
  */
 class Swift_SendmailTransport extends Swift_Transport_SendmailTransport
 {
     /**
      * Create a new SendmailTransport, optionally using $command for sending.
+     *
      * @param string $command
      */
     public function __construct($command = '/usr/sbin/sendmail -bs')
@@ -33,8 +33,10 @@ class Swift_SendmailTransport extends Swift_Transport_SendmailTransport
 
     /**
      * Create a new SendmailTransport instance.
-     * @param  string                  $command
-     * @return Swift_SendmailTransport
+     *
+     * @param string $command
+     *
+     * @return self
      */
     public static function newInstance($command = '/usr/sbin/sendmail -bs')
     {
