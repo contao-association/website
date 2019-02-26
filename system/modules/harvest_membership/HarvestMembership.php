@@ -207,6 +207,12 @@ class HarvestMembership extends Controller
             return 0;
         }
 
+        $arrClients = Harvest::getClientLookupTable();
+
+        if (($intId = array_search($strName, $arrClients)) !== false) {
+            return $intId;
+        }
+
         return (int) $objResult->data;
     }
 
@@ -220,6 +226,10 @@ class HarvestMembership extends Controller
      */
     protected function createContact($intClient, $arrMember)
     {
+        if (!$intClient) {
+            return 0;
+        }
+
         $objResult = Harvest::getClientContacts($intClient);
 
         if ($objResult->isSuccess()) {
