@@ -266,6 +266,8 @@ kind,description,quantity,unit_price,amount,taxed,taxed2,project_id
             $this->db->prepare(
                 "UPDATE tl_lock SET tstamp=? WHERE name=?"
             )->execute($stop->format('YmdH'), 'harvest_payments');
+
+            $this->notifyPayments();
         }
     }
 
