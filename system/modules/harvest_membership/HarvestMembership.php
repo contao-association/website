@@ -159,14 +159,46 @@ class HarvestMembership extends Controller
 
         if ($objResult->isSuccess()) {
             $objClient = $this->prepareClient($arrMember, $objResult->data);
-            Harvest::updateClient($objClient);
+            $objResult = Harvest::updateClient($objClient);
+
+            if (!$objResult->isSuccess()) {
+                $GLOBALS['SENTRY_CLIENT']->getIdent(
+                    $GLOBALS['SENTRY_CLIENT']->captureMessage(
+                        'Error updating Harvest client data for member ID '.$arrMember['id'].' (Error '.$objResult->code.')',
+                        [],
+                        ['extra' => ['response' => $objResult->data]]
+                    )
+                );
+                $this->log('Error updating Harvest client data for member ID '.$arrMember['id'].' (Error '.$objResult->code.')', __METHOD__, TL_ERROR);
+
+                if (TL_MODE === 'BE') {
+                    $this->addErrorMessage('Harvest-Daten konnten nicht aktualisiert werden!');
+                }
+                return;
+            }
         }
 
         $objResult = Harvest::getContact($arrMember['harvest_id']);
 
         if ($objResult->isSuccess()) {
             $objContact = $this->prepareContact($arrMember, $objResult->data);
-            Harvest::updateContact($objContact);
+            $objResult = Harvest::updateContact($objContact);
+
+            if (!$objResult->isSuccess()) {
+                $GLOBALS['SENTRY_CLIENT']->getIdent(
+                    $GLOBALS['SENTRY_CLIENT']->captureMessage(
+                        'Error updating Harvest contact data for member ID '.$arrMember['id'].' (Error '.$objResult->code.')',
+                        [],
+                        ['extra' => ['response' => $objResult->data]]
+                    )
+                );
+                $this->log('Error updating Harvest contact data for member ID '.$arrMember['id'].' (Error '.$objResult->code.')', __METHOD__, TL_ERROR);
+
+                if (TL_MODE === 'BE') {
+                    $this->addErrorMessage('Harvest-Daten konnten nicht aktualisiert werden!');
+                }
+                return;
+            }
         }
     }
 
@@ -289,7 +321,7 @@ class HarvestMembership extends Controller
         $objClient->name = ampersand(Harvest::generateClientName($arrMember, $arrSubscription));
 
         if ($arrSubscription['company']) {
-            $objClient->details = ampersand(sprintf("%s%s\n%s %s%s",
+            $objClient->address = $objClient->details = ampersand(sprintf("%s%s\n%s %s%s",
                 ($arrMember['company'] ? $arrMember['firstname'].' '.$arrMember['lastname']."\n" : ''),
                 $arrMember['street'],
                 $arrMember['postal'],
@@ -297,7 +329,7 @@ class HarvestMembership extends Controller
                 ($arrMember['country'] == 'ch' ? '' : "\n".$arrCountries[$arrMember['country']]))
             );
         } else {
-            $objClient->details = ampersand(sprintf("%s%s\n%s %s%s",
+            $objClient->address = $objClient->details = ampersand(sprintf("%s%s\n%s %s%s",
                 ($arrMember['company'] ? $arrMember['company']."\n" : ''),
                 $arrMember['street'],
                 $arrMember['postal'],
