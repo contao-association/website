@@ -1,0 +1,22 @@
+imports:
+    - { resource: config.yml }
+
+sentry:
+    dsn: '%env(SENTRY_DSN)%'
+    options:
+        send_default_pii: true
+        environment: "%env(SENTRY_ENV)%"
+        excluded_exceptions:
+            - Contao\CoreBundle\Exception\PageNotFoundException
+            - Contao\CoreBundle\Exception\AccessDeniedException
+            - Contao\CoreBundle\Exception\InvalidRequestTokenException
+            - Contao\CoreBundle\Exception\ResponseException
+            - Contao\CoreBundle\Exception\RedirectResponseException
+            - Contao\CoreBundle\Exception\AjaxRedirectResponseException
+            - Contao\CoreBundle\Exception\NoContentResponseException
+            - Lexik\Bundle\MaintenanceBundle\Exception\ServiceUnavailableException
+            - Symfony\Component\HttpKernel\Exception\NotFoundHttpException
+            - Symfony\Component\HttpKernel\Exception\AccessDeniedHttpException
+            - Symfony\Component\HttpKernel\Exception\ServiceUnavailableHttpException
+            - Symfony\Component\HttpKernel\Exception\UnauthorizedHttpException
+            - Symfony\Component\Security\Core\Exception\AccessDeniedException

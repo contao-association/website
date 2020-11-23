@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="<?= $this->language ?>"<?php if ($this->isRTL): ?> dir="rtl"<?php endif; ?>>
+<head>
+
+    <?php $this->block('head'); ?>
+    <meta charset="<?= $this->charset ?>">
+    <title><?= $this->title ?></title>
+    <base href="<?= $this->base ?>">
+
+    <?php $this->block('meta'); ?>
+    <meta name="robots" content="<?= $this->robots ?>">
+    <meta name="description" content="<?= $this->description ?>">
+    <meta name="generator" content="Contao Open Source CMS">
+    <meta name="viewport" content="width=device-width,initial-scale=1.0">
+
+    <link rel="apple-touch-icon" sizes="180x180" href="<?= $this->asset('icons/apple-touch-icon.png') ?>">
+    <link rel="icon" type="image/png" sizes="32x32" href="<?= $this->asset('icons/favicon-32x32.png') ?>">
+    <link rel="icon" type="image/png" sizes="16x16" href="<?= $this->asset('icons/favicon-16x16.png') ?>">
+    <link rel="manifest" href="<?= $this->asset('icons/site.webmanifest') ?>">
+    <link rel="mask-icon" href="<?= $this->asset('icons/safari-pinned-tab.svg') ?>" color="#db2c3c">
+    <link rel="shortcut icon" href="<?= $this->asset('icons/favicon.ico') ?>">
+    <meta name="msapplication-TileColor" content="#2d89ef">
+    <meta name="msapplication-config" content="<?= $this->asset('icons/browserconfig.xml') ?>">
+    <meta name="theme-color" content="#ffffff">
+    <?php $this->endblock(); ?>
+
+    <?= $this->framework ?>
+    <link type="text/css" rel="stylesheet" href="<?= $this->asset('app.css') ?>">
+    <?= $this->stylesheets ?>
+    <script src="<?= $this->asset('app.js') ?>"></script>
+    <?= $this->mooScripts ?>
+    <?= $this->head ?>
+
+    <?php $this->endblock(); ?>
+
+</head>
+<body class="<?= $this->class; ?>"<?php if ($this->onload): ?> onload="<?= $this->onload ?>"<?php endif; ?> itemscope itemtype="http://schema.org/WebPage">
+
+<?php $this->block('body'); ?>
+<?php $this->sections('top'); ?>
+
+<?php $this->block('header'); ?>
+<?php if ($this->header): ?>
+    <header class="section-header" itemscope itemtype="http://schema.org/WPHeader">
+        <div class="section-header__inside">
+            <?= $this->header ?>
+        </div>
+    </header>
+<?php endif; ?>
+<?php $this->endblock(); ?>
+
+<?php $this->sections('before'); ?>
+
+<?php $this->block('container'); ?>
+<div class="layout__columns layout__columns--<?= $this->layout->cols ?>">
+<?php $this->block('main'); ?>
+    <main class="section-main" itemscope itemtype="http://schema.org/WebPageElement" itemprop="mainContentOfPage">
+        <div class="section-main__inside">
+            <?= $this->main ?>
+        </div>
+    </main>
+<?php $this->endblock(); ?>
+
+<?php $this->block('left'); ?>
+<?php if ($this->left): ?>
+    <aside class="section-left">
+        <div class="section-left__inside">
+            <?= $this->left ?>
+        </div>
+    </aside>
+<?php endif; ?>
+<?php $this->endblock(); ?>
+
+<?php $this->block('right'); ?>
+<?php if ($this->right): ?>
+    <aside class="section-right">
+        <div class="section-right__inside">
+            <?= $this->right ?>
+        </div>
+    </aside>
+<?php endif; ?>
+<?php $this->endblock(); ?>
+
+</div>
+<?php $this->endblock(); ?>
+
+<?php $this->sections('after'); ?>
+
+<?php $this->block('footer'); ?>
+<?php if ($this->footer): ?>
+    <footer class="section-footer" itemscope itemtype="http://schema.org/WPFooter">
+        <div class="section-footer__inside">
+            <?= $this->footer ?>
+        </div>
+    </footer>
+<?php endif; ?>
+<?php $this->endblock(); ?>
+
+
+<?php $this->sections('bottom'); ?>
+<?php $this->endblock(); ?>
+
+<?= $this->mootools ?>
+
+</body>
+</html>

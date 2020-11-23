@@ -1,0 +1,3 @@
+<?php foreach ($this->matches as $section): ?>
+    <?php $this->insert($section['template'], $section); ?>
+<?php endforeach; ?>

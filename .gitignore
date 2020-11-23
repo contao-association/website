@@ -1,0 +1,10 @@
+# Generated folders
+/assets/
+/files/
+/node_modules/
+/system/
+/var/
+/vendor/
+/web/*
+!/web/.htaccess.*
+/.env.*

@@ -1,0 +1,19 @@
+.base: &base
+    user: contaoro
+    bin/php: 'php74'
+    hostname: s001.cyon.net
+
+    # Composer 2.0
+    bin/composer: '/home/contaoro/public_html/composer.phar'
+
+dev:
+    <<: *base
+    deploy_path: /home/contaoro/public_html/members.contao.org
+    symfony_env: prod
+    htaccess_filename: .htaccess.dev
+
+prod:
+    <<: *base
+    deploy_path: /home/contaoro/public_html/members.contao.org
+    symfony_env: prod
+    htaccess_filename: .htaccess.prod

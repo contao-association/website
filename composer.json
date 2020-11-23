@@ -1,0 +1,28 @@
+{
+    "type": "project",
+    "license": "proprietary",
+    "require": {
+        "php": "^7.4",
+        "contao/conflicts": "*@dev",
+        "contao/manager-bundle": "4.9.*",
+        "terminal42/notification_center": "^1.4",
+        "terminal42/contao-mailusername": "^1.0.6",
+        "sentry/sentry-symfony": "^3.0"
+    },
+    "require-dev": {
+        "deployer/deployer": "^6.5",
+        "deployer/recipes": "^6.2",
+        "terminal42/deployer-recipes": "dev-main"
+    },
+    "extra": {
+        "contao-component-dir": "assets"
+    },
+    "scripts": {
+        "post-install-cmd": [
+            "Contao\\ManagerBundle\\Composer\\ScriptHandler::initializeApplication"
+        ],
+        "post-update-cmd": [
+            "Contao\\ManagerBundle\\Composer\\ScriptHandler::initializeApplication"
+        ]
+    }
+}

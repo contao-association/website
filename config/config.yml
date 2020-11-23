@@ -1,0 +1,23 @@
+
+contao:
+    prepend_locale: true
+    localconfig:
+        licenseAccepted: true
+        enableSearch: false
+        disableCron: true
+        folderUrl: false
+
+        installPassword: "%env(INSTALL_PASSWORD)%"
+        adminEmail: association@contao.org
+        dateFormat: "d.m.Y"
+        datimFormat: "d.m.Y H:i"
+        timeZone: 'Europe/Zurich'
+
+        # Adjust the upload image settings
+        maxFileSize: 20480000
+        imageWidth: 2500
+        imageHeight: 2500
+
+framework:
+    assets:
+        json_manifest_path: '%kernel.project_dir%/web/layout/manifest.json'
