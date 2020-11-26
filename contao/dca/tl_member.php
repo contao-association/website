@@ -5,6 +5,8 @@ use Contao\CoreBundle\DataContainer\PaletteManipulator;
 $GLOBALS['TL_DCA']['tl_member']['config']['closed'] = true;
 $GLOBALS['TL_DCA']['tl_member']['config']['ctable'][] = 'tl_member_log';
 
+$GLOBALS['TL_DCA']['tl_member']['list']['label']['fields'] = array('icon', 'company', 'firstname', 'lastname');
+
 $GLOBALS['TL_DCA']['tl_member']['list']['operations']['log'] = [
     'href' => 'table=tl_member_log',
     'icon' => 'edit.svg',
@@ -25,3 +27,10 @@ $GLOBALS['TL_DCA']['tl_member']['fields']['member_log_note'] = [
         return null;
     }],
 ];
+
+$GLOBALS['TL_DCA']['tl_member']['fields']['street']['eval']['mandatory'] = true;
+$GLOBALS['TL_DCA']['tl_member']['fields']['postal']['eval']['mandatory'] = true;
+$GLOBALS['TL_DCA']['tl_member']['fields']['city']['eval']['mandatory'] = true;
+$GLOBALS['TL_DCA']['tl_member']['fields']['phone']['eval']['mandatory'] = true;
+$GLOBALS['TL_DCA']['tl_member']['fields']['country']['eval']['mandatory'] = true;
+$GLOBALS['TL_DCA']['tl_member']['fields']['country']['default'] = 'ch';
