@@ -1,0 +1,28 @@
+
+/// Mixin for Links
+///
+/// hover-focus-active
+/// @name hover-focus-active
+/// @group Mixin
+/// @param {everything you want or need} $media
+/// @example
+///  @include hfa() {
+///  Your SCSS goes here
+///  }
+
+@mixin hfa() {
+
+  &:hover,
+  &:focus,
+  &:active {
+    @content;
+  }
+}
+
+@mixin border-radius($radius) {
+  -ms-border-radius : $radius;
+  -o-border-radius : $radius;
+  -moz-border-radius : $radius;
+  -webkit-border-radius : $radius;
+  border-radius : $radius;
+}
