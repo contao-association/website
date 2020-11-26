@@ -1,0 +1,29 @@
+parameters:
+    memberships:
+        active:
+            group: 1
+            price: 80
+            custom: false
+            company: false
+
+        passive:
+            group: 2
+            price: 50
+            custom: false
+            company: false
+
+        support:
+            group: 3
+            price: 200
+            custom: true
+            company: true
+
+services:
+    _defaults:
+        autoconfigure: true
+        autowire: true
+        bind:
+            $memberships: '%memberships%'
+
+    App\:
+        resource: ../src
