@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xliff version="1.1">
+    <file source-language="en">
+        <body>
+            <trans-unit id="tl_member.member_log_note.0">
+                <source>Note</source>
+            </trans-unit>
+            <trans-unit id="tl_member.member_log_note.1">
+                <source>Please enter the note.</source>
+            </trans-unit>
+            <trans-unit id="tl_member.log.0">
+                <source>View logs</source>
+            </trans-unit>
+            <trans-unit id="tl_member.log.1">
+                <source>View logs of member ID %s</source>
+            </trans-unit>
+            <trans-unit id="tl_member.log_legend">
+                <source>Log settings</source>
+            </trans-unit>
+        </body>
+    </file>
+</xliff>

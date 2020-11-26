@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xliff version="1.1">
+    <file source-language="en" target-language="en">
+        <body>
+            <trans-unit id="tl_member_log.text.0">
+                <source>Note</source>
+                <target>Notiz</target>
+            </trans-unit>
+            <trans-unit id="tl_member_log.text.1">
+                <source>Please enter the note.</source>
+                <target>Bitte geben Sie eine Notiz ein.</target>
+            </trans-unit>
+            <trans-unit id="tl_member_log.dateAdded.0">
+                <source>Date created</source>
+                <target>Erstellungsdatum</target>
+            </trans-unit>
+            <trans-unit id="tl_member_log.user.0">
+                <source>User</source>
+                <target>Benutzer</target>
+            </trans-unit>
+            <trans-unit id="tl_member_log.type.0">
+                <source>Type</source>
+                <target>Typ</target>
+            </trans-unit>
+            <trans-unit id="tl_member_log.type.note">
+                <source>Note</source>
+                <target>Notiz</target>
+            </trans-unit>
+            <trans-unit id="tl_member_log.type.personal_data">
+                <source>Personal data</source>
+                <target>Persönliche Daten</target>
+            </trans-unit>
+            <trans-unit id="tl_member_log.type.registration">
+                <source>Registration</source>
+                <target>Registrierung</target>
+            </trans-unit>
+            <trans-unit id="tl_member_log.data.0">
+                <source>Data</source>
+                <target>Daten</target>
+            </trans-unit>
+            <trans-unit id="tl_member_log.text_legend">
+                <source>Note text</source>
+                <target>Notiz-Text</target>
+            </trans-unit>
+            <trans-unit id="tl_member_log.new.0">
+                <source>New note</source>
+                <target>Neue Notiz</target>
+            </trans-unit>
+            <trans-unit id="tl_member_log.new.1">
+                <source>Create a new note</source>
+                <target>Eine neue Notiz erstellen</target>
+            </trans-unit>
+            <trans-unit id="tl_member_log.edit.0">
+                <source>Edit note</source>
+                <target>Notiz bearbeiten</target>
+            </trans-unit>
+            <trans-unit id="tl_member_log.edit.1">
+                <source>Edit note ID %s</source>
+                <target>Notiz ID %s bearbeiten</target>
+            </trans-unit>
+            <trans-unit id="tl_member_log.label_personal_data_field">
+                <source>Field</source>
+                <target>Feld</target>
+            </trans-unit>
+            <trans-unit id="tl_member_log.label_personal_data_old">
+                <source>Old value</source>
+                <target>Bisher</target>
+            </trans-unit>
+            <trans-unit id="tl_member_log.label_personal_data_new">
+                <source>New value</source>
+                <target>Neu</target>
+            </trans-unit>
+            <trans-unit id="tl_member_log.label_user">
+                <source>%s (ID: %s)</source>
+                <target>%s (ID: %s)</target>
+            </trans-unit>
+            <trans-unit id="tl_member_log.label_user_deleted">
+                <source>anonymous (ID: %s)</source>
+                <target>Anonym (ID: %s)</target>
+            </trans-unit>
+        </body>
+    </file>
+</xliff>
