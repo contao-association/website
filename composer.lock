@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "701d01707a91983ecc9ff81a35853927",
+    "content-hash": "3f64c81440c7bb88b377c84bfe9e9e13",
     "packages": [
         {
             "name": "ausi/slug-generator",
@@ -11951,6 +11951,66 @@
                 }
             ],
             "time": "2020-10-24T11:50:19+00:00"
+        },
+        {
+            "name": "terminal42/contao-easy_themes",
+            "version": "2.2.11",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/terminal42/contao-easy_themes.git",
+                "reference": "2589602774b77ba3d29a8e93d8ae2d3b38312154"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/terminal42/contao-easy_themes/zipball/2589602774b77ba3d29a8e93d8ae2d3b38312154",
+                "reference": "2589602774b77ba3d29a8e93d8ae2d3b38312154",
+                "shasum": ""
+            },
+            "require": {
+                "contao-community-alliance/composer-plugin": "~2.4 || ~3.0",
+                "contao/core-bundle": "^4.4",
+                "php": ">=5.4"
+            },
+            "replace": {
+                "contao-legacy/easy_themes": "*"
+            },
+            "type": "contao-module",
+            "extra": {
+                "contao": {
+                    "sources": {
+                        "": "system/modules/easy_themes"
+                    },
+                    "runonce": [
+                        "runonce/runonce.php"
+                    ]
+                }
+            },
+            "autoload": {
+                "classmap": [
+                    ""
+                ]
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "LGPL-3.0-or-later"
+            ],
+            "authors": [
+                {
+                    "name": "terminal42 gmbh",
+                    "homepage": "http://www.terminal42.ch"
+                }
+            ],
+            "description": "Contao Open Source CMS extension easy_themes",
+            "keywords": [
+                "contao",
+                "easy",
+                "themes"
+            ],
+            "support": {
+                "issues": "https://github.com/terminal42/contao-easy_themes/issues",
+                "source": "https://github.com/terminal42/contao-easy_themes"
+            },
+            "time": "2020-05-22T09:36:29+00:00"
         },
         {
             "name": "terminal42/contao-mailusername",
