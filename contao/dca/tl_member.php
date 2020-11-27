@@ -49,7 +49,7 @@ $GLOBALS['TL_DCA']['tl_member']['fields']['member_log_note'] = [
     'inputType' => 'textarea',
     'eval' => ['doNotSaveEmpty' => true],
     'save_callback' => [static function ($value, \Contao\DataContainer $dc) {
-        $dc->createNewVersion = !empty($value);
+        $dc->createNewVersion = $dc->createNewVersion || !empty($value);
         return null;
     }],
 ];
