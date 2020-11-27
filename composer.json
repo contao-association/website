@@ -6,7 +6,6 @@
         "contao/conflicts": "*@dev",
         "contao/manager-bundle": "4.9.*",
         "terminal42/notification_center": "^1.4",
-        "terminal42/contao-mailusername": "^1.0.6",
         "sentry/sentry-symfony": "^3.0"
     },
     "require-dev": {

@@ -6,7 +6,7 @@ namespace App\EventListener;
 
 use Contao\CoreBundle\ServiceAnnotation\Callback;
 use Contao\DataContainer;
-use Contao\Input;
+use Contao\FrontendUser;
 use Doctrine\DBAL\Connection;
 use Symfony\Contracts\Translation\TranslatorInterface;
 
@@ -39,23 +39,21 @@ class MembershipListener
 
     /**
      * @Callback(table="tl_member", target="config.onsubmit")
+     *
+     * @param FrontendUser|DataContainer
      */
-    public function updateGroup(DataContainer $dc): void
+    public function updateMember($data): void
     {
-        if ('edit' !== Input::get('act')) {
-            return;
-        }
-
-        if (!isset($this->memberships[$dc->activeRecord->membership])) {
-            return;
-        }
-
-        $membership = $this->memberships[$dc->activeRecord->membership];
+        $email = $data instanceof DataContainer ? $data->activeRecord->email : $data->email;
+        $level = $data instanceof DataContainer ? $data->activeRecord->membership : $data->membership;
 
         $this->connection->update(
             'tl_member',
-            ['groups' => serialize([$membership['group']])],
-            ['id' => $dc->id]
+            [
+                'username' => $email,
+                'groups' => serialize([$this->memberships[$level]['group'] ?? 0])
+            ],
+            ['id' => $data->id]
         );
     }
 }

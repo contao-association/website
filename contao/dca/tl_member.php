@@ -70,4 +70,11 @@ $GLOBALS['TL_DCA']['tl_member']['fields']['username']['sorting'] = false;
 
 $GLOBALS['TL_DCA']['tl_member']['fields']['login']['eval']['doNotShow'] = true;
 $GLOBALS['TL_DCA']['tl_member']['fields']['groups']['eval']['doNotShow'] = true;
+$GLOBALS['TL_DCA']['tl_member']['fields']['groups']['eval']['feEditable'] = false;
 $GLOBALS['TL_DCA']['tl_member']['fields']['username']['eval']['doNotShow'] = true;
+$GLOBALS['TL_DCA']['tl_member']['fields']['username']['eval']['feEditable'] = false;
+$GLOBALS['TL_DCA']['tl_member']['fields']['username']['eval']['feViewable'] = false;
+
+$GLOBALS['TL_DCA']['tl_member']['fields']['email']['eval']['unique'] = true;
+$GLOBALS['TL_DCA']['tl_member']['fields']['email']['eval']['maxlength'] = 64;
+$GLOBALS['TL_DCA']['tl_member']['fields']['username']['sql'] = 'varchar(64) COLLATE utf8mb4_unicode_ci NULL';
