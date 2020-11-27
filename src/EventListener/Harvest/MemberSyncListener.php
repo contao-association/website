@@ -7,6 +7,8 @@ namespace App\EventListener\Harvest;
 use App\Harvest\Harvest;
 use Contao\CoreBundle\ServiceAnnotation\Callback;
 use Contao\DataContainer;
+use Contao\FrontendUser;
+use Contao\Input;
 use Contao\MemberModel;
 use Doctrine\DBAL\Connection;
 use Symfony\Contracts\Translation\TranslatorInterface;
@@ -50,17 +52,31 @@ class MemberSyncListener
      * @Callback(table="tl_member", target="fields.firstname.save")
      * @Callback(table="tl_member", target="fields.lastname.save")
      * @Callback(table="tl_member", target="fields.company.save")
+     *
+     * @param FrontendUser|DataContainer|null $record
      */
-    public function preventDuplicateName($value, DataContainer $dc)
+    public function preventDuplicateName($value, $record)
     {
-        $model = new MemberModel();
-        $model->setRow($dc->activeRecord->row());
-        $model->preventSaving(false);
+        // Do not handle front end registration
+        if (null === $record) {
+            return $value;
+        }
+
+        $member = MemberModel::findByPk($record->id);
+
+        if (null === $member) {
+            return $value;
+        }
+
+        $member->preventSaving();
+        $member->company = Input::post('company');
+        $member->firstname = Input::post('firstname');
+        $member->lastname = Input::post('lastname');
 
         try {
-            $this->findAndReuseClientId($model);
+            $this->findAndReuseClientId($member);
         } catch (\OverflowException $e) {
-            throw new \RuntimeException($this->translator->trans('harvest_client_exists'));
+            throw new \RuntimeException(strip_tags($this->translator->trans('harvest_client_exists')));
         }
 
         return $value;

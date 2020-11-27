@@ -24,6 +24,9 @@ class MemberVersionListener
 
     /**
      * @Callback(table="tl_member", target="config.oncreate_version")
+     *
+     * @param string|int $memberId
+     * @param string|int $versionNumber
      */
     public function onCreate(string $table, $memberId, $versionNumber, array $newData): void
     {
@@ -51,6 +54,9 @@ class MemberVersionListener
 
     /**
      * @Callback(table="tl_member", target="config.onrestore_version")
+     *
+     * @param string|int $memberId
+     * @param string|int $versionNumber
      */
     public function onRestore(string $table, $memberId, $versionNumber, array $newData): void
     {

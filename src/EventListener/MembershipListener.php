@@ -26,7 +26,7 @@ class MembershipListener
     /**
      * @Callback(table="tl_member", target="fields.membership.options")
      */
-    public function getMembershipOptions()
+    public function getMembershipOptions(): array
     {
         $options = [];
 

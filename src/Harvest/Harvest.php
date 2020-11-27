@@ -7,7 +7,6 @@ namespace App\Harvest;
 use Contao\MemberModel;
 use Contao\System;
 use Required\Harvest\Client;
-use Symfony\Contracts\Translation\TranslatorInterface;
 
 class Harvest
 {
