@@ -66,6 +66,7 @@ set('shared_dirs', [
     'assets/images',
     'contao-manager',
     'files',
+    'var/invoices',
     'var/logs',
     'web/share',
 ]);

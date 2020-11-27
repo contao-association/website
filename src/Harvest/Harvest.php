@@ -10,14 +10,16 @@ use Required\Harvest\Client;
 
 class Harvest
 {
-    private Client $api;
+    public Client $api;
+    public Invoice $invoice;
     private array $memberships;
 
     private ?array $clientLookupTable = null;
 
-    public function __construct(Client $api, array $memberships)
+    public function __construct(Client $api, Invoice $invoice, array $memberships)
     {
         $this->api = $api;
+        $this->invoice = $invoice;
         $this->memberships = $memberships;
     }
 

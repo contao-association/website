@@ -33,15 +33,17 @@ unset(
 $GLOBALS['TL_DCA']['tl_member']['fields']['membership'] = [
     'inputType' => 'radio',
     'filter' => true,
+    'default' => 'active',
     'options' => ['active', 'passive', 'support'],
     'reference' => &$GLOBALS['TL_LANG']['tl_member']['membership'],
-    'eval' => ['mandatory' => true, 'submitOnChange' => true, 'tl_class' => 'w50'],
+    'eval' => ['mandatory' => true, 'submitOnChange' => true, 'feEditable' => true, 'feViewable' => true, 'tl_class' => 'w50'],
     'sql' => "varchar(16) NOT NULL default 'active'",
 ];
 
 $GLOBALS['TL_DCA']['tl_member']['fields']['membership_amount'] = [
+    'default' => '200',
     'inputType' => 'text',
-    'eval' => ['mandatory' => true, 'minval' => 200, 'tl_class' => 'w50'],
+    'eval' => ['mandatory' => true, 'minval' => 200, 'feEditable' => true, 'feViewable' => true, 'tl_class' => 'w50'],
     'sql' => "int(10) NOT NULL default '200'",
 ];
 

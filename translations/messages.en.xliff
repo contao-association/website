@@ -18,6 +18,15 @@
                 <source>harvest_client_exists</source>
                 <target><![CDATA[<strong>Ein Mitglied mit diesem Namen ist bereits vorhanden.</strong> <br>Du kannst nicht zwei mal den gleichen Vor-/Nachnamen (z.B. Aktivmitglied & Fördermitglied) oder zwei Fördermitglieder für dieselbe Firma registrieren.]]></target>
             </trans-unit>
+            <trans-unit id="invoice_description">
+                <source>invoice_description</source>
+                <target>Mitgliedschaft als *{membership}* in der Contao Association</target>
+            </trans-unit>
+            <trans-unit id="invoice_notes">
+                <source>invoice_notes</source>
+                <target>*Bankverbindung:* Postfinance AG, Mingerstrasse 20, 3030 Bern, Schweiz
+BIC: POFICHBEXXX, IBAN: CH61 0900 0000 9196 1453 2</target>
+            </trans-unit>
         </body>
     </file>
 </xliff>

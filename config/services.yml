@@ -24,6 +24,8 @@ services:
         autowire: true
         bind:
             $memberships: '%memberships%'
+            $projectDir: '%kernel.project_dir%'
+            $harvestSubdomain: '%env(HARVEST_SUBDOMAIN)%'
 
     App\:
         resource: ../src
