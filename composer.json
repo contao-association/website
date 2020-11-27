@@ -6,7 +6,8 @@
         "contao/conflicts": "*@dev",
         "contao/manager-bundle": "4.9.*",
         "terminal42/notification_center": "^1.4",
-        "sentry/sentry-symfony": "^3.0"
+        "sentry/sentry-symfony": "^3.0",
+        "wearerequired/harvest-api-php-client": "^0.2.2"
     },
     "require-dev": {
         "deployer/deployer": "^6.5",

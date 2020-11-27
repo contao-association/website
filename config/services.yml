@@ -27,3 +27,7 @@ services:
 
     App\:
         resource: ../src
+
+    Required\Harvest\Client:
+        calls:
+            - ['authenticate', ['%env(HARVEST_ID)%', '%env(HARVEST_TOKEN)%']]

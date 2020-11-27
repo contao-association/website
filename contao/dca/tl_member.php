@@ -54,6 +54,19 @@ $GLOBALS['TL_DCA']['tl_member']['fields']['member_log_note'] = [
     }],
 ];
 
+$GLOBALS['TL_DCA']['tl_member']['fields']['harvest_client_id'] = [
+    'eval' => ['doNotShow' => true],
+    'sql' => "int(10) unsigned NOT NULL default '0'",
+];
+$GLOBALS['TL_DCA']['tl_member']['fields']['harvest_contact_id'] = [
+    'eval' => ['doNotShow' => true],
+    'sql' => "int(10) unsigned NOT NULL default '0'",
+];
+$GLOBALS['TL_DCA']['tl_member']['fields']['harvest_invoice'] = [
+    'eval' => ['doNotShow' => true],
+    'sql' => "int(10) unsigned NOT NULL default '0'",
+];
+
 $GLOBALS['TL_DCA']['tl_member']['fields']['street']['eval']['mandatory'] = true;
 $GLOBALS['TL_DCA']['tl_member']['fields']['postal']['eval']['mandatory'] = true;
 $GLOBALS['TL_DCA']['tl_member']['fields']['city']['eval']['mandatory'] = true;
