@@ -12,8 +12,8 @@
   }
 }
 
-.ce_text + .ce_text,
-.ce_text + div[class^="mod_"],
+div[class^="ce_"] + div[class^="ce_"],
+div[class^="ce_"] + div[class^="mod_"],
 div[class^="mod_"] + div[class^="mod_"],
 div[class^="mod_"] + div[class^="ce_"] {
   margin-top : 30px;
