@@ -1,0 +1,49 @@
+.mod_voting_list {
+  .voting {
+    background: $background-grey;
+    display: flex;
+  }
+
+  .vote {
+    background: #fff;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    position : relative;
+    display: flex;
+    flex: 1 0 30%;
+    margin: 15px;
+
+
+
+    a {
+      padding: 15px;
+      @include hfa() {
+        text-decoration: none;
+      }
+      @media (min-width: 768px) {
+        padding: 30px;
+      }
+    }
+  }
+
+  h3 {
+    color: $primary-color;
+
+    @media (min-width: 768px) {
+      font-size: 1.8em;
+    }
+
+    &::before {
+      content: 'ICON';
+      margin-bottom: 15px;
+      display: block;
+    }
+  }
+
+  a {
+    .period, .total {
+      color : $grey-dark;
+    }
+  }
+}
