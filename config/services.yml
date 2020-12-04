@@ -5,18 +5,21 @@ parameters:
             custom: false
             group: 1
             type: Aktivmitglied
+            accountId: 43
 
         passive:
             price: 50
             custom: false
             group: 2
             type: Passivmitglied
+            accountId: 151
 
         support:
             price: 200
             custom: true
             group: 3
             type: Fördermitglied
+            accountId: 152
 
 services:
     _defaults:

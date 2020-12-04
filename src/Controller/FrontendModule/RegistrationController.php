@@ -13,12 +13,20 @@ use Contao\PageModel;
 use Contao\Versions;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use App\CashctrlApi;
+use NotificationCenter\Model\Notification;
+use function Sentry\captureMessage;
+use Contao\Config;
+use Haste\Util\StringUtil;
+use Symfony\Contracts\Translation\TranslatorInterface;
 
 /**
  * @FrontendModule("registration", category="user")
  */
 class RegistrationController extends ModuleRegistration
 {
+    private CashctrlApi $api;
+    private TranslatorInterface $translator;
     private array $memberships;
 
     private ?Request $request;
@@ -27,10 +35,12 @@ class RegistrationController extends ModuleRegistration
      * @noinspection MagicMethodsValidityInspection
      * @noinspection PhpMissingParentConstructorInspection
      */
-    public function __construct(array $memberships)
+    public function __construct(CashctrlApi $api, TranslatorInterface $translator, array $memberships)
     {
         // do not call parent constructor
 
+        $this->api = $api;
+        $this->translator = $translator;
         $this->memberships = $memberships;
     }
 
@@ -87,8 +97,46 @@ class RegistrationController extends ModuleRegistration
         return $newMember;
     }
 
-    private function sendInvoice(MemberModel $member): void
+    private function sendInvoice(MemberModel $member)
     {
-        // TODO send invoice
+        $notification = Notification::findByPk($this->objModel->nc_notification);
+
+        if (null === $notification) {
+            $this->sentryOrThrow('No notification is configured to send Harvest invoices (Registration module ID '.$this->objModel->id.')');
+            return;
+        }
+
+        $invoice = $this->api->createMemberInvoice($member);
+        $pdf = $this->api->downloadInvoice($invoice, 'ch' === $member->country ? 8 : 10);
+
+        $dateFormat = isset($GLOBALS['objPage']) ? $GLOBALS['objPage']->dateFormat : $GLOBALS['TL_CONFIG']['dateFormat'];
+
+        $tokens = [
+            'admin_email' => Config::get('adminEmail'),
+            'membership_label' => $this->translator->trans('membership.'.$member->membership),
+            'invoice_number' => $invoice->getNr(),
+            'invoice_date' => $invoice->getDate()->format($dateFormat),
+            'invoice_due_days' => $invoice->getDueDays(),
+            'invoice_total' => number_format($invoice->total, 2, '.', "'"),
+            'invoice_pdf' => $pdf,
+        ];
+
+        StringUtil::flatten($member->row(), 'member', $tokens);
+
+        $result = $notification->send($tokens);
+
+        if (\in_array(false, $result, true)) {
+            $this->sentryOrThrow('Unable to send Harvest invoice email to '.$member->email);
+            return;
+        }
+
+        $this->api->markInvoiceSent($invoice->getId());
+    }
+
+    private function sentryOrThrow(string $message): void
+    {
+        if (null === captureMessage($message)) {
+            throw new \RuntimeException($message);
+        }
     }
 }

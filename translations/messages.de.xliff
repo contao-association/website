@@ -14,6 +14,10 @@
                 <source>membership.support</source>
                 <target>Fördermitglied</target>
             </trans-unit>
+            <trans-unit id="invoice_description">
+                <source>invoice_description</source>
+                <target>Mitgliedschaft als {membership} in der Contao Association</target>
+            </trans-unit>
         </body>
     </file>
 </xliff>
