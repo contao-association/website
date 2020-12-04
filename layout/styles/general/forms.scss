@@ -25,67 +25,6 @@ form {
     }
   }
 
-  input[type="submit"],
-  input[type="button"] {
-    background: $primary-color;
-    border: none;
-    color : #ffffff;
-    display : inline-block;
-    font-weight : normal;
-    overflow : hidden;
-    padding : .5rem 1.5rem;
-    position : relative;
-    text-transform : uppercase;
-    transition : all .3s;
-    z-index : 1;
-    -moz-appearance: none;
-    -webkit-appearance: none;
-    appearance: none;
-    @include border-radius(5px);
-
-    &::after {
-      background-color : $primary-color;
-      bottom : 0;
-      content : '';
-      height : 100%;
-      left : 0;
-      position : absolute;
-      width : 100%;
-      z-index : -2;
-      @include border-radius(5px);
-    }
-
-    &::before {
-      background-color : $primary-color-dark;
-      bottom : 0;
-      content : '';
-      height : 100%;
-      left : 0;
-      position : absolute;
-      transition : all .3s;
-      width : 0;
-      z-index : -1;
-      @include border-radius(5px);
-    }
-
-    &:hover {
-      color : #ffffff;
-      cursor: pointer;
-
-      &::before {
-        width : 100%;
-      }
-    }
-
-    &:active {
-      color : #ffffff;
-    }
-
-    &:visited {
-      color : #ffffff;
-    }
-  }
-
   textarea {
     font-family : inherit;
     height : 250px;
@@ -184,5 +123,65 @@ form {
   h5,
   h6 {
     margin-top : 0;
+  }
+}
+input[type="submit"],
+input[type="button"] {
+  background: $primary-color;
+  border: none;
+  color : #ffffff;
+  display : inline-block;
+  font-weight : normal;
+  overflow : hidden;
+  padding : .5rem 1.5rem;
+  position : relative;
+  text-transform : uppercase;
+  transition : all .3s;
+  z-index : 1;
+  -moz-appearance: none;
+  -webkit-appearance: none;
+  appearance: none;
+  @include border-radius(5px);
+
+  &::after {
+    background-color : $primary-color;
+    bottom : 0;
+    content : '';
+    height : 100%;
+    left : 0;
+    position : absolute;
+    width : 100%;
+    z-index : -2;
+    @include border-radius(5px);
+  }
+
+  &::before {
+    background-color : $primary-color-dark;
+    bottom : 0;
+    content : '';
+    height : 100%;
+    left : 0;
+    position : absolute;
+    transition : all .3s;
+    width : 0;
+    z-index : -1;
+    @include border-radius(5px);
+  }
+
+  &:hover {
+    color : #ffffff;
+    cursor: pointer;
+
+    &::before {
+      width : 100%;
+    }
+  }
+
+  &:active {
+    color : #ffffff;
+  }
+
+  &:visited {
+    color : #ffffff;
   }
 }
