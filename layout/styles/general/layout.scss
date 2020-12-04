@@ -232,16 +232,6 @@ div[class^="mod_"] {
   margin : 30px 36px 10px;
 }
 
-// Call to action
-.cta {
-  background: #f7f7f7;
-  padding: 15px;
-  border: 1px dotted $primary-color;
-}
-.cta p:last-child a {
-  @extend input[type="button"];
-}
-
 .ce_hyperlink {
   float            : left;
   margin           : 10px;

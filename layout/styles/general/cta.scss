@@ -1,0 +1,8 @@
+.cta {
+  background: #f7f7f7;
+  padding: 15px;
+  border: 1px solid $border-color;
+}
+.cta p:last-child a {
+  @extend input[type="button"];
+}
