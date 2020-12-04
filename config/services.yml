@@ -1,22 +1,22 @@
 parameters:
     memberships:
         active:
-            group: 1
             price: 80
             custom: false
-            company: false
+            group: 1
+            type: Aktivmitglied
 
         passive:
-            group: 2
             price: 50
             custom: false
-            company: false
+            group: 2
+            type: Passivmitglied
 
         support:
-            group: 3
             price: 200
             custom: true
-            company: true
+            group: 3
+            type: Fördermitglied
 
 services:
     _defaults:
@@ -25,11 +25,6 @@ services:
         bind:
             $memberships: '%memberships%'
             $projectDir: '%kernel.project_dir%'
-            $harvestSubdomain: '%env(HARVEST_SUBDOMAIN)%'
 
     App\:
         resource: ../src
-
-    Required\Harvest\Client:
-        calls:
-            - ['authenticate', ['%env(HARVEST_ID)%', '%env(HARVEST_TOKEN)%']]

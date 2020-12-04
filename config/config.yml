@@ -21,3 +21,7 @@ contao:
 framework:
     assets:
         json_manifest_path: '%kernel.project_dir%/web/layout/manifest.json'
+
+terminal42_cashctrl:
+    subdomain: '%env(CASHCTRL_SUBDOMAIN)%'
+    api_key: '%env(CASHCTRL_APIKEY)%'

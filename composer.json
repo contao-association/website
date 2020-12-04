@@ -7,13 +7,24 @@
         "contao/manager-bundle": "4.9.*",
         "terminal42/notification_center": "^1.4",
         "sentry/sentry-symfony": "^3.0",
-        "wearerequired/harvest-api-php-client": "^0.2.2"
+        "terminal42/cashctrl-bundle": "^1.0@dev",
+        "terminal42/cashctrl-api": "^1.0@dev"
     },
     "require-dev": {
         "deployer/deployer": "^6.5",
         "deployer/recipes": "^6.2",
         "terminal42/deployer-recipes": "dev-main"
     },
+    "repositories": [
+        {
+            "type": "vcs",
+            "url": "https://github.com/terminal42/cashctrl-bundle"
+        },
+        {
+            "type": "vcs",
+            "url": "https://github.com/terminal42/cashctrl-api"
+        }
+    ],
     "extra": {
         "contao-component-dir": "assets"
     },

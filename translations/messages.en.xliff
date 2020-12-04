@@ -14,10 +14,6 @@
                 <source>membership.support</source>
                 <target>Supporting member</target>
             </trans-unit>
-            <trans-unit id="harvest_client_exists">
-                <source>harvest_client_exists</source>
-                <target><![CDATA[<strong>Ein Mitglied mit diesem Namen ist bereits vorhanden.</strong> <br>Du kannst nicht zwei mal den gleichen Vor-/Nachnamen (z.B. Aktivmitglied & Fördermitglied) oder zwei Fördermitglieder für dieselbe Firma registrieren.]]></target>
-            </trans-unit>
             <trans-unit id="invoice_description">
                 <source>invoice_description</source>
                 <target>Mitgliedschaft als *{membership}* in der Contao Association</target>
