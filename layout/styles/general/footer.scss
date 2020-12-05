@@ -1,0 +1,24 @@
+.section-footer {
+  padding          : 48px 0;
+  background-color : #ffffff;
+  border-top       : 1px solid #eaeaea;
+  border-right     : 0 solid #eaeaea;
+  border-bottom    : 0 solid #eaeaea;
+  border-left      : 0 solid #eaeaea;
+
+  p {
+    margin : 0 0 10px
+  }
+
+  &__inside {
+    padding: 0 15px;
+    display: flex;
+    justify-content: space-between;
+  }
+}
+
+.sponsor {
+  a {
+    display: block;
+  }
+}

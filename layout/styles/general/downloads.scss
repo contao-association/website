@@ -1,0 +1,14 @@
+.ce_download,
+.ce_downloads {
+  background: #fff;
+  padding: 15px;
+  border: 1px solid $border-color;
+
+  @media (min-width: 768px) {
+    padding: 30px;
+  }
+  ul {
+    margin: 0;
+    padding: 0;
+  }
+}

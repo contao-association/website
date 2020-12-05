@@ -6,6 +6,7 @@
         "contao/conflicts": "*@dev",
         "contao/manager-bundle": "4.9.*",
         "terminal42/notification_center": "^1.4",
+        "terminal42/contao-easy_themes": "^2.2",
         "sentry/sentry-symfony": "^3.0",
         "terminal42/cashctrl-bundle": "^1.0@dev",
         "terminal42/cashctrl-api": "^1.0@dev"

@@ -1,0 +1,54 @@
+
+table > thead > tr:first-child > th,
+table > thead > tr:first-child > td,
+table > tbody:first-child > tr:first-child > th,
+table > tbody:first-child > tr:first-child > td,
+table > tfoot:first-child + tbody > tr:first-child > th,
+table > tfoot:first-child + tbody > tr:first-child > td {
+  /* Erste Zeile */
+  border-top: 0;
+}
+
+
+table {
+  width: 100%;
+  border-collapse: separate;
+  border-spacing: 0;
+  border: 1px solid #dcdcdc;
+  background: #ffffff;
+
+  thead {
+    background: $background-grey;
+  }
+  tbody {
+    tr {
+      @include hfa() {
+        background: $background-grey;
+      }
+      &.paid .col_4 {
+        color: $color-green;
+      }
+    }
+  }
+  tfoot {
+    td {
+      font-style: italic;
+    }
+  }
+  th, td {
+    border: solid #f2f2f2;
+    border-width: 1px 0 0 1px;
+
+    &:first-child {
+      border-left: 0;
+    }
+  }
+  td {
+    padding: 0.4em 0.66667em;
+  }
+  th {
+    padding: 0.4em 0.66667em;
+    font-weight: bold;
+    text-align: left;
+  }
+}

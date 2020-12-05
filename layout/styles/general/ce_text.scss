@@ -1,0 +1,20 @@
+.ce_text {
+  width: 100%;
+  &.intro {
+    @media (min-width: 992px) {
+      text-align: center;
+      max-width: 850px;
+      margin: 0 auto;
+    }
+    > *:not(:last-child) {
+      margin-bottom: 15px;
+    }
+  }
+}
+
+.ce_text + .ce_text,
+.ce_text + div[class^="mod_"],
+div[class^="mod_"] + div[class^="mod_"],
+div[class^="mod_"] + div[class^="ce_"] {
+  margin-top : 30px;
+}

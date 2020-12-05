@@ -1,0 +1,541 @@
+@charset "utf-8";
+
+
+/* Reset and Normalize CSS */
+
+/* ============================ */
+
+/* Nur ein paar Grundlagen, die ich immer dabei habe */
+
+*,
+*::after,
+*::before {
+  box-sizing : border-box;
+  margin : 0;
+  padding : 0;
+}
+
+/* hyphenate for special elements: */
+
+/* works not for everything: https://css-tricks.com/almanac/properties/h/hyphenate/ */
+
+table,
+form legend,
+a,
+.box-info,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  -moz-hyphens : auto;
+  -webkit-hyphens : auto;
+  hyphens : auto;
+  overflow-wrap : break-word;
+  word-wrap : break-word;
+}
+
+/* Zuerst das ganze für den Mozilla Firefox */
+
+::-moz-selection {
+  background-color : $primary-color-dark;
+  color : $color-white;
+}
+
+/* Wichtig: Danach!!! sonst interpretiert der Firefox das nicht richtig!! */
+
+/* Danach für alle anderen */
+
+::selection {
+  background-color : $primary-color-dark;
+  color : $color-white;
+}
+
+.invisible,
+.visualyhidden,
+.nav-skiplink,
+.nav-skiplink-content {
+  left : -32768px;
+  position : absolute;
+  top : -32768px; /* LTR */
+}
+
+.visualyhidden:focus,
+.nav-skiplink:focus,
+.nav-skiplink-content:focus {
+  left : 0;
+  position : static;
+  top : 0;
+}
+
+.nav-skiplink {
+  left : -32768px;
+  list-style-type : none;
+  margin : 0;
+  padding : 0;
+  position : absolute;
+  top : 0;
+  width : 100%;
+  z-index : 1000;
+}
+
+.nav-skiplink-content:focus,
+.nav-skiplink-content:active {
+  background-color : $primary-color-dark;
+  color : $color-white;
+  left : 32768px;
+  outline : 0 none;
+  position : absolute;
+  text-align : center;
+  width : 100%;
+}
+
+/* tabindex Elements outline: */
+
+*[tabindex="-1"] {
+  outline : none;
+}
+
+
+iframe {
+  border : 0;
+}
+
+
+@media screen and (min-width : 800px) {
+  /* Floating Elements */
+
+  .float-left,
+  .float_left {
+    float : left;
+    margin-bottom : .5em;
+    margin-right : 1em;
+  }
+
+  .float-right,
+  .float_right {
+    float : right;
+    margin-bottom : .5em;
+    margin-left : 1em;
+  }
+}
+
+/* Float-Container and Clearfix */
+
+.contain-oh {
+  display : block;
+  overflow : hidden;
+  width : 100%;
+}
+
+.contain-fl {
+  float : left;
+  width : 100%;
+}
+
+.contain-dt,
+.u-wrapper-dt
+  /*.ce_text*/ {
+  display : table;
+  table-layout : fixed;
+  width : 100%;
+}
+
+/* clearfix */
+
+.clearfix {
+  zoom : 1; /* IE < 8; */
+
+  &::before {
+    content : '';
+    display : table;
+  }
+
+  ::after {
+    clear : both;
+    content : '.';
+    display : block;
+    font-size : 0;
+    height : 0;
+    visibility : hidden;
+  }
+}
+
+
+html,
+body {
+  /* https://css-tricks.com/rem-global-em-local/ */
+  background-color : $color-white;
+  color : $text-color;
+  font-family : 'Open Sans', sans-serif;
+  height : 100%;
+  text-align : left;
+}
+
+html {
+  font-size : 62.5%; /* reset to 10px!!! */
+  overflow-x : hidden;
+  overflow-y : visible;
+
+  @media (max-width : 400px) {
+    font-size : 46.875%;
+  }
+}
+
+body {
+  background-color : $color-white;
+  color : $text-color;
+  display : table;
+  font-family : 'Open Sans', sans-serif;
+  font-size : 1.8rem;
+  font-weight : 400;
+
+  /*
+      https://css-tricks.com/books/volume-i/scale-typography-screen-size/
+  */
+  line-height : 2.8rem;
+  table-layout : fixed;
+  width : 100%;
+}
+
+#wrapper {
+  margin : 0 auto;
+  max-width : $maxwidth;
+}
+
+/* Full with Sections: */
+
+header,
+footer,
+.swiperSlider,
+.header-legal-contact,
+#header .header-inner,
+.visual {
+  left : 50%;
+  margin-left : -50vw;
+  margin-right : -50vw;
+  position : relative;
+  right : 50%;
+  width : 100vw;
+
+  .inside {
+    @extend #wrapper;
+  }
+}
+
+header,
+footer {
+  background-color : $grey-light;
+}
+
+
+button {
+  font-family : 'Open Sans', sans-serif;
+  font-weight : 700;
+}
+
+button:hover,
+button:focus,
+button:active {
+  outline : none;
+}
+
+button::-moz-focus-inner {
+  border : 0;
+}
+
+/* ============================ */
+
+/* sizes */
+
+/*
+h1 = 30px = 3.0rem (Khand, regular)
+    h2 = 30px = 3.0rem (Khand, regular)
+    h3 = 22px = 2.2rem (Khand, regular)
+    h4 = 15px = 1.5rem (Khand, regular bold)
+    h5 - h6 = h3 (keine Definition)
+ */
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  color : $headings-color;
+  font-family : $font-primary;
+  font-weight : 400;
+  line-height : 1.4;
+  margin-bottom : 15px;
+  margin-top : 30px;
+
+  @media (min-width : 992px) {
+    margin-bottom : 30px;
+  }
+
+  &::after {
+    background-color : $primary-color;
+    content : '';
+    display : block;
+    height : 6px;
+    margin-top : 10px;
+    max-width : 70px;
+    width : 50%;
+  }
+}
+
+h2 {
+  font-size : 3rem;
+}
+
+h3 {
+  font-size : 2.5rem;
+}
+
+h4 {
+  font-size : 2.3rem;
+}
+
+h5 {
+  font-size : 2.2rem;
+}
+
+h6 {
+  font-size : 2rem;
+  font-weight : 600;
+}
+
+
+p {
+  //margin-bottom : 2em;
+  margin-bottom : 0;
+}
+
+nav ul,
+nav ol {
+  list-style-type : none;
+  padding : 0;
+}
+
+main ul,
+main ol {
+  margin-bottom : 1em;
+  margin-left : 1em;
+}
+
+main ul {
+  list-style-type : square;
+}
+
+main li {
+  margin-bottom : .5rem;
+}
+
+
+/* Cave: set an really good state for focus after this!!! */
+
+a {
+  text-decoration : none;
+
+  &:hover,
+  &:focus,
+  &:active {
+    outline : none;
+  }
+}
+
+a[href^="tel:"] {
+  border-bottom : 0;
+}
+
+a[href^="tel:"]:hover {
+  background-color : $primary-color-dark;
+  color : $color-white;
+}
+
+
+main a,
+main a:visited {
+  color : $primary-color;
+  text-decoration : none;
+}
+
+main a {
+  transition : all .5s ease-in-out;
+
+  @include hfa() {
+    //background-color : $primary-color-dark;
+    //color            : $color-white;
+    color : $primary-color;
+    text-decoration : underline;
+    transition : all .5s ease-in-out;
+  }
+}
+
+footer a,
+footer a:visited {
+  color : $primary-color;
+  text-decoration : none;
+}
+
+footer a {
+  transition : all .5s ease-in-out;
+
+  @include hfa() {
+    background-color : $primary-color-dark;
+    color : $color-white;
+    text-decoration : underline;
+    transition : all .5s ease-in-out;
+  }
+}
+
+
+/* extern Links */
+
+p a[href^="http:"],
+p a[href^="https:"],
+p a[href^="ftp:"] {
+  // uncomment this, when there is an image for this
+  //background   : transparent url('../img/png/link-pfeil-extern.png') 2px 50% no-repeat;
+  //background   : linear-gradient(transparent, transparent), url('../img/link-pfeil-extern.svg');
+  //background-repeat: no-repeat;
+  //background-size : 5px;
+  //background-position: 3px center;
+  //padding-left : 10px;
+}
+
+/* intern Links */
+// change domain in real domain
+
+a[href^="http://domain.de"],
+a[href^="https://domain.de"] {
+  //background   : transparent;
+  //padding-left : 0;
+}
+
+
+ul {
+  list-style-type : square;
+}
+
+address {
+  font-style : normal;
+}
+
+figure,
+img {
+  height : auto;
+  max-width : 100%;
+  //width  : 100%;
+  width : auto;
+}
+
+figure.float_right,
+figure.float_left {
+  height : auto;
+  width : auto;
+}
+
+img {
+  border : none; /* für IE10 und kleiner (hat eine unschöne blaue border gezeichnet bei allen Bildern) */
+}
+
+figcaption {
+  background-position : 0 .5em;
+  background-repeat : no-repeat;
+  background-size : .75em .75em;
+  padding-left : 1em;
+}
+
+video {
+  height : auto;
+  position : relative;
+  width : 100%;
+}
+
+.video-box_overlay {
+  content : '';
+  height : 100%;
+  left : 0;
+  position : absolute;
+  top : 0;
+  width : 100%;
+}
+
+.ce_player,
+.ce_youtube {
+  margin-bottom : 2em;
+}
+
+
+@media screen and (max-width : 900px) {
+
+  .ce_youtube iframe {
+    bottom : 0;
+    height : 100% !important;
+    left : 0;
+    position : absolute;
+    right : 0;
+    top : 0;
+    width : 100% !important;
+  }
+}
+
+
+// ================== Allgemeines:
+
+
+.invisible,
+.u-legend-hidden legend {
+  @extend .u-hideme;
+}
+
+a.invisible {
+  display : inline-block;
+  left : -32768px;
+  list-style-type : none;
+  margin : 0;
+  padding : 0;
+  position : absolute;
+  top : 0;
+  width : 100%;
+  z-index : 1000;
+
+  &:focus,
+  &:active {
+    background : $primary-color;
+    border-bottom : 4px $color-white solid;
+    color : $color-white;
+    left : 32768px;
+    //left: 0;
+    outline : 0 none;
+    padding : 10px 0;
+    position : static !important;
+    text-align : center;
+    text-decoration : none;
+    width : auto;
+    z-index : 1999; // open-street-map is using massive heigh z-index, so we need to set this element so heigh -> therefore the navigation is set to 1500
+  }
+}
+
+.ce_text p {
+  margin-bottom : 10px;
+}
+
+/**
+* (en) reset monospaced elements to font size 16px in all browsers
+* (de) Schriftgröße von monospaced Elemente in allen Browsern auf 16 Pixel setzen
+*
+* @see: http://webkit.org/blog/67/strange-medium/
+*/
+
+textarea,
+pre,
+code,
+kbd,
+samp,
+var,
+tt {
+  font-family : $font-monospace;
+}

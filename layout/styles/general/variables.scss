@@ -1,0 +1,115 @@
+// Print Module
+
+// Default Print Settings
+// ---------------------------------
+$print-fontsize           : 10pt !default;
+$print-abbreviation       : false !default;
+$print-href               : false !default;
+
+// Typography Module
+
+/// The primary font of the Page
+/// @group fonts
+$font-primary             : 'PT Sans', sans-serif;
+/// The secondary font of the Page
+/// @group fonts
+$font-secondary           : 'PT Sans', sans-serif;
+/// monospace font when needed
+/// @group fonts
+$font-monospace           : consolas, "Lucida Console", "Andale Mono", "Bitstream Vera Sans Mono", "Courier New", courier;
+
+/// The black color
+/// @group colors
+$color-black              : #000000;
+/// The white color
+/// @group colors
+$color-white              : #ffffff;
+
+/// The primary color
+/// @group colors
+//$primary-color : #007dbe;
+$primary-color: #eb8623;
+$primary-color-accessible : #bb5c00;
+
+/// The primary color in dark
+/// @group colors
+$primary-color-dark       : darken($primary-color, 20%);
+/// The primary color in light
+/// @group colors
+$primary-color-light      : lighten($primary-color, 20%);
+/// The primary color in 60%
+/// @group colors
+$primary-color-light60    : lighten($primary-color, 40%);
+/// The grey-dark color
+/// @group colors
+$grey-dark                : #333333;
+$background-grey: #f5f5f5;
+
+/// Border Color
+$border-color: #e1e1e3;
+/// The grey-light color (background for forms when active)
+/// @group colors
+$grey-light               : #e5e5e5;
+
+$color-green              : #008000;
+
+$color-red                : #710000;
+
+// Color Settings
+// ---------------------------------
+// standard typography colors
+$text-color               : $grey-dark;
+$headings-color           : $primary-color;
+$blockquote-text-color    : $grey-dark;
+$blockquote-bg-color      : transparent;
+$pre-text-color           : $grey-dark;
+$kbd-text-color           : $grey-dark;
+$mark-text-color          : $grey-dark;
+$mark-bg-color            : $primary-color-light;
+
+// highlight colors
+$highlight-info-color     : $primary-color-light;
+$highlight-success-color  : $color-green;
+$highlight-warning-color  : $primary-color-light;
+$highlight-error-color    : $color-red;
+
+// link colors
+//$link-text-color : $primary-color;
+//$link-bg-color : transparent;
+//$link-focus-text-color : $color-white;
+//$link-focus-bg-color : $primary-color;
+$link-text-color          : $primary-color;
+$link-bg-color            : transparent;
+$link-focus-text-color    : $primary-color-dark;
+$link-focus-bg-color      : transparent;
+
+// special colors
+$hr-color                 : $primary-color;
+$highlight-text-color     : $color-black;
+$dimmed-text-color        : $primary-color-light;
+
+/// max-width of the page
+/// @group padding-margin
+$maxwidth                 : 1280px;
+
+
+/// important breakpoints:
+/// max width of the page content: 1280px
+$min-small-small          : 320;
+$max-small-small          : $min-small-small - 1;
+$min-small-middle         : 480;
+$max-small-middle         : $min-small-middle - 1;
+$min-middle-small         : 640;
+$max-middle-small         : $min-middle-small - 1;
+$min-middle-middle        : 720;
+$max-middle-middle        : $min-middle-middle - 1;
+$min-middle-big           : 800;
+$max-middle-big           : $min-middle-big - 1;
+$min-big-small            : 960;
+$max-big-small            : $min-big-small - 1;
+$min-big-middle           : 1024;
+$max-big-middle           : $min-big-middle - 1;
+$min-big-big              : 1280;
+$max-big-big              : $min-big-big - 1;
+$min-big-extrem           : 1470;
+$max-big-extrem           : $min-big-extrem - 1;

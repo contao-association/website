@@ -8,3 +8,5 @@
 /web/*
 !/web/.htaccess.*
 /.env.*
+/composer.phar
+/contao-manager/
