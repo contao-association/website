@@ -41,17 +41,24 @@ class CashctrlApi
     {
         if ($member->cashctrl_id) {
             $person = $this->person->read((int) $member->cashctrl_id);
-            $this->updatePerson($person, $member);
-            $this->person->update($person);
-        } else {
+        }
+
+        if (null === $person) {
             $person = new Person($member->company ?: null, $member->firstname, $member->lastname);
             $person->setSequenceNumberId(1000);
-            $this->updatePerson($person, $member);
-            $result = $this->person->create($person);
-
-            $member->cashctrl_id = $result->insertId();
-            $member->save();
         }
+
+        $this->updatePerson($person, $member);
+
+        if (null !== $person->getId()) {
+            $this->person->update($person);
+            return;
+        }
+
+        $result = $this->person->create($person);
+
+        $member->cashctrl_id = $result->insertId();
+        $member->save();
     }
 
     public function createMemberInvoice(MemberModel $member): Order

@@ -25,3 +25,4 @@ framework:
 terminal42_cashctrl:
     subdomain: '%env(CASHCTRL_SUBDOMAIN)%'
     api_key: '%env(CASHCTRL_APIKEY)%'
+    throttle: true
