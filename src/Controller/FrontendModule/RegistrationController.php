@@ -102,12 +102,12 @@ class RegistrationController extends ModuleRegistration
         $notification = Notification::findByPk($this->objModel->nc_notification);
 
         if (null === $notification) {
-            $this->sentryOrThrow('No notification is configured to send Harvest invoices (Registration module ID '.$this->objModel->id.')');
+            $this->sentryOrThrow('No notification is configured to send invoices (Registration module ID '.$this->objModel->id.')');
             return;
         }
 
         $invoice = $this->api->createMemberInvoice($member);
-        $pdf = $this->api->downloadInvoice($invoice, 'ch' === $member->country ? 8 : 10);
+        $pdf = $this->api->downloadInvoice($invoice, 'ch' === $member->country ? 11 : 13);
 
         $dateFormat = isset($GLOBALS['objPage']) ? $GLOBALS['objPage']->dateFormat : $GLOBALS['TL_CONFIG']['dateFormat'];
 
@@ -126,7 +126,7 @@ class RegistrationController extends ModuleRegistration
         $result = $notification->send($tokens);
 
         if (\in_array(false, $result, true)) {
-            $this->sentryOrThrow('Unable to send Harvest invoice email to '.$member->email);
+            $this->sentryOrThrow('Unable to send invoice email to '.$member->email);
             return;
         }
 

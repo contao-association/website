@@ -120,6 +120,7 @@ class CashctrlApi
 
         $person->setCustomfield(2, date('Y-m-d', (int) $member->dateAdded));
         $person->setCustomfield(3, $member->stop ? date('Y-m-d', (int) $member->stop) : '');
+        $person->setCustomfield(4, $member->tax_id);
 
         $invoiceAddress = $this->findAddress($person, PersonAddress::TYPE_MAIN);
         $invoiceAddress->address = $member->street;

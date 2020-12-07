@@ -19,9 +19,9 @@ $GLOBALS['TL_DCA']['tl_member']['list']['operations']['log'] = [
 $GLOBALS['TL_DCA']['tl_member']['palettes'] = [
     '__selector__' => ['membership'],
     'default' => 'membership',
-    'active' => '{personal_legend},firstname,lastname,dateOfBirth,gender;{address_legend:hide},company,street,postal,city,state,country;{contact_legend:hide},phone,mobile,fax,website,language;{login_legend},email,password,membership;{account_legend},disable,start,stop;{log_legend},member_log_note',
-    'passive' => '{personal_legend},firstname,lastname,dateOfBirth,gender;{address_legend:hide},company,street,postal,city,state,country;{contact_legend:hide},phone,mobile,fax,website,language;{login_legend},email,password,membership;{account_legend},disable,start,stop;{log_legend},member_log_note',
-    'support' => '{personal_legend},firstname,lastname,dateOfBirth,gender;{address_legend:hide},company,street,postal,city,state,country;{contact_legend:hide},phone,mobile,fax,website,language;{login_legend},email,password,membership,membership_amount;{account_legend},disable,start,stop;{log_legend},member_log_note',
+    'active' => '{personal_legend},firstname,lastname,dateOfBirth,gender;{address_legend:hide},company,tax_id,street,postal,city,state,country;{contact_legend:hide},phone,mobile,fax,website,language;{login_legend},email,password,membership;{account_legend},disable,start,stop;{log_legend},member_log_note',
+    'passive' => '{personal_legend},firstname,lastname,dateOfBirth,gender;{address_legend:hide},company,tax_id,street,postal,city,state,country;{contact_legend:hide},phone,mobile,fax,website,language;{login_legend},email,password,membership;{account_legend},disable,start,stop;{log_legend},member_log_note',
+    'support' => '{personal_legend},firstname,lastname,dateOfBirth,gender;{address_legend:hide},company,tax_id,street,postal,city,state,country;{contact_legend:hide},phone,mobile,fax,website,language;{login_legend},email,password,membership,membership_amount;{account_legend},disable,start,stop;{log_legend},member_log_note',
 ];
 
 unset(
@@ -31,6 +31,13 @@ unset(
 );
 
 $GLOBALS['TL_DCA']['tl_member']['fields']['language']['options'] = ['de' => 'Deutsch', 'en' => 'English'];
+
+$GLOBALS['TL_DCA']['tl_member']['fields']['tax_id'] = [
+    'inputType' => 'text',
+    'search' => true,
+    'eval' => ['maxlength' => 32, 'feEditable' => true, 'feViewable' => true, 'tl_class' => 'w50'],
+    'sql' => "varchar(32) NOT NULL default ''",
+];
 
 $GLOBALS['TL_DCA']['tl_member']['fields']['membership'] = [
     'inputType' => 'radio',

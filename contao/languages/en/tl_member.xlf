@@ -2,6 +2,12 @@
 <xliff version="1.1">
     <file source-language="en">
         <body>
+            <trans-unit id="tl_member.tax_id.0">
+                <source>Tax ID</source>
+            </trans-unit>
+            <trans-unit id="tl_member.tax_id.1">
+                <source>Enter a tax ID for this company.</source>
+            </trans-unit>
             <trans-unit id="tl_member.membership.0">
                 <source>Membership</source>
             </trans-unit>
