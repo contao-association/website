@@ -7,6 +7,15 @@ form {
     height : auto;
     margin-right : 8px;
     width : auto;
+    box-sizing: border-box;
+    padding: 0;
+  }
+
+  input[type="date"],
+  input[type="time"],
+  input[type="datetime-local"],
+  input[type="month"] {
+    -webkit-appearance: listbox;
   }
 
   input,
@@ -28,11 +37,16 @@ form {
   textarea {
     font-family : inherit;
     height : 250px;
+    overflow: auto;
+    resize: vertical;
   }
 
   fieldset {
     border : none;
     margin-bottom : 15px;
+    min-width: 0;
+    padding: 0;
+    border: 0;
 
     fieldset {
       border : none;
@@ -42,30 +56,20 @@ form {
 
     legend {
       border : none;
-      color : #333333;
+      color : $text-color;
       display : inline;
-      font-weight : bold;
+      font-size: 1em;
       margin-bottom : 0;
       padding : 0;
       width : auto;
+      max-width: 100%;
+      line-height: inherit;
+      white-space: normal;
     }
 
-    &.col-2 {
-      border : none;
-      padding : 0;
-
-      .fieldset {
-        display : flex;
-        flex-wrap : wrap;
-        justify-content : space-between;
-
-        .widget {
-          flex : 1 1 100%;
-
-          @media (min-width : 768px) {
-            flex : 0 1 49.333%;
-          }
-        }
+    + fieldset {
+      @media (min-width: 768px) {
+        margin-top : 40px;
       }
     }
   }
@@ -101,6 +105,10 @@ form {
     float : left;
     width : 100%;
   }
+  ::-webkit-file-upload-button {
+    font: inherit;
+    -webkit-appearance: button;
+  }
 }
 
 .explanation {
@@ -126,14 +134,15 @@ form {
   }
 }
 input[type="submit"],
-input[type="button"] {
+input[type="button"],
+button {
   background: $primary-color;
   border: none;
   color : #ffffff;
   display : inline-block;
   font-weight : normal;
   overflow : hidden;
-  padding : .5rem 1.5rem;
+  padding : 15px 30px;
   position : relative;
   text-transform : uppercase;
   transition : all .3s;
@@ -141,6 +150,8 @@ input[type="button"] {
   -moz-appearance: none;
   -webkit-appearance: none;
   appearance: none;
+  font-family: inherit;
+  font-size: 0.8em;
   @include border-radius(5px);
 
   &::after {
@@ -183,5 +194,41 @@ input[type="button"] {
 
   &:visited {
     color : #ffffff;
+  }
+}
+button:focus {
+  outline: 1px dotted;
+  outline: 5px auto -webkit-focus-ring-color;
+}
+
+button,
+html [type="button"],
+[type="reset"],
+[type="submit"] {
+  -webkit-appearance: button;
+}
+
+button::-moz-focus-inner,
+[type="button"]::-moz-focus-inner,
+[type="reset"]::-moz-focus-inner,
+[type="submit"]::-moz-focus-inner {
+  padding: 0;
+  border-style: none;
+}
+
+.mod_personalData {
+  @media (min-width: 992px) {
+    max-width: 850px;
+    margin-left : auto;
+    margin-right: auto;
+  }
+  fieldset {
+    padding: 15px;
+    border: 1px solid $border-color;
+
+    legend {
+      padding-left: 10px;
+      padding-right: 10px;
+    }
   }
 }

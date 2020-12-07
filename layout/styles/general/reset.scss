@@ -39,7 +39,7 @@ h6 {
 /* Zuerst das ganze für den Mozilla Firefox */
 
 ::-moz-selection {
-  background-color : $primary-color-dark;
+  background-color : $primary-color;
   color : $color-white;
 }
 
@@ -48,7 +48,7 @@ h6 {
 /* Danach für alle anderen */
 
 ::selection {
-  background-color : $primary-color-dark;
+  background-color : $primary-color;
   color : $color-white;
 }
 
@@ -82,7 +82,7 @@ h6 {
 
 .nav-skiplink-content:focus,
 .nav-skiplink-content:active {
-  background-color : $primary-color-dark;
+  background-color : $primary-color;
   color : $color-white;
   left : 32768px;
   outline : 0 none;
@@ -168,9 +168,14 @@ body {
   /* https://css-tricks.com/rem-global-em-local/ */
   background-color : $color-white;
   color : $text-color;
-  font-family : 'Open Sans', sans-serif;
-  height : 100%;
-  text-align : left;
+  //height : 100%;
+  height: 100vh;
+  font-family: sans-serif;
+  line-height: 1.15;
+  -webkit-text-size-adjust: 100%;
+  -ms-text-size-adjust: 100%;
+  -ms-overflow-style: scrollbar;
+  -webkit-tap-highlight-color: transparent;
 }
 
 html {
@@ -178,18 +183,29 @@ html {
   overflow-x : hidden;
   overflow-y : visible;
 
+
   @media (max-width : 400px) {
     font-size : 46.875%;
   }
 }
 
+@-ms-viewport {
+  width: device-width;
+}
+
+article, aside, dialog, figcaption, figure, footer, header, hgroup, main, nav, section {
+  display: block;
+}
+
 body {
   background-color : $color-white;
   color : $text-color;
-  display : table;
-  font-family : 'Open Sans', sans-serif;
-  font-size : 1.8rem;
-  font-weight : 400;
+  margin: 0;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
+  font-size: 1rem;
+  font-weight: 400;
+  color: #212529;
+  text-align: left;
 
   /*
       https://css-tricks.com/books/volume-i/scale-typography-screen-size/
@@ -199,6 +215,18 @@ body {
   width : 100%;
 }
 
+[tabindex="-1"]:focus {
+  outline: 0 !important;
+}
+
+hr {
+  box-sizing: content-box;
+  height: 0;
+  overflow: visible;
+  border: none;
+  border-bottom: 1px solid;
+}
+
 #wrapper {
   margin : 0 auto;
   max-width : $maxwidth;
@@ -206,34 +234,10 @@ body {
 
 /* Full with Sections: */
 
-header,
-footer,
-.swiperSlider,
-.header-legal-contact,
-#header .header-inner,
-.visual {
-  left : 50%;
-  margin-left : -50vw;
-  margin-right : -50vw;
-  position : relative;
-  right : 50%;
-  width : 100vw;
-
-  .inside {
-    @extend #wrapper;
-  }
-}
-
-header,
-footer {
-  background-color : $grey-light;
-}
 
 
-button {
-  font-family : 'Open Sans', sans-serif;
-  font-weight : 700;
-}
+
+
 
 button:hover,
 button:focus,
@@ -268,20 +272,9 @@ h6 {
   font-weight : 400;
   line-height : 1.4;
   margin-bottom : 15px;
-  margin-top : 30px;
 
   @media (min-width : 992px) {
     margin-bottom : 30px;
-  }
-
-  &::after {
-    background-color : $primary-color;
-    content : '';
-    display : block;
-    height : 6px;
-    margin-top : 10px;
-    max-width : 70px;
-    width : 50%;
   }
 }
 
@@ -337,6 +330,7 @@ main li {
 
 a {
   text-decoration : none;
+  -webkit-text-decoration-skip: objects;
 
   &:hover,
   &:focus,
@@ -347,11 +341,6 @@ a {
 
 a[href^="tel:"] {
   border-bottom : 0;
-}
-
-a[href^="tel:"]:hover {
-  background-color : $primary-color-dark;
-  color : $color-white;
 }
 
 
@@ -365,8 +354,6 @@ main a {
   transition : all .5s ease-in-out;
 
   @include hfa() {
-    //background-color : $primary-color-dark;
-    //color            : $color-white;
     color : $primary-color;
     text-decoration : underline;
     transition : all .5s ease-in-out;
@@ -383,8 +370,6 @@ footer a {
   transition : all .5s ease-in-out;
 
   @include hfa() {
-    background-color : $primary-color-dark;
-    color : $color-white;
     text-decoration : underline;
     transition : all .5s ease-in-out;
   }
@@ -419,8 +404,25 @@ ul {
   list-style-type : square;
 }
 
+ol,
+ul {
+  margin-top: 0;
+  margin-bottom: 1rem;
+}
+
+ol ol,
+ul ul,
+ol ul,
+ul ol {
+  margin-bottom: 0;
+}
+
 address {
   font-style : normal;
+}
+
+figure {
+  margin: 0 0 1rem;
 }
 
 figure,
@@ -439,6 +441,11 @@ figure.float_left {
 
 img {
   border : none; /* für IE10 und kleiner (hat eine unschöne blaue border gezeichnet bei allen Bildern) */
+  vertical-align: middle;
+  border-style: none;
+}
+svg:not(:root) {
+  overflow: hidden;
 }
 
 figcaption {
@@ -485,11 +492,6 @@ video {
 
 // ================== Allgemeines:
 
-
-.invisible,
-.u-legend-hidden legend {
-  @extend .u-hideme;
-}
 
 a.invisible {
   display : inline-block;
