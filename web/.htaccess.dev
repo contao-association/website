@@ -1,4 +1,4 @@
-AddHandler application/x-httpd-php71 .php
+AddHandler application/x-httpd-php74 .php
 
 <IfModule mod_security2.c>
     SecFilterEngine Off
@@ -28,6 +28,10 @@ AddHandler application/x-httpd-php71 .php
     # Sets the HTTP_AUTHORIZATION header removed by apache
     RewriteCond %{HTTP:Authorization} .
     RewriteRule .* - [E=HTTP_AUTHORIZATION:%{HTTP:Authorization}]
+
+    # Force use of TLS connection
+    RewriteCond %{HTTPS} off
+    RewriteRule (.*) https://%{HTTP_HOST}%{REQUEST_URI} [R=301,NC,L]
 
     # Redirect to URI without front controller to prevent duplicate content
     # (with and without `/app.php`). Only do this redirect on the initial
