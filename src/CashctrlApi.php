@@ -108,7 +108,7 @@ class CashctrlApi
     private function updatePerson(Person $person, MemberModel $member): void
     {
         $person->setNr('M-'.str_pad((string) $member->id, 4, '0', STR_PAD_LEFT));
-        $person->setCategoryId(1);
+        $person->setCategoryId($this->getCategoryId($member->membership));
         $person->setIsInactive((bool) $member->disable);
 
         $person->setCompany($member->company);
@@ -118,7 +118,6 @@ class CashctrlApi
         $person->setLanguage($member->language);
         $person->setDateBirth($member->dateOfBirth ? date('Y-m-d', (int) $member->dateOfBirth) : '');
 
-        $person->setCustomfield(1, $this->getMembership($member->membership));
         $person->setCustomfield(2, date('Y-m-d', (int) $member->dateAdded));
         $person->setCustomfield(3, $member->stop ? date('Y-m-d', (int) $member->stop) : '');
 
@@ -171,13 +170,13 @@ class CashctrlApi
         }
     }
 
-    private function getMembership(string $membership): ?string
+    private function getCategoryId(string $membership): int
     {
         if (!isset($this->memberships[$membership])) {
-            return null;
+            return 1;
         }
 
-        return $this->memberships[$membership]['type'];
+        return (int) $this->memberships[$membership]['categoryId'];
     }
 
     private function getTitleId(string $gender): int
