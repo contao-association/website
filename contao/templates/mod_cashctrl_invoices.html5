@@ -1,0 +1,24 @@
+<?php $this->extend('block_unsearchable'); ?>
+<?php $this->block('content'); ?>
+
+<table>
+    <tr>
+        <th><?= $this->trans('invoice_nr', [], 'messages') ?></th>
+        <th><?= $this->trans('invoice_date', [], 'messages') ?></th>
+        <th><?= $this->trans('invoice_due', [], 'messages') ?></th>
+        <th><?= $this->trans('invoice_total', [], 'messages') ?></th>
+        <th><?= $this->trans('invoice_status', [], 'messages') ?></th>
+        <th></th>
+    </tr>
+    <?php foreach ($this->orders as $order): ?>
+    <tr>
+        <td><?= $order['nr'] ?></td>
+        <td><?= $order['date'] ?></td>
+        <td><?= $order['due'] ?></td>
+        <td>€ <?= $order['total'] ?></td>
+        <td><?= $order['status'] ?></td>
+        <td><a href="<?= $order['href'] ?>" target="blank"><?= $this->trans('invoice_pdf', [], 'messages') ?></a></td>
+    </tr>
+    <?php endforeach; ?>
+</table>
+<?php $this->endblock(); ?>

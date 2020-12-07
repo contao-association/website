@@ -23,7 +23,7 @@ class MemberSyncListener
      *
      * @param int|string $memberId
      */
-    public function updateClientAndContact(string $table, $memberId): void
+    public function updatePerson(string $table, $memberId): void
     {
         if ('tl_member' !== $table) {
             throw new \InvalidArgumentException("Invalid call to sync table \"$table\" with Cashctrl.");

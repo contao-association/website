@@ -18,6 +18,30 @@
                 <source>invoice_description</source>
                 <target>{membership} of the Contao Association</target>
             </trans-unit>
+            <trans-unit id="invoice_nr">
+                <source>invoice_nr</source>
+                <target>Invoice No.</target>
+            </trans-unit>
+            <trans-unit id="invoice_date">
+                <source>invoice_date</source>
+                <target>Date</target>
+            </trans-unit>
+            <trans-unit id="invoice_due">
+                <source>invoice_due</source>
+                <target>Due</target>
+            </trans-unit>
+            <trans-unit id="invoice_total">
+                <source>invoice_total</source>
+                <target>Total</target>
+            </trans-unit>
+            <trans-unit id="invoice_status">
+                <source>invoice_status</source>
+                <target>State</target>
+            </trans-unit>
+            <trans-unit id="invoice_pdf">
+                <source>invoice_pdf</source>
+                <target>Download PDF</target>
+            </trans-unit>
         </body>
     </file>
 </xliff>

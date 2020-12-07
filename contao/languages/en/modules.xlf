@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xliff version="1.1">
+    <file source-language="en">
+        <body>
+            <trans-unit id="FMD.cashctrl_invoices.0">
+                <source>CashCtrl Invoices</source>
+            </trans-unit>
+        </body>
+    </file>
+</xliff>

@@ -15,6 +15,7 @@ use Terminal42\CashctrlApi\Api\OrderEndpoint;
 use Symfony\Contracts\Translation\TranslatorInterface;
 use Terminal42\CashctrlApi\Api\OrderDocumentEndpoint;
 use Symfony\Component\Filesystem\Filesystem;
+use Terminal42\CashctrlApi\Api\ListFilter;
 
 class CashctrlApi
 {
@@ -37,7 +38,7 @@ class CashctrlApi
         $this->projectDir = $projectDir;
     }
 
-    public function syncMember(MemberModel $member)
+    public function syncMember(MemberModel $member): void
     {
         if ($member->cashctrl_id) {
             $person = $this->person->read((int) $member->cashctrl_id);
@@ -79,14 +80,21 @@ class CashctrlApi
         return $this->order->read($insertId);
     }
 
-    public function downloadInvoice(Order $invoice, int $templateId, string $language = null)
+    public function downloadInvoice(Order $invoice, int $templateId = null, string $language = null): string
     {
         if (null === $language && isset($GLOBALS['TL_LANGUAGE'])) {
             $language = (string) $GLOBALS['TL_LANGUAGE'];
         }
 
-        $this->orderDocument->update($invoice->getId(), ['templateId' => $templateId]);
+        if (null !== $templateId) {
+            $this->orderDocument->update($invoice->getId(), ['templateId' => $templateId]);
+        }
 
+        return $this->orderDocument->downloadPdf([$invoice->getId()], $language);
+    }
+
+    public function archiveInvoice(Order $invoice, int $templateId = null, string $language = null): string
+    {
         $year = $invoice->getDate()->format('Y');
         $quarter = ceil($invoice->getDate()->format('n') / 4);
 
@@ -94,7 +102,7 @@ class CashctrlApi
         $targetFile = 'var/invoices/'.$year.'/Q'.$quarter.'/'.$name.'.pdf';
         $this->filesystem->dumpFile(
             $this->projectDir.'/'.$targetFile,
-            $this->orderDocument->downloadPdf([$invoice->getId()], $language)
+            $this->downloadInvoice($invoice, $templateId, $language)
         );
 
         return $targetFile;
@@ -103,6 +111,15 @@ class CashctrlApi
     public function markInvoiceSent(int $invoiceId): void
     {
         $this->order->updateStatus($invoiceId, 16);
+    }
+
+    public function listInvoices(MemberModel $member): array
+    {
+        if (!$member->cashctrl_id) {
+            return [];
+        }
+
+        return $this->order->list()->filter('associateId', $member->cashctrl_id, ListFilter::EQUALS)->get();
     }
 
     private function updatePerson(Person $person, MemberModel $member): void

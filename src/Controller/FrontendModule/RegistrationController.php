@@ -107,7 +107,7 @@ class RegistrationController extends ModuleRegistration
         }
 
         $invoice = $this->api->createMemberInvoice($member);
-        $pdf = $this->api->downloadInvoice($invoice, 'ch' === $member->country ? 11 : 13);
+        $pdf = $this->api->archiveInvoice($invoice, 'ch' === $member->country ? 11 : 13);
 
         $dateFormat = isset($GLOBALS['objPage']) ? $GLOBALS['objPage']->dateFormat : $GLOBALS['TL_CONFIG']['dateFormat'];
 
