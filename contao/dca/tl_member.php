@@ -77,6 +77,8 @@ $GLOBALS['TL_DCA']['tl_member']['fields']['phone']['eval']['mandatory'] = true;
 $GLOBALS['TL_DCA']['tl_member']['fields']['country']['eval']['mandatory'] = true;
 $GLOBALS['TL_DCA']['tl_member']['fields']['country']['default'] = 'ch';
 
+$GLOBALS['TL_DCA']['tl_member']['fields']['postal']['eval']['maxlength'] = 10;
+
 $GLOBALS['TL_DCA']['tl_member']['fields']['city']['filter'] = false;
 $GLOBALS['TL_DCA']['tl_member']['fields']['login']['filter'] = false;
 $GLOBALS['TL_DCA']['tl_member']['fields']['groups']['filter'] = false;
