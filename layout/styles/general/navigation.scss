@@ -127,3 +127,182 @@ nav {
     }
   }
 }
+
+@media screen and (max-width : 1199px) {
+
+  li.submenu {
+    position : relative;
+    z-index : 10;
+  }
+
+  ul.level_2 {
+    background : darken($grey-light, 5%);
+    height : 0;
+    opacity : 0;
+    overflow : hidden;
+    padding-left : 1em;
+    transition : opacity 500ms ease-in-out;
+
+    li {
+      padding : 8px 0;
+    }
+  }
+
+  .js-mobile-nav-inner {
+    background-color : $grey-light;
+    height : calc(100vh - 110px);
+    overflow-y : auto;
+    position : fixed;
+    width : 70vw;
+    z-index : 1111;
+
+    @media (min-width : 400px) {
+      height : calc(100vh - 118px);
+    }
+
+    @media (min-width : 768px) {
+      height : calc(100vh - 143px);
+    }
+
+    li {
+      transition : all .5s ease-in-out;
+      &:not(:last-of-type) {
+        border-bottom : 1px solid #cccccc;
+      }
+
+      @include hfa() {
+        background-color : darken($grey-light, 3%);
+
+        .js-nav-main-sub-button {
+          background-color : darken($grey-light, 3%);
+        }
+      }
+
+      a,
+      strong {
+        padding : 0 15px;
+      }
+    }
+  }
+
+  .js-mobile-nav-inner[data-expanded="false"] {
+    right : -100%;
+    transition : right 400ms ease-in-out;
+  }
+
+  .js-mobile-nav-inner[data-expanded="true"] {
+    right : 0;
+    transition : right 400ms ease-in-out;
+  }
+
+  .js-mobile-nav-inner li {
+    display : block;
+    width : 100%;
+  }
+
+  .js-nav-main-button {
+    background : url("../../img/icon_menu.svg") transparent no-repeat;
+    background-size : 40px 40px;
+    border : none;
+    display : inline-block !important;
+    height : 40px;
+    position : absolute;
+    right : 15px;
+    text-indent : -1000em;
+    top : 75px;
+    width : 40px;
+
+    &:hover {
+      cursor : pointer;
+    }
+  }
+
+  .js-nav-main-sub-button {
+    background-color : $grey-light;
+    background-position : center center;
+    background-size : 1.5em 1.5em;
+    border-left : 1px solid #ccc;
+    display : inline-block;
+    height : 4.8rem;
+    overflow : hidden;
+    //transform        : rotate(90deg);
+    position : absolute;
+    right : 0;
+    text-indent : -1000em;
+    top : 0;
+    transition : all .5s ease-in-out;
+    width : 5.5rem;
+    z-index : 20;
+
+
+    @include hfa() {
+      cursor : pointer;
+      outline : none;
+    }
+
+    &::after {
+      background : url("../../img/icon_arrow_top.svg") transparent no-repeat;
+      //transform: translate(-50%,-50%);
+      background-size : 30%;
+      content : '';
+      height : 4.8rem;
+      left : 50%;
+      position : absolute;
+      top : 50%;
+      transform : translate(-90%, -16%) rotate(90deg);
+      width : 5.5rem;
+    }
+  }
+
+
+  .js-nav-main-sub-button[aria-expanded="true"]::after {
+    transform : translate(-84%, -90%) rotate(180deg);
+  }
+
+  .js-nav-main-sub-button[aria-expanded="true"] + ul.level_2,
+  .trail ul.level_2 {
+    height : auto;
+    opacity : 1;
+    padding-bottom : 5px;
+    padding-top : 5px;
+    transition : opacity 500ms ease-in-out;
+  }
+
+  ul.level_2 li {
+    height : 0;
+    opacity : 0;
+    overflow : hidden;
+    transition : opacity 500ms ease-in-out;
+  }
+
+  .js-nav-main-sub-button[aria-expanded="true"] + ul.level_2 li,
+  .trail ul.level_2 li {
+    height : auto;
+    opacity : 1;
+    transition : opacity 500ms ease-in-out;
+
+    @include hfa() {
+      background-color : transparent;
+    }
+  }
+
+  .js-click-close {
+    background-color : rgba(255, 255, 255, .8);
+    bottom : 0;
+    curcor : pointer;
+    display : none;
+    height : 100vh;
+    left : 0;
+    position : fixed;
+    right : 0;
+    text-indent : -1000em;
+    top : 0;
+    width : 100vw;
+    z-index : 500;
+
+
+    body[data-navi-expanded="true"] & {
+      display : block;
+    }
+  }
+}

@@ -35,7 +35,7 @@
 
 </head>
 <body class="<?= $this->class; ?>"<?php if ($this->onload): ?> onload="<?= $this->onload ?>"<?php endif; ?> itemscope itemtype="http://schema.org/WebPage">
-
+<div id="wrapper">
 <?php $this->block('body'); ?>
 <?php $this->sections('top'); ?>
 
@@ -101,6 +101,6 @@
 <?php $this->endblock(); ?>
 
 <?= $this->mootools ?>
-
+</div>
 </body>
 </html>
