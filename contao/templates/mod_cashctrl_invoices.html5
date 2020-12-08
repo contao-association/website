@@ -5,6 +5,7 @@
 <p class="message"><?= $this->trans('invoice_empty', [], 'messages') ?></p>
 <?php else: ?>
 <table>
+    <thead>
     <tr>
         <th><?= $this->trans('invoice_nr', [], 'messages') ?></th>
         <th><?= $this->trans('invoice_date', [], 'messages') ?></th>
@@ -13,6 +14,8 @@
         <th><?= $this->trans('invoice_status', [], 'messages') ?></th>
         <th></th>
     </tr>
+    </thead>
+    <tbody>
     <?php foreach ($this->orders as $order): ?>
     <tr>
         <td><?= $order['nr'] ?></td>
@@ -23,6 +26,7 @@
         <td><a href="<?= $order['href'] ?>" target="blank"><?= $this->trans('invoice_pdf', [], 'messages') ?></a></td>
     </tr>
     <?php endforeach; ?>
+    </tbody>
 </table>
 <?php endif; ?>
 <?php $this->endblock(); ?>

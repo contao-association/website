@@ -20,7 +20,7 @@
             </trans-unit>
             <trans-unit id="invoice_nr">
                 <source>invoice_nr</source>
-                <target>Rechnungsnummer</target>
+                <target>Rechnungsnr.</target>
             </trans-unit>
             <trans-unit id="invoice_date">
                 <source>invoice_date</source>
