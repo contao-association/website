@@ -3,6 +3,7 @@
   background: #fff;
   padding: 15px;
   border: 1px solid $border-color;
+  @include border-radius(5px);
 
   @media (min-width: 768px) {
     padding: 30px;
