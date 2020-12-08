@@ -25,9 +25,6 @@ table {
       @include hfa() {
         background: $background-grey;
       }
-      &.paid .col_4 {
-        color: $color-green;
-      }
     }
   }
   tfoot {
@@ -45,6 +42,13 @@ table {
   }
   td {
     padding: 0.4em 0.66667em;
+
+    &.paid {
+      color: $color-green;
+    }
+    &.open {
+      color: $color-red;
+    }
   }
   th {
     padding: 0.4em 0.66667em;
