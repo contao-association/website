@@ -109,6 +109,11 @@ form {
     font: inherit;
     -webkit-appearance: button;
   }
+
+  .widget-wrapper {
+    display: flex;
+    justify-content: space-between;
+  }
 }
 
 .explanation {
