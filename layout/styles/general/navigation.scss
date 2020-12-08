@@ -1,17 +1,129 @@
-.mainnavi {
-  margin-left: auto;
-
+nav {
   ul {
-    padding: 0;
-    margin: 0;
+    list-style-type : none;
+    margin          : 0;
+    padding         : 0;
+
+    &:after {
+      content : "";
+      display : table;
+      clear   : both;
+    }
+  }
+
+  ul.level_2 {
+    display: none;
+  }
+  a {
+    color: $primary-color;
+
+    @include hfa() {
+      text-decoration: underline;
+    }
+  }
+  a:hover, strong, a.trail {
+    color: $primary-color;
+  }
+
+  /*a:hover, strong, a.trail {
+    color: $color-default;
+    text-decoration: none;
+  }*/
+  strong {
+    font-weight: lighter;
+  }
+  li:hover > ul {
+    display: block;
+  }
+}
+
+.mainnavi {
+  //margin-left: 30px;
+  margin-left: auto;
+  display: flex;
+  align-items: center;
+
+  a, strong {
+    color: $primary-color;
+  }
+
+  ul.level_1 {
     display: flex;
+    margin-right: 60px;
+    > li {
+      &:not(:last-child) {
+        margin-right: 30px;
+      }
+      > a, > strong {
+        font-size: 18px;
+        padding-bottom: 30px;
+      }
+      > a:hover, > a.trail, > strong:not(.forward) {
+        text-decoration: underline;
+      }
+
+      &.submenu {
+        /*> a, > strong {
+          &::before {
+          content: '';
+          font-family: 'FontAwesome';
+        }*/
+
+        ul {
+          position: absolute;
+          z-index: 1000;
+          font-size: 16px;
+        }
+      }
+    }
+  }
+
+  ul.level_2 {
+    padding-top: 15px;
+
+    &:before {
+      content: '';
+      position: absolute;
+      width: 100%;
+      height: calc(100% - 15px);
+      display: block;
+      z-index: -1;
+      @include box-shadow(#999);
+      @include border-radius(5px);
+    }
+
+    li {
+      //margin-top: $base-spacing-xx-s;
+    }
+
+    a, strong {
+      display: block;
+      background-color: #fff;
+      padding: 10px 15px;
+      font-size: 14px;
+      border-top: 1px solid $border-color;
+      line-height: 1.4em;
+
+      &.first {
+        border-top-right-radius: 5px;
+        border-top-left-radius: 5px;
+        border-top: none;
+      }
+
+      &.last {
+        border-bottom-right-radius: 5px;
+        border-bottom-left-radius: 5px;
+      }
+    }
+
+    strong:not(.forward), a:hover {
+      background-color: #f2f2f2;
+    }
   }
 
   li {
-    list-style: none;
-
-    &:not(:last-child) {
-      margin-right: 15px;
+    &.page-account, &.page-logout {
+      display: none;
     }
   }
 }
