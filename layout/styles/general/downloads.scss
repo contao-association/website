@@ -3,10 +3,12 @@
   background: #fff;
   padding: 15px;
   border: 1px solid $border-color;
-  width: 100%;
 
   @media (min-width: 768px) {
     padding: 30px;
+  }
+  @media (min-width: 992px) {
+    width: 50%;
   }
   ul {
     margin: 0;
