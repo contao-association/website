@@ -14,6 +14,7 @@ sentry:
             - Contao\CoreBundle\Exception\RedirectResponseException
             - Contao\CoreBundle\Exception\AjaxRedirectResponseException
             - Contao\CoreBundle\Exception\NoContentResponseException
+            - Contao\CoreBundle\Exception\InsufficientAuthenticationException
             - Lexik\Bundle\MaintenanceBundle\Exception\ServiceUnavailableException
             - Symfony\Component\HttpKernel\Exception\NotFoundHttpException
             - Symfony\Component\HttpKernel\Exception\AccessDeniedHttpException
