@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "fc6c32ef7734028637c4f8fd983b2998",
+    "content-hash": "357d8fd948e1607b29d2a74ca96f9c1d",
     "packages": [
         {
             "name": "ausi/slug-generator",
@@ -4677,6 +4677,72 @@
                 "source": "https://github.com/lexik/LexikMaintenanceBundle/tree/master"
             },
             "time": "2018-02-14T10:18:33+00:00"
+        },
+        {
+            "name": "madeyourday/contao-rocksolid-custom-elements",
+            "version": "v2.2.17",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/madeyourday/contao-rocksolid-custom-elements.git",
+                "reference": "a535e3e1edcecb32c88a3dbdcc3fb59875ad9570"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/madeyourday/contao-rocksolid-custom-elements/zipball/a535e3e1edcecb32c88a3dbdcc3fb59875ad9570",
+                "reference": "a535e3e1edcecb32c88a3dbdcc3fb59875ad9570",
+                "shasum": ""
+            },
+            "require": {
+                "contao/core-bundle": "^4.4.2",
+                "php": ">=5.5"
+            },
+            "conflict": {
+                "contao/core": "*",
+                "contao/core-bundle": "4.4.1",
+                "contao/manager-plugin": "<2.0 || >=3.0"
+            },
+            "replace": {
+                "contao-legacy/rocksolid-custom-elements": "self.version"
+            },
+            "require-dev": {
+                "contao/manager-plugin": "^2.0"
+            },
+            "suggest": {
+                "madeyourday/contao-rocksolid-columns": "For grid column support. See documentation for more information."
+            },
+            "type": "contao-bundle",
+            "extra": {
+                "contao-manager-plugin": "MadeYourDay\\RockSolidCustomElements\\ContaoManagerPlugin"
+            },
+            "autoload": {
+                "psr-4": {
+                    "MadeYourDay\\RockSolidCustomElements\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "RockSolid Themes",
+                    "homepage": "https://rocksolidthemes.com/de/contao-themes",
+                    "role": "Developer"
+                }
+            ],
+            "description": "Create your own, nestable content elements using a modular system. End the WYSIWYG chaos with your own content elements.",
+            "homepage": "https://rocksolidthemes.com/de/contao/plugins/custom-content-elements",
+            "keywords": [
+                "contao",
+                "content-elements",
+                "custom-elements"
+            ],
+            "support": {
+                "forum": "http://help.rocksolidthemes.com/discussions/contao",
+                "issues": "https://github.com/madeyourday/contao-rocksolid-custom-elements/issues",
+                "source": "https://github.com/madeyourday/contao-rocksolid-custom-elements"
+            },
+            "time": "2020-10-06T12:39:30+00:00"
         },
         {
             "name": "matthiasmullie/minify",
@@ -11976,12 +12042,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/terminal42/cashctrl-api.git",
-                "reference": "8551693b1154a719fe4909b3e6ae974dcae1a2c0"
+                "reference": "1820c16e67e17a9456290d0013d5785cfc9f8ae7"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/terminal42/cashctrl-api/zipball/8551693b1154a719fe4909b3e6ae974dcae1a2c0",
-                "reference": "8551693b1154a719fe4909b3e6ae974dcae1a2c0",
+                "url": "https://api.github.com/repos/terminal42/cashctrl-api/zipball/1820c16e67e17a9456290d0013d5785cfc9f8ae7",
+                "reference": "1820c16e67e17a9456290d0013d5785cfc9f8ae7",
                 "shasum": ""
             },
             "require": {
@@ -12028,7 +12094,7 @@
                     "url": "https://ko-fi.com/terminal42"
                 }
             ],
-            "time": "2020-12-07T07:40:02+00:00"
+            "time": "2020-12-08T11:36:21+00:00"
         },
         {
             "name": "terminal42/cashctrl-bundle",
@@ -12036,12 +12102,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/terminal42/cashctrl-bundle.git",
-                "reference": "a3a5eb8c6b0e9af006e601471f874be6b330fcf3"
+                "reference": "7f60cb2ddb95edeac363ac8f33bd9f8639a0906b"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/terminal42/cashctrl-bundle/zipball/a3a5eb8c6b0e9af006e601471f874be6b330fcf3",
-                "reference": "a3a5eb8c6b0e9af006e601471f874be6b330fcf3",
+                "url": "https://api.github.com/repos/terminal42/cashctrl-bundle/zipball/7f60cb2ddb95edeac363ac8f33bd9f8639a0906b",
+                "reference": "7f60cb2ddb95edeac363ac8f33bd9f8639a0906b",
                 "shasum": ""
             },
             "require": {
@@ -12088,7 +12154,7 @@
                     "url": "https://ko-fi.com/terminal42"
                 }
             ],
-            "time": "2020-12-06T21:19:37+00:00"
+            "time": "2020-12-07T16:47:20+00:00"
         },
         {
             "name": "terminal42/contao-easy_themes",
