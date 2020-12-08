@@ -75,6 +75,7 @@ class CashctrlInvoicesController extends AbstractFrontendModuleController
                 'nr' => $order->getNr(),
                 'date' => $order->getDate()->format($dateFormat),
                 'due' => $due->format($dateFormat),
+                'closed' => $order->isClosed,
                 'total' => number_format($order->total, 2, '.', "'"),
                 'status' => XmlHelper::parseValues($order->statusName)[$GLOBALS['TL_LANGUAGE']],
                 'href' => Environment::get('request').'?invoice='.$order->getId(),

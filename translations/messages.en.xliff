@@ -42,6 +42,10 @@
                 <source>invoice_pdf</source>
                 <target>Download PDF</target>
             </trans-unit>
+            <trans-unit id="invoice_empty">
+                <source>invoice_empty</source>
+                <target>You currently do not have any invoices. Please be aware that only invoices starting from 2021 are available here. For older invoices, please contact {{email::association@contao.org}}.</target>
+            </trans-unit>
         </body>
     </file>
 </xliff>

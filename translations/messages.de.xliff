@@ -42,6 +42,10 @@
                 <source>invoice_pdf</source>
                 <target>PDF herunterladen</target>
             </trans-unit>
+            <trans-unit id="invoice_empty">
+                <source>invoice_empty</source>
+                <target>Du hast noch keine Rechnungen von uns. Beachte dass nur Rechnungen ab 2021 angezeigt werden, für ältere Rechnugnen wende dich bitte an {{email::association@contao.org}}.</target>
+            </trans-unit>
         </body>
     </file>
 </xliff>

@@ -1,6 +1,9 @@
 <?php $this->extend('block_unsearchable'); ?>
 <?php $this->block('content'); ?>
 
+<?php if (empty($this->orders)): ?>
+<p class="message"><?= $this->trans('invoice_empty', [], 'messages') ?></p>
+<?php else: ?>
 <table>
     <tr>
         <th><?= $this->trans('invoice_nr', [], 'messages') ?></th>
@@ -14,11 +17,12 @@
     <tr>
         <td><?= $order['nr'] ?></td>
         <td><?= $order['date'] ?></td>
-        <td><?= $order['due'] ?></td>
+        <td class="<?= $order['closed'] ? 'closed' : 'open' ?>"><?= $order['due'] ?></td>
         <td>€ <?= $order['total'] ?></td>
         <td><?= $order['status'] ?></td>
         <td><a href="<?= $order['href'] ?>" target="blank"><?= $this->trans('invoice_pdf', [], 'messages') ?></a></td>
     </tr>
     <?php endforeach; ?>
 </table>
+<?php endif; ?>
 <?php $this->endblock(); ?>
