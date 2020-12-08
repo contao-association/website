@@ -211,9 +211,9 @@ a {
 hr {
   width: 100%;
   display: block;
-  border-color: $primary-color;
+  border-color: $border-color;
   margin-top : 30px;
-  padding-bottom: 30px;
+  margin-bottom: 30px;
 }
 
 .mod_article {
@@ -221,6 +221,10 @@ hr {
 }
 div[class^="mod_"] {
   width: 100%;
+}
+.row div[class^="ce_"], .row div[class^="mod_"] {
+  padding-right: 15px;
+  padding-left: 15px;
 }
 
 
