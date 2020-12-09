@@ -34,73 +34,80 @@
     <?php $this->endblock(); ?>
 
 </head>
-<body class="<?= $this->class; ?>"<?php if ($this->onload): ?> onload="<?= $this->onload ?>"<?php endif; ?> itemscope itemtype="http://schema.org/WebPage">
-<div id="wrapper">
+<body class="<?= $this->class; ?>"<?php if ($this->onload): ?> onload="<?= $this->onload ?>"<?php endif; ?> itemscope
+      itemtype="http://schema.org/WebPage">
+
 <?php $this->block('body'); ?>
 <?php $this->sections('top'); ?>
+<input type="checkbox" class="menu-toggle" id="menu-toggle">
+<div class="wrapper">
+    <?php $this->block('header'); ?>
+    <?php if ($this->header): ?>
+        <header class="section-header" itemscope itemtype="http://schema.org/WPHeader">
+            <div class="section-header__inside">
+                <?= $this->header ?>
+                <label class="menu-toggle" for="menu-toggle">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </label>
+            </div>
+        </header>
+    <?php endif; ?>
+    <?php $this->endblock(); ?>
 
-<?php $this->block('header'); ?>
-<?php if ($this->header): ?>
-    <header class="section-header" itemscope itemtype="http://schema.org/WPHeader">
-        <div class="section-header__inside">
-            <?= $this->header ?>
-        </div>
-    </header>
-<?php endif; ?>
-<?php $this->endblock(); ?>
+    <?php $this->sections('before'); ?>
 
-<?php $this->sections('before'); ?>
+    <?php $this->block('container'); ?>
+    <div class="layout__columns layout__columns--<?= $this->layout->cols ?>">
+        <?php $this->block('main'); ?>
+        <main class="section-main" itemscope itemtype="http://schema.org/WebPageElement" itemprop="mainContentOfPage">
+            <div class="section-main__inside">
+                <?= $this->main ?>
+            </div>
+        </main>
+        <?php $this->endblock(); ?>
 
-<?php $this->block('container'); ?>
-<div class="layout__columns layout__columns--<?= $this->layout->cols ?>">
-<?php $this->block('main'); ?>
-    <main class="section-main" itemscope itemtype="http://schema.org/WebPageElement" itemprop="mainContentOfPage">
-        <div class="section-main__inside">
-            <?= $this->main ?>
-        </div>
-    </main>
-<?php $this->endblock(); ?>
+        <?php $this->block('left'); ?>
+        <?php if ($this->left): ?>
+            <aside class="section-left">
+                <div class="section-left__inside">
+                    <?= $this->left ?>
+                </div>
+            </aside>
+        <?php endif; ?>
+        <?php $this->endblock(); ?>
 
-<?php $this->block('left'); ?>
-<?php if ($this->left): ?>
-    <aside class="section-left">
-        <div class="section-left__inside">
-            <?= $this->left ?>
-        </div>
-    </aside>
-<?php endif; ?>
-<?php $this->endblock(); ?>
+        <?php $this->block('right'); ?>
+        <?php if ($this->right): ?>
+            <aside class="section-right">
+                <div class="section-right__inside">
+                    <?= $this->right ?>
+                </div>
+            </aside>
+        <?php endif; ?>
+        <?php $this->endblock(); ?>
 
-<?php $this->block('right'); ?>
-<?php if ($this->right): ?>
-    <aside class="section-right">
-        <div class="section-right__inside">
-            <?= $this->right ?>
-        </div>
-    </aside>
-<?php endif; ?>
-<?php $this->endblock(); ?>
+    </div>
+    <?php $this->endblock(); ?>
 
-</div>
-<?php $this->endblock(); ?>
+    <?php $this->sections('after'); ?>
 
-<?php $this->sections('after'); ?>
-
-<?php $this->block('footer'); ?>
-<?php if ($this->footer): ?>
-    <footer class="section-footer" itemscope itemtype="http://schema.org/WPFooter">
-        <div class="section-footer__inside">
-            <?= $this->footer ?>
-        </div>
-    </footer>
-<?php endif; ?>
-<?php $this->endblock(); ?>
+    <?php $this->block('footer'); ?>
+    <?php if ($this->footer): ?>
+        <footer class="section-footer" itemscope itemtype="http://schema.org/WPFooter">
+            <div class="section-footer__inside">
+                <?= $this->footer ?>
+            </div>
+        </footer>
+    <?php endif; ?>
+    <?php $this->endblock(); ?>
 
 
-<?php $this->sections('bottom'); ?>
-<?php $this->endblock(); ?>
+    <?php $this->sections('bottom'); ?>
+    <?php $this->endblock(); ?>
 
-<?= $this->mootools ?>
+    <?= $this->mootools ?>
 </div>
 </body>
 </html>
