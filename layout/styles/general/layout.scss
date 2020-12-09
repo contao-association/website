@@ -216,6 +216,19 @@ hr {
   margin-bottom: 30px;
 }
 
+#wrapper {
+  margin : 0 auto;
+  max-width : 1170px;
+}
+
+/* Full with Sections: */
+
+.mod_article .inner {
+  margin: 0 auto;
+  max-width: 1170px;
+  padding-left: 15px;
+  padding-right: 15px;
+}
 .mod_article {
   margin-bottom : 40px;
 }
