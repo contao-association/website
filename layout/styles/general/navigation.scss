@@ -37,11 +37,17 @@ nav {
   }
 }
 
-.mainnavi {
-  //margin-left: 30px;
+.js-mobile-nav-inner {
   margin-left: auto;
   display: flex;
   align-items: center;
+}
+
+.mainnavi {
+  //margin-left: 30px;
+  //margin-left: auto;
+  //display: flex;
+  //align-items: center;
 
   a, strong {
     color: $primary-color;
@@ -201,7 +207,7 @@ nav {
   }
 
   .js-nav-main-button {
-    background : url("../../img/icon_menu.svg") transparent no-repeat;
+    background : url("../../images/icon_menu.svg") transparent no-repeat;
     background-size : 40px 40px;
     border : none;
     display : inline-block !important;
@@ -241,7 +247,7 @@ nav {
     }
 
     &::after {
-      background : url("../../img/icon_arrow_top.svg") transparent no-repeat;
+      background : url("../../images/icon_arrow_top.svg") transparent no-repeat;
       //transform: translate(-50%,-50%);
       background-size : 30%;
       content : '';
