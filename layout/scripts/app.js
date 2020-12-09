@@ -1,7 +1,7 @@
 
 import '../icons/browserconfig.xml';
 import '../icons/site.webmanifest';
-import '/nav_button';
+import './_nav_button';
 import '../styles/app.scss';
 
 // automatically add all images to the manifest.json
