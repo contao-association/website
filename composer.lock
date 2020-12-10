@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "357d8fd948e1607b29d2a74ca96f9c1d",
+    "content-hash": "3304d88bc48d11ba7dc746caa39e39f6",
     "packages": [
         {
             "name": "ausi/slug-generator",
@@ -74,6 +74,166 @@
                 }
             ],
             "time": "2020-10-19T15:25:33+00:00"
+        },
+        {
+            "name": "backup-manager/backup-manager",
+            "version": "1.4.1",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/backup-manager/backup-manager.git",
+                "reference": "5d8cdadeda8b89bffa70829b4b74c0c774fa0364"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/backup-manager/backup-manager/zipball/5d8cdadeda8b89bffa70829b4b74c0c774fa0364",
+                "reference": "5d8cdadeda8b89bffa70829b4b74c0c774fa0364",
+                "shasum": ""
+            },
+            "require": {
+                "league/flysystem": "^1.0",
+                "php": ">=7.1",
+                "symfony/process": "^2.1 || ^3.0 || ^4"
+            },
+            "require-dev": {
+                "aws/aws-sdk-php": "~3.0",
+                "dropbox/dropbox-sdk": "~1.1",
+                "league/flysystem-aws-s3-v3": "~1.0",
+                "league/flysystem-dropbox": "~1.0",
+                "league/flysystem-rackspace": "~1.0",
+                "league/flysystem-sftp": "~1.0",
+                "league/flysystem-webdav": "~1.0",
+                "mhetreramesh/flysystem-backblaze": "~1.0",
+                "mockery/mockery": "~0.9",
+                "phpspec/phpspec": "~2.1",
+                "satooshi/php-coveralls": "~0.6",
+                "srmklive/flysystem-dropbox-v2": "~1.0",
+                "superbalist/flysystem-google-storage": "^7.0"
+            },
+            "suggest": {
+                "league/flysystem-aws-s3-v3": "AWS S3 adapter support.",
+                "league/flysystem-rackspace": "Rackspace adapter support.",
+                "league/flysystem-sftp": "SFTP adapter support.",
+                "league/flysystem-webdav": "Webdav adapter support.",
+                "mhetreramesh/flysystem-backblaze": "B2 adapter support.",
+                "srmklive/flysystem-dropbox-v2": "Dropbox API v2 adapter support.",
+                "superbalist/flysystem-google-storage": "Google Cloud Storage adapter support."
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "1.0-dev"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "BackupManager\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Shawn McCool",
+                    "email": "shawn@heybigname.com",
+                    "homepage": "http://heybigname.com/"
+                },
+                {
+                    "name": "Mitchell van Wijngaarden",
+                    "email": "mitchell@kooding.nl",
+                    "homepage": "http://heybigname.com/"
+                }
+            ],
+            "description": "A framework agnostic database backup manager with user-definable procedures and support for S3, Dropbox, FTP, SFTP, and more with drivers for popular frameworks.",
+            "support": {
+                "issues": "https://github.com/backup-manager/backup-manager/issues",
+                "source": "https://github.com/backup-manager/backup-manager/tree/1.4.1"
+            },
+            "time": "2019-11-22T13:33:22+00:00"
+        },
+        {
+            "name": "backup-manager/symfony",
+            "version": "2.3.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/backup-manager/symfony.git",
+                "reference": "4e1f69638df4fe781028eb6e4f34f73fb1618253"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/backup-manager/symfony/zipball/4e1f69638df4fe781028eb6e4f34f73fb1618253",
+                "reference": "4e1f69638df4fe781028eb6e4f34f73fb1618253",
+                "shasum": ""
+            },
+            "require": {
+                "backup-manager/backup-manager": "^1.3",
+                "nyholm/dsn": "^1.0",
+                "php": "^7.2",
+                "symfony/config": "^3.4 || ^4.4 || ^5.0",
+                "symfony/console": "^3.4 || ^4.4 || ^5.0",
+                "symfony/dependency-injection": "^3.4 || ^4.4 || ^5.0",
+                "symfony/filesystem": "^3.4 || ^4.4 || ^5.0",
+                "symfony/framework-bundle": "^3.4 || ^4.4 || ^5.0",
+                "symfony/http-kernel": "^3.4 || ^4.4 || ^5.0",
+                "symfony/yaml": "^3.4 || ^4.4 || ^5.0"
+            },
+            "require-dev": {
+                "matthiasnoback/symfony-config-test": "^4.1",
+                "matthiasnoback/symfony-dependency-injection-test": "^4.1",
+                "nyholm/symfony-bundle-test": "^1.6",
+                "superbalist/flysystem-google-storage": "^6.0 || ^7.0",
+                "symfony/phpunit-bridge": "^5.0"
+            },
+            "suggest": {
+                "league/flysystem-aws-s3-v3": "To use AWS S3, version 3",
+                "league/flysystem-rackspace": "To use Rackspace",
+                "league/flysystem-sftp": "To use sftp",
+                "mhetreramesh/flysystem-backblaze": "To use B2",
+                "srmklive/flysystem-dropbox-v2": "To use Dropbox",
+                "superbalist/flysystem-google-storage": "Google Cloud Storage adapter support."
+            },
+            "type": "symfony-bundle",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "2.3-dev"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "BM\\BackupManagerBundle\\": ""
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Tobias Nyholm",
+                    "email": "tobias.nyholm@gmail.com"
+                },
+                {
+                    "name": "Luiz Henrique Gomes Palácio",
+                    "email": "lhpalacio@outlook.com"
+                }
+            ],
+            "description": "A simple database backup manager for Symfony2 with support for S3, Rackspace, Dropbox, FTP, SFTP.",
+            "keywords": [
+                "backup",
+                "database",
+                "dropbox",
+                "ftp",
+                "rackspace",
+                "s3",
+                "sftp",
+                "symfony"
+            ],
+            "support": {
+                "issues": "https://github.com/backup-manager/symfony/issues",
+                "source": "https://github.com/backup-manager/symfony/tree/2.3.0"
+            },
+            "time": "2019-12-07T14:31:56+00:00"
         },
         {
             "name": "bacon/bacon-qr-code",
@@ -4185,16 +4345,16 @@
         },
         {
             "name": "lcobucci/jwt",
-            "version": "3.4.1",
+            "version": "3.4.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/lcobucci/jwt.git",
-                "reference": "958a9873a63b0244a72f6e354ccc86019ee674a5"
+                "reference": "17cb82dd625ccb17c74bf8f38563d3b260306483"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/lcobucci/jwt/zipball/958a9873a63b0244a72f6e354ccc86019ee674a5",
-                "reference": "958a9873a63b0244a72f6e354ccc86019ee674a5",
+                "url": "https://api.github.com/repos/lcobucci/jwt/zipball/17cb82dd625ccb17c74bf8f38563d3b260306483",
+                "reference": "17cb82dd625ccb17c74bf8f38563d3b260306483",
                 "shasum": ""
             },
             "require": {
@@ -4246,7 +4406,7 @@
             ],
             "support": {
                 "issues": "https://github.com/lcobucci/jwt/issues",
-                "source": "https://github.com/lcobucci/jwt/tree/3.4.1"
+                "source": "https://github.com/lcobucci/jwt/tree/3.4.2"
             },
             "funding": [
                 {
@@ -4258,7 +4418,157 @@
                     "type": "patreon"
                 }
             ],
-            "time": "2020-11-27T01:17:14+00:00"
+            "time": "2020-12-03T13:43:45+00:00"
+        },
+        {
+            "name": "league/flysystem",
+            "version": "1.1.3",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/thephpleague/flysystem.git",
+                "reference": "9be3b16c877d477357c015cec057548cf9b2a14a"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/thephpleague/flysystem/zipball/9be3b16c877d477357c015cec057548cf9b2a14a",
+                "reference": "9be3b16c877d477357c015cec057548cf9b2a14a",
+                "shasum": ""
+            },
+            "require": {
+                "ext-fileinfo": "*",
+                "league/mime-type-detection": "^1.3",
+                "php": "^7.2.5 || ^8.0"
+            },
+            "conflict": {
+                "league/flysystem-sftp": "<1.0.6"
+            },
+            "require-dev": {
+                "phpspec/prophecy": "^1.11.1",
+                "phpunit/phpunit": "^8.5.8"
+            },
+            "suggest": {
+                "ext-fileinfo": "Required for MimeType",
+                "ext-ftp": "Allows you to use FTP server storage",
+                "ext-openssl": "Allows you to use FTPS server storage",
+                "league/flysystem-aws-s3-v2": "Allows you to use S3 storage with AWS SDK v2",
+                "league/flysystem-aws-s3-v3": "Allows you to use S3 storage with AWS SDK v3",
+                "league/flysystem-azure": "Allows you to use Windows Azure Blob storage",
+                "league/flysystem-cached-adapter": "Flysystem adapter decorator for metadata caching",
+                "league/flysystem-eventable-filesystem": "Allows you to use EventableFilesystem",
+                "league/flysystem-rackspace": "Allows you to use Rackspace Cloud Files",
+                "league/flysystem-sftp": "Allows you to use SFTP server storage via phpseclib",
+                "league/flysystem-webdav": "Allows you to use WebDAV storage",
+                "league/flysystem-ziparchive": "Allows you to use ZipArchive adapter",
+                "spatie/flysystem-dropbox": "Allows you to use Dropbox storage",
+                "srmklive/flysystem-dropbox-v2": "Allows you to use Dropbox storage for PHP 5 applications"
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "1.1-dev"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "League\\Flysystem\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Frank de Jonge",
+                    "email": "info@frenky.net"
+                }
+            ],
+            "description": "Filesystem abstraction: Many filesystems, one API.",
+            "keywords": [
+                "Cloud Files",
+                "WebDAV",
+                "abstraction",
+                "aws",
+                "cloud",
+                "copy.com",
+                "dropbox",
+                "file systems",
+                "files",
+                "filesystem",
+                "filesystems",
+                "ftp",
+                "rackspace",
+                "remote",
+                "s3",
+                "sftp",
+                "storage"
+            ],
+            "support": {
+                "issues": "https://github.com/thephpleague/flysystem/issues",
+                "source": "https://github.com/thephpleague/flysystem/tree/1.x"
+            },
+            "funding": [
+                {
+                    "url": "https://offset.earth/frankdejonge",
+                    "type": "other"
+                }
+            ],
+            "time": "2020-08-23T07:39:11+00:00"
+        },
+        {
+            "name": "league/mime-type-detection",
+            "version": "1.5.1",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/thephpleague/mime-type-detection.git",
+                "reference": "353f66d7555d8a90781f6f5e7091932f9a4250aa"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/thephpleague/mime-type-detection/zipball/353f66d7555d8a90781f6f5e7091932f9a4250aa",
+                "reference": "353f66d7555d8a90781f6f5e7091932f9a4250aa",
+                "shasum": ""
+            },
+            "require": {
+                "ext-fileinfo": "*",
+                "php": "^7.2 || ^8.0"
+            },
+            "require-dev": {
+                "phpstan/phpstan": "^0.12.36",
+                "phpunit/phpunit": "^8.5.8"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "League\\MimeTypeDetection\\": "src"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Frank de Jonge",
+                    "email": "info@frankdejonge.nl"
+                }
+            ],
+            "description": "Mime-type detection for Flysystem",
+            "support": {
+                "issues": "https://github.com/thephpleague/mime-type-detection/issues",
+                "source": "https://github.com/thephpleague/mime-type-detection/tree/1.5.1"
+            },
+            "funding": [
+                {
+                    "url": "https://github.com/frankdejonge",
+                    "type": "github"
+                },
+                {
+                    "url": "https://tidelift.com/funding/github/packagist/league/flysystem",
+                    "type": "tidelift"
+                }
+            ],
+            "time": "2020-10-18T11:50:25+00:00"
         },
         {
             "name": "league/uri-components",
@@ -5136,6 +5446,67 @@
                 "source": "https://github.com/nelmio/NelmioSecurityBundle/tree/v2.10.1"
             },
             "time": "2020-06-18T12:49:09+00:00"
+        },
+        {
+            "name": "nyholm/dsn",
+            "version": "1.0.1",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/Nyholm/dsn.git",
+                "reference": "1b37b7b4b6ca6552fb745209323eaf14d385d7a9"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/Nyholm/dsn/zipball/1b37b7b4b6ca6552fb745209323eaf14d385d7a9",
+                "reference": "1b37b7b4b6ca6552fb745209323eaf14d385d7a9",
+                "shasum": ""
+            },
+            "require": {
+                "php": "^5.5 || ^7.0"
+            },
+            "require-dev": {
+                "phpunit/phpunit": "^4.8.36 || ^6.5.7 || ^7.0"
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "1.0-dev"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Nyholm\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Tobias Nyholm",
+                    "email": "tobias.nyholm@gmail.com"
+                }
+            ],
+            "description": "Parse your DSN",
+            "homepage": "http://tnyholm.se",
+            "keywords": [
+                "database",
+                "dsn",
+                "dsn parser",
+                "parser"
+            ],
+            "support": {
+                "issues": "https://github.com/Nyholm/dsn/issues",
+                "source": "https://github.com/Nyholm/dsn/tree/1.0.1"
+            },
+            "funding": [
+                {
+                    "url": "https://github.com/Nyholm",
+                    "type": "github"
+                }
+            ],
+            "time": "2020-04-11T10:41:33+00:00"
         },
         {
             "name": "nyholm/psr7",
@@ -6480,6 +6851,60 @@
             "time": "2020-02-21T04:36:14+00:00"
         },
         {
+            "name": "richardhj/contao-backup-manager",
+            "version": "v2.2.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/richardhj/contao-backup-manager.git",
+                "reference": "fe009b64aa5b043d0a08d916e796dafcf399e63d"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/richardhj/contao-backup-manager/zipball/fe009b64aa5b043d0a08d916e796dafcf399e63d",
+                "reference": "fe009b64aa5b043d0a08d916e796dafcf399e63d",
+                "shasum": ""
+            },
+            "require": {
+                "backup-manager/symfony": "^2.2",
+                "contao/core-bundle": "^4.9",
+                "php": "^7.4",
+                "symfony/config": "^4.4",
+                "symfony/http-kernel": "^4.4"
+            },
+            "require-dev": {
+                "contao/manager-plugin": "^2.7"
+            },
+            "suggest": {
+                "alextartan/flysystem-libsodium-adapter": "Configure an encrypted data layer for remote filesystems"
+            },
+            "type": "contao-bundle",
+            "extra": {
+                "contao-manager-plugin": "Richardhj\\ContaoBackupManager\\ContaoManager\\Plugin"
+            },
+            "autoload": {
+                "psr-4": {
+                    "Richardhj\\ContaoBackupManager\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "LGPL-3.0-or-later"
+            ],
+            "authors": [
+                {
+                    "name": "Richard Henkenjohann",
+                    "email": "richardhenkenjohann@googlemail.com",
+                    "role": "Developer"
+                }
+            ],
+            "description": "Wrapper extension for backup-manager.",
+            "support": {
+                "issues": "https://github.com/richardhj/contao-backup-manager/issues",
+                "source": "https://github.com/richardhj/contao-backup-manager"
+            },
+            "time": "2020-11-19T16:18:17+00:00"
+        },
+        {
             "name": "scheb/two-factor-bundle",
             "version": "v4.18.4",
             "source": {
@@ -7021,32 +7446,31 @@
         },
         {
             "name": "swiftmailer/swiftmailer",
-            "version": "v6.2.3",
+            "version": "v6.2.4",
             "source": {
                 "type": "git",
                 "url": "https://github.com/swiftmailer/swiftmailer.git",
-                "reference": "149cfdf118b169f7840bbe3ef0d4bc795d1780c9"
+                "reference": "56f0ab23f54c4ccbb0d5dcc67ff8552e0c98d59e"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/swiftmailer/swiftmailer/zipball/149cfdf118b169f7840bbe3ef0d4bc795d1780c9",
-                "reference": "149cfdf118b169f7840bbe3ef0d4bc795d1780c9",
+                "url": "https://api.github.com/repos/swiftmailer/swiftmailer/zipball/56f0ab23f54c4ccbb0d5dcc67ff8552e0c98d59e",
+                "reference": "56f0ab23f54c4ccbb0d5dcc67ff8552e0c98d59e",
                 "shasum": ""
             },
             "require": {
-                "egulias/email-validator": "~2.0",
+                "egulias/email-validator": "^2.0",
                 "php": ">=7.0.0",
                 "symfony/polyfill-iconv": "^1.0",
                 "symfony/polyfill-intl-idn": "^1.10",
                 "symfony/polyfill-mbstring": "^1.0"
             },
             "require-dev": {
-                "mockery/mockery": "~0.9.1",
-                "symfony/phpunit-bridge": "^3.4.19|^4.1.8"
+                "mockery/mockery": "^1.0",
+                "symfony/phpunit-bridge": "^4.4|^5.0"
             },
             "suggest": {
-                "ext-intl": "Needed to support internationalized email addresses",
-                "true/punycode": "Needed to support internationalized email addresses, if ext-intl is not installed"
+                "ext-intl": "Needed to support internationalized email addresses"
             },
             "type": "library",
             "extra": {
@@ -7081,9 +7505,19 @@
             ],
             "support": {
                 "issues": "https://github.com/swiftmailer/swiftmailer/issues",
-                "source": "https://github.com/swiftmailer/swiftmailer/tree/v6.2.3"
+                "source": "https://github.com/swiftmailer/swiftmailer/tree/v6.2.4"
             },
-            "time": "2019-11-12T09:31:26+00:00"
+            "funding": [
+                {
+                    "url": "https://github.com/fabpot",
+                    "type": "github"
+                },
+                {
+                    "url": "https://tidelift.com/funding/github/packagist/swiftmailer/swiftmailer",
+                    "type": "tidelift"
+                }
+            ],
+            "time": "2020-12-08T18:02:06+00:00"
         },
         {
             "name": "symfony-cmf/routing",

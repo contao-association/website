@@ -10,7 +10,8 @@
         "sentry/sentry-symfony": "^3.0",
         "terminal42/cashctrl-bundle": "^1.0@dev",
         "terminal42/cashctrl-api": "^1.0@dev",
-        "madeyourday/contao-rocksolid-custom-elements": "^2.2"
+        "madeyourday/contao-rocksolid-custom-elements": "^2.2",
+        "richardhj/contao-backup-manager": "^2.1"
     },
     "require-dev": {
         "deployer/deployer": "^6.5",
