@@ -2,6 +2,8 @@
   background: #f7f7f7;
   padding: 15px;
   border: 1px solid $border-color;
+  margin-left: 15px;
+  margin-right: 15px;
 }
 .cta p:last-child a {
   @extend input[type="button"];

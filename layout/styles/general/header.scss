@@ -13,5 +13,12 @@
 }
 .logo {
   background: url("../../images/logo-contao-association.svg") 0 0 no-repeat;
-  width: 250px;
+  background-size: 100%;
+  width: 200px;
+  height: 60px;
+
+  @media (min-width: 480px) {
+    width: 250px;
+    height: 70px;
+  }
 }
