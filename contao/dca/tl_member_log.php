@@ -32,23 +32,23 @@ $GLOBALS['TL_DCA']['tl_member_log'] = [
     ],
     'fields' => [
         'id' => [
-            'sql' => "int(10) unsigned NOT NULL auto_increment",
+            'sql' => 'int(10) unsigned NOT NULL auto_increment',
         ],
         'pid' => [
-            'sql' => "int(10) unsigned NOT NULL default 0",
+            'sql' => 'int(10) unsigned NOT NULL default 0',
         ],
         'tstamp' => [
-            'sql' => "int(10) unsigned NOT NULL default 0",
+            'sql' => 'int(10) unsigned NOT NULL default 0',
         ],
         'dateAdded' => [
             'label' => &$GLOBALS['TL_LANG']['tl_member_log']['dateAdded'],
             'flag' => 8,
-            'sql' => "int(10) unsigned NOT NULL default 0",
+            'sql' => 'int(10) unsigned NOT NULL default 0',
         ],
         'user' => [
             'label' => &$GLOBALS['TL_LANG']['tl_member_log']['user'],
             'filter' => true,
-            'sql' => "int(10) unsigned NOT NULL default 0",
+            'sql' => 'int(10) unsigned NOT NULL default 0',
         ],
         'data' => [
             'label' => &$GLOBALS['TL_LANG']['tl_member_log']['data'],

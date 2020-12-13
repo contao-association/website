@@ -108,6 +108,7 @@
     <?php $this->endblock(); ?>
 
     <?= $this->mootools ?>
+    <script src="https://contao.org/files/js/network.js"></script>
 </div>
 </body>
 </html>
