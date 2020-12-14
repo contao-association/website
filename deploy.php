@@ -64,7 +64,6 @@ set('rsync', function () {
 
 set('shared_dirs', [
     'assets/images',
-    'contao-manager',
     'files',
     'var/invoices',
     'var/logs',
@@ -121,7 +120,6 @@ task('deploy', [
 
     // Release
     'maintenance:enable',
-    'contao:download_manager',
     'contao:lock_install_tool',
     'deploy:symlink',
     'deploy:opcache',
