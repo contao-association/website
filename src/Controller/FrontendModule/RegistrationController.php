@@ -13,21 +13,16 @@ use Contao\PageModel;
 use Contao\Versions;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
-use App\CashctrlApi;
-use NotificationCenter\Model\Notification;
-use function Sentry\captureMessage;
-use Contao\Config;
-use Haste\Util\StringUtil;
-use Symfony\Contracts\Translation\TranslatorInterface;
+use App\MembershipHelper;
 
 /**
  * @FrontendModule("registration", category="user")
  */
 class RegistrationController extends ModuleRegistration
 {
-    private CashctrlApi $api;
-    private TranslatorInterface $translator;
+    private MembershipHelper $membership;
     private array $memberships;
+    private int $notificationId;
 
     private ?Request $request;
 
@@ -35,13 +30,13 @@ class RegistrationController extends ModuleRegistration
      * @noinspection MagicMethodsValidityInspection
      * @noinspection PhpMissingParentConstructorInspection
      */
-    public function __construct(CashctrlApi $api, TranslatorInterface $translator, array $memberships)
+    public function __construct(MembershipHelper $membership, array $memberships, int $notificationId)
     {
         // do not call parent constructor
 
-        $this->api = $api;
-        $this->translator = $translator;
+        $this->membership = $membership;
         $this->memberships = $memberships;
+        $this->notificationId = $notificationId;
     }
 
     public function __invoke(Request $request, ModuleModel $model, string $section): Response
@@ -60,7 +55,12 @@ class RegistrationController extends ModuleRegistration
     protected function createNewUser($arrData): void
     {
         $member = $this->createMember($arrData);
-        $this->sendInvoice($member);
+        $invoice = $this->membership->createAndSendInvoice($member, $this->notificationId);
+
+        if (null !== $invoice) {
+            $member->cashctrl_invoice = $invoice->getId();
+            $member->save();
+        }
 
         $jumpTo = $this->objModel->getRelated('jumpTo');
         if ($jumpTo instanceof PageModel) {
@@ -95,48 +95,5 @@ class RegistrationController extends ModuleRegistration
         $objVersions->initialize();
 
         return $newMember;
-    }
-
-    private function sendInvoice(MemberModel $member)
-    {
-        $notification = Notification::findByPk($this->objModel->nc_notification);
-
-        if (null === $notification) {
-            $this->sentryOrThrow('No notification is configured to send invoices (Registration module ID '.$this->objModel->id.')');
-            return;
-        }
-
-        $invoice = $this->api->createMemberInvoice($member);
-        $pdf = $this->api->archiveInvoice($invoice, 'ch' === $member->country ? 11 : 13);
-
-        $dateFormat = isset($GLOBALS['objPage']) ? $GLOBALS['objPage']->dateFormat : $GLOBALS['TL_CONFIG']['dateFormat'];
-
-        $tokens = [
-            'admin_email' => Config::get('adminEmail'),
-            'membership_label' => $this->translator->trans('membership.'.$member->membership),
-            'invoice_number' => $invoice->getNr(),
-            'invoice_date' => $invoice->getDate()->format($dateFormat),
-            'invoice_due_days' => $invoice->getDueDays(),
-            'invoice_total' => number_format($invoice->total, 2, '.', "'"),
-            'invoice_pdf' => $pdf,
-        ];
-
-        StringUtil::flatten($member->row(), 'member', $tokens);
-
-        $result = $notification->send($tokens);
-
-        if (\in_array(false, $result, true)) {
-            $this->sentryOrThrow('Unable to send invoice email to '.$member->email);
-            return;
-        }
-
-        $this->api->markInvoiceSent($invoice->getId());
-    }
-
-    private function sentryOrThrow(string $message): void
-    {
-        if (null === captureMessage($message)) {
-            throw new \RuntimeException($message);
-        }
     }
 }

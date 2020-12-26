@@ -31,3 +31,19 @@ services:
 
     App\:
         resource: ../src
+
+    App\Controller\FrontendModule\RegistrationController:
+        arguments:
+            $notificationId: '%env(REGISTRATION_NOTIFICATION)%'
+
+    App\Cron\ActivateMemberCron:
+        arguments:
+            $notificationId: '%env(ACTIVATION_NOTIFICATION)%'
+
+    App\Cron\RecurringInvoicesCron:
+        arguments:
+            $notificationId: '%env(RECURRING_NOTIFICATION)%'
+
+    App\Cron\PaymentNotificationCron:
+        arguments:
+            $notificationId: '%env(PAYMENT_NOTIFICATION)%'

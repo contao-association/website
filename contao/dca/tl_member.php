@@ -70,6 +70,11 @@ $GLOBALS['TL_DCA']['tl_member']['fields']['cashctrl_id'] = [
     'sql' => "int(10) unsigned NOT NULL default '0'",
 ];
 
+$GLOBALS['TL_DCA']['tl_member']['fields']['cashctrl_invoice'] = [
+    'eval' => ['doNotShow' => true],
+    'sql' => "int(10) unsigned NOT NULL default '0'",
+];
+
 $GLOBALS['TL_DCA']['tl_member']['fields']['street']['eval']['mandatory'] = true;
 $GLOBALS['TL_DCA']['tl_member']['fields']['postal']['eval']['mandatory'] = true;
 $GLOBALS['TL_DCA']['tl_member']['fields']['city']['eval']['mandatory'] = true;

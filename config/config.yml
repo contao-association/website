@@ -1,9 +1,11 @@
 
 contao:
     prepend_locale: true
+    search:
+        default_indexer:
+            enable: false
     localconfig:
         licenseAccepted: true
-        enableSearch: false
         disableCron: true
         folderUrl: false
 

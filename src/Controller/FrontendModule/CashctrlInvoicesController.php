@@ -16,10 +16,10 @@ use Contao\MemberModel;
 use Contao\CoreBundle\ServiceAnnotation\FrontendModule;
 use Terminal42\CashctrlApi\Entity\Order;
 use Terminal42\CashctrlApi\XmlHelper;
-use Terminal42\CashctrlApi\ApiClientInterface;
 use Contao\Environment;
 use Contao\Input;
 use Contao\CoreBundle\Exception\ResponseException;
+use Terminal42\CashctrlApi\ApiClient;
 
 /**
  * @FrontendModule(category="user")
@@ -55,13 +55,13 @@ class CashctrlInvoicesController extends AbstractFrontendModuleController
 
         /** @var Order $order */
         foreach ($this->api->listInvoices($member) as $order) {
-            if (!$order->isBook) {
+            if (!$order->isBook || $order->getAssociateId() !== (int) $member->cashctrl_id) {
                 continue;
             }
 
             if ((int) Input::get('invoice') === $order->getId()) {
                 throw new ResponseException(new Response(
-                    $this->api->downloadInvoice($order),
+                    $this->api->downloadInvoice($order, null, $member->language ?: 'de'),
                     200,
                     [
                         'Content-Type' => 'application/pdf'
@@ -69,7 +69,7 @@ class CashctrlInvoicesController extends AbstractFrontendModuleController
                 ));
             }
 
-            $due = \DateTime::createFromFormat(ApiClientInterface::DATE_FORMAT, $order->dateDue);
+            $due = ApiClient::parseDateTime($order->dateDue);
 
             $orders[] = [
                 'nr' => $order->getNr(),

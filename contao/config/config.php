@@ -19,15 +19,21 @@ $GLOBALS['BE_MOD']['accounts']['member']['tables'][] = 'tl_member_log';
 /**
  * Notificiation Tokens
  */
-$GLOBALS['NOTIFICATION_CENTER']['NOTIFICATION_TYPE']['contao']['member_registration']['email_subject'][] = 'invoice_number';
-$GLOBALS['NOTIFICATION_CENTER']['NOTIFICATION_TYPE']['contao']['member_registration']['email_text'][] = 'membership_label';
-$GLOBALS['NOTIFICATION_CENTER']['NOTIFICATION_TYPE']['contao']['member_registration']['email_html'][] = 'membership_label';
-$GLOBALS['NOTIFICATION_CENTER']['NOTIFICATION_TYPE']['contao']['member_registration']['email_text'][] = 'invoice_number';
-$GLOBALS['NOTIFICATION_CENTER']['NOTIFICATION_TYPE']['contao']['member_registration']['email_text'][] = 'invoice_date';
-$GLOBALS['NOTIFICATION_CENTER']['NOTIFICATION_TYPE']['contao']['member_registration']['email_text'][] = 'invoice_due_days';
-$GLOBALS['NOTIFICATION_CENTER']['NOTIFICATION_TYPE']['contao']['member_registration']['email_text'][] = 'invoice_total';
-$GLOBALS['NOTIFICATION_CENTER']['NOTIFICATION_TYPE']['contao']['member_registration']['email_html'][] = 'invoice_number';
-$GLOBALS['NOTIFICATION_CENTER']['NOTIFICATION_TYPE']['contao']['member_registration']['email_html'][] = 'invoice_date';
-$GLOBALS['NOTIFICATION_CENTER']['NOTIFICATION_TYPE']['contao']['member_registration']['email_html'][] = 'invoice_due_days';
-$GLOBALS['NOTIFICATION_CENTER']['NOTIFICATION_TYPE']['contao']['member_registration']['email_html'][] = 'invoice_total';
-$GLOBALS['NOTIFICATION_CENTER']['NOTIFICATION_TYPE']['contao']['member_registration']['attachment_tokens'][] = 'invoice_pdf';
+unset(
+    $GLOBALS['NOTIFICATION_CENTER']['NOTIFICATION_TYPE']['contao']['member_registration'],
+    $GLOBALS['NOTIFICATION_CENTER']['NOTIFICATION_TYPE']['contao']['member_activation'],
+);
+
+$GLOBALS['NOTIFICATION_CENTER']['NOTIFICATION_TYPE']['association']['cashctrl'] = [
+    'recipients'           => ['member_email', 'admin_email'],
+    'email_subject'        => ['invoice_number', 'member_*', 'admin_email'],
+    'email_text'           => ['membership_label', 'invoice_number', 'invoice_date', 'invoice_due_days', 'invoice_total', 'payment_date', 'payment_total', 'member_*', 'admin_email'],
+    'email_html'           => ['membership_label', 'invoice_number', 'invoice_date', 'invoice_due_days', 'invoice_total', 'payment_date', 'payment_total', 'member_*', 'admin_email'],
+    'email_sender_name'    => ['admin_email', 'member_*'],
+    'email_sender_address' => ['admin_email', 'member_*'],
+    'email_recipient_cc'   => ['admin_email', 'member_*'],
+    'email_recipient_bcc'  => ['admin_email', 'member_*'],
+    'email_replyTo'        => ['admin_email', 'member_*'],
+    'attachment_tokens'    => ['invoice_pdf'],
+];
+

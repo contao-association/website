@@ -15,13 +15,13 @@ use Terminal42\CashctrlApi\Api\OrderEndpoint;
 use Symfony\Contracts\Translation\TranslatorInterface;
 use Terminal42\CashctrlApi\Api\OrderDocumentEndpoint;
 use Symfony\Component\Filesystem\Filesystem;
-use Terminal42\CashctrlApi\Api\ListFilter;
+use Terminal42\CashctrlApi\Api\Filter\ListFilter;
 
 class CashctrlApi
 {
     public PersonEndpoint $person;
-    private OrderEndpoint $order;
-    private OrderDocumentEndpoint $orderDocument;
+    public OrderEndpoint $order;
+    public OrderDocumentEndpoint $orderDocument;
     private TranslatorInterface $translator;
     private Filesystem $filesystem;
     private array $memberships;
@@ -66,7 +66,7 @@ class CashctrlApi
     {
         $membership = $this->memberships[$member->membership];
 
-        $order = new Order($member->cashctrl_id, 4);
+        $order = new Order((int) $member->cashctrl_id, 4);
         $order->setNr($member->id.'/'.date('Y'));
         $order->setDueDays(30);
         $order->addItem(new OrderItem(
