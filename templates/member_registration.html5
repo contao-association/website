@@ -1,0 +1,70 @@
+
+<!-- indexer::stop -->
+<div class="<?= $this->class ?> block"<?= $this->cssID ?><?php if ($this->style): ?> style="<?= $this->style ?>"<?php endif; ?>>
+
+<?php if ($this->headline): ?>
+    <<?= $this->hl ?>><?= $this->headline ?></<?= $this->hl ?>>
+<?php endif; ?>
+
+<?php if ($this->message): ?>
+    <p class="tl_confirm"><?= $this->message ?></p>
+<?php endif; ?>
+
+<form id="<?= $this->formId ?>" method="post" enctype="<?= $this->enctype ?>">
+    <div class="formbody">
+        <input type="hidden" name="FORM_SUBMIT" value="<?= $this->formId ?>">
+        <input type="hidden" name="REQUEST_TOKEN" value="{{request_token}}">
+
+        <div class="row">
+            <div class="col">
+                <?= $this->personal['firstname'] ?>
+                <?= $this->personal['lastname'] ?>
+            </div>
+            <div class="membership col">
+                <?= $this->membership['membership'] ?>
+                <?= $this->membership['membership_amount'] ?>
+            </div>
+        </div>
+
+        <hr>
+        <h3><?= $this->trans('member_account', [], 'messages') ?></h3>
+        <div class="row">
+            <div class="col">
+                <?= $this->contact['email'] ?>
+            </div>
+            <div class="col">
+                <?= $this->login['password'] ?>
+            </div>
+        </div>
+
+        <hr>
+        <div class="row">
+            <div class="col">
+                <h3><?= $this->trans('member_address', [], 'messages') ?></h3>
+                <?= $this->address['company'] ?>
+                <?= $this->address['street'] ?>
+                <?= $this->address['postal'] ?>
+                <?= $this->address['city'] ?>
+                <?= $this->address['country'] ?>
+            </div>
+            <div class="col">
+                <h3><?= $this->trans('member_details', [], 'messages') ?></h3>
+                <?= $this->personal['gender'] ?>
+                <?= $this->personal['dateOfBirth'] ?>
+                <?= $this->contact['phone'] ?>
+                <?= $this->contact['website'] ?>
+                <?= $this->address['tax_id'] ?>
+            </div>
+        </div>
+
+        <hr>
+        <p><?= $this->trans('member_legal', [], 'messages') ?></p>
+        <?= $this->captcha ?>
+        <div class="widget widget-submit text-center">
+            <button type="submit" class="submit"><?= $this->trans('member_register', [], 'messages') ?></button>
+        </div>
+    </div>
+</form>
+
+</div>
+<!-- indexer::continue -->

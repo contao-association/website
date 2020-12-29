@@ -31,7 +31,16 @@ class MembershipListener
         $options = [];
 
         foreach ($this->memberships as $membership => $config) {
-            $options[$membership] = $this->translator->trans('membership.'.$membership);
+            $label = $this->translator->trans('membership.'.$membership).' ';
+            $price = number_format($config['price'], 2, '.', "'");
+
+            if ($config['custom']) {
+                $label .= $this->translator->trans('membership_custom', ['{price}' => $price]);
+            } else {
+                $label .= $this->translator->trans('membership_fixed', ['{price}' => $price]);
+            }
+
+            $options[$membership] = $label;
         }
 
         return $options;

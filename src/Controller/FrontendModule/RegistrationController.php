@@ -77,6 +77,7 @@ class RegistrationController extends ModuleRegistration
         $data['disable'] = '1';
         $data['login'] = '1';
         $data['username'] = $data['email'];
+        $data['language'] = $GLOBALS['TL_LANGUAGE'];
 
         if (isset($this->memberships[$data['membership']])) {
             $membership = $this->memberships[$data['membership']];

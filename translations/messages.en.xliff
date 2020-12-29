@@ -18,6 +18,41 @@
                 <source>membership.support</source>
                 <target>Supporting member</target>
             </trans-unit>
+            <trans-unit id="membership_fixed">
+                <source>membership_fixed</source>
+                <target>(EUR {price})</target>
+            </trans-unit>
+            <trans-unit id="membership_custom">
+                <source>membership_custom</source>
+                <target>(from EUR {price})</target>
+            </trans-unit>
+
+            <trans-unit id="member_account">
+                <source>member_account</source>
+                <target>User Account</target>
+            </trans-unit>
+            <trans-unit id="member_address">
+                <source>member_address</source>
+                <target>Billling Address</target>
+            </trans-unit>
+            <trans-unit id="member_details">
+                <source>member_details</source>
+                <target>Personal Details</target>
+            </trans-unit>
+            <trans-unit id="member_legal">
+                <source>member_legal</source>
+                <target><![CDATA[
+                    <strong>Please note:</strong>
+                    Your registration is binding! We will send you an invoice by e-mail, the membership amount is due every year.
+                    You can change or cancel your registration at the end of the invoice period, more information can be found
+                    in our articles of association.
+                ]]></target>
+            </trans-unit>
+            <trans-unit id="member_register">
+                <source>member_register</source>
+                <target>Become a member</target>
+            </trans-unit>
+
             <trans-unit id="invoice_description">
                 <source>invoice_description</source>
                 <target>{membership} of the Contao Association</target>

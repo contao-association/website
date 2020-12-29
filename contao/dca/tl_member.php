@@ -35,24 +35,21 @@ $GLOBALS['TL_DCA']['tl_member']['fields']['language']['options'] = ['de' => 'Deu
 $GLOBALS['TL_DCA']['tl_member']['fields']['tax_id'] = [
     'inputType' => 'text',
     'search' => true,
-    'eval' => ['maxlength' => 32, 'feEditable' => true, 'feViewable' => true, 'tl_class' => 'w50'],
+    'eval' => ['maxlength' => 32, 'feEditable' => true, 'feViewable' => true, 'feGroup' => 'address', 'tl_class' => 'w50'],
     'sql' => "varchar(32) NOT NULL default ''",
 ];
 
 $GLOBALS['TL_DCA']['tl_member']['fields']['membership'] = [
     'inputType' => 'radio',
     'filter' => true,
-    'default' => 'active',
-    'options' => ['active', 'passive', 'support'],
-    'reference' => &$GLOBALS['TL_LANG']['tl_member']['membership'],
-    'eval' => ['mandatory' => true, 'submitOnChange' => true, 'feEditable' => true, 'feViewable' => true, 'tl_class' => 'w50'],
+    'eval' => ['mandatory' => true, 'submitOnChange' => (TL_MODE === 'BE'), 'feEditable' => true, 'feViewable' => true, 'feGroup' => 'membership', 'tl_class' => 'w50'],
     'sql' => "varchar(16) NOT NULL default 'active'",
 ];
 
 $GLOBALS['TL_DCA']['tl_member']['fields']['membership_amount'] = [
     'default' => '200',
     'inputType' => 'text',
-    'eval' => ['mandatory' => true, 'minval' => 200, 'feEditable' => true, 'feViewable' => true, 'tl_class' => 'w50'],
+    'eval' => ['mandatory' => true, 'rgxp' => 'digit', 'minval' => 200, 'feEditable' => true, 'feViewable' => true, 'feGroup' => 'membership', 'tl_class' => 'w50'],
     'sql' => "int(10) NOT NULL default '200'",
 ];
 
@@ -78,7 +75,6 @@ $GLOBALS['TL_DCA']['tl_member']['fields']['cashctrl_invoice'] = [
 $GLOBALS['TL_DCA']['tl_member']['fields']['street']['eval']['mandatory'] = true;
 $GLOBALS['TL_DCA']['tl_member']['fields']['postal']['eval']['mandatory'] = true;
 $GLOBALS['TL_DCA']['tl_member']['fields']['city']['eval']['mandatory'] = true;
-$GLOBALS['TL_DCA']['tl_member']['fields']['phone']['eval']['mandatory'] = true;
 $GLOBALS['TL_DCA']['tl_member']['fields']['country']['eval']['mandatory'] = true;
 $GLOBALS['TL_DCA']['tl_member']['fields']['country']['default'] = 'ch';
 

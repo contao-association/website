@@ -27,7 +27,6 @@
     <?= $this->framework ?>
     <link type="text/css" rel="stylesheet" href="<?= $this->asset('app.css') ?>">
     <?= $this->stylesheets ?>
-    <script src="<?= $this->asset('app.js') ?>"></script>
     <?= $this->mooScripts ?>
     <?= $this->head ?>
   <?php $this->endblock(); ?>
@@ -104,7 +103,8 @@
   <?php $this->endblock(); ?>
 
   <?= $this->mootools ?>
-  <script src="https://contao.org/files/js/network.js"></script>
-</div>
+  <script src="<?= $this->asset('app.js') ?>" async></script>
+  <script src="https://contao.org/files/js/network.js" async></script>
+
 </body>
 </html>
