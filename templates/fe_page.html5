@@ -2,7 +2,7 @@
 <html lang="<?= $this->language ?>"<?php if ($this->isRTL): ?> dir="rtl"<?php endif; ?>>
 <head>
 
-    <?php $this->block('head'); ?>
+  <?php $this->block('head'); ?>
     <meta charset="<?= $this->charset ?>">
     <title><?= $this->title ?></title>
     <base href="<?= $this->base ?>">
@@ -30,85 +30,81 @@
     <script src="<?= $this->asset('app.js') ?>"></script>
     <?= $this->mooScripts ?>
     <?= $this->head ?>
-
-    <?php $this->endblock(); ?>
+  <?php $this->endblock(); ?>
 
 </head>
-<body class="<?= $this->class; ?>"<?php if ($this->onload): ?> onload="<?= $this->onload ?>"<?php endif; ?> itemscope
-      itemtype="http://schema.org/WebPage">
+<body<?php if ($this->class): ?> class="<?= $this->class ?>"<?php endif; ?><?php if ($this->onload): ?> onload="<?= $this->onload ?>"<?php endif; ?> itemscope itemtype="http://schema.org/WebPage">
 
-<?php $this->block('body'); ?>
-<?php $this->sections('top'); ?>
-<input type="checkbox" class="menu-toggle" id="menu-toggle">
-<div class="wrapper">
-    <?php $this->block('header'); ?>
-    <?php if ($this->header): ?>
-        <header class="section-header" itemscope itemtype="http://schema.org/WPHeader">
+  <?php $this->block('body'); ?>
+    <?php $this->sections('top'); ?>
+
+    <div class="wrapper">
+
+      <?php $this->block('header'); ?>
+        <?php if ($this->header): ?>
+          <header class="section-header" itemscope itemtype="http://schema.org/WPHeader">
             <div class="section-header__inside">
-                <?= $this->header ?>
-                <label class="menu-toggle" for="menu-toggle">
-                    <span></span>
-                    <span></span>
-                    <span></span>
-                </label>
+              <?= $this->header ?>
             </div>
-        </header>
-    <?php endif; ?>
-    <?php $this->endblock(); ?>
+          </header>
+        <?php endif; ?>
+      <?php $this->endblock(); ?>
 
-    <?php $this->sections('before'); ?>
+      <?php $this->sections('before'); ?>
 
-    <?php $this->block('container'); ?>
-    <div class="layout__columns layout__columns--<?= $this->layout->cols ?>">
-        <?php $this->block('main'); ?>
-        <main class="section-main" itemscope itemtype="http://schema.org/WebPageElement" itemprop="mainContentOfPage">
-            <div class="section-main__inside">
+      <?php $this->block('container'); ?>
+        <div class="layout__columns layout__columns--<?= $this->layout->cols ?>">
+          <?php $this->block('main'); ?>
+            <main class="section-main" itemscope itemtype="http://schema.org/WebPageElement" itemprop="mainContentOfPage">
+              <div class="section-main__inside">
                 <?= $this->main ?>
-            </div>
-        </main>
-        <?php $this->endblock(); ?>
+              </div>
+              <?php $this->sections('main'); ?>
+            </main>
+          <?php $this->endblock(); ?>
 
-        <?php $this->block('left'); ?>
-        <?php if ($this->left): ?>
-            <aside class="section-left">
+          <?php $this->block('left'); ?>
+            <?php if ($this->left): ?>
+              <aside class="section-left">
                 <div class="section-left__inside">
-                    <?= $this->left ?>
+                  <?= $this->left ?>
                 </div>
-            </aside>
-        <?php endif; ?>
-        <?php $this->endblock(); ?>
+              </aside>
+            <?php endif; ?>
+          <?php $this->endblock(); ?>
 
-        <?php $this->block('right'); ?>
-        <?php if ($this->right): ?>
-            <aside class="section-right">
+          <?php $this->block('right'); ?>
+            <?php if ($this->right): ?>
+              <aside class="section-right">
                 <div class="section-right__inside">
-                    <?= $this->right ?>
+                  <?= $this->right ?>
                 </div>
-            </aside>
+              </aside>
+            <?php endif; ?>
+          <?php $this->endblock(); ?>
+
+        </div>
+      <?php $this->endblock(); ?>
+
+      <?php $this->sections('after'); ?>
+
+      <?php $this->block('footer'); ?>
+        <?php if ($this->footer): ?>
+          <footer class="section-footer" itemscope itemtype="http://schema.org/WPFooter">
+            <div class="section-footer__inside">
+              <?= $this->footer ?>
+            </div>
+          </footer>
         <?php endif; ?>
-        <?php $this->endblock(); ?>
+      <?php $this->endblock(); ?>
 
     </div>
-    <?php $this->endblock(); ?>
-
-    <?php $this->sections('after'); ?>
-
-    <?php $this->block('footer'); ?>
-    <?php if ($this->footer): ?>
-        <footer class="section-footer" itemscope itemtype="http://schema.org/WPFooter">
-            <div class="section-footer__inside">
-                <?= $this->footer ?>
-            </div>
-        </footer>
-    <?php endif; ?>
-    <?php $this->endblock(); ?>
-
 
     <?php $this->sections('bottom'); ?>
-    <?php $this->endblock(); ?>
+  <?php $this->endblock(); ?>
 
-    <?= $this->mootools ?>
-    <script src="https://contao.org/files/js/network.js"></script>
+  <?= $this->mootools ?>
+  <script src="https://contao.org/files/js/network.js"></script>
 </div>
 </body>
 </html>

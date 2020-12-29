@@ -1,7 +1,0 @@
-<?php if ($this->content): ?>
-<section class="section-<?= StringUtil::standardize($this->id, true) ?>">
-    <div class="section-<?= StringUtil::standardize($this->id, true) ?>__inside">
-        <?= $this->content ?>
-    </div>
-</section>
-<?php endif; ?>
