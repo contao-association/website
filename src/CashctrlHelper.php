@@ -161,7 +161,7 @@ class CashctrlHelper
     public function archiveInvoice(Order $invoice, int $templateId = null, string $language = null): string
     {
         $year = $invoice->getDate()->format('Y');
-        $quarter = ceil($invoice->getDate()->format('n') / 4);
+        $quarter = ceil($invoice->getDate()->format('n') / 3);
 
         $name = str_replace('/', '-', $invoice->getNr());
         $targetFile = 'var/invoices/'.$year.'/Q'.$quarter.'/'.$name.'.pdf';
