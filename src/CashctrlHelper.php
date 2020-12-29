@@ -131,12 +131,26 @@ class CashctrlHelper
     {
         $membership = $this->memberships[$member->membership];
 
+        $invoiceLine = $this->translator->trans(
+            'invoice_description',
+            [
+                '{membership}' => $this->translator->trans(
+                    'membership.'.$member->membership,
+                    [],
+                    'messages',
+                    $member->language ?: 'de'
+                )
+            ],
+            'messages',
+            $member->language ?: 'de'
+        );
+
         $order = new Order((int) $member->cashctrl_id, 4);
         $order->setNr($member->id.'/'.date('Y'));
         $order->setDueDays(30);
         $order->addItem(new OrderItem(
             $membership['accountId'],
-            $this->translator->trans('invoice_description', ['{membership}' => $this->translator->trans('membership.'.$member->membership)]),
+            $invoiceLine,
             (float) ($membership['custom'] ? $member->membership_amount : $membership['price'])
         ));
 
@@ -145,12 +159,8 @@ class CashctrlHelper
         return $this->order->read($insertId);
     }
 
-    public function downloadInvoice(Order $invoice, int $templateId = null, string $language = null): string
+    public function downloadInvoice(Order $invoice, int $templateId = null, string $language): string
     {
-        if (null === $language && isset($GLOBALS['TL_LANGUAGE'])) {
-            $language = (string) $GLOBALS['TL_LANGUAGE'];
-        }
-
         if (null !== $templateId) {
             $this->orderDocument->update($invoice->getId(), ['templateId' => $templateId]);
         }
@@ -158,7 +168,7 @@ class CashctrlHelper
         return $this->orderDocument->downloadPdf([$invoice->getId()], $language);
     }
 
-    public function archiveInvoice(Order $invoice, int $templateId = null, string $language = null): string
+    public function archiveInvoice(Order $invoice, int $templateId = null, string $language): string
     {
         $year = $invoice->getDate()->format('Y');
         $quarter = ceil($invoice->getDate()->format('n') / 3);
