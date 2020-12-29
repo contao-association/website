@@ -6,10 +6,10 @@ namespace App\Cron;
 
 use Contao\CoreBundle\Framework\ContaoFramework;
 use Contao\MemberModel;
-use App\MembershipHelper;
 use Contao\CoreBundle\ServiceAnnotation\CronJob;
 use Doctrine\DBAL\Connection;
 use Psr\Log\LoggerInterface;
+use App\CashctrlHelper;
 
 /**
  * @CronJob("daily")
@@ -18,20 +18,20 @@ class RecurringInvoicesCron
 {
     private ContaoFramework $framework;
     private Connection $connection;
-    private MembershipHelper $membership;
+    private CashctrlHelper $cashctrl;
     private LoggerInterface $logger;
     private int $notificationId;
 
     public function __construct(
         ContaoFramework $framework,
         Connection $connection,
-        MembershipHelper $membership,
+        CashctrlHelper $cashctrl,
         LoggerInterface $logger,
         int $notificationId
     ) {
         $this->framework = $framework;
         $this->connection = $connection;
-        $this->membership = $membership;
+        $this->cashctrl = $cashctrl;
         $this->logger = $logger;
         $this->notificationId = $notificationId;
     }
@@ -70,7 +70,8 @@ class RecurringInvoicesCron
         }
 
         foreach ($members as $member) {
-            $invoice = $this->membership->createAndSendInvoice($member, $this->notificationId);
+            $this->cashctrl->syncMember($member);
+            $invoice = $this->cashctrl->createAndSendInvoice($member, $this->notificationId);
 
             if (null !== $invoice) {
                 $this->logger->info('Recurring membership invoice '.$invoice->getNr().' sent to '.$member->email);

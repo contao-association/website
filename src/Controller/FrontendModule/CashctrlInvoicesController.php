@@ -9,7 +9,7 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Request;
 use Contao\ModuleModel;
 use Contao\Template;
-use App\CashctrlApi;
+use App\CashctrlHelper;
 use Symfony\Component\Security\Core\Security;
 use Contao\FrontendUser;
 use Contao\MemberModel;
@@ -26,12 +26,12 @@ use Terminal42\CashctrlApi\ApiClient;
  */
 class CashctrlInvoicesController extends AbstractFrontendModuleController
 {
-    private CashctrlApi $api;
+    private CashctrlHelper $cashctrl;
     private Security $security;
 
-    public function __construct(CashctrlApi $api, Security $security)
+    public function __construct(CashctrlHelper $cashctrl, Security $security)
     {
-        $this->api = $api;
+        $this->cashctrl = $cashctrl;
         $this->security = $security;
     }
 
@@ -54,14 +54,14 @@ class CashctrlInvoicesController extends AbstractFrontendModuleController
         $dateFormat = isset($GLOBALS['objPage']) ? $GLOBALS['objPage']->dateFormat : $GLOBALS['TL_CONFIG']['dateFormat'];
 
         /** @var Order $order */
-        foreach ($this->api->listInvoices($member) as $order) {
+        foreach ($this->cashctrl->listInvoices($member) as $order) {
             if (!$order->isBook || $order->getAssociateId() !== (int) $member->cashctrl_id) {
                 continue;
             }
 
             if ((int) Input::get('invoice') === $order->getId()) {
                 throw new ResponseException(new Response(
-                    $this->api->downloadInvoice($order, null, $member->language ?: 'de'),
+                    $this->cashctrl->downloadInvoice($order, null, $member->language ?: 'de'),
                     200,
                     [
                         'Content-Type' => 'application/pdf'

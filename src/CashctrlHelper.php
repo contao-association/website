@@ -16,8 +16,15 @@ use Symfony\Contracts\Translation\TranslatorInterface;
 use Terminal42\CashctrlApi\Api\OrderDocumentEndpoint;
 use Symfony\Component\Filesystem\Filesystem;
 use Terminal42\CashctrlApi\Api\Filter\ListFilter;
+use Terminal42\CashctrlApi\Api\Filter\OrderListFilter;
+use NotificationCenter\Model\Notification;
+use Contao\Config;
+use Terminal42\CashctrlApi\ApiClient;
+use Haste\Util\StringUtil;
+use Contao\PageModel;
+use function Sentry\captureMessage;
 
-class CashctrlApi
+class CashctrlHelper
 {
     public PersonEndpoint $person;
     public OrderEndpoint $order;
@@ -27,8 +34,17 @@ class CashctrlApi
     private array $memberships;
     private string $projectDir;
 
-    public function __construct(PersonEndpoint $person, OrderEndpoint $order, OrderDocumentEndpoint $orderDocument, TranslatorInterface $translator, Filesystem $filesystem, array $memberships, string $projectDir)
-    {
+    private array $dateFormat = [];
+
+    public function __construct(
+        PersonEndpoint $person,
+        OrderEndpoint $order,
+        OrderDocumentEndpoint $orderDocument,
+        TranslatorInterface $translator,
+        Filesystem $filesystem,
+        array $memberships,
+        string $projectDir
+    ) {
         $this->person = $person;
         $this->order = $order;
         $this->orderDocument = $orderDocument;
@@ -60,6 +76,55 @@ class CashctrlApi
 
         $member->cashctrl_id = $result->insertId();
         $member->save();
+    }
+
+    public function createAndSendInvoice(MemberModel $member, int $notificationId): ?Order
+    {
+        $notification = Notification::findByPk($notificationId);
+
+        if (null === $notification) {
+            $this->sentryOrThrow('Notification ID "'.$notificationId.'" not found, cannot send invoices');
+            return null;
+        }
+
+        $invoice = $this->createMemberInvoice($member);
+        $pdf = $this->archiveInvoice($invoice, 'ch' === $member->country ? 11 : 13, $member->language ?: 'de');
+
+        if (!$this->sendInvoiceNotification($notification, $invoice, $member, ['invoice_pdf' => $pdf])) {
+            $this->sentryOrThrow('Unable to send invoice email to '.$member->email);
+            return $invoice;
+        }
+
+        $this->markInvoiceSent($invoice->getId());
+
+        return $invoice;
+    }
+
+    public function sendInvoiceNotification(Notification $notification, Order $invoice, MemberModel $member, array $tokens = []): bool
+    {
+        $tokens = array_merge($tokens, [
+            'admin_email' => Config::get('adminEmail'),
+            'membership_label' => $this->translator->trans('membership.'.$member->membership, [], null, $member->language ?: 'de'),
+            'invoice_number' => $invoice->getNr(),
+            'invoice_date' => $invoice->getDate()->format($this->getDateFormat($member)),
+            'invoice_due_days' => $invoice->getDueDays(),
+            'invoice_total' => number_format($invoice->total, 2, '.', "'"),
+        ]);
+
+        if ($invoice->isClosed) {
+            $tokens['payment_date'] = ApiClient::parseDateTime($invoice->dateLastBooked)->format($this->getDateFormat($member));
+            $tokens['payment_total'] = number_format($invoice->total - $invoice->open, 2, '.', "'");
+        }
+
+        StringUtil::flatten($member->row(), 'member', $tokens);
+
+        $result = $notification->send($tokens);
+
+        if (\in_array(false, $result, true)) {
+            return false;
+        }
+
+        return true;
     }
 
     public function createMemberInvoice(MemberModel $member): Order
@@ -120,6 +185,27 @@ class CashctrlApi
         }
 
         return $this->order->list()->filter('associateId', $member->cashctrl_id, ListFilter::EQUALS)->get();
+    }
+
+    /**
+     * @return Order[]
+     */
+    public function getLastUpdatedInvoices(): array
+    {
+        return $this->order
+            ->list()
+            ->ofType(OrderListFilter::TYPE_SALES)
+            ->withStatus(18)
+            ->sortBy('lastUpdated', 'DESC')
+            ->get()
+            ;
+    }
+
+    public function sentryOrThrow(string $message): void
+    {
+        if (null === captureMessage($message)) {
+            throw new \RuntimeException($message);
+        }
     }
 
     private function updatePerson(Person $person, MemberModel $member): void
@@ -211,5 +297,22 @@ class CashctrlApi
         }
 
         return 0;
+    }
+
+    private function getDateFormat(MemberModel $member): string
+    {
+        $locale = $member->language ?: 'de';
+
+        if (isset($this->dateFormat[$locale])) {
+            return $this->dateFormat[$locale];
+        }
+
+        $page = PageModel::findOneBy(['language=?', "type='root'"], [$locale]);
+
+        if (null !== $page && $page->dateFormat) {
+            return $this->dateFormat[$locale] = $page->dateFormat;
+        }
+
+        return $this->dateFormat[$locale] = $GLOBALS['TL_CONFIG']['dateFormat'];
     }
 }

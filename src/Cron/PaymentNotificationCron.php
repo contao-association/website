@@ -10,10 +10,10 @@ use Contao\CoreBundle\ServiceAnnotation\CronJob;
 use Terminal42\CashctrlApi\Entity\Order;
 use Terminal42\CashctrlApi\ApiClientInterface;
 use Terminal42\CashctrlApi\ApiClient;
-use App\MembershipHelper;
 use NotificationCenter\Model\Notification;
 use function Sentry\captureMessage;
 use Psr\Log\LoggerInterface;
+use App\CashctrlHelper;
 
 /**
  * @CronJob("hourly")
@@ -21,14 +21,14 @@ use Psr\Log\LoggerInterface;
 class PaymentNotificationCron
 {
     private ContaoFramework $framework;
-    private MembershipHelper $helper;
+    private CashctrlHelper $cashctrl;
     private LoggerInterface $logger;
     private int $notificationId;
 
-    public function __construct(ContaoFramework $framework, MembershipHelper $helper, LoggerInterface $logger, int $notificationId)
+    public function __construct(ContaoFramework $framework, CashctrlHelper $cashctrl, LoggerInterface $logger, int $notificationId)
     {
         $this->framework = $framework;
-        $this->helper = $helper;
+        $this->cashctrl = $cashctrl;
         $this->logger = $logger;
         $this->notificationId = $notificationId;
     }
@@ -40,12 +40,12 @@ class PaymentNotificationCron
         $notification = Notification::findByPk($this->notificationId);
 
         if (null === $notification) {
-            $this->helper->sentryOrThrow('Notification ID "'.$this->notificationId.'" not found, cannot send payment notification');
+            $this->cashctrl->sentryOrThrow('Notification ID "'.$this->notificationId.'" not found, cannot send payment notification');
             return;
         }
 
-        foreach ($this->helper->getLastUpdatedInvoices() as $order) {
-            if (!$this->sendNotification($order)) {
+        foreach ($this->cashctrl->getLastUpdatedInvoices() as $order) {
+            if (!$this->shouldSendNotification($order)) {
                 // Orders are sorted by lastUpdated. We assume this means all orders
                 // after the first not in booking range are out of range too.
                 return;
@@ -60,13 +60,15 @@ class PaymentNotificationCron
 
             $this->logger->info('Sent payment notification for CashCtrl invoice '.$order->getNr().' to '.$member->email);
 
-            if (!$this->helper->sendInvoiceNotification($notification, $order, $member)) {
+            $this->cashctrl->syncMember($member);
+
+            if (!$this->cashctrl->sendInvoiceNotification($notification, $order, $member)) {
                 captureMessage('Unable to send payment notification to '.$member->email);
             }
         }
     }
 
-    private function sendNotification(Order $order): bool
+    private function shouldSendNotification(Order $order): bool
     {
         if (!$order->isClosed) {
             return false;

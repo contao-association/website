@@ -6,15 +6,15 @@ namespace App\EventListener\Cashctrl;
 
 use Contao\CoreBundle\ServiceAnnotation\Callback;
 use Contao\MemberModel;
-use App\CashctrlApi;
+use App\CashctrlHelper;
 
 class MemberSyncListener
 {
-    private CashctrlApi $api;
+    private CashctrlHelper $cashctrl;
 
-    public function __construct(CashctrlApi $api)
+    public function __construct(CashctrlHelper $cashctrl)
     {
-        $this->api = $api;
+        $this->cashctrl = $cashctrl;
     }
 
     /**
@@ -35,6 +35,6 @@ class MemberSyncListener
             throw new \InvalidArgumentException("Member ID \"$memberId\" was not found.");
         }
 
-        $this->api->syncMember($member);
+        $this->cashctrl->syncMember($member);
     }
 }

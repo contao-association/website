@@ -13,14 +13,14 @@ use Contao\PageModel;
 use Contao\Versions;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
-use App\MembershipHelper;
+use App\CashctrlHelper;
 
 /**
  * @FrontendModule("registration", category="user")
  */
 class RegistrationController extends ModuleRegistration
 {
-    private MembershipHelper $membership;
+    private CashctrlHelper $cashctrl;
     private array $memberships;
     private int $notificationId;
 
@@ -30,11 +30,11 @@ class RegistrationController extends ModuleRegistration
      * @noinspection MagicMethodsValidityInspection
      * @noinspection PhpMissingParentConstructorInspection
      */
-    public function __construct(MembershipHelper $membership, array $memberships, int $notificationId)
+    public function __construct(CashctrlHelper $cashctrl, array $memberships, int $notificationId)
     {
         // do not call parent constructor
 
-        $this->membership = $membership;
+        $this->cashctrl = $cashctrl;
         $this->memberships = $memberships;
         $this->notificationId = $notificationId;
     }
@@ -55,7 +55,7 @@ class RegistrationController extends ModuleRegistration
     protected function createNewUser($arrData): void
     {
         $member = $this->createMember($arrData);
-        $invoice = $this->membership->createAndSendInvoice($member, $this->notificationId);
+        $invoice = $this->cashctrl->createAndSendInvoice($member, $this->notificationId);
 
         if (null !== $invoice) {
             $member->cashctrl_invoice = $invoice->getId();

@@ -9,7 +9,7 @@ use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Style\SymfonyStyle;
 use Contao\CoreBundle\Framework\ContaoFramework;
-use App\CashctrlApi;
+use App\CashctrlHelper;
 use Contao\MemberModel;
 
 class CashctrlSyncCommand extends Command
@@ -17,13 +17,13 @@ class CashctrlSyncCommand extends Command
     protected static $defaultName = 'app:cashctrl:sync';
 
     private ContaoFramework $framework;
-    private CashctrlApi $api;
+    private CashctrlHelper $cashctrl;
 
-    public function __construct(ContaoFramework $framework, CashctrlApi $api)
+    public function __construct(ContaoFramework $framework, CashctrlHelper $cashctrl)
     {
         parent::__construct();
         $this->framework = $framework;
-        $this->api = $api;
+        $this->cashctrl = $cashctrl;
     }
 
     protected function configure(): void
@@ -48,7 +48,7 @@ class CashctrlSyncCommand extends Command
         $io->progressStart(count($members));
 
         foreach ($members as $member) {
-            $this->api->syncMember($member);
+            $this->cashctrl->syncMember($member);
             $io->progressAdvance();
         }
 

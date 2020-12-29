@@ -5,9 +5,8 @@ declare(strict_types=1);
 namespace App\Cron;
 
 use Contao\CoreBundle\Framework\ContaoFramework;
-use App\CashctrlApi;
+use App\CashctrlHelper;
 use Contao\MemberModel;
-use App\MembershipHelper;
 use Contao\CoreBundle\ServiceAnnotation\CronJob;
 use NotificationCenter\Model\Notification;
 use function Sentry\captureMessage;
@@ -20,21 +19,18 @@ use Psr\Log\LoggerInterface;
 class ActivateMemberCron
 {
     private ContaoFramework $framework;
-    private CashctrlApi $api;
-    private MembershipHelper $helper;
+    private CashctrlHelper $cashctrl;
     private LoggerInterface $logger;
     private int $notificationId;
 
     public function __construct(
         ContaoFramework $framework,
-        CashctrlApi $api,
-        MembershipHelper $helper,
+        CashctrlHelper $cashctrl,
         LoggerInterface $logger,
         int $notificationId
     ) {
         $this->framework = $framework;
-        $this->api = $api;
-        $this->helper = $helper;
+        $this->cashctrl = $cashctrl;
         $this->logger = $logger;
         $this->notificationId = $notificationId;
     }
@@ -46,7 +42,7 @@ class ActivateMemberCron
         $notification = Notification::findByPk($this->notificationId);
 
         if (null === $notification) {
-            $this->helper->sentryOrThrow('Notification ID "'.$this->notificationId.'" not found, cannot send account activation notification');
+            $this->cashctrl->sentryOrThrow('Notification ID "'.$this->notificationId.'" not found, cannot send account activation notification');
             return;
         }
 
@@ -57,7 +53,7 @@ class ActivateMemberCron
         }
 
         foreach ($members as $member) {
-            $order = $this->api->order->read((int) $members->cashctrl_invoice);
+            $order = $this->cashctrl->order->read((int) $members->cashctrl_invoice);
 
             if (!$order->isClosed) {
                 continue;
@@ -77,7 +73,7 @@ class ActivateMemberCron
 
             $this->logger->info('Sent activation notification for CashCtrl invoice '.$order->getNr().' to '.$member->email);
 
-            if (!$this->helper->sendInvoiceNotification($notification, $order, $member)) {
+            if (!$this->cashctrl->sendInvoiceNotification($notification, $order, $member)) {
                 captureMessage('Unable to send account activation notification to '.$member->email);
             }
         }
