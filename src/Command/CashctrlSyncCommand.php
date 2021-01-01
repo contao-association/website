@@ -53,7 +53,7 @@ class CashctrlSyncCommand extends Command
         }
 
         $io->progressFinish();
-        $io->success('All migrations completed.');
+        $io->success('Synchronization complete.');
 
         return 0;
     }
