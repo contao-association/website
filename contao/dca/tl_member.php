@@ -48,6 +48,7 @@ $GLOBALS['TL_DCA']['tl_member']['fields']['membership'] = [
 
 $GLOBALS['TL_DCA']['tl_member']['fields']['membership_amount'] = [
     'default' => '200',
+    'sorting' => true,
     'inputType' => 'text',
     'eval' => ['mandatory' => true, 'rgxp' => 'digit', 'minval' => 200, 'feEditable' => true, 'feViewable' => true, 'feGroup' => 'membership', 'tl_class' => 'w50'],
     'sql' => "int(10) NOT NULL default '200'",

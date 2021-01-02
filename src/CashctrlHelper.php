@@ -145,9 +145,19 @@ class CashctrlHelper
             $member->language ?: 'de'
         );
 
+        $invoiceDescription = sprintf(
+            '%s/%s - %s %s%s',
+            $member->id,
+            date('Y'),
+            $member->firstname,
+            $member->lastname,
+            ($member->company ? ', '.$member->company : '')
+        );
+
         $order = new Order((int) $member->cashctrl_id, 4);
         $order->setNr($member->id.'/'.date('Y'));
         $order->setDueDays(30);
+        $order->setDescription($invoiceDescription);
         $order->addItem(new OrderItem(
             $membership['accountId'],
             $invoiceLine,
