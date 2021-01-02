@@ -60,7 +60,7 @@
         <hr>
         <p><?= $this->trans('member_legal', [], 'messages') ?></p>
         <?= $this->captcha ?>
-        <div class="widget widget-submit text-center">
+        <div class="submit_container widget widget-submit text-center">
             <button type="submit" class="submit"><?= $this->trans('member_register', [], 'messages') ?></button>
         </div>
     </div>

@@ -20,11 +20,11 @@
             </trans-unit>
             <trans-unit id="membership_fixed">
                 <source>membership_fixed</source>
-                <target>(EUR {price})</target>
+                <target>(EUR {price}/Jahr)</target>
             </trans-unit>
             <trans-unit id="membership_custom">
                 <source>membership_custom</source>
-                <target>(ab EUR {price})</target>
+                <target>(ab EUR {price}/Jahr)</target>
             </trans-unit>
 
             <trans-unit id="member_account">
