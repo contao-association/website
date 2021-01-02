@@ -150,8 +150,6 @@ button {
   padding : 15px 30px;
   position : relative;
   text-transform : uppercase;
-  transition : all .3s;
-  z-index : 1;
   -moz-appearance: none;
   -webkit-appearance: none;
   appearance: none;
@@ -185,20 +183,7 @@ button {
   }
 
   &:hover {
-    color : #ffffff;
-    cursor: pointer;
-
-    &::before {
-      width : 100%;
-    }
-  }
-
-  &:active {
-    color : #ffffff;
-  }
-
-  &:visited {
-    color : #ffffff;
+      background-color: $primary-color-dark;
   }
 }
 button:focus {

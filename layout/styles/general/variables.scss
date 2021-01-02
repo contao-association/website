@@ -27,13 +27,12 @@ $color-white              : #ffffff;
 
 /// The primary color
 /// @group colors
-//$primary-color : #007dbe;
-$primary-color: #eb8623;
+$primary-color: #f47c00;
 $primary-color-accessible : #bb5c00;
 
 /// The primary color in dark
 /// @group colors
-$primary-color-dark       : darken($primary-color, 20%);
+$primary-color-dark       : #db6f00;
 /// The primary color in light
 /// @group colors
 $primary-color-light      : lighten($primary-color, 20%);
