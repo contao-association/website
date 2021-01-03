@@ -62,6 +62,8 @@ class RegistrationController extends ModuleRegistration
             $member->save();
         }
 
+        $this->sendAdminNotification($member->id, $arrData);
+
         $jumpTo = $this->objModel->getRelated('jumpTo');
         if ($jumpTo instanceof PageModel) {
             throw new RedirectResponseException($jumpTo->getAbsoluteUrl());
