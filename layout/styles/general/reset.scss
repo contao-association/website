@@ -15,43 +15,6 @@
   padding : 0;
 }
 
-/* hyphenate for special elements: */
-
-/* works not for everything: https://css-tricks.com/almanac/properties/h/hyphenate/ */
-
-table,
-form legend,
-a,
-.box-info,
-h1,
-h2,
-h3,
-h4,
-h5,
-h6 {
-  -moz-hyphens : auto;
-  -webkit-hyphens : auto;
-  hyphens : auto;
-  overflow-wrap : break-word;
-  word-wrap : break-word;
-}
-
-/* Zuerst das ganze für den Mozilla Firefox */
-
-::-moz-selection {
-  background-color : $primary-color;
-  color : $color-white;
-}
-
-/* Wichtig: Danach!!! sonst interpretiert der Firefox das nicht richtig!! */
-
-/* Danach für alle anderen */
-
-::selection {
-  background-color : $primary-color;
-  color : $color-white;
-}
-
 .invisible,
 .visualyhidden,
 .nav-skiplink,
