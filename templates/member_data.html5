@@ -15,39 +15,44 @@
         <input type="hidden" name="FORM_SUBMIT" value="<?= $this->formId ?>">
         <input type="hidden" name="REQUEST_TOKEN" value="{{request_token}}">
 
-        <div class="row">
-            <div class="col">
-                <?= $this->contact['email'] ?>
-                <?= $this->personal['language'] ?>
+        <fieldset>
+            <div class="row">
+                <div class="col-xs-12 col-sm-6">
+                    <?= $this->contact['email'] ?>
+                    <?= $this->personal['language'] ?>
+                </div>
+                <div class="col-xs-12 col-sm-6 membership">
+                    <?= $this->membership['membership'] ?>
+                    <?= $this->membership['membership_amount'] ?>
+                </div>
             </div>
-            <div class="membership col">
-                <?= $this->membership['membership'] ?>
-                <?= $this->membership['membership_amount'] ?>
-            </div>
-        </div>
+        </fieldset>
 
-        <hr>
         <div class="row">
-            <div class="col">
-                <h3><?= $this->trans('member_address', [], 'messages') ?></h3>
-                <?= $this->address['company'] ?>
-                <?= $this->address['street'] ?>
-                <?= $this->address['postal'] ?>
-                <?= $this->address['city'] ?>
-                <?= $this->address['country'] ?>
+            <div class="col-xs-12 col-sm-6">
+                <fieldset>
+                    <legend><?= $this->trans('member_address', [], 'messages') ?></legend>
+                    <?= $this->address['company'] ?>
+                    <?= $this->address['street'] ?>
+                    <?= $this->address['postal'] ?>
+                    <?= $this->address['city'] ?>
+                    <?= $this->address['country'] ?>
+                </fieldset>
             </div>
-            <div class="col">
-                <h3><?= $this->trans('member_details', [], 'messages') ?></h3>
-                <?= $this->personal['gender'] ?>
-                <?= $this->personal['dateOfBirth'] ?>
-                <?= $this->contact['phone'] ?>
-                <?= $this->contact['website'] ?>
-                <?= $this->address['tax_id'] ?>
+            <div class="col-xs-12 col-sm-6">
+                <fieldset>
+                    <legend><?= $this->trans('member_details', [], 'messages') ?></legend>
+                    <?= $this->personal['gender'] ?>
+                    <?= $this->personal['dateOfBirth'] ?>
+                    <?= $this->contact['phone'] ?>
+                    <?= $this->contact['website'] ?>
+                    <?= $this->address['tax_id'] ?>
+                </fieldset>
             </div>
         </div>
 
         <?= $this->captcha ?>
-        <div class="widget widget-submit text-center">
+        <div class="submit_container widget widget-submit text-center">
             <button type="submit" class="submit"><?= $this->slabel ?></button>
         </div>
     </div>

@@ -6,6 +6,7 @@ form {
     float : left;
     height : auto;
     margin-right : 8px;
+    margin-top: 5px;
     width : auto;
     box-sizing: border-box;
     padding: 0;
@@ -21,12 +22,11 @@ form {
   input,
   textarea {
     background : #ffffff;
-    border : 1px solid #cccccc;
-    @include border-radius(5px);
-    color : #666666;
-    height : 40px;
-    padding : 5px;
-    width : 100%;;
+    border: 1px solid #d6d6d8;
+    color : #333;
+    padding : 15px;
+    width : 100%;
+    font: 300 16px/26px 'Open Sans',sans-serif;
 
     &:focus {
       border : 1px solid $primary-color;
@@ -43,40 +43,40 @@ form {
 
   fieldset {
     border : none;
-    margin-bottom : 15px;
+    margin : 0 0 2em;
     min-width: 0;
     padding: 0;
     border: 0;
-
-    fieldset {
-      border : none;
-      margin : 0;
-      padding : 0;
-    }
 
     legend {
       border : none;
       color : $text-color;
       display : inline;
-      font-size: 1em;
-      margin-bottom : 0;
+      font-size: 24px;
+      margin-bottom: .75em;
       padding : 0;
       width : auto;
       max-width: 100%;
-      line-height: inherit;
+      line-height: 1.5em;
       white-space: normal;
-    }
-
-    + fieldset {
-      @media (min-width: 768px) {
-        margin-top : 40px;
-      }
     }
   }
 
+    fieldset.radio_container,
+    fieldset.checkbox_container {
+        margin-bottom: 0;
+        padding: 10px 0 0;
+
+        legend {
+            font-size: inherit;
+            margin-bottom: 0;
+        }
+    }
+
   label {
-    display : block;
-    margin-bottom: 0.2rem;
+      display: block;
+      margin-bottom: .35em;
+      text-align: left;
   }
 
   select {
@@ -87,9 +87,8 @@ form {
     border : 1px solid #cccccc;
     @include border-radius(5px);
     color : inherit;
-    font-size : 16px;
-    height : 40px;
-    padding-left : 10px;
+    font: 300 16px/26px 'Open Sans',sans-serif;
+    padding : 15px 65px 15px 15px;
     width : 100%;
   }
 
@@ -100,6 +99,23 @@ form {
   .widget {
     margin-bottom : 15px;
   }
+
+    .widget-select {
+        position: relative;
+
+        &:after {
+            content: "";
+            position: absolute;
+            right: 1px;
+            bottom: 1px;
+            width: 50px;
+            height: 56px;
+            z-index: 1;
+            background: $primary-color url("../../images/select-arrow-down.png") center center no-repeat;
+            background-size: 23px 12px;
+            pointer-events: none;
+        }
+    }
 
   .submit_container {
     margin-top: 30px;
@@ -204,17 +220,4 @@ button::-moz-focus-inner,
 [type="submit"]::-moz-focus-inner {
   padding: 0;
   border-style: none;
-}
-
-.mod_registration,
-.mod_personalData {
-  fieldset {
-    padding: 15px;
-    border: 1px solid $border-color;
-
-    legend {
-      padding-left: 10px;
-      padding-right: 10px;
-    }
-  }
 }
