@@ -17,9 +17,9 @@
     <link rel="icon" type="image/png" sizes="32x32" href="<?= $this->asset('icons/favicon-32x32.png') ?>">
     <link rel="icon" type="image/png" sizes="16x16" href="<?= $this->asset('icons/favicon-16x16.png') ?>">
     <link rel="manifest" href="<?= $this->asset('icons/site.webmanifest') ?>">
-    <link rel="mask-icon" href="<?= $this->asset('icons/safari-pinned-tab.svg') ?>" color="#db2c3c">
+    <link rel="mask-icon" href="<?= $this->asset('icons/safari-pinned-tab.svg') ?>" color="#f47c00">
     <link rel="shortcut icon" href="<?= $this->asset('icons/favicon.ico') ?>">
-    <meta name="msapplication-TileColor" content="#2d89ef">
+    <meta name="msapplication-TileColor" content="#f47c00">
     <meta name="msapplication-config" content="<?= $this->asset('icons/browserconfig.xml') ?>">
     <meta name="theme-color" content="#ffffff">
     <?php $this->endblock(); ?>
