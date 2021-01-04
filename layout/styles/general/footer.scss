@@ -1,5 +1,5 @@
 .section-footer {
-  padding          : 48px 0;
+  padding: 48px 0;
   font-size: 14px;
 
   p {
@@ -10,6 +10,7 @@
     padding: 0 15px;
     display: flex;
     justify-content: space-between;
+    align-items: center;
     max-width: 1600px;
     margin-left: auto;
     margin-right: auto;
@@ -22,8 +23,11 @@
 }
 
 .sponsor {
-  max-width: 250px;
-  a {
-    display: block;
-  }
+    max-width: 170px;
+    text-align: center;
+    line-height: 2;
+
+    a {
+        display: block;
+    }
 }

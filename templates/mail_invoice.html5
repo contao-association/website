@@ -141,7 +141,7 @@
 
                 <tr>
                     <td class="textPad" style="font-size:20px;background-color:#f47c00;">
-                        <p style="margin:0;color:#FFF;font-family:Helvetica, Arial, sans-serif;font-weight:bold;">{{newsletter::subject}}</p>
+                        <p style="margin:0;color:#FFF;font-family:Helvetica, Arial, sans-serif;font-weight:bold;"></p>
                     </td>
                 </tr>
                 <tr>

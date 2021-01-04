@@ -56,6 +56,8 @@ class CashctrlHelper
 
     public function syncMember(MemberModel $member): void
     {
+        $person = null;
+
         if ($member->cashctrl_id) {
             $person = $this->person->read((int) $member->cashctrl_id);
         }

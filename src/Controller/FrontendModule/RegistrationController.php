@@ -90,7 +90,7 @@ class RegistrationController extends ModuleRegistration
         $newMember->setRow($data);
         $newMember->save();
 
-        // Create the initial version, this will synced with Cashctrl
+        // Create the initial version, this will sync with CashCtrl
         $objVersions = new Versions('tl_member', $newMember->id);
         $objVersions->setUsername($data['username']);
         $objVersions->setUserId(0);
