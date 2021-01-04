@@ -83,7 +83,7 @@
             </trans-unit>
             <trans-unit id="invoice_empty">
                 <source>invoice_empty</source>
-                <target>There are no invoices to show.</target>
+                <target>There are no invoices in your account.</target>
             </trans-unit>
         </body>
     </file>

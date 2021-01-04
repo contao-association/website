@@ -4,7 +4,7 @@ $GLOBALS['TL_DCA']['tl_member']['config']['closed'] = true;
 $GLOBALS['TL_DCA']['tl_member']['config']['notCopyable'] = true;
 $GLOBALS['TL_DCA']['tl_member']['config']['ctable'][] = 'tl_member_log';
 
-$GLOBALS['TL_DCA']['tl_member']['list']['label']['fields'] = array('icon', 'company', 'firstname', 'lastname');
+$GLOBALS['TL_DCA']['tl_member']['list']['label']['fields'] = array('icon', 'company', 'firstname', 'lastname', 'membership');
 
 unset(
     $GLOBALS['TL_DCA']['tl_member']['list']['global_operations'],

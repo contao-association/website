@@ -2,7 +2,7 @@
 <?php $this->block('content'); ?>
 
 <?php if (empty($this->orders)): ?>
-<p class="message"><?= $this->trans('invoice_empty', [], 'messages') ?></p>
+<p class="message cta"><?= $this->trans('invoice_empty', [], 'messages') ?></p>
 <?php else: ?>
 <table>
     <thead>

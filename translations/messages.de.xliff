@@ -84,7 +84,7 @@
             </trans-unit>
             <trans-unit id="invoice_empty">
                 <source>invoice_empty</source>
-                <target>Es gibt keine Rechnungen zum anzeigen.</target>
+                <target>Wir haben noch keine Rechnungen in deinem Konto.</target>
             </trans-unit>
         </body>
     </file>

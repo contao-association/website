@@ -98,6 +98,10 @@ form {
 
   .widget {
     margin-bottom : 15px;
+
+    @media (min-width: 992px) {
+      width: 90%;
+    }
   }
 
     .widget-select {
@@ -130,6 +134,23 @@ form {
     display: flex;
     justify-content: space-between;
   }
+
+    input.error {
+        border-color: #c00;
+    }
+
+    p.error {
+        color: #c00;
+        font-size: 90%;
+    }
+
+    .widget-captcha .captcha {
+        height: 40px;
+        width: 40px;
+        padding: 8px;
+        display: inline-block;
+        margin-right: 10px;
+    }
 }
 
 .explanation {
