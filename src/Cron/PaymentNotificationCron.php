@@ -8,7 +8,6 @@ use Contao\CoreBundle\Framework\ContaoFramework;
 use Contao\MemberModel;
 use Contao\CoreBundle\ServiceAnnotation\CronJob;
 use NotificationCenter\Model\Notification;
-use function Sentry\captureMessage;
 use Psr\Log\LoggerInterface;
 use App\CashctrlHelper;
 
@@ -57,8 +56,13 @@ class PaymentNotificationCron
 
             $this->cashctrl->syncMember($member);
 
-            if (!$this->cashctrl->sendInvoiceNotification($notification, $order, $member)) {
-                captureMessage('Unable to send payment notification to '.$member->email);
+            try {
+                if (!$this->cashctrl->sendInvoiceNotification($notification, $order, $member)) {
+                    $this->cashctrl->sentryOrThrow('Unable to send payment notification to '.$member->email);
+                    continue;
+                }
+            } catch (\Exception $e) {
+                $this->cashctrl->sentryOrThrow('Unable to send payment notification to '.$member->email, $e);
                 continue;
             }
 

@@ -9,7 +9,6 @@ use App\CashctrlHelper;
 use Contao\MemberModel;
 use Contao\CoreBundle\ServiceAnnotation\CronJob;
 use NotificationCenter\Model\Notification;
-use function Sentry\captureMessage;
 use Contao\Versions;
 use Psr\Log\LoggerInterface;
 
@@ -73,8 +72,13 @@ class ActivateMemberCron
 
             $this->logger->info('Sent activation notification for CashCtrl invoice '.$order->getNr().' to '.$member->email);
 
-            if (!$this->cashctrl->sendInvoiceNotification($notification, $order, $member)) {
-                captureMessage('Unable to send account activation notification to '.$member->email);
+            try {
+                if (!$this->cashctrl->sendInvoiceNotification($notification, $order, $member)) {
+                    $this->cashctrl->sentryOrThrow('Unable to send account activation notification to '.$member->email);
+                    continue;
+                }
+            } catch (\Exception $e) {
+                $this->cashctrl->sentryOrThrow('Unable to send account activation notification to '.$member->email, $e);
                 continue;
             }
 

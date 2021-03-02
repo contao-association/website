@@ -22,7 +22,7 @@ use Contao\Config;
 use Terminal42\CashctrlApi\ApiClient;
 use Haste\Util\StringUtil;
 use Contao\PageModel;
-use function Sentry\captureMessage;
+use function Sentry\captureEvent;
 
 class CashctrlHelper
 {
@@ -219,14 +219,13 @@ class CashctrlHelper
             ->ofType(OrderListFilter::TYPE_SALES)
             ->withStatus(18)
             ->sortBy('lastUpdated', 'DESC')
-            ->get()
-            ;
+            ->get();
     }
 
-    public function sentryOrThrow(string $message): void
+    public function sentryOrThrow(string $message, \Exception $exception = null): void
     {
-        if (null === captureMessage($message)) {
-            throw new \RuntimeException($message);
+        if (null === captureEvent(['message' => $message, 'exception' => $exception])) {
+            throw new \RuntimeException($message, 0, $exception);
         }
     }
 

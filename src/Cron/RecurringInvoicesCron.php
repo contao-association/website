@@ -70,11 +70,15 @@ class RecurringInvoicesCron
         }
 
         foreach ($members as $member) {
-            $this->cashctrl->syncMember($member);
-            $invoice = $this->cashctrl->createAndSendInvoice($member, $this->notificationId);
+            try {
+                $this->cashctrl->syncMember($member);
+                $invoice = $this->cashctrl->createAndSendInvoice($member, $this->notificationId);
 
-            if (null !== $invoice) {
-                $this->logger->info('Recurring membership invoice '.$invoice->getNr().' sent to '.$member->email);
+                if (null !== $invoice) {
+                    $this->logger->info('Recurring membership invoice '.$invoice->getNr().' sent to '.$member->email);
+                }
+            } catch (\Exception $e) {
+                $this->cashctrl->sentryOrThrow('Unable to send recurring invoice to '.$member->email.' (member ID '.$member->id.')', $e);
             }
         }
     }
