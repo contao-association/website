@@ -7,9 +7,6 @@ namespace App\Cron;
 use Contao\CoreBundle\Framework\ContaoFramework;
 use Contao\MemberModel;
 use Contao\CoreBundle\ServiceAnnotation\CronJob;
-use Terminal42\CashctrlApi\Entity\Order;
-use Terminal42\CashctrlApi\ApiClientInterface;
-use Terminal42\CashctrlApi\ApiClient;
 use NotificationCenter\Model\Notification;
 use function Sentry\captureMessage;
 use Psr\Log\LoggerInterface;
@@ -45,10 +42,8 @@ class PaymentNotificationCron
         }
 
         foreach ($this->cashctrl->getLastUpdatedInvoices() as $order) {
-            if (!$this->shouldSendNotification($order)) {
-                // Orders are sorted by lastUpdated. We assume this means all orders
-                // after the first not in booking range are out of range too.
-                return;
+            if (!$order->isClosed || 'true' === $order->getCustomfield(5)) {
+                continue;
             }
 
             $member = MemberModel::findOneBy('cashctrl_id', $order->getAssociateId());
@@ -64,19 +59,11 @@ class PaymentNotificationCron
 
             if (!$this->cashctrl->sendInvoiceNotification($notification, $order, $member)) {
                 captureMessage('Unable to send payment notification to '.$member->email);
+                continue;
             }
+
+            $order->setCustomfield(5, 'true');
+            $this->cashctrl->order->update($order);
         }
-    }
-
-    private function shouldSendNotification(Order $order): bool
-    {
-        if (!$order->isClosed) {
-            return false;
-        }
-
-        $bookDate = ApiClient::parseDateTime($order->dateLastBooked);
-        $now = new \DateTime('-1 hour', new \DateTimeZone(ApiClientInterface::DATE_TIMEZONE));
-
-        return $now->format('YmdH') === $bookDate->format('YmdH');
     }
 }

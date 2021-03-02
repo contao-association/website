@@ -75,7 +75,11 @@ class ActivateMemberCron
 
             if (!$this->cashctrl->sendInvoiceNotification($notification, $order, $member)) {
                 captureMessage('Unable to send account activation notification to '.$member->email);
+                continue;
             }
+
+            $order->setCustomfield(5, 'true');
+            $this->cashctrl->order->update($order);
         }
     }
 }
