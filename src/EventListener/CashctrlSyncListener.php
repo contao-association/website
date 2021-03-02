@@ -2,13 +2,17 @@
 
 declare(strict_types=1);
 
-namespace App\EventListener\Cashctrl;
+namespace App\EventListener;
 
 use Contao\CoreBundle\ServiceAnnotation\Callback;
 use Contao\MemberModel;
 use App\CashctrlHelper;
 
-class MemberSyncListener
+/**
+ * @Callback(table="tl_member", target="config.oncreate_version")
+ * @Callback(table="tl_member", target="config.onrestore_version")
+ */
+class CashctrlSyncListener
 {
     private CashctrlHelper $cashctrl;
 
@@ -18,12 +22,9 @@ class MemberSyncListener
     }
 
     /**
-     * @Callback(table="tl_member", target="config.oncreate_version")
-     * @Callback(table="tl_member", target="config.onrestore_version")
-     *
      * @param int|string $memberId
      */
-    public function updatePerson(string $table, $memberId): void
+    public function __invoke(string $table, $memberId): void
     {
         if ('tl_member' !== $table) {
             throw new \InvalidArgumentException("Invalid call to sync table \"$table\" with Cashctrl.");
