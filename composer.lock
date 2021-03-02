@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "7ea0861567e9f8907ba28743af947247",
+    "content-hash": "d1a742a85a0fade1aacb3349ac8043e9",
     "packages": [
         {
             "name": "ausi/slug-generator",
@@ -3479,6 +3479,108 @@
             "time": "2021-01-26T12:46:48+00:00"
         },
         {
+            "name": "guzzlehttp/guzzle",
+            "version": "7.2.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/guzzle/guzzle.git",
+                "reference": "0aa74dfb41ae110835923ef10a9d803a22d50e79"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/guzzle/guzzle/zipball/0aa74dfb41ae110835923ef10a9d803a22d50e79",
+                "reference": "0aa74dfb41ae110835923ef10a9d803a22d50e79",
+                "shasum": ""
+            },
+            "require": {
+                "ext-json": "*",
+                "guzzlehttp/promises": "^1.4",
+                "guzzlehttp/psr7": "^1.7",
+                "php": "^7.2.5 || ^8.0",
+                "psr/http-client": "^1.0"
+            },
+            "provide": {
+                "psr/http-client-implementation": "1.0"
+            },
+            "require-dev": {
+                "ext-curl": "*",
+                "php-http/client-integration-tests": "^3.0",
+                "phpunit/phpunit": "^8.5.5 || ^9.3.5",
+                "psr/log": "^1.1"
+            },
+            "suggest": {
+                "ext-curl": "Required for CURL handler support",
+                "ext-intl": "Required for Internationalized Domain Name (IDN) support",
+                "psr/log": "Required for using the Log middleware"
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "7.1-dev"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "GuzzleHttp\\": "src/"
+                },
+                "files": [
+                    "src/functions_include.php"
+                ]
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Michael Dowling",
+                    "email": "mtdowling@gmail.com",
+                    "homepage": "https://github.com/mtdowling"
+                },
+                {
+                    "name": "Márk Sági-Kazár",
+                    "email": "mark.sagikazar@gmail.com",
+                    "homepage": "https://sagikazarmark.hu"
+                }
+            ],
+            "description": "Guzzle is a PHP HTTP client library",
+            "homepage": "http://guzzlephp.org/",
+            "keywords": [
+                "client",
+                "curl",
+                "framework",
+                "http",
+                "http client",
+                "psr-18",
+                "psr-7",
+                "rest",
+                "web service"
+            ],
+            "support": {
+                "issues": "https://github.com/guzzle/guzzle/issues",
+                "source": "https://github.com/guzzle/guzzle/tree/7.2.0"
+            },
+            "funding": [
+                {
+                    "url": "https://github.com/GrahamCampbell",
+                    "type": "github"
+                },
+                {
+                    "url": "https://github.com/Nyholm",
+                    "type": "github"
+                },
+                {
+                    "url": "https://github.com/alexeyshockov",
+                    "type": "github"
+                },
+                {
+                    "url": "https://github.com/gmponos",
+                    "type": "github"
+                }
+            ],
+            "time": "2020-10-10T11:47:56+00:00"
+        },
+        {
             "name": "guzzlehttp/promises",
             "version": "1.4.0",
             "source": {
@@ -6776,6 +6878,54 @@
                 "wiki": "https://github.com/ramsey/uuid/wiki"
             },
             "time": "2020-02-21T04:36:14+00:00"
+        },
+        {
+            "name": "rapidmail/rapidmail-apiv3-client-php",
+            "version": "1.1.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/rapidmail/rapidmail-apiv3-client-php.git",
+                "reference": "074a4fda9273513c411dab6dd0ed6e7bf01a5971"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/rapidmail/rapidmail-apiv3-client-php/zipball/074a4fda9273513c411dab6dd0ed6e7bf01a5971",
+                "reference": "074a4fda9273513c411dab6dd0ed6e7bf01a5971",
+                "shasum": ""
+            },
+            "require": {
+                "ext-fileinfo": "*",
+                "ext-json": "*",
+                "guzzlehttp/guzzle": "^6.3 || ^7.0",
+                "php": "^5.6 || ^7.0 || ^8.0",
+                "psr/http-message": "^1.0"
+            },
+            "require-dev": {
+                "phpunit/phpunit": "^5.7 || ^7.0 || ^9.0",
+                "yoast/phpunit-polyfills": "^0.2.0"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "Rapidmail\\ApiClient\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "BSD-2-Clause"
+            ],
+            "authors": [
+                {
+                    "name": "rapidmail GmbH",
+                    "email": "support@rapidmail.de"
+                }
+            ],
+            "description": "rapidmail API v3 client",
+            "support": {
+                "issues": "https://github.com/rapidmail/rapidmail-apiv3-client-php/issues",
+                "source": "https://github.com/rapidmail/rapidmail-apiv3-client-php/tree/1.1.0"
+            },
+            "time": "2021-02-09T20:17:26+00:00"
         },
         {
             "name": "richardhj/contao-backup-manager",

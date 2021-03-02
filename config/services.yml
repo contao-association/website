@@ -47,3 +47,9 @@ services:
     App\Cron\PaymentNotificationCron:
         arguments:
             $notificationId: '%env(PAYMENT_NOTIFICATION)%'
+
+    App\RapidmailHelper:
+        arguments:
+            - '%env(RAPIDMAIL_USERNAME)%'
+            - '%env(RAPIDMAIL_PASSWORD)%'
+            - '%env(RAPIDMAIL_LIST)%'
