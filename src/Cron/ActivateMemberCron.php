@@ -53,7 +53,7 @@ class ActivateMemberCron
         }
 
         foreach ($members as $member) {
-            $order = $this->cashctrl->order->read((int) $members->cashctrl_invoice);
+            $order = $this->cashctrl->order->read((int) $member->cashctrl_invoice);
 
             if (!$order->isClosed) {
                 continue;
