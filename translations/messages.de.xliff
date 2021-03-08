@@ -6,6 +6,10 @@
                 <source>to_home</source>
                 <target>zur Startseite</target>
             </trans-unit>
+            <trans-unit id="download">
+                <source>download</source>
+                <target>Download</target>
+            </trans-unit>
             <trans-unit id="membership.active">
                 <source>membership.active</source>
                 <target>Aktivmitglied</target>

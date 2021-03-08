@@ -1,0 +1,16 @@
+<?php $this->extend('block_searchable'); ?>
+
+<?php $this->block('content'); ?>
+
+<ul>
+    <?php foreach ($this->files as $file): ?>
+        <li class="download-element ext-<?= $file['extension'] ?>">
+            <a href="<?= $file['href'] ?>" title="<?= $file['title'] ?>" type="<?= $file['mime'] ?>">
+                <span class="dl-above-txt"><?= $file['link'] ?></span>
+                <span class="dl-below-txt"><?= $this->trans('download', [], 'messages') ?> (<?= $file['filesize'] ?>)</span>
+            </a>
+        </li>
+    <?php endforeach; ?>
+</ul>
+
+<?php $this->endblock(); ?>
