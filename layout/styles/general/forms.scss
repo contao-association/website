@@ -178,31 +178,7 @@ form {
 input[type="submit"],
 input[type="button"],
 button {
-  background: $primary-color;
-  border: none;
-  color : #ffffff;
-  display : inline-block;
-  font-weight : normal;
-  overflow : hidden;
-  padding : 15px 30px;
-  position : relative;
-  text-transform : uppercase;
-  -moz-appearance: none;
-  -webkit-appearance: none;
-  appearance: none;
-  font-family: inherit;
-  font-size: 0.8em;
-  border-radius: 5px;
-  cursor: pointer;
-  transition: background-color .5s;
-
-  &:hover {
-      background-color: $primary-color-dark;
-  }
-}
-button:focus {
-  outline: 1px dotted;
-  outline: 5px auto -webkit-focus-ring-color;
+  @include button-default;
 }
 
 button,

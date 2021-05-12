@@ -6,5 +6,5 @@
   margin-right: 15px;
 }
 .cta p:last-child a {
-  @extend input[type="button"];
+  @include button-default;
 }

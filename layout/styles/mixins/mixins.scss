@@ -18,3 +18,33 @@
     @content;
   }
 }
+
+@mixin button-default {
+  background: $primary-color;
+  border: none;
+  color : #ffffff;
+  display : inline-block;
+  font-weight : normal;
+  overflow : hidden;
+  padding : 15px 30px;
+  position : relative;
+  text-transform : uppercase;
+  -moz-appearance: none;
+  -webkit-appearance: none;
+  appearance: none;
+  font-family: inherit;
+  font-size: 0.8em;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color .5s;
+
+  @include hfa() {
+    background-color: $primary-color-dark;
+    color: #ffffff;
+  }
+
+  &:focus {
+    outline: 1px dotted;
+    outline: 5px auto -webkit-focus-ring-color;
+  }
+}
