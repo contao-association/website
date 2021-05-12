@@ -14,8 +14,6 @@
     flex: 1 0 30%;
     margin: 15px;
 
-
-
     a {
       padding: 15px;
       @include hfa() {
@@ -33,17 +31,31 @@
     @media (min-width: 768px) {
       font-size: 1.8em;
     }
-
-    &::before {
-      content: 'ICON';
-      margin-bottom: 15px;
-      display: block;
-    }
   }
 
   a {
     .period, .total {
       color : $grey-dark;
+    }
+  }
+}
+
+.mod_voting_enquiry_list {
+  margin-top: 3em;
+
+  @media screen and (min-width: 992px) {
+    margin-top: 6em;
+  }
+
+  .enquiry {
+    &:not(:last-of-type) {
+      margin-bottom: 2em;
+      padding-bottom: 2em;
+      border-bottom: 1px solid $border-color;
+    }
+
+    h3 {
+      margin-bottom: 0.5em;
     }
   }
 }

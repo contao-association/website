@@ -82,7 +82,7 @@ img {
 }
 
 body {
-  font                    : 18px 'Open Sans', sans-serif;
+  font                    : 1.8rem 'Open Sans', sans-serif;
   color                   : #333333;
   font-weight             : 300;
   background              : #f7f7f9;
@@ -112,15 +112,15 @@ h1 + .ce_text {
 
 h2 {
   margin-bottom : 15px;
-  font-size     : 27px
+  //font-size     : 27px;
 }
 
 h3 {
-  font-size : 21px
+  //font-size : 21px
 }
 
 strong, b {
-  font-weight : 400
+  font-weight : 400;
 }
 
 p {
@@ -130,6 +130,7 @@ p {
 a {
   text-decoration : none;
   color           : #eb8623;
+
   @include hfa() {
     color : #cb5f06;
   }
@@ -172,14 +173,14 @@ div[class^="mod_"] {
 }
 
 .ce_hyperlink {
-  float            : left;
-  margin           : 10px;
-  background-color : #ffffff;
-  border           : 1px solid #e1e1e1;
 
   img {
     width   : 100%;
     display : block
+  }
+
+  a {
+    @include button-default;
   }
 }
 
@@ -202,9 +203,9 @@ button,
 a.more,
 .pagination a.last,
 .pagination a.first {
-  @extend input[type="button"];
+  @include button-default;
 
-  &:hover {
+  @include hfa() {
     text-decoration: none;
   }
 }
