@@ -1,11 +1,14 @@
 {
+    "name": "contao-association/website",
+    "description": "This is the member website for the Contao Association.",
+    "homepage": "https://members.contao.org",
     "type": "project",
     "license": "proprietary",
     "require": {
         "php": "^7.4",
         "contao/conflicts": "*@dev",
         "contao/manager-bundle": "4.9.*",
-        "contao-association/contao-voting": "v2.x-dev",
+        "contao-association/contao-voting": "dev-main",
         "terminal42/notification_center": "^1.4",
         "terminal42/contao-easy_themes": "^2.2",
         "sentry/sentry-symfony": "^3.0",
@@ -24,14 +27,6 @@
         {
             "type": "vcs",
             "url": "https://github.com/contao-association/contao-voting"
-        },
-        {
-            "type": "vcs",
-            "url": "https://github.com/terminal42/cashctrl-bundle"
-        },
-        {
-            "type": "vcs",
-            "url": "https://github.com/terminal42/cashctrl-api"
         }
     ],
     "extra": {

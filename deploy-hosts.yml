@@ -3,9 +3,6 @@
     bin/php: 'php74'
     hostname: s001.cyon.net
 
-    # Composer 2.0
-    bin/composer: '/home/contaoro/public_html/composer.phar'
-
 prod:
     <<: *base
     deploy_path: /home/contaoro/public_html/members.contao.org
