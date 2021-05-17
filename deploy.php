@@ -120,6 +120,7 @@ task('deploy', [
 
     // Release
     'maintenance:enable',
+    'contao:download_manager',
     'contao:lock_install_tool',
     'deploy:symlink',
     'deploy:opcache',
