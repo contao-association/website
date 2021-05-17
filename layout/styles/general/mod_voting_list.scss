@@ -48,14 +48,32 @@
   }
 
   .enquiry {
+    flex-direction: column;
+
     &:not(:last-of-type) {
       margin-bottom: 2em;
       padding-bottom: 2em;
       border-bottom: 1px solid $border-color;
     }
 
+    .more {
+      text-align: left;
+
+      a {
+        background: none;
+        padding: 0;
+        color: $primary-color;
+        font-size: inherit;
+        text-transform: none;
+      }
+    }
+
     h3 {
       margin-bottom: 0.5em;
     }
+  }
+
+  .submit {
+    width: auto;
   }
 }
