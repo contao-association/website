@@ -2,8 +2,11 @@
   background: #fff;
   padding: 15px;
   border: 1px solid $border-color;
-  margin-left: 15px;
-  margin-right: 15px;
+
+  @media (min-width: 768px) {
+    margin-left: 15px;
+    margin-right: 15px;
+  }
 }
 .cta p:last-child a {
   @include button-default;

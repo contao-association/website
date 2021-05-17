@@ -293,8 +293,7 @@ a[href^="tel:"] {
 }
 
 
-main a,
-main a:visited {
+main a {
   color : $primary-color;
   text-decoration : none;
 }
@@ -309,8 +308,7 @@ main a {
   }
 }
 
-footer a,
-footer a:visited {
+footer a {
   color : $primary-color;
   text-decoration : none;
 }
