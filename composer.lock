@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "46c428d8de2df726eae0fe8bb44038e8",
+    "content-hash": "4e251024d5747c874a5373b2e5fdaf61",
     "packages": [
         {
             "name": "ausi/slug-generator",
@@ -651,16 +651,16 @@
         },
         {
             "name": "contao-association/contao-voting",
-            "version": "dev-main",
+            "version": "2.0.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/contao-association/contao-voting.git",
-                "reference": "c49bcd63af9fa2d728845c075eac2b7eddbdd18b"
+                "reference": "2c19437a3bdefeb38971b15b824208036dd3828b"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/contao-association/contao-voting/zipball/c49bcd63af9fa2d728845c075eac2b7eddbdd18b",
-                "reference": "c49bcd63af9fa2d728845c075eac2b7eddbdd18b",
+                "url": "https://api.github.com/repos/contao-association/contao-voting/zipball/2c19437a3bdefeb38971b15b824208036dd3828b",
+                "reference": "2c19437a3bdefeb38971b15b824208036dd3828b",
                 "shasum": ""
             },
             "require": {
@@ -674,7 +674,6 @@
                 "contao/easy-coding-standard": "^3.0",
                 "contao/manager-plugin": "^2.9"
             },
-            "default-branch": true,
             "type": "contao-bundle",
             "extra": {
                 "contao-manager-plugin": "ContaoAssociation\\VotingBundle\\ContaoManager\\Plugin"
@@ -703,10 +702,10 @@
                 "voting"
             ],
             "support": {
-                "source": "https://github.com/contao-association/contao-voting/tree/main",
+                "source": "https://github.com/contao-association/contao-voting/tree/2.0.0",
                 "issues": "https://github.com/contao-association/contao-voting/issues"
             },
-            "time": "2021-05-17T10:45:16+00:00"
+            "time": "2021-05-18T07:19:20+00:00"
         },
         {
             "name": "contao-community-alliance/composer-plugin",
@@ -7186,16 +7185,16 @@
         },
         {
             "name": "scssphp/scssphp",
-            "version": "v1.5.1",
+            "version": "v1.5.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/scssphp/scssphp.git",
-                "reference": "fc275168bc43de68b82e81e95d8456567e86654f"
+                "reference": "6fe16f169f55f5e793474fb210aac0a4481619e5"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/scssphp/scssphp/zipball/fc275168bc43de68b82e81e95d8456567e86654f",
-                "reference": "fc275168bc43de68b82e81e95d8456567e86654f",
+                "url": "https://api.github.com/repos/scssphp/scssphp/zipball/6fe16f169f55f5e793474fb210aac0a4481619e5",
+                "reference": "6fe16f169f55f5e793474fb210aac0a4481619e5",
                 "shasum": ""
             },
             "require": {
@@ -7210,6 +7209,7 @@
                 "squizlabs/php_codesniffer": "~3.5",
                 "symfony/phpunit-bridge": "^5.1",
                 "twbs/bootstrap": "~5.0",
+                "twbs/bootstrap4": "4.6.0",
                 "zurb/foundation": "~6.5"
             },
             "suggest": {
@@ -7252,9 +7252,9 @@
             ],
             "support": {
                 "issues": "https://github.com/scssphp/scssphp/issues",
-                "source": "https://github.com/scssphp/scssphp/tree/v1.5.1"
+                "source": "https://github.com/scssphp/scssphp/tree/v1.5.2"
             },
-            "time": "2021-05-17T08:29:29+00:00"
+            "time": "2021-05-18T00:05:58+00:00"
         },
         {
             "name": "sentry/sdk",
@@ -14142,7 +14142,6 @@
     "minimum-stability": "stable",
     "stability-flags": {
         "contao/conflicts": 20,
-        "contao-association/contao-voting": 20,
         "terminal42/cashctrl-bundle": 20,
         "terminal42/cashctrl-api": 20,
         "terminal42/deployer-recipes": 20
