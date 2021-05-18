@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "4e251024d5747c874a5373b2e5fdaf61",
+    "content-hash": "154d601729bc0e3bd8c8a57a6b377dc8",
     "packages": [
         {
             "name": "ausi/slug-generator",
@@ -651,16 +651,16 @@
         },
         {
             "name": "contao-association/contao-voting",
-            "version": "2.0.0",
+            "version": "2.1.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/contao-association/contao-voting.git",
-                "reference": "2c19437a3bdefeb38971b15b824208036dd3828b"
+                "reference": "dac1bd9216fb7e3901e6de87888ad51bc5c0c585"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/contao-association/contao-voting/zipball/2c19437a3bdefeb38971b15b824208036dd3828b",
-                "reference": "2c19437a3bdefeb38971b15b824208036dd3828b",
+                "url": "https://api.github.com/repos/contao-association/contao-voting/zipball/dac1bd9216fb7e3901e6de87888ad51bc5c0c585",
+                "reference": "dac1bd9216fb7e3901e6de87888ad51bc5c0c585",
                 "shasum": ""
             },
             "require": {
@@ -702,10 +702,10 @@
                 "voting"
             ],
             "support": {
-                "source": "https://github.com/contao-association/contao-voting/tree/2.0.0",
+                "source": "https://github.com/contao-association/contao-voting/tree/2.1.0",
                 "issues": "https://github.com/contao-association/contao-voting/issues"
             },
-            "time": "2021-05-18T07:19:20+00:00"
+            "time": "2021-05-18T15:04:04+00:00"
         },
         {
             "name": "contao-community-alliance/composer-plugin",
@@ -3874,24 +3874,28 @@
         },
         {
             "name": "jean85/pretty-package-versions",
-            "version": "1.6.0",
+            "version": "2.0.3",
             "source": {
                 "type": "git",
                 "url": "https://github.com/Jean85/pretty-package-versions.git",
-                "reference": "1e0104b46f045868f11942aea058cd7186d6c303"
+                "reference": "b2c4ec2033a0196317a467cb197c7c843b794ddf"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/Jean85/pretty-package-versions/zipball/1e0104b46f045868f11942aea058cd7186d6c303",
-                "reference": "1e0104b46f045868f11942aea058cd7186d6c303",
+                "url": "https://api.github.com/repos/Jean85/pretty-package-versions/zipball/b2c4ec2033a0196317a467cb197c7c843b794ddf",
+                "reference": "b2c4ec2033a0196317a467cb197c7c843b794ddf",
                 "shasum": ""
             },
             "require": {
-                "composer/package-versions-deprecated": "^1.8.0",
-                "php": "^7.0|^8.0"
+                "composer-runtime-api": "^2.0.0",
+                "php": "^7.1|^8.0"
             },
             "require-dev": {
-                "phpunit/phpunit": "^6.0|^8.5|^9.2"
+                "friendsofphp/php-cs-fixer": "^2.17",
+                "jean85/composer-provided-replaced-stub-package": "^1.0",
+                "phpstan/phpstan": "^0.12.66",
+                "phpunit/phpunit": "^7.5|^8.5|^9.4",
+                "vimeo/psalm": "^4.3"
             },
             "type": "library",
             "extra": {
@@ -3914,7 +3918,7 @@
                     "email": "alessandro.lai85@gmail.com"
                 }
             ],
-            "description": "A wrapper for ocramius/package-versions to get pretty versions strings",
+            "description": "A library to get pretty versions strings of installed dependencies",
             "keywords": [
                 "composer",
                 "package",
@@ -3923,9 +3927,9 @@
             ],
             "support": {
                 "issues": "https://github.com/Jean85/pretty-package-versions/issues",
-                "source": "https://github.com/Jean85/pretty-package-versions/tree/1.6.0"
+                "source": "https://github.com/Jean85/pretty-package-versions/tree/2.0.3"
             },
-            "time": "2021-02-04T16:20:16+00:00"
+            "time": "2021-02-22T10:52:38+00:00"
         },
         {
             "name": "knplabs/knp-menu",
@@ -7415,20 +7419,20 @@
         },
         {
             "name": "sentry/sentry-symfony",
-            "version": "3.5.3",
+            "version": "3.5.4",
             "source": {
                 "type": "git",
                 "url": "https://github.com/getsentry/sentry-symfony.git",
-                "reference": "839460734f50fc26a0276532ad9bf977c117bece"
+                "reference": "b3f9b7f0fff3725f0b7811aa4e070e4658b8722b"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/getsentry/sentry-symfony/zipball/839460734f50fc26a0276532ad9bf977c117bece",
-                "reference": "839460734f50fc26a0276532ad9bf977c117bece",
+                "url": "https://api.github.com/repos/getsentry/sentry-symfony/zipball/b3f9b7f0fff3725f0b7811aa4e070e4658b8722b",
+                "reference": "b3f9b7f0fff3725f0b7811aa4e070e4658b8722b",
                 "shasum": ""
             },
             "require": {
-                "jean85/pretty-package-versions": "^1.5",
+                "jean85/pretty-package-versions": "^1.5 || ^2.0",
                 "php": "^7.1",
                 "sentry/sdk": "^2.1",
                 "symfony/config": "^3.4||^4.0||^5.0",
@@ -7453,7 +7457,7 @@
                 "symfony/framework-bundle": "^3.4||^4.0||^5.0",
                 "symfony/messenger": "^4.3||^5.0",
                 "symfony/monolog-bundle": "^3.4",
-                "symfony/phpunit-bridge": "^5.0",
+                "symfony/phpunit-bridge": "^5.2.6",
                 "symfony/yaml": "^3.4||^4.0||^5.0"
             },
             "suggest": {
@@ -7497,7 +7501,7 @@
             ],
             "support": {
                 "issues": "https://github.com/getsentry/sentry-symfony/issues",
-                "source": "https://github.com/getsentry/sentry-symfony/tree/3.5.3"
+                "source": "https://github.com/getsentry/sentry-symfony/tree/3.5.4"
             },
             "funding": [
                 {
@@ -7509,7 +7513,7 @@
                     "type": "custom"
                 }
             ],
-            "time": "2020-10-13T07:37:17+00:00"
+            "time": "2021-05-13T08:38:28+00:00"
         },
         {
             "name": "simplepie/simplepie",
