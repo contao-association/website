@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "0b060ba490d6f6c875284f8539cb183d",
+    "content-hash": "47c9bea7462fcd997abaed148cd323aa",
     "packages": [
         {
             "name": "ausi/slug-generator",
@@ -651,19 +651,20 @@
         },
         {
             "name": "contao-association/contao-voting",
-            "version": "2.2.0",
+            "version": "2.3.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/contao-association/contao-voting.git",
-                "reference": "b0edcc0925f8c25c4645048234df27ee8cf7c186"
+                "reference": "38cdd11f68c6b02b63f1657a21515cba0a8b4e5b"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/contao-association/contao-voting/zipball/b0edcc0925f8c25c4645048234df27ee8cf7c186",
-                "reference": "b0edcc0925f8c25c4645048234df27ee8cf7c186",
+                "url": "https://api.github.com/repos/contao-association/contao-voting/zipball/38cdd11f68c6b02b63f1657a21515cba0a8b4e5b",
+                "reference": "38cdd11f68c6b02b63f1657a21515cba0a8b4e5b",
                 "shasum": ""
             },
             "require": {
+                "codefog/contao-haste": "^4.0",
                 "contao/core-bundle": "^4.9.6",
                 "php": "^7.4"
             },
@@ -702,10 +703,10 @@
                 "voting"
             ],
             "support": {
-                "source": "https://github.com/contao-association/contao-voting/tree/2.2.0",
+                "source": "https://github.com/contao-association/contao-voting/tree/2.3.0",
                 "issues": "https://github.com/contao-association/contao-voting/issues"
             },
-            "time": "2021-05-27T12:36:14+00:00"
+            "time": "2021-05-27T14:28:25+00:00"
         },
         {
             "name": "contao-community-alliance/composer-plugin",

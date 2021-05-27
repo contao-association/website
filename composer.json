@@ -8,7 +8,7 @@
         "php": "^7.4",
         "contao/conflicts": "*@dev",
         "contao/manager-bundle": "4.9.*",
-        "contao-association/contao-voting": "^2.2",
+        "contao-association/contao-voting": "^2.3",
         "terminal42/notification_center": "^1.4",
         "terminal42/contao-easy_themes": "^2.2",
         "sentry/sentry-symfony": "^3.0",
