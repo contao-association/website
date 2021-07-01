@@ -4,6 +4,9 @@ contao:
     search:
         default_indexer:
             enable: false
+    security:
+        two_factor:
+            enforce_backend: true
     localconfig:
         licenseAccepted: true
         disableCron: true
