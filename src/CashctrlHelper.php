@@ -131,6 +131,15 @@ class CashctrlHelper
 
     public function createMemberInvoice(MemberModel $member): Order
     {
+        $order = $this->prepareMemberInvoice($member);
+
+        $insertId = $this->order->create($order)->insertId();
+
+        return $this->order->read($insertId);
+    }
+
+    public function prepareMemberInvoice(MemberModel $member): Order
+    {
         $membership = $this->memberships[$member->membership];
 
         $invoiceLine = $this->translator->trans(
@@ -166,9 +175,7 @@ class CashctrlHelper
             (float) ($membership['custom'] ? $member->membership_amount : $membership['price'])
         ));
 
-        $insertId = $this->order->create($order)->insertId();
-
-        return $this->order->read($insertId);
+        return $order;
     }
 
     public function downloadInvoice(Order $invoice, int $templateId = null, string $language): string
