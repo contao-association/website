@@ -52,20 +52,6 @@ class PaymentNotificationCron
                 continue;
             }
 
-            // Fix broken invoices due to partial API update
-            if ('true' === $order->getCustomfield(5)) {
-                $original = $this->cashctrl->order->read($order->getId());
-
-                if (empty($original->getItems())) {
-                    $draft = $this->cashctrl->prepareMemberInvoice($member);
-                    $original->setItems($draft->getItems());
-                    $this->cashctrl->order->update($original);
-                }
-
-                $this->cashctrl->markInvoicePaymentConfirmed($order->getId());
-                continue;
-            }
-
             $this->logger->info('Sent payment notification for CashCtrl invoice '.$order->getNr().' to '.$member->email);
 
             $this->cashctrl->syncMember($member);
