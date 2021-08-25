@@ -200,6 +200,11 @@ class CashctrlHelper
         $this->order->updateStatus($invoiceId, 16);
     }
 
+    public function markInvoicePaymentConfirmed(int $invoiceId): void
+    {
+        $this->order->updateStatus($invoiceId, 87);
+    }
+
     public function listInvoices(MemberModel $member): array
     {
         if (!$member->cashctrl_id) {
@@ -212,7 +217,7 @@ class CashctrlHelper
     /**
      * @return Order[]
      */
-    public function getLastUpdatedInvoices(): array
+    public function getLastPaidInvoices(): array
     {
         return $this->order
             ->list()

@@ -40,8 +40,8 @@ class PaymentNotificationCron
             return;
         }
 
-        foreach ($this->cashctrl->getLastUpdatedInvoices() as $order) {
-            if (!$order->isClosed || 'true' === $order->getCustomfield(5)) {
+        foreach ($this->cashctrl->getLastPaidInvoices() as $order) {
+            if (!$order->isClosed) {
                 continue;
             }
 
@@ -66,8 +66,7 @@ class PaymentNotificationCron
                 continue;
             }
 
-            $order->setCustomfield(5, 'true');
-            $this->cashctrl->order->update($order);
+            $this->cashctrl->markInvoicePaymentConfirmed($order->getId());
         }
     }
 }

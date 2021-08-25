@@ -82,8 +82,7 @@ class ActivateMemberCron
                 continue;
             }
 
-            $order->setCustomfield(5, 'true');
-            $this->cashctrl->order->update($order);
+            $this->cashctrl->markInvoicePaymentConfirmed($order->getId());
         }
     }
 }
