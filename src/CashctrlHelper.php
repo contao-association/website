@@ -90,7 +90,7 @@ class CashctrlHelper
         }
 
         $invoice = $this->createMemberInvoice($member);
-        $pdf = $this->archiveInvoice($invoice, 'ch' === $member->country ? 11 : 13, $member->language ?: 'de');
+        $pdf = $this->archiveInvoice($invoice, 'ch' === $member->country ? 1011 : 1013, $member->language ?: 'de');
 
         if (!$this->sendInvoiceNotification($notification, $invoice, $member, ['invoice_pdf' => $pdf])) {
             $this->sentryOrThrow('Unable to send invoice email to '.$member->email);
