@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App;
 
+use Terminal42\CashctrlApi\Api\FiscalperiodEndpoint;
 use Terminal42\CashctrlApi\Api\PersonEndpoint;
 use Contao\MemberModel;
 use Terminal42\CashctrlApi\Entity\Person;
@@ -29,6 +30,7 @@ class CashctrlHelper
     public PersonEndpoint $person;
     public OrderEndpoint $order;
     public OrderDocumentEndpoint $orderDocument;
+    public FiscalperiodEndpoint $fiscalperiod;
     private TranslatorInterface $translator;
     private Filesystem $filesystem;
     private array $memberships;
@@ -40,6 +42,7 @@ class CashctrlHelper
         PersonEndpoint $person,
         OrderEndpoint $order,
         OrderDocumentEndpoint $orderDocument,
+        FiscalperiodEndpoint $fiscalperiod,
         TranslatorInterface $translator,
         Filesystem $filesystem,
         array $memberships,
@@ -48,6 +51,7 @@ class CashctrlHelper
         $this->person = $person;
         $this->order = $order;
         $this->orderDocument = $orderDocument;
+        $this->fiscalperiod = $fiscalperiod;
         $this->translator = $translator;
         $this->filesystem = $filesystem;
         $this->memberships = $memberships;
@@ -218,7 +222,20 @@ class CashctrlHelper
             return [];
         }
 
-        return $this->order->list()->filter('associateId', $member->cashctrl_id, ListFilter::EQUALS)->get();
+        $invoices = [];
+        foreach ($this->fiscalperiod->list() as $period) {
+            if ($period->getStart() < new \DateTime('2021-01-01')) {
+                continue;
+            }
+
+            $invoices[] = $this->order
+                ->list()
+                ->inFiscalPeriod($period->getId())
+                ->filter('associateId', $member->cashctrl_id, ListFilter::EQUALS)
+                ->get();
+        }
+
+        return array_merge(...$invoices);
     }
 
     /**
