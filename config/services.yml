@@ -32,6 +32,11 @@ services:
     App\:
         resource: ../src
 
+    App\Controller\FrontendModule\InvoicesController:
+        arguments:
+            $harvestId: '%env(HARVEST_ID)%'
+            $harvestToken: '%env(HARVEST_TOKEN)%'
+
     App\Controller\FrontendModule\RegistrationController:
         arguments:
             $notificationId: '%env(REGISTRATION_NOTIFICATION)%'

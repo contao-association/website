@@ -82,9 +82,21 @@
                 <source>invoice_status</source>
                 <target>Status</target>
             </trans-unit>
+            <trans-unit id="invoice_unpaid">
+                <source>invoice_unpaid</source>
+                <target>Offen</target>
+            </trans-unit>
+            <trans-unit id="invoice_paid">
+                <source>invoice_paid</source>
+                <target>Bezahlt</target>
+            </trans-unit>
             <trans-unit id="invoice_pdf">
                 <source>invoice_pdf</source>
                 <target>PDF herunterladen</target>
+            </trans-unit>
+            <trans-unit id="invoice_link">
+                <source>invoice_link</source>
+                <target>Rechnung öffnen</target>
             </trans-unit>
             <trans-unit id="invoice_empty">
                 <source>invoice_empty</source>

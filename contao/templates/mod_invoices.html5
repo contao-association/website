@@ -1,7 +1,7 @@
 <?php $this->extend('block_unsearchable'); ?>
 <?php $this->block('content'); ?>
 
-<?php if (empty($this->orders)): ?>
+<?php if (empty($this->invoices)): ?>
 <p class="message cta"><?= $this->trans('invoice_empty', [], 'messages') ?></p>
 <?php else: ?>
 <table>
@@ -16,14 +16,14 @@
     </tr>
     </thead>
     <tbody>
-    <?php foreach ($this->orders as $order): ?>
+    <?php foreach ($this->invoices as $invoice): ?>
     <tr>
-        <td><?= $order['nr'] ?></td>
-        <td><?= $order['date'] ?></td>
-        <td class="<?= $order['closed'] ? 'closed' : 'open' ?>"><?= $order['due'] ?></td>
-        <td>€ <?= $order['total'] ?></td>
-        <td><?= $order['status'] ?></td>
-        <td><a href="<?= $order['href'] ?>" target="blank"><?= $this->trans('invoice_pdf', [], 'messages') ?></a></td>
+        <td><?= $invoice['nr'] ?></td>
+        <td><?= $invoice['date'] ?></td>
+        <td class="<?= $invoice['closed'] ? 'closed' : 'open' ?>"><?= $invoice['due'] ?></td>
+        <td>€ <?= $invoice['total'] ?></td>
+        <td><?= $this->trans($invoice['closed'] ? 'invoice_paid' : 'invoice_unpaid', [], 'messages') ?></td>
+        <td><a href="<?= $invoice['href'] ?>" target="blank"><?= $this->trans($invoice['isPdf'] ? 'invoice_pdf' : 'invoice_link', [], 'messages') ?></a></td>
     </tr>
     <?php endforeach; ?>
     </tbody>
