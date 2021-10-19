@@ -144,6 +144,8 @@ class CashctrlHelper
 
     public function prepareMemberInvoice(MemberModel $member): Order
     {
+        $this->setFiscalPeriod();
+
         $membership = $this->memberships[$member->membership];
 
         $invoiceLine = $this->translator->trans(
@@ -364,5 +366,19 @@ class CashctrlHelper
         }
 
         return $this->dateFormat[$locale] = $GLOBALS['TL_CONFIG']['dateFormat'];
+    }
+
+    private function setFiscalPeriod(): void
+    {
+        $date = new \DateTime();
+
+        foreach ($this->fiscalperiod->list() as $period) {
+            if ($period->getStart() <= $date && $period->getEnd() >= $date) {
+                $this->fiscalperiod->switch($period->getId());
+                return;
+            }
+        }
+
+        throw new \RuntimeException('No fiscal period for current date found');
     }
 }
