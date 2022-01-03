@@ -84,7 +84,7 @@ class CashctrlHelper
         $member->save();
     }
 
-    public function createAndSendInvoice(MemberModel $member, int $notificationId): ?Order
+    public function createAndSendInvoice(MemberModel $member, int $notificationId, \DateTimeInterface $invoiceDate = null): ?Order
     {
         $notification = Notification::findByPk($notificationId);
 
@@ -93,7 +93,7 @@ class CashctrlHelper
             return null;
         }
 
-        $invoice = $this->createMemberInvoice($member);
+        $invoice = $this->createMemberInvoice($member, $invoiceDate);
         $pdf = $this->archiveInvoice($invoice, 'ch' === $member->country ? 1011 : 1013, $member->language ?: 'de');
 
         if (!$this->sendInvoiceNotification($notification, $invoice, $member, ['invoice_pdf' => $pdf])) {
@@ -133,18 +133,20 @@ class CashctrlHelper
         return true;
     }
 
-    public function createMemberInvoice(MemberModel $member): Order
+    public function createMemberInvoice(MemberModel $member, \DateTimeInterface $invoiceDate = null): Order
     {
-        $order = $this->prepareMemberInvoice($member);
+        $order = $this->prepareMemberInvoice($member, $invoiceDate);
 
         $insertId = $this->order->create($order)->insertId();
 
         return $this->order->read($insertId);
     }
 
-    public function prepareMemberInvoice(MemberModel $member): Order
+    public function prepareMemberInvoice(MemberModel $member, \DateTimeInterface $invoiceDate = null): Order
     {
-        $this->setFiscalPeriod();
+        $invoiceDate = $invoiceDate ?? new \DateTime();
+
+        $this->setFiscalPeriod($invoiceDate);
 
         $membership = $this->memberships[$member->membership];
 
@@ -165,7 +167,7 @@ class CashctrlHelper
         $invoiceDescription = sprintf(
             '%s/%s - %s %s%s',
             $member->id,
-            date('Y'),
+            $invoiceDate->format('Y'),
             $member->firstname,
             $member->lastname,
             ($member->company ? ', '.$member->company : '')
@@ -173,6 +175,7 @@ class CashctrlHelper
 
         $order = new Order((int) $member->cashctrl_id, 4);
         $order->setNr($member->id.'/'.date('Y'));
+        $order->setDate($invoiceDate);
         $order->setDueDays(30);
         $order->setDescription($invoiceDescription);
         $order->addItem(new OrderItem(
@@ -368,9 +371,11 @@ class CashctrlHelper
         return $this->dateFormat[$locale] = $GLOBALS['TL_CONFIG']['dateFormat'];
     }
 
-    private function setFiscalPeriod(): void
+    private function setFiscalPeriod(\DateTimeInterface $date = null): void
     {
-        $date = new \DateTime();
+        if (null === $date) {
+            $date = new \DateTime();
+        }
 
         foreach ($this->fiscalperiod->list() as $period) {
             if ($period->getStart() <= $date && $period->getEnd() >= $date) {

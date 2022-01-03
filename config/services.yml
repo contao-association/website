@@ -32,6 +32,10 @@ services:
     App\:
         resource: ../src
 
+    App\Command\RecurringInvoicesCommand:
+        arguments:
+            $notificationId: '%env(RECURRING_NOTIFICATION)%'
+
     App\Controller\FrontendModule\InvoicesController:
         arguments:
             $harvestId: '%env(HARVEST_ID)%'
