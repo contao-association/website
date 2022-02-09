@@ -9,10 +9,8 @@ $recipes = [
     'symfony4',
     'deployer/recipes/recipe/rsync',
     'terminal42/deployer-recipes/recipe/contao',
-    'terminal42/deployer-recipes/recipe/database',
     'terminal42/deployer-recipes/recipe/deploy',
     'terminal42/deployer-recipes/recipe/encore',
-    'terminal42/deployer-recipes/recipe/maintenance',
 ];
 
 // Require the recipes
@@ -66,6 +64,7 @@ set('shared_dirs', [
     'assets/images',
     'contao-manager',
     'files',
+    'var/backups',
     'var/invoices',
     'var/logs',
     'web/share',
@@ -83,23 +82,20 @@ task('deploy:opcache', function () {
     }
 })->desc('Clear OpCode cache');
 
-task('database:backup', static function () {
-    if (!has('previous_release')) {
-        return;
-    }
 
-    try {
-        run('cd {{previous_release}} && {{bin/composer}} show backup-manager/symfony');
-    } catch (RuntimeException $e) {
-        writeln("\r\033[1A\033[32C … skipped");
+// Enable maintenance mode
+task('maintenance:enable', function () {
+    run('{{bin/php}} {{bin/console}} contao:maintenance-mode enable {{console_options}}');
+})->desc('Enable maintenance mode');
 
-        output()->setWasWritten(false);
+// Disable maintenance mode
+task('maintenance:disable', function () {
+    run('{{bin/php}} {{bin/console}} contao:maintenance-mode disable {{console_options}}');
+})->desc('Disable maintenance mode');
 
-        return;
-    }
-
-    run(sprintf('cd {{previous_release}} && {{bin/php}} {{bin/console}} backup-manager:backup contao local -c gzip --filename %s.sql', date('Y-m-d-H-i-s')));
-})->desc('Backup database');
+task('contao:lock_manager', function () {
+    run('echo \'3\' > {{release_path}}/contao-manager/login.lock');
+})->desc('Lock the Contao Manager');
 
 
 // Main task
@@ -111,7 +107,6 @@ task('deploy', [
     // Deploy
     'deploy:info',
     'deploy:prepare',
-    'deploy:lock',
     'deploy:release',
     'rsync',
     'deploy:create_initial_dirs',
@@ -123,14 +118,13 @@ task('deploy', [
     'maintenance:enable',
     'contao:download_manager',
     'contao:lock_install_tool',
+    'contao:lock_manager',
     'deploy:symlink',
     'deploy:opcache',
-    'database:backup',
     'contao:migrate',
     'maintenance:disable',
 
     // Cleanup
-    'deploy:unlock',
     'cleanup',
     'success',
 ])->desc('Deploy your project');

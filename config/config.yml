@@ -1,6 +1,8 @@
+imports:
+    - { resource: mailer.php }
 
 contao:
-    prepend_locale: true
+    legacy_routing: false
     search:
         default_indexer:
             enable: false
@@ -10,7 +12,6 @@ contao:
     localconfig:
         licenseAccepted: true
         disableCron: true
-        folderUrl: false
 
         installPassword: "%env(INSTALL_PASSWORD)%"
         adminEmail: association@contao.org

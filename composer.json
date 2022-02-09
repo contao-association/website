@@ -7,15 +7,16 @@
     "require": {
         "php": "^7.4",
         "contao/conflicts": "*@dev",
-        "contao/manager-bundle": "4.9.*",
+        "contao/manager-bundle": "4.13.x-dev as 4.13.0",
+        "contao/core-bundle": "4.13.x-dev as 4.13.0",
+        "contao/installation-bundle": "4.13.x-dev as 4.13.0",
         "contao-association/contao-voting": "^2.3",
         "terminal42/notification_center": "^1.4",
         "terminal42/contao-easy_themes": "^2.2",
-        "sentry/sentry-symfony": "^3.0",
+        "sentry/sentry-symfony": "^4.0",
         "terminal42/cashctrl-bundle": "^1.0@dev",
         "terminal42/cashctrl-api": "^1.0@dev",
         "madeyourday/contao-rocksolid-custom-elements": "^2.2",
-        "richardhj/contao-backup-manager": "^2.1",
         "rapidmail/rapidmail-apiv3-client-php": "^1.1"
     },
     "require-dev": {
@@ -34,10 +35,10 @@
     },
     "scripts": {
         "post-install-cmd": [
-            "Contao\\ManagerBundle\\Composer\\ScriptHandler::initializeApplication"
+            "@php vendor/bin/contao-setup"
         ],
         "post-update-cmd": [
-            "Contao\\ManagerBundle\\Composer\\ScriptHandler::initializeApplication"
+            "@php vendor/bin/contao-setup"
         ]
     }
 }
