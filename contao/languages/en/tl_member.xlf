@@ -20,6 +20,18 @@
             <trans-unit id="tl_member.membership_amount.1">
                 <source>Enter an invoice amount for the membership.</source>
             </trans-unit>
+            <trans-unit id="tl_member.membership_start.0">
+                <source>Subscription start date</source>
+            </trans-unit>
+            <trans-unit id="tl_member.membership_start.1">
+                <source>Enter a start date for the subscription.</source>
+            </trans-unit>
+            <trans-unit id="tl_member.membership_stop.0">
+                <source>Subscription stop date</source>
+            </trans-unit>
+            <trans-unit id="tl_member.membership_stop.1">
+                <source>Enter a stop date for the subscription.</source>
+            </trans-unit>
             <trans-unit id="tl_member.member_log_note.0">
                 <source>Note</source>
             </trans-unit>

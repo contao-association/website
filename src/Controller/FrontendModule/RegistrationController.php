@@ -76,6 +76,7 @@ class RegistrationController extends ModuleRegistration
     {
         $data['tstamp'] = time();
         $data['dateAdded'] = $data['tstamp'];
+        $data['membership_start'] = mktime(0, 0, 0);
         $data['disable'] = '1';
         $data['login'] = '1';
         $data['username'] = $data['email'];

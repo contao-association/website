@@ -13,15 +13,13 @@ unset(
 
 $GLOBALS['TL_DCA']['tl_member']['list']['operations']['log'] = [
     'href' => 'table=tl_member_log',
-    'icon' => 'edit.svg',
+    'icon' => 'cssimport.svg',
 ];
 
 $GLOBALS['TL_DCA']['tl_member']['palettes'] = [
     '__selector__' => ['membership'],
-    'default' => 'membership',
-    'active' => '{personal_legend},firstname,lastname,dateOfBirth,gender;{address_legend:hide},company,tax_id,street,postal,city,state,country;{contact_legend:hide},phone,mobile,fax,website,language;{login_legend},email,password,membership;{account_legend},disable,start,stop;{log_legend},member_log_note',
-    'passive' => '{personal_legend},firstname,lastname,dateOfBirth,gender;{address_legend:hide},company,tax_id,street,postal,city,state,country;{contact_legend:hide},phone,mobile,fax,website,language;{login_legend},email,password,membership;{account_legend},disable,start,stop;{log_legend},member_log_note',
-    'support' => '{personal_legend},firstname,lastname,dateOfBirth,gender;{address_legend:hide},company,tax_id,street,postal,city,state,country;{contact_legend:hide},phone,mobile,fax,website,language;{login_legend},email,password,membership,membership_amount;{account_legend},disable,start,stop;{log_legend},member_log_note',
+    'default' => '{personal_legend},firstname,lastname,dateOfBirth,gender;{address_legend:hide},company,tax_id,street,postal,city,state,country;{contact_legend:hide},phone,mobile,fax,website,language;{login_legend:hide},email,password,membership;{subscription_legend},membership,membership_start,membership_stop;{account_legend:hide},disable,start,stop;{log_legend},member_log_note',
+    'support' => '{personal_legend},firstname,lastname,dateOfBirth,gender;{address_legend:hide},company,tax_id,street,postal,city,state,country;{contact_legend:hide},phone,mobile,fax,website,language;{login_legend:hide},email,password;{subscription_legend},membership,membership_amount,membership_start,membership_stop;{account_legend:hide},disable,start,stop;{log_legend},member_log_note',
 ];
 
 unset(
@@ -52,6 +50,20 @@ $GLOBALS['TL_DCA']['tl_member']['fields']['membership_amount'] = [
     'inputType' => 'text',
     'eval' => ['mandatory' => true, 'rgxp' => 'digit', 'minval' => 200, 'feEditable' => true, 'feViewable' => true, 'feGroup' => 'membership', 'tl_class' => 'w50'],
     'sql' => "int(10) NOT NULL default '200'",
+];
+
+$GLOBALS['TL_DCA']['tl_member']['fields']['membership_start'] = [
+    'exclude' => true,
+    'inputType' => 'text',
+    'eval' => ['rgxp' => 'date', 'datepicker' => true, 'tl_class' => 'clr w50 wizard'],
+    'sql' => "varchar(10) NOT NULL default ''",
+];
+
+$GLOBALS['TL_DCA']['tl_member']['fields']['membership_stop'] = [
+    'exclude' => true,
+    'inputType' => 'text',
+    'eval' => ['rgxp' => 'date', 'datepicker' => true, 'tl_class' => 'w50 wizard'],
+    'sql' => "varchar(10) NOT NULL default ''",
 ];
 
 $GLOBALS['TL_DCA']['tl_member']['fields']['member_log_note'] = [

@@ -26,6 +26,22 @@
                 <source>Enter an invoice amount for the membership.</source>
                 <target>Geben Sie eine Rechnungsbetrag für die Mitgliedschaft ein.</target>
             </trans-unit>
+            <trans-unit id="tl_member.membership_start.0">
+                <source>Subscription start date</source>
+                <target>Startdatum Abonnement</target>
+            </trans-unit>
+            <trans-unit id="tl_member.membership_start.1">
+                <source>Enter a start date for the subscription.</source>
+                <target>Gib ein Startdatum für das Abonnement ein.</target>
+            </trans-unit>
+            <trans-unit id="tl_member.membership_stop.0">
+                <source>Subscription stop date</source>
+                <target>Enddatum Abonnement</target>
+            </trans-unit>
+            <trans-unit id="tl_member.membership_stop.1">
+                <source>Enter a stop date for the subscription.</source>
+                <target>Gib ein Stopdatum für das Abonnement ein.</target>
+            </trans-unit>
             <trans-unit id="tl_member.member_log_note.0">
                 <source>Note</source>
                 <target>Notiz</target>

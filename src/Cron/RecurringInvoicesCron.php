@@ -43,10 +43,10 @@ class RecurringInvoicesCron
         // Find members which have been added today some time ago
         // @see http://stackoverflow.com/a/2218577
         $ids = $this->connection->fetchFirstColumn("
-            SELECT id 
-            FROM tl_member 
+            SELECT id
+            FROM tl_member
             WHERE (
-                DATE_FORMAT(FROM_UNIXTIME(dateAdded),'%m-%d') = DATE_FORMAT(NOW(),'%m-%d')
+                DATE_FORMAT(FROM_UNIXTIME(membership_start),'%m-%d') = DATE_FORMAT(NOW(),'%m-%d')
                 OR (
                     (
                         DATE_FORMAT(NOW(),'%Y') % 4 <> 0
@@ -56,13 +56,14 @@ class RecurringInvoicesCron
                         )
                     )
                     AND DATE_FORMAT(NOW(),'%m-%d') = '03-01'
-                    AND DATE_FORMAT(FROM_UNIXTIME(dateAdded),'%m-%d') = '02-29'
+                    AND DATE_FORMAT(FROM_UNIXTIME(membership_start),'%m-%d') = '02-29'
                 )
             )
-            AND DATE_FORMAT(FROM_UNIXTIME(dateAdded),'%Y-%m-%d') != DATE_FORMAT(NOW(),'%Y-%m-%d')
+            AND DATE_FORMAT(FROM_UNIXTIME(membership_start),'%Y-%m-%d') != DATE_FORMAT(NOW(),'%Y-%m-%d')
             AND disable=''
             AND (start='' OR start<=UNIX_TIMESTAMP())
             AND (stop='' OR stop>UNIX_TIMESTAMP())
+            AND (membership_stop='' OR membership_stop>UNIX_TIMESTAMP())
         ");
 
         if (false === $ids || null === ($members = MemberModel::findMultipleByIds($ids))) {
