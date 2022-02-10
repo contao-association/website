@@ -9,11 +9,6 @@ Encore
 
     .addEntry('app', './layout/scripts/app.js')
 
-    // Fixes app-manifest-loader not expecting "export default …"
-    .configureLoaderRule('images', function (rule) {
-        rule.options.esModule = false;
-    })
-
     .copyFiles({
         from: './layout/icons',
         pattern: /\.(png|svg|ico)$/i,
@@ -30,22 +25,6 @@ Encore
     .addLoader({
         test: /\.(gif|png|jpe?g|svg)$/i,
         use: [ 'image-webpack-loader' ]
-    })
-
-    .addLoader({
-        test: /(site\.webmanifest|browserconfig\.xml)$/,
-        use: [
-            {
-                loader: "file-loader",
-                options: {
-                    name: "icons/[name].[hash:8].[ext]",
-                    esModule: false
-                },
-            },
-            {
-                loader: "app-manifest-loader",
-            }
-        ]
     })
 
     .enableSassLoader()

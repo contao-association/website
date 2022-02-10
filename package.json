@@ -7,7 +7,6 @@
   },
   "devDependencies": {
     "@symfony/webpack-encore": "^0.31.0",
-    "app-manifest-loader": "^2.4.1",
     "autoprefixer": "^8.5.0",
     "image-webpack-loader": "7.0.1",
     "node-sass": "^4.14.1",
