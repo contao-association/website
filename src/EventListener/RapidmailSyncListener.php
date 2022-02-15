@@ -30,6 +30,10 @@ class RapidmailSyncListener
             throw new \InvalidArgumentException("Invalid call to sync table \"$table\" with Rapidmail.");
         }
 
+        if (!$this->rapidmail->isConfigured()) {
+            return;
+        }
+
         $member = MemberModel::findByPk($memberId);
 
         if (null === $member) {

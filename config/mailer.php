@@ -1,15 +1,12 @@
 <?php
 
-use Symfony\Component\DependencyInjection\Loader\Configurator\ContainerConfigurator;
+use Symfony\Config\FrameworkConfig;
 
-return static function (ContainerConfigurator $containerConfigurator): void {
+return static function (FrameworkConfig $framework): void {
     if (($_SERVER['SENTRY_ENV'] ?? '') !== 'prod') {
-        $containerConfigurator->extension('framework', [
-            'mailer' => [
-                'envelope' => [
-                    'recipients' => ['association@contao.org']
-                ]
-            ]
-        ]);
+        $framework->mailer()
+            ->envelope()
+                ->recipients(['andreas.schempp@terminal42.ch'])
+        ;
     }
 };
