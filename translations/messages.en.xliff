@@ -22,8 +22,42 @@
                 <source>membership.support</source>
                 <target>Supporting member</target>
             </trans-unit>
-            <trans-unit id="membership_fixed">
-                <source>membership_fixed</source>
+
+            <trans-unit id="membership.support5">
+                <source>membership.support5</source>
+                <target>Supporter</target>
+            </trans-unit>
+            <trans-unit id="membership.support10">
+                <source>membership.support10</source>
+                <target>Supporter</target>
+            </trans-unit>
+            <trans-unit id="membership.support25">
+                <source>membership.support25</source>
+                <target>Supporter</target>
+            </trans-unit>
+            <trans-unit id="membership.support50">
+                <source>membership.support50</source>
+                <target>Supporter</target>
+            </trans-unit>
+            <trans-unit id="membership.sponsor">
+                <source>membership.sponsor</source>
+                <target>Sponsor</target>
+            </trans-unit>
+            <trans-unit id="membership.gold_sponsor">
+                <source>membership.gold_sponsor</source>
+                <target>Gold Sponsor</target>
+            </trans-unit>
+            <trans-unit id="membership.diamond_sponsor">
+                <source>membership.diamond_sponsor</source>
+                <target>Diamond Sponsor</target>
+            </trans-unit>
+
+            <trans-unit id="membership_month">
+                <source>membership_month</source>
+                <target>(EUR {price}/month)</target>
+            </trans-unit>
+            <trans-unit id="membership_year">
+                <source>membership_year</source>
                 <target>(EUR {price}/year)</target>
             </trans-unit>
             <trans-unit id="membership_custom">
@@ -54,13 +88,90 @@
             </trans-unit>
             <trans-unit id="member_register">
                 <source>member_register</source>
-                <target>Become a member</target>
+                <target>Start paid subscription</target>
             </trans-unit>
 
-            <trans-unit id="invoice_description">
-                <source>invoice_description</source>
-                <target>{membership} of the Contao Association</target>
+            <trans-unit id="invoice_name.active">
+                <source>invoice_name.active</source>
+                <target>Active member of the Contao Association</target>
             </trans-unit>
+            <trans-unit id="invoice_name.passive">
+                <source>invoice_name.passive</source>
+                <target>Passive member of the Contao Association</target>
+            </trans-unit>
+            <trans-unit id="invoice_name.support">
+                <source>invoice_name.support</source>
+                <target>Supporting member of the Contao Association</target>
+            </trans-unit>
+            <trans-unit id="invoice_name.support5">
+                <source>invoice_name.support5</source>
+                <target>Contao Supporter</target>
+            </trans-unit>
+            <trans-unit id="invoice_name.support12">
+                <source>invoice_name.support12</source>
+                <target>Contao Supporter</target>
+            </trans-unit>
+            <trans-unit id="invoice_name.support23">
+                <source>invoice_name.support23</source>
+                <target>Contao Supporter</target>
+            </trans-unit>
+            <trans-unit id="invoice_name.support42">
+                <source>invoice_name.support42</source>
+                <target>Contao Supporter</target>
+            </trans-unit>
+            <trans-unit id="invoice_name.sponsor">
+                <source>invoice_name.sponsor</source>
+                <target>Contao Sponsor</target>
+            </trans-unit>
+            <trans-unit id="invoice_name.gold_sponsor">
+                <source>invoice_name.gold_sponsor</source>
+                <target>Contao GOLD Sponsor</target>
+            </trans-unit>
+            <trans-unit id="invoice_name.diamond_sponsor">
+                <source>invoice_name.diamond_sponsor</source>
+                <target>Contao DIAMOND Sponsor</target>
+            </trans-unit>
+            <trans-unit id="invoice_description.active">
+                <source>invoice_description.active</source>
+                <target>Subscription period from {from} to {to}</target>
+            </trans-unit>
+            <trans-unit id="invoice_description.passive">
+                <source>invoice_description.passive</source>
+                <target>Subscription period from {from} to {to}</target>
+            </trans-unit>
+            <trans-unit id="invoice_description.support">
+                <source>invoice_description.support</source>
+                <target>Subscription period from {from} to {to}</target>
+            </trans-unit>
+            <trans-unit id="invoice_description.support5">
+                <source>invoice_description.support5</source>
+                <target>Listing in the Contao Supporter directory. Subscription period from {from} to {to}</target>
+            </trans-unit>
+            <trans-unit id="invoice_description.support12">
+                <source>invoice_description.support12</source>
+                <target>Listing in the Contao Supporter directory. Subscription period from {from} to {to}</target>
+            </trans-unit>
+            <trans-unit id="invoice_description.support23">
+                <source>invoice_description.support23</source>
+                <target>Listing in the Contao Supporter directory. Subscription period from {from} to {to}</target>
+            </trans-unit>
+            <trans-unit id="invoice_description.support42">
+                <source>invoice_description.support42</source>
+                <target>Listing in the Contao Supporter directory. Subscription period from {from} to {to}</target>
+            </trans-unit>
+            <trans-unit id="invoice_description.sponsor">
+                <source>invoice_description.sponsor</source>
+                <target>Listing in the Contao Supporter directory. Subscription period from {from} to {to}</target>
+            </trans-unit>
+            <trans-unit id="invoice_description.gold_sponsor">
+                <source>invoice_description.gold_sponsor</source>
+                <target>Listing in the Contao Supporter directory. Subscription period from {from} to {to}</target>
+            </trans-unit>
+            <trans-unit id="invoice_description.diamond_sponsor">
+                <source>invoice_description.diamond_sponsor</source>
+                <target>Listing in the Contao Supporter directory. Subscription period from {from} to {to}</target>
+            </trans-unit>
+
             <trans-unit id="invoice_nr">
                 <source>invoice_nr</source>
                 <target>Invoice No.</target>

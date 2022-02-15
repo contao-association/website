@@ -84,7 +84,7 @@ class CashctrlHelper
         $member->save();
     }
 
-    public function createAndSendInvoice(MemberModel $member, int $notificationId, \DateTimeInterface $invoiceDate = null): ?Order
+    public function createAndSendInvoice(MemberModel $member, int $notificationId, \DateTimeImmutable $invoiceDate = null): ?Order
     {
         $notification = Notification::findByPk($notificationId);
 
@@ -133,7 +133,7 @@ class CashctrlHelper
         return true;
     }
 
-    public function createMemberInvoice(MemberModel $member, \DateTimeInterface $invoiceDate = null): Order
+    public function createMemberInvoice(MemberModel $member, \DateTimeImmutable $invoiceDate = null): Order
     {
         $order = $this->prepareMemberInvoice($member, $invoiceDate);
 
@@ -142,23 +142,26 @@ class CashctrlHelper
         return $this->order->read($insertId);
     }
 
-    public function prepareMemberInvoice(MemberModel $member, \DateTimeInterface $invoiceDate = null): Order
+    public function prepareMemberInvoice(MemberModel $member, \DateTimeImmutable $invoiceDate = null): Order
     {
-        $invoiceDate = $invoiceDate ?? new \DateTime();
+        $invoiceDate = $invoiceDate ?? new \DateTimeImmutable();
 
         $this->setFiscalPeriod($invoiceDate);
 
         $membership = $this->memberships[$member->membership];
 
-        $invoiceLine = $this->translator->trans(
-            'invoice_description',
+        $itemName = $this->translator->trans(
+            'invoice_name.'.$member->membership,
+            [],
+            'messages',
+            $member->language ?: 'de'
+        );
+
+        $itemDescription = $this->translator->trans(
+            'invoice_description.'.$member->membership,
             [
-                '{membership}' => $this->translator->trans(
-                    'membership.'.$member->membership,
-                    [],
-                    'messages',
-                    $member->language ?: 'de'
-                )
+                '{from}' => $invoiceDate->format('d.m.Y'),
+                '{to}' => $invoiceDate->modify('+1 year -1 day')->format('d.m.Y'),
             ],
             'messages',
             $member->language ?: 'de'
@@ -173,16 +176,20 @@ class CashctrlHelper
             ($member->company ? ', '.$member->company : '')
         );
 
+        $item = new OrderItem(
+            $membership['accountId'],
+            $itemName,
+            (float) ($membership['custom'] ? $member->membership_amount : $membership['price'])
+        );
+        $item->quantity = 'month' === $membership['type'] ? 12 : 1;
+        $item->description = $itemDescription;
+
         $order = new Order((int) $member->cashctrl_id, 4);
         $order->setNr($member->id.'/'.date('Y'));
         $order->setDate($invoiceDate);
         $order->setDueDays(30);
         $order->setDescription($invoiceDescription);
-        $order->addItem(new OrderItem(
-            $membership['accountId'],
-            $invoiceLine,
-            (float) ($membership['custom'] ? $member->membership_amount : $membership['price'])
-        ));
+        $order->addItem($item);
 
         return $order;
     }

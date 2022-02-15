@@ -9,16 +9,16 @@
                 <source>Enter a tax ID for this company.</source>
             </trans-unit>
             <trans-unit id="tl_member.membership.0">
-                <source>Membership</source>
+                <source>Subscription</source>
             </trans-unit>
             <trans-unit id="tl_member.membership.1">
-                <source>Please select a membership level.</source>
+                <source>Please select a subscription level.</source>
             </trans-unit>
             <trans-unit id="tl_member.membership_amount.0">
                 <source>Invoice Amount</source>
             </trans-unit>
             <trans-unit id="tl_member.membership_amount.1">
-                <source>Enter an invoice amount for the membership.</source>
+                <source>Enter an invoice amount for the subscription.</source>
             </trans-unit>
             <trans-unit id="tl_member.membership_start.0">
                 <source>Subscription start date</source>

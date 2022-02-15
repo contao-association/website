@@ -1,7 +1,64 @@
 parameters:
     memberships:
+        support5:
+            price: 5
+            type: month
+            custom: false
+            group: 4
+            categoryId: 8
+            accountId: 183
+
+        support10:
+            price: 10
+            type: month
+            custom: false
+            group: 4
+            categoryId: 8
+            accountId: 183
+
+        support25:
+            price: 25
+            type: month
+            custom: false
+            group: 4
+            categoryId: 8
+            accountId: 183
+
+        support50:
+            price: 50
+            type: month
+            custom: false
+            group: 4
+            categoryId: 8
+            accountId: 183
+
+        sponsor:
+            price: 100
+            type: month
+            custom: false
+            group: 5
+            categoryId: 9
+            accountId: 183
+
+        gold_sponsor:
+            price: 200
+            type: month
+            custom: false
+            group: 6
+            categoryId: 10
+            accountId: 183
+
+        diamond_sponsor:
+            price: 500
+            type: month
+            custom: false
+            group: 7
+            categoryId: 11
+            accountId: 183
+
         active:
             price: 80
+            type: year
             custom: false
             group: 1
             categoryId: 5
@@ -9,17 +66,21 @@ parameters:
 
         passive:
             price: 50
+            type: year
             custom: false
             group: 2
             categoryId: 6
             accountId: 151
+            legacy: true
 
         support:
             price: 200
+            type: custom
             custom: true
             group: 3
             categoryId: 7
             accountId: 152
+            legacy: true
 
 services:
     _defaults:

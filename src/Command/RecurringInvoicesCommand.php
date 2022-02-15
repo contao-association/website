@@ -60,7 +60,7 @@ class RecurringInvoicesCommand extends Command
             return 1;
         }
 
-        $date = new \DateTime($input->getArgument('date'));
+        $date = new \DateTimeImmutable($input->getArgument('date'));
 
         if ($date->format('Y-m-d') !== $input->getArgument('date')) {
             $io->error('Invalid date format');

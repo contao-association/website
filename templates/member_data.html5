@@ -1,61 +1,83 @@
-
 <!-- indexer::stop -->
 <div class="<?= $this->class ?> block"<?= $this->cssID ?><?php if ($this->style): ?> style="<?= $this->style ?>"<?php endif; ?>>
 
-<?php if ($this->headline): ?>
-    <<?= $this->hl ?>><?= $this->headline ?></<?= $this->hl ?>>
+  <?php if ($this->headline): ?>
+  <<?= $this->hl ?>><?= $this->headline ?></<?= $this->hl ?>>
 <?php endif; ?>
 
 <?php if ($this->message): ?>
-    <p class="tl_confirm"><?= $this->message ?></p>
+  <p class="tl_confirm"><?= $this->message ?></p>
 <?php endif; ?>
 
 <form id="<?= $this->formId ?>" method="post" enctype="<?= $this->enctype ?>">
-    <div class="formbody">
-        <input type="hidden" name="FORM_SUBMIT" value="<?= $this->formId ?>">
-        <input type="hidden" name="REQUEST_TOKEN" value="{{request_token}}">
+  <div class="formbody">
+    <input type="hidden" name="FORM_SUBMIT" value="<?= $this->formId ?>">
+    <input type="hidden" name="REQUEST_TOKEN" value="{{request_token}}">
 
+    <fieldset>
+      <div class="row">
+        <div class="col-xs-12 col-sm-6">
+          <div class="widget widget-text">
+            <label for="ctrl_firstname"><?= $this->trans('tl_member.firstname.0', [], 'contao_tl_member') ?></label>
+            <input type="text" id="ctrl_firstname" class="text" value="{{user::firstname}}" disabled>
+          </div>
+        </div>
+        <div class="col-xs-12 col-sm-6">
+          <div class="widget widget-text">
+            <label for="ctrl_lastname"><?= $this->trans('tl_member.lastname.0', [], 'contao_tl_member') ?></label>
+            <input type="text" id="ctrl_lastname" class="text" value="{{user::lastname}}" disabled>
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-xs-12 col-sm-6">
+          <?= $this->contact['email'] ?>
+          <?= $this->personal['language'] ?>
+        </div>
+        <div class="col-xs-12 col-sm-6">
+          <div class="widget widget-text">
+            <label for="ctrl_membership"><?= $this->trans('tl_member.membership.0', [], 'contao_tl_member') ?></label>
+            <input type="text" id="ctrl_membership" class="text" value="{{subscription::label}}" disabled>
+          </div>
+          <div class="widget block">
+            <?php if ('de' === $GLOBALS['TL_LANGUAGE']): ?>
+              <p>Um deinen Namen oder dein Abonnement zu ändern oder zu kündigen, sende uns eine E-Mail an {{email::association@contao.org}}.</p>
+            <?php else: ?>
+              <p>To change your name or subscription or to cancel, please email us at {{email::association@contao.org}}.</p>
+            <?php endif; ?>
+          </div>
+        </div>
+      </div>
+    </fieldset>
+
+    <div class="row">
+      <div class="col-xs-12 col-sm-6">
         <fieldset>
-            <div class="row">
-                <div class="col-xs-12 col-sm-6">
-                    <?= $this->contact['email'] ?>
-                    <?= $this->personal['language'] ?>
-                </div>
-                <div class="col-xs-12 col-sm-6 membership">
-                    <?= $this->membership['membership'] ?>
-                    <?= $this->membership['membership_amount'] ?>
-                </div>
-            </div>
+          <legend><?= $this->trans('member_address', [], 'messages') ?></legend>
+          <?= $this->address['company'] ?>
+          <?= $this->address['street'] ?>
+          <?= $this->address['postal'] ?>
+          <?= $this->address['city'] ?>
+          <?= $this->address['country'] ?>
         </fieldset>
-
-        <div class="row">
-            <div class="col-xs-12 col-sm-6">
-                <fieldset>
-                    <legend><?= $this->trans('member_address', [], 'messages') ?></legend>
-                    <?= $this->address['company'] ?>
-                    <?= $this->address['street'] ?>
-                    <?= $this->address['postal'] ?>
-                    <?= $this->address['city'] ?>
-                    <?= $this->address['country'] ?>
-                </fieldset>
-            </div>
-            <div class="col-xs-12 col-sm-6">
-                <fieldset>
-                    <legend><?= $this->trans('member_details', [], 'messages') ?></legend>
-                    <?= $this->personal['gender'] ?>
-                    <?= $this->personal['dateOfBirth'] ?>
-                    <?= $this->contact['phone'] ?>
-                    <?= $this->contact['website'] ?>
-                    <?= $this->address['tax_id'] ?>
-                </fieldset>
-            </div>
-        </div>
-
-        <?= $this->captcha ?>
-        <div class="submit_container widget widget-submit text-center">
-            <button type="submit" class="submit"><?= $this->slabel ?></button>
-        </div>
+      </div>
+      <div class="col-xs-12 col-sm-6">
+        <fieldset>
+          <legend><?= $this->trans('member_details', [], 'messages') ?></legend>
+          <?= $this->personal['gender'] ?>
+          <?= $this->personal['dateOfBirth'] ?>
+          <?= $this->contact['phone'] ?>
+          <?= $this->contact['website'] ?>
+          <?= $this->address['tax_id'] ?>
+        </fieldset>
+      </div>
     </div>
+
+    <?= $this->captcha ?>
+    <div class="submit_container widget widget-submit text-center">
+      <button type="submit" class="submit"><?= $this->slabel ?></button>
+    </div>
+  </div>
 </form>
 
 </div>

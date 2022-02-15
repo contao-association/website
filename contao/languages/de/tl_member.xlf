@@ -11,20 +11,20 @@
                 <target>Geben Sie die Steuernummer der Firma ein.</target>
             </trans-unit>
             <trans-unit id="tl_member.membership.0">
-                <source>Membership</source>
-                <target>Mitgliedschaft</target>
+                <source>Subscription</source>
+                <target>Abonnement</target>
             </trans-unit>
             <trans-unit id="tl_member.membership.1">
-                <source>Please select a membership level.</source>
-                <target>Wähle eine Mitgliedschaft.</target>
+                <source>Please select a subscription level.</source>
+                <target>Wähle ein Abonnement.</target>
             </trans-unit>
             <trans-unit id="tl_member.membership_amount.0">
                 <source>Invoice Amount</source>
                 <target>Rechnungsbetrag</target>
             </trans-unit>
             <trans-unit id="tl_member.membership_amount.1">
-                <source>Enter an invoice amount for the membership.</source>
-                <target>Geben Sie eine Rechnungsbetrag für die Mitgliedschaft ein.</target>
+                <source>Enter an invoice amount for the subscription.</source>
+                <target>Gib einen Rechnungsbetrag für dein Abonnement ein.</target>
             </trans-unit>
             <trans-unit id="tl_member.membership_start.0">
                 <source>Subscription start date</source>
