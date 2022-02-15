@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace App;
 
+use Sentry\Event;
+use Sentry\EventHint;
 use Terminal42\CashctrlApi\Api\FiscalperiodEndpoint;
 use Terminal42\CashctrlApi\Api\PersonEndpoint;
 use Contao\MemberModel;
@@ -265,7 +267,10 @@ class CashctrlHelper
 
     public function sentryOrThrow(string $message, \Exception $exception = null): void
     {
-        if (null === captureEvent(['message' => $message, 'exception' => $exception])) {
+        $event = Event::createEvent();
+        $event->setMessage($message);
+
+        if (null === captureEvent($event, EventHint::fromArray(['exception' => $exception]))) {
             throw new \RuntimeException($message, 0, $exception);
         }
     }
