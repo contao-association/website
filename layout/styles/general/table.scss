@@ -5,61 +5,206 @@ table > tbody:first-child > tr:first-child > th,
 table > tbody:first-child > tr:first-child > td,
 table > tfoot:first-child + tbody > tr:first-child > th,
 table > tfoot:first-child + tbody > tr:first-child > td {
-  /* Erste Zeile */
-  border-top: 0;
+    /* Erste Zeile */
+    border-top: 0;
 }
 
 
 table {
-  width: 100%;
-  border-collapse: separate;
-  border-spacing: 0;
-  border: 1px solid #dcdcdc;
-  background: #ffffff;
+    width: 100%;
+    border-collapse: separate;
+    border-spacing: 0;
+    border: 1px solid #dcdcdc;
+    background: #ffffff;
 
-  thead {
-    background: $background-grey;
-  }
-  tbody {
-    tr {
-      @include hfa() {
+    thead {
         background: $background-grey;
-      }
     }
-  }
-  tfoot {
+
+    tbody {
+        tr {
+            @include hfa() {
+                background: $background-grey;
+            }
+        }
+    }
+
+    tfoot {
+        td {
+            font-style: italic;
+        }
+    }
+
+    th, td {
+        border: solid #f2f2f2;
+        border-width: 1px 0 0 1px;
+
+        &:first-child {
+            border-left: 0;
+        }
+    }
+
     td {
-      font-style: italic;
-    }
-  }
-  th, td {
-    border: solid #f2f2f2;
-    border-width: 1px 0 0 1px;
+        padding: 0.4em 0.66667em;
 
-    &:first-child {
-      border-left: 0;
-    }
-  }
-  td {
-    padding: 0.4em 0.66667em;
+        &.paid {
+            color: $color-green;
+        }
 
-    &.paid {
-      color: $color-green;
+        &.open {
+            color: $color-red;
+        }
     }
-    &.open {
-      color: $color-red;
+
+    th {
+        padding: 0.4em 0.66667em;
+        font-weight: bold;
+        text-align: left;
     }
-  }
-  th {
-    padding: 0.4em 0.66667em;
-    font-weight: bold;
-    text-align: left;
-  }
 }
+
 caption {
-  padding-top: 0.75rem;
-  padding-bottom: 0.75rem;
-  color: #6c757d;
-  text-align: left;
-  caption-side: bottom;
+    padding-top: 0.75rem;
+    padding-bottom: 0.75rem;
+    color: #6c757d;
+    text-align: left;
+    caption-side: bottom;
+}
+
+div.supporter {
+    overflow: scroll;
+    max-height: 100vh;
+    border: 1px solid #dcdcdc;
+
+    table {
+        border: none;
+    }
+
+    th, td {
+        border-width: 0;
+    }
+
+    thead th,
+    tbody td {
+        text-align: center;
+    }
+
+    tbody th,
+    tbody td {
+        border-top: 5px solid #fff;
+    }
+
+    thead tr th {
+        position: sticky;
+        z-index: 120;
+
+        &:first-child {
+            z-index: 140;
+        }
+    }
+
+    thead tr:nth-child(1) th {
+        top: 0;
+    }
+    thead tr:nth-child(2) th {
+        top: 100px;
+    }
+    thead tr:nth-child(3) th {
+        top: 180px;
+    }
+
+    th:first-child {
+        position: sticky;
+        left: 0;
+        z-index: 100;
+    }
+
+    thead th:first-child {
+        background: $background-grey;
+    }
+
+    tbody th {
+        background: #fff;
+    }
+
+    .bg--supporter {
+        background: #eef5ff;
+    }
+
+    .bg--sponsor {
+        background: #ecffe9;
+    }
+
+    tr:hover td,
+    tbody tr:hover th {
+        background: #f5f5f5 !important;
+    }
+
+    .explain,
+    p.planned {
+        margin: 0;
+        font-size: 1.2rem;
+        line-height: 1.5;
+        font-weight: normal;
+    }
+
+    tr.planned th,
+    tr.planned td {
+        background: #f5f5f5 !important;
+        color: #aaa;
+
+        p.planned {
+            color: $text-color;
+            font-weight: bold;
+        }
+    }
+
+    td {
+        font-size: 2rem;
+
+        .explain {
+            white-space: nowrap;
+        }
+    }
+
+    .title {
+        font-size: 24px;
+    }
+
+    .price-per-month {
+        font-size: 32px;
+        line-height: 1;
+
+        th {
+            padding-top: .5rem;
+            padding-bottom: .5rem;
+        }
+
+        th:first-child {
+            font-size: 13px;
+            text-align: right;
+        }
+    }
+
+    .price-per-year {
+        font-size: 13px;
+
+        th {
+            padding-top: 0;
+            font-weight: normal;
+        }
+
+        th:first-child {
+            text-align: right;
+        }
+    }
+
+    @media (min-width : 992px) {
+        max-height: none;
+        overflow: initial;
+
+        th {
+            position: initial !important;
+        }
+    }
 }

@@ -1,0 +1,164 @@
+<div class="supporter">
+  <table>
+    <thead>
+    <tr>
+      <th></th>
+      <th class="title bg--supporter" colspan="4">💰 Supporter</th>
+      <th class="title bg--sponsor" colspan="3">🏅 Sponsor</th>
+    </tr>
+    <tr class="price-per-month">
+      <th>pro Monat</th>
+      <th class="bg--supporter">5€</th>
+      <th class="bg--supporter">10€</th>
+      <th class="bg--supporter">25€</th>
+      <th class="bg--supporter">50€</th>
+      <th class="bg--sponsor">100€</th>
+      <th class="bg--sponsor">200€</th>
+      <th class="bg--sponsor">500€</th>
+    </tr>
+    <tr class="price-per-year">
+      <th>pro Jahr</th>
+      <th class="bg--supporter">60€</th>
+      <th class="bg--supporter">120€</th>
+      <th class="bg--supporter">300€</th>
+      <th class="bg--supporter">600€</th>
+      <th class="bg--sponsor">1200€</th>
+      <th class="bg--sponsor">2400€</th>
+      <th class="bg--sponsor">6000€</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+      <th>
+        Auflistung auf contao.org
+        <p class="explain">Dein Name bzw. dein Logo wird auf
+          <a href="https://to.contao.org/supporter">contao.org</a> als Supporter bzw. Sponsor aufgelistet.</p>
+      </th>
+      <td class="bg--supporter">✗ <div class="explain">&nbsp;</div></td>
+      <td class="bg--supporter">✓ <div class="explain">Name</div></td>
+      <td class="bg--supporter">✓ <div class="explain">Name & Link</div></td>
+      <td class="bg--supporter">✓ <div class="explain">Name & Link</div></td>
+      <td class="bg--sponsor">✓ <div class="explain">Logo & Link</div></td>
+      <td class="bg--sponsor">✓ <div class="explain">Logo & Link</div></td>
+      <td class="bg--sponsor">✓ <div class="explain">Logo & Link</div></td>
+    </tr>
+    <tr>
+      <th>
+        Mitgliedschaft in der Contao Association
+        <p class="explain">Falls gewünscht erhältst du eine kostenlose Aktivmitgliedschaft im Wert von 80€/Jahr und kannst an Abstimmungen etc. teilnehmen.<sup>1</sup>
+        </p>
+      </th>
+      <td class="bg--supporter">✗</td>
+      <td class="bg--supporter">✗</td>
+      <td class="bg--supporter">✓</td>
+      <td class="bg--supporter">✓</td>
+      <td class="bg--sponsor">✓</td>
+      <td class="bg--sponsor">✓</td>
+      <td class="bg--sponsor">✓</td>
+    </tr>
+    <tr>
+      <th>
+        Erwähnung auf Social Media
+        <p class="explain">Gerne bedanken wir uns persönlich bei dir auf Twitter und Facebook.</p>
+      </th>
+      <td class="bg--supporter">✗</td>
+      <td class="bg--supporter">✗</td>
+      <td class="bg--supporter">✗</td>
+      <td class="bg--supporter">✓</td>
+      <td class="bg--sponsor">✓</td>
+      <td class="bg--sponsor">✓</td>
+      <td class="bg--sponsor">✓</td>
+    </tr>
+    <tr>
+      <th>
+        #supporter Kanal auf Slack
+        <p class="explain">Wir laden dich bzw. deine Mitarbeiter in den #supporter-Kanal im Contao Slack ein (Anzahl Personen).</p>
+      </th>
+      <td class="bg--supporter">✗</td>
+      <td class="bg--supporter">✗</td>
+      <td class="bg--supporter">✗</td>
+      <td class="bg--supporter"><span class="explain">1 Pers.</span></td>
+      <td class="bg--sponsor"><span class="explain">2 Pers.</span></td>
+      <td class="bg--sponsor"><span class="explain">3 Pers.</span></td>
+      <td class="bg--sponsor"><span class="explain">3 Pers.</span></td>
+    </tr>
+    <tr>
+      <td class="bg--sponsor" colspan="5"></td>
+      <td class="bg--sponsor explain" colspan="3">Nur für Sponsoren</td>
+    </tr>
+    <tr>
+      <th>
+        Contao Sponsor Logo
+        <p class="explain">Du darfst das Contao Sponsor Logo verwenden, um deine Unterstützung von Contao zu zeigen.</p>
+      </th>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td class="bg--sponsor">✓ <div class="explain">&nbsp;</div></td>
+      <td class="bg--sponsor">✓ <div class="explain">GOLD</div></td>
+      <td class="bg--sponsor">✓ <div class="explain">DIAMOND</div></td>
+    </tr>
+    <tr>
+      <th>
+        Auflistung im Abspann unserer Videos
+        <p class="explain">Wir führen deinen Firmenname bzw. dein Logo im Abspann unserer YouTube-Videos auf.<sup>2</sup></p>
+      </th>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td class="bg--sponsor">✓ <div class="explain">Name</div></td>
+      <td class="bg--sponsor">✓ <div class="explain">Logo</div></td>
+      <td class="bg--sponsor">✓ <div class="explain">Logo</div></td>
+    </tr>
+    <!--
+    <tr class="planned">
+      <th>
+        Auflistung im Abspann unserer Videos
+        <p class="explain">Wir führen deinen Firmenname bzw. dein Logo im Abspann unserer YouTube-Videos auf.<sup>2</sup></p>
+        <p class="planned">In Planung, Verfügbarkeit nicht garantiert!</p>
+      </th>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td class="bg--sponsor">✓ <div class="explain">Name</div></td>
+      <td class="bg--sponsor">✓ <div class="explain">Logo</div></td>
+      <td class="bg--sponsor">✓ <div class="explain">Logo</div></td>
+    </tr>
+    -->
+    <tr>
+      <th>
+        Support von Contao Core-Entwicklern
+        <p class="explain">Jeden Monat steht dir einer unserer Core-Entwickler eine Stunde lang für technische Fragen zu deinen Projekten zur Verfügung.</p>
+      </th>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td class="bg--sponsor">✗</td>
+      <td class="bg--sponsor">✗</td>
+      <td class="bg--sponsor">✓</td>
+    </tr>
+    <tr>
+      <th>
+        Weitere Leistungen nach Verfügbarkeit
+        <p class="explain">Als Sponsor bieten wir dir weitere Inklusiv-Leistungen nach Verfügbarkeit (z.B. Nennung an Contao Events).</p>
+      </th>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td class="bg--sponsor">✓</td>
+      <td class="bg--sponsor">✓</td>
+      <td class="bg--sponsor">✓</td>
+    </tr>
+    </tbody>
+  </table>
+</div>
+
+<p>
+  <small><sup>1</sup> die Aktivmitgliedschaft gilt für die Inhaberin/den Inhaber des Kontos. Eine Aktivmitgliedschaft kann auch separat für 80€/Jahr gebucht werden.</small><br>
+  <small><sup>2</sup> entsprechend dem Zeitpunkt der Video-Veröffentlichung. Gilt nicht für Live-Streams sowie für gesponsorte Videos.</small>
+</p>
