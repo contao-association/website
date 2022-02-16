@@ -18,6 +18,14 @@
                 <source>Please select a subscription level.</source>
                 <target>Wähle ein Abonnement.</target>
             </trans-unit>
+            <trans-unit id="tl_member.membership_member.0">
+                <source>Association member</source>
+                <target>Vereinsmitglied</target>
+            </trans-unit>
+            <trans-unit id="tl_member.membership_member.1">
+                <source>Enable to make this account an association member.</source>
+                <target>Aktivieren um dieses Konto zum Vereinsmitglied zu machen.</target>
+            </trans-unit>
             <trans-unit id="tl_member.membership_amount.0">
                 <source>Invoice Amount</source>
                 <target>Rechnungsbetrag</target>
@@ -61,6 +69,9 @@
             <trans-unit id="tl_member.log_legend">
                 <source>Log settings</source>
                 <target>Mitglieder-Log</target>
+            </trans-unit>
+            <trans-unit id="tl_member.subscription_legend">
+                <source>Abonnement</source>
             </trans-unit>
         </body>
     </file>

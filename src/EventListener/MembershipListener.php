@@ -76,12 +76,23 @@ class MembershipListener
     {
         $email = $data instanceof DataContainer ? $data->activeRecord->email : $data->email;
         $level = $data instanceof DataContainer ? $data->activeRecord->membership : $data->membership;
+        $member = $data instanceof DataContainer ? $data->activeRecord->membership_member : $data->membership_member;
+
+        $groups = [];
+
+        if ($this->memberships[$level]['group'] ?? null) {
+            $groups[] = $this->memberships[$level]['group'];
+        }
+
+        if ($member && ($this->memberships[$level]['memberGroup'] ?? 0) > 0) {
+            $groups[] = $this->memberships[$level]['memberGroup'];
+        }
 
         $this->connection->update(
             'tl_member',
             [
                 'username' => $email,
-                'groups' => serialize([$this->memberships[$level]['group'] ?? 0])
+                'groups' => serialize($groups)
             ],
             ['id' => $data->id]
         );

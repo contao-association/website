@@ -14,6 +14,12 @@
             <trans-unit id="tl_member.membership.1">
                 <source>Please select a subscription level.</source>
             </trans-unit>
+            <trans-unit id="tl_member.membership_member.0">
+                <source>Association member</source>
+            </trans-unit>
+            <trans-unit id="tl_member.membership_member.1">
+                <source>Enable to make this account an association member.</source>
+            </trans-unit>
             <trans-unit id="tl_member.membership_amount.0">
                 <source>Invoice Amount</source>
             </trans-unit>
@@ -46,6 +52,9 @@
             </trans-unit>
             <trans-unit id="tl_member.log_legend">
                 <source>Log settings</source>
+            </trans-unit>
+            <trans-unit id="tl_member.subscription_legend">
+                <source>Subscription</source>
             </trans-unit>
         </body>
     </file>

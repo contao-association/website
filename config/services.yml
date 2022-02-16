@@ -21,6 +21,7 @@ parameters:
             type: month
             custom: false
             group: 4
+            memberGroup: 1
             categoryId: 8
             accountId: 183
 
@@ -29,6 +30,7 @@ parameters:
             type: month
             custom: false
             group: 4
+            memberGroup: 1
             categoryId: 8
             accountId: 183
 
@@ -37,6 +39,7 @@ parameters:
             type: month
             custom: false
             group: 5
+            memberGroup: 1
             categoryId: 9
             accountId: 183
 
@@ -45,6 +48,7 @@ parameters:
             type: month
             custom: false
             group: 6
+            memberGroup: 1
             categoryId: 10
             accountId: 183
 
@@ -53,6 +57,7 @@ parameters:
             type: month
             custom: false
             group: 7
+            memberGroup: 1
             categoryId: 11
             accountId: 183
 
