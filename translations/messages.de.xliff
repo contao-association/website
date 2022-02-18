@@ -93,15 +93,15 @@
 
             <trans-unit id="invoice_name.active">
                 <source>invoice_name.active</source>
-                <target>Mitgliedschaft als Aktivmitglied in der Contao Association</target>
+                <target>Aktivmitglied der Contao Association</target>
             </trans-unit>
             <trans-unit id="invoice_name.passive">
                 <source>invoice_name.passive</source>
-                <target>Mitgliedschaft als Passivmitglied in der Contao Association</target>
+                <target>Passivmitglied der Contao Association</target>
             </trans-unit>
             <trans-unit id="invoice_name.support">
                 <source>invoice_name.support</source>
-                <target>Mitgliedschaft als Fördermitglied in der Contao Association</target>
+                <target>Fördermitglied der Contao Association</target>
             </trans-unit>
             <trans-unit id="invoice_name.support5">
                 <source>invoice_name.support5</source>
