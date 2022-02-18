@@ -23,7 +23,7 @@
                 </div>
                 <div class="col-xs-12 col-sm-6 membership">
                     <?= $this->membership['membership'] ?>
-                    <?= $this->membership['membership_amount'] ?>
+                    <?= $this->membership['membership_member'] ?>
                   <p>{{link_open::23}}Übersicht der Abonnements und Leistungen{{link_close}}</p>
                 </div>
             </div>

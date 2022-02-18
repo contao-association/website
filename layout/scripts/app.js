@@ -6,24 +6,21 @@ const imagesCtx = require.context('../images', false, /\.(png|jpg|jpeg|gif|ico|s
 imagesCtx.keys().forEach(imagesCtx);
 
 
-const registration = document.querySelector('.mod_registration .membership, .mod_personalData .membership');
+const registration = document.querySelector('.mod_registration .membership');
 if (registration) {
-    const amount = registration.querySelector('.widget-text');
+    const member = registration.querySelector('.widget-checkbox');
     const selected = registration.querySelector('input[name="membership"]:checked');
-    if (!selected || selected.value !== 'support') {
-        amount.classList.add('invisible');
+    const valid = ['support25', 'support50', 'sponsor', 'gold_sponsor', 'diamond_sponsor'];
+    if (!selected || !valid.includes(selected.value)) {
+        member.classList.add('invisible');
     }
 
     registration.querySelectorAll('input[name="membership"]').forEach((el) => {
         el.addEventListener('change', () => {
-            if (el.value === 'support') {
-                amount.classList.remove('invisible');
+            if (valid.includes(el.value)) {
+                member.classList.remove('invisible');
             } else {
-                amount.classList.add('invisible');
-
-                if (amount.querySelector('input').value < 200) {
-                    amount.querySelector('input').value = 200;
-                }
+                member.classList.add('invisible');
             }
         })
     })

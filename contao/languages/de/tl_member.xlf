@@ -19,12 +19,12 @@
                 <target>Wähle ein Abonnement.</target>
             </trans-unit>
             <trans-unit id="tl_member.membership_member.0">
-                <source>Association member</source>
-                <target>Vereinsmitglied</target>
+                <source>Association membership</source>
+                <target>Vereinsmitgliedschaft</target>
             </trans-unit>
             <trans-unit id="tl_member.membership_member.1">
-                <source>Enable to make this account an association member.</source>
-                <target>Aktivieren um dieses Konto zum Vereinsmitglied zu machen.</target>
+                <source>Become an active member of the Contao Association</source>
+                <target>Aktivmitglied der Contao Association werden</target>
             </trans-unit>
             <trans-unit id="tl_member.membership_amount.0">
                 <source>Invoice Amount</source>

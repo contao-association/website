@@ -15,10 +15,10 @@
                 <source>Please select a subscription level.</source>
             </trans-unit>
             <trans-unit id="tl_member.membership_member.0">
-                <source>Association member</source>
+                <source>Association membership</source>
             </trans-unit>
             <trans-unit id="tl_member.membership_member.1">
-                <source>Enable to make this account an association member.</source>
+                <source>Become an active member of the Contao Association</source>
             </trans-unit>
             <trans-unit id="tl_member.membership_amount.0">
                 <source>Invoice Amount</source>
