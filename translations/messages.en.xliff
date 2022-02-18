@@ -107,16 +107,16 @@
                 <source>invoice_name.support5</source>
                 <target>Contao Supporter</target>
             </trans-unit>
-            <trans-unit id="invoice_name.support12">
-                <source>invoice_name.support12</source>
+            <trans-unit id="invoice_name.support10">
+                <source>invoice_name.support10</source>
                 <target>Contao Supporter</target>
             </trans-unit>
-            <trans-unit id="invoice_name.support23">
-                <source>invoice_name.support23</source>
+            <trans-unit id="invoice_name.support25">
+                <source>invoice_name.support25</source>
                 <target>Contao Supporter</target>
             </trans-unit>
-            <trans-unit id="invoice_name.support42">
-                <source>invoice_name.support42</source>
+            <trans-unit id="invoice_name.support50">
+                <source>invoice_name.support50</source>
                 <target>Contao Supporter</target>
             </trans-unit>
             <trans-unit id="invoice_name.sponsor">
@@ -147,16 +147,16 @@
                 <source>invoice_description.support5</source>
                 <target>Listing in the Contao Supporter directory. Subscription period from {from} to {to}</target>
             </trans-unit>
-            <trans-unit id="invoice_description.support12">
-                <source>invoice_description.support12</source>
+            <trans-unit id="invoice_description.support10">
+                <source>invoice_description.support10</source>
                 <target>Listing in the Contao Supporter directory. Subscription period from {from} to {to}</target>
             </trans-unit>
-            <trans-unit id="invoice_description.support23">
-                <source>invoice_description.support23</source>
+            <trans-unit id="invoice_description.support25">
+                <source>invoice_description.support25</source>
                 <target>Listing in the Contao Supporter directory. Subscription period from {from} to {to}</target>
             </trans-unit>
-            <trans-unit id="invoice_description.support42">
-                <source>invoice_description.support42</source>
+            <trans-unit id="invoice_description.support50">
+                <source>invoice_description.support50</source>
                 <target>Listing in the Contao Supporter directory. Subscription period from {from} to {to}</target>
             </trans-unit>
             <trans-unit id="invoice_description.sponsor">
