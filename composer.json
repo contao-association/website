@@ -7,9 +7,7 @@
     "require": {
         "php": "^7.4",
         "contao/conflicts": "*@dev",
-        "contao/manager-bundle": "4.13.x-dev as 4.13.0",
-        "contao/core-bundle": "4.13.x-dev as 4.13.0",
-        "contao/installation-bundle": "4.13.x-dev as 4.13.0",
+        "contao/manager-bundle": "4.13.*",
         "contao-association/contao-voting": "^2.3",
         "terminal42/notification_center": "^1.4",
         "terminal42/contao-easy_themes": "^2.2",
