@@ -80,6 +80,12 @@ div.supporter {
         border: none;
     }
 
+    thead {
+        position: sticky;
+        top: 0;
+        z-index: 120;
+    }
+
     th, td {
         border-width: 0;
     }
@@ -95,22 +101,16 @@ div.supporter {
     }
 
     thead tr th {
-        position: sticky;
-        z-index: 120;
+        //position: sticky;
+        //z-index: 120;
 
         &:first-child {
             z-index: 140;
         }
     }
 
-    thead tr:nth-child(1) th {
-        top: 0;
-    }
-    thead tr:nth-child(2) th {
-        top: 100px;
-    }
-    thead tr:nth-child(3) th {
-        top: 180px;
+    thead tr:last-child th {
+        border-bottom: 1px solid #dcdcdc;
     }
 
     th:first-child {
@@ -167,10 +167,6 @@ div.supporter {
         }
     }
 
-    .title {
-        font-size: 24px;
-    }
-
     .price-per-month {
         font-size: 32px;
         line-height: 1;
@@ -196,15 +192,6 @@ div.supporter {
 
         th:first-child {
             text-align: right;
-        }
-    }
-
-    @media (min-width : 992px) {
-        max-height: none;
-        overflow: initial;
-
-        th {
-            position: initial !important;
         }
     }
 }
