@@ -198,16 +198,16 @@
         },
         {
             "name": "clue/stream-filter",
-            "version": "v1.5.0",
+            "version": "v1.6.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/clue/stream-filter.git",
-                "reference": "aeb7d8ea49c7963d3b581378955dbf5bc49aa320"
+                "reference": "d6169430c7731d8509da7aecd0af756a5747b78e"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/clue/stream-filter/zipball/aeb7d8ea49c7963d3b581378955dbf5bc49aa320",
-                "reference": "aeb7d8ea49c7963d3b581378955dbf5bc49aa320",
+                "url": "https://api.github.com/repos/clue/stream-filter/zipball/d6169430c7731d8509da7aecd0af756a5747b78e",
+                "reference": "d6169430c7731d8509da7aecd0af756a5747b78e",
                 "shasum": ""
             },
             "require": {
@@ -248,7 +248,7 @@
             ],
             "support": {
                 "issues": "https://github.com/clue/stream-filter/issues",
-                "source": "https://github.com/clue/stream-filter/tree/v1.5.0"
+                "source": "https://github.com/clue/stream-filter/tree/v1.6.0"
             },
             "funding": [
                 {
@@ -260,7 +260,7 @@
                     "type": "github"
                 }
             ],
-            "time": "2020-10-02T12:38:20+00:00"
+            "time": "2022-02-21T13:15:14+00:00"
         },
         {
             "name": "codefog/contao-haste",
@@ -4181,12 +4181,12 @@
             },
             "type": "library",
             "autoload": {
-                "psr-4": {
-                    "Laminas\\Code\\": "src/"
-                },
                 "files": [
                     "polyfill/ReflectionEnumPolyfill.php"
-                ]
+                ],
+                "psr-4": {
+                    "Laminas\\Code\\": "src/"
+                }
             },
             "notification-url": "https://packagist.org/downloads/",
             "license": [
@@ -4741,16 +4741,16 @@
         },
         {
             "name": "madeyourday/contao-rocksolid-custom-elements",
-            "version": "v2.3.11",
+            "version": "v2.3.12",
             "source": {
                 "type": "git",
                 "url": "https://github.com/madeyourday/contao-rocksolid-custom-elements.git",
-                "reference": "ab614faca64a871d097f3e140164cca9cce24ed4"
+                "reference": "242e895df07e1015ff1a8c0599b7ccb1173af5ba"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/madeyourday/contao-rocksolid-custom-elements/zipball/ab614faca64a871d097f3e140164cca9cce24ed4",
-                "reference": "ab614faca64a871d097f3e140164cca9cce24ed4",
+                "url": "https://api.github.com/repos/madeyourday/contao-rocksolid-custom-elements/zipball/242e895df07e1015ff1a8c0599b7ccb1173af5ba",
+                "reference": "242e895df07e1015ff1a8c0599b7ccb1173af5ba",
                 "shasum": ""
             },
             "require": {
@@ -4760,7 +4760,8 @@
             "conflict": {
                 "contao/core": "*",
                 "contao/core-bundle": "4.4.1",
-                "contao/manager-plugin": "<2.0 || >=3.0"
+                "contao/manager-plugin": "<2.0 || >=3.0",
+                "madeyourday/contao-rocksolid-frontend-helper": "<=2.1.2"
             },
             "replace": {
                 "contao-legacy/rocksolid-custom-elements": "self.version"
@@ -4803,7 +4804,7 @@
                 "issues": "https://github.com/madeyourday/contao-rocksolid-custom-elements/issues",
                 "source": "https://github.com/madeyourday/contao-rocksolid-custom-elements"
             },
-            "time": "2022-02-04T00:46:00+00:00"
+            "time": "2022-02-22T10:26:38+00:00"
         },
         {
             "name": "matthiasmullie/minify",
@@ -5706,16 +5707,16 @@
         },
         {
             "name": "php-http/httplug",
-            "version": "2.2.0",
+            "version": "2.3.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/php-http/httplug.git",
-                "reference": "191a0a1b41ed026b717421931f8d3bd2514ffbf9"
+                "reference": "f640739f80dfa1152533976e3c112477f69274eb"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/php-http/httplug/zipball/191a0a1b41ed026b717421931f8d3bd2514ffbf9",
-                "reference": "191a0a1b41ed026b717421931f8d3bd2514ffbf9",
+                "url": "https://api.github.com/repos/php-http/httplug/zipball/f640739f80dfa1152533976e3c112477f69274eb",
+                "reference": "f640739f80dfa1152533976e3c112477f69274eb",
                 "shasum": ""
             },
             "require": {
@@ -5762,9 +5763,9 @@
             ],
             "support": {
                 "issues": "https://github.com/php-http/httplug/issues",
-                "source": "https://github.com/php-http/httplug/tree/master"
+                "source": "https://github.com/php-http/httplug/tree/2.3.0"
             },
-            "time": "2020-07-13T15:43:23+00:00"
+            "time": "2022-02-21T09:52:22+00:00"
         },
         {
             "name": "php-http/message",
@@ -9330,14 +9331,14 @@
             },
             "type": "library",
             "autoload": {
+                "files": [
+                    "Resources/functions.php"
+                ],
                 "psr-4": {
                     "Symfony\\Component\\Intl\\": ""
                 },
                 "classmap": [
                     "Resources/stubs"
-                ],
-                "files": [
-                    "Resources/functions.php"
                 ],
                 "exclude-from-classmap": [
                     "/Tests/"
