@@ -7,6 +7,7 @@ namespace App\EventListener;
 use Contao\CoreBundle\ServiceAnnotation\Callback;
 use Contao\CoreBundle\ServiceAnnotation\Hook;
 use Contao\DataContainer;
+use Contao\Date;
 use Contao\FrontendUser;
 use Contao\ModuleRegistration;
 use Contao\StringUtil;
@@ -54,7 +55,9 @@ class MembershipListener
      */
     public function replaceInsertTags(string $tag)
     {
-        if ('subscription::label' !== $tag) {
+        $t = explode('::', $tag);
+
+        if ('subscription' !== $t[0]) {
             return false;
         }
 
@@ -64,7 +67,39 @@ class MembershipListener
             return '';
         }
 
-        return $this->getMembershipLabel($user->membership, $user->membership_amount);
+        switch ($t[1] ?? null) {
+            case 'renew':
+                $date = new \DateTime($user->membership_start);
+                $time = time();
+                while ($date->format('U') < $time) {
+                    $date->modify('+1 year');
+                }
+
+                return Date::parse('d. F Y', $date->format('U'));
+
+            case 'yearly':
+                $config = $this->memberships[$user->membership];
+                $price = $config['price'];
+
+                if ($config['custom'] ?? false) {
+                    $price = $user->membership_amount;
+                } elseif ($config['type'] === 'month') {
+                    $price = 12 * $config['price'];
+                }
+
+                return number_format((float) $price, 2, '.', "'");
+
+            case 'amount':
+                return $this->formatAmount($user->membership, $user->membership_amount);
+
+            case 'title':
+                return $this->translator->trans('membership.'.$user->membership);
+
+            case 'label':
+                return $this->getMembershipLabel($user->membership, $user->membership_amount);
+        }
+
+        return '';
     }
 
     /**
@@ -98,20 +133,23 @@ class MembershipListener
         );
     }
 
-    private function getMembershipLabel(string $membership, string $amount = null): string
+    private function getMembershipLabel(string $membership, ?string $amount = null): string
+    {
+        return $this->translator->trans('membership.'.$membership).' '.$this->formatAmount($amount);
+    }
+
+    private function formatAmount(string $membership, ?string $amount = null): string
     {
         $config = $this->memberships[$membership];
 
-        $label = $this->translator->trans('membership.'.$membership).' ';
-
         if (null !== $amount && ($config['custom'] ?? false)) {
             $price = number_format((float) $amount, 2, '.', "'");
-            $label .= $this->translator->trans('membership_year', ['{price}' => $price]);
-        } else {
-            $price = number_format($config['price'], 2, '.', "'");
-            $label .= $this->translator->trans('membership_'.$config['type'], ['{price}' => $price]);
+
+            return $this->translator->trans('membership_year', ['{price}' => $price]);
         }
 
-        return $label;
+        $price = number_format($config['price'], 2, '.', "'");
+
+        return $this->translator->trans('membership_'.$config['type'], ['{price}' => $price]);
     }
 }
