@@ -133,12 +133,12 @@ class MembershipListener
         );
     }
 
-    private function getMembershipLabel(string $membership, ?string $amount = null): string
+    private function getMembershipLabel(string $membership, string $amount = null): string
     {
-        return $this->translator->trans('membership.'.$membership).' '.$this->formatAmount($amount);
+        return $this->translator->trans('membership.'.$membership).' '.$this->formatAmount($membership, $amount);
     }
 
-    private function formatAmount(string $membership, ?string $amount = null): string
+    private function formatAmount(string $membership, string $amount = null): string
     {
         $config = $this->memberships[$membership];
 
