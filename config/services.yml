@@ -102,6 +102,12 @@ services:
         arguments:
             $notificationId: '%env(RECURRING_NOTIFICATION)%'
 
+    App\Controller\KofiController:
+        arguments:
+            $kofiToken: '%env(KOFI_TOKEN)%'
+        tags:
+            - controller.service_arguments
+
     App\Controller\FrontendModule\InvoicesController:
         arguments:
             $harvestId: '%env(HARVEST_ID)%'

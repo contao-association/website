@@ -6,6 +6,7 @@
     "license": "proprietary",
     "require": {
         "php": "^7.4",
+        "ext-json": "*",
         "contao/conflicts": "*@dev",
         "contao/manager-bundle": "4.13.*",
         "contao-association/contao-voting": "^2.3",

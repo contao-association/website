@@ -6,9 +6,12 @@ namespace App;
 
 use Sentry\Event;
 use Sentry\EventHint;
+use Terminal42\CashctrlApi\Api\AccountEndpoint;
 use Terminal42\CashctrlApi\Api\FiscalperiodEndpoint;
+use Terminal42\CashctrlApi\Api\JournalEndpoint;
 use Terminal42\CashctrlApi\Api\PersonEndpoint;
 use Contao\MemberModel;
+use Terminal42\CashctrlApi\Entity\Journal;
 use Terminal42\CashctrlApi\Entity\Person;
 use Terminal42\CashctrlApi\Entity\PersonAddress;
 use Terminal42\CashctrlApi\Entity\PersonContact;
@@ -25,6 +28,7 @@ use Contao\Config;
 use Terminal42\CashctrlApi\ApiClient;
 use Haste\Util\StringUtil;
 use Contao\PageModel;
+use Terminal42\CashctrlApi\Result;
 use function Sentry\captureEvent;
 
 class CashctrlHelper
@@ -33,6 +37,8 @@ class CashctrlHelper
     public OrderEndpoint $order;
     public OrderDocumentEndpoint $orderDocument;
     public FiscalperiodEndpoint $fiscalperiod;
+    public JournalEndpoint $journal;
+    public AccountEndpoint $account;
     private TranslatorInterface $translator;
     private Filesystem $filesystem;
     private array $memberships;
@@ -45,6 +51,8 @@ class CashctrlHelper
         OrderEndpoint $order,
         OrderDocumentEndpoint $orderDocument,
         FiscalperiodEndpoint $fiscalperiod,
+        JournalEndpoint $journal,
+        AccountEndpoint $account,
         TranslatorInterface $translator,
         Filesystem $filesystem,
         array $memberships,
@@ -54,6 +62,8 @@ class CashctrlHelper
         $this->order = $order;
         $this->orderDocument = $orderDocument;
         $this->fiscalperiod = $fiscalperiod;
+        $this->journal = $journal;
+        $this->account = $account;
         $this->translator = $translator;
         $this->filesystem = $filesystem;
         $this->memberships = $memberships;
@@ -263,6 +273,26 @@ class CashctrlHelper
             ->withStatus(18)
             ->sortBy('lastUpdated', 'DESC')
             ->get();
+    }
+
+    public function addJournalEntry(Journal $journal): Result
+    {
+        $this->setFiscalPeriod($journal->getDateAdded());
+
+        return $this->journal->create($journal);
+    }
+
+    public function getAccountId(int $accountNumber): ?int
+    {
+        $accounts = $this->account->list()->filter('number', (string) $accountNumber);
+
+        foreach ($accounts as $account) {
+            if ($account->getNumber() === (string) $accountNumber) {
+                return $account->getId();
+            }
+        }
+
+        return null;
     }
 
     public function sentryOrThrow(string $message, \Exception $exception = null): void
