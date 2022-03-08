@@ -16,7 +16,8 @@
         "terminal42/cashctrl-bundle": "^1.0@dev",
         "terminal42/cashctrl-api": "^1.0@dev",
         "madeyourday/contao-rocksolid-custom-elements": "^2.2",
-        "rapidmail/rapidmail-apiv3-client-php": "^1.1"
+        "rapidmail/rapidmail-apiv3-client-php": "^1.1",
+        "stripe/stripe-php": "^7"
     },
     "require-dev": {
         "deployer/deployer": "^6.5",

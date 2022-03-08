@@ -108,6 +108,12 @@ services:
         tags:
             - controller.service_arguments
 
+    App\Controller\StripeController:
+        arguments:
+            $stripeSecret: '%env(STRIPE_SECRET)%'
+        tags:
+            - controller.service_arguments
+
     App\Controller\FrontendModule\InvoicesController:
         arguments:
             $harvestId: '%env(HARVEST_ID)%'
@@ -134,3 +140,7 @@ services:
             - '%env(RAPIDMAIL_USERNAME)%'
             - '%env(RAPIDMAIL_PASSWORD)%'
             - '%env(RAPIDMAIL_LIST)%'
+
+    App\StripeHelper:
+        arguments:
+            $stripeKey: '%env(STRIPE_KEY)%'
