@@ -102,18 +102,6 @@ services:
         arguments:
             $notificationId: '%env(RECURRING_NOTIFICATION)%'
 
-    App\Controller\KofiController:
-        arguments:
-            $kofiToken: '%env(KOFI_TOKEN)%'
-        tags:
-            - controller.service_arguments
-
-    App\Controller\StripeController:
-        arguments:
-            $stripeSecret: '%env(STRIPE_SECRET)%'
-        tags:
-            - controller.service_arguments
-
     App\Controller\FrontendModule\InvoicesController:
         arguments:
             $harvestId: '%env(HARVEST_ID)%'
@@ -122,6 +110,18 @@ services:
     App\Controller\FrontendModule\RegistrationController:
         arguments:
             $notificationId: '%env(REGISTRATION_NOTIFICATION)%'
+
+    App\Controller\Webhooks\KofiController:
+        arguments:
+            $kofiToken: '%env(KOFI_TOKEN)%'
+        tags:
+            - controller.service_arguments
+
+    App\Controller\Webhooks\StripeController:
+        arguments:
+            $stripeSecret: '%env(STRIPE_SECRET)%'
+        tags:
+            - controller.service_arguments
 
     App\Cron\ActivateMemberCron:
         arguments:

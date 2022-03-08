@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace App\Controller;
+namespace App\Controller\Webhooks;
 
 use App\CashctrlHelper;
 use Symfony\Component\HttpFoundation\Request;
@@ -13,7 +13,7 @@ use Symfony\Component\Routing\Annotation\Route;
 use Terminal42\CashctrlApi\Entity\Journal;
 
 /**
- * @Route("/_kofi", methods={"POST"})
+ * @Route("/_webhooks/kofi", methods={"POST"})
  */
 class KofiController
 {
@@ -35,7 +35,7 @@ class KofiController
         }
 
         if ('EUR' !== $data['currency']) {
-            throw new BadRequestHttpException('Only EUR is supported');
+            throw new BadRequestHttpException("Currency {$data['currency']} is not supported");
         }
 
         $journal = new Journal(

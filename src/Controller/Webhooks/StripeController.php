@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace App\Controller;
+namespace App\Controller\Webhooks;
 
 use App\StripeHelper;
 use Stripe\Webhook;
@@ -12,7 +12,7 @@ use Symfony\Component\HttpKernel\Exception\BadRequestHttpException;
 use Symfony\Component\Routing\Annotation\Route;
 
 /**
- * @Route("/_stripe", methods={"POST"})
+ * @Route("/_webhooks/stripe", methods={"POST"})
  */
 class StripeController
 {
