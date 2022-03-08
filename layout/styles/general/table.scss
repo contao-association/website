@@ -101,9 +101,6 @@ div.supporter {
     }
 
     thead tr th {
-        //position: sticky;
-        //z-index: 120;
-
         &:first-child {
             z-index: 140;
         }
@@ -192,6 +189,16 @@ div.supporter {
 
         th:first-child {
             text-align: right;
+        }
+    }
+
+    @media (min-width: 1200px) {
+        overflow: hidden;
+        max-height: none;
+
+        thead,
+        th:first-child {
+            position: initial;
         }
     }
 }

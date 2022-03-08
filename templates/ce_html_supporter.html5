@@ -3,8 +3,8 @@
     <thead>
     <tr>
       <th></th>
-      <th class="title bg--supporter" colspan="4">❤️ Supporter</th>
-      <th class="title bg--sponsor" colspan="3">🏅 Sponsor</th>
+      <th class="bg--supporter" colspan="4">❤️ Supporter</th>
+      <th class="bg--sponsor" colspan="3">🏅 Sponsor</th>
     </tr>
     <tr class="price-per-month">
       <th>pro Monat</th>
@@ -44,9 +44,22 @@
     </tr>
     <tr>
       <th>
-        Mitgliedschaft in der Contao Association
-        <p class="explain">Falls gewünscht erhältst du eine kostenlose Aktivmitgliedschaft im Wert von 80€/Jahr und kannst an Abstimmungen etc. teilnehmen.<sup>1</sup>
-        </p>
+        Mitgliedschaft in der Contao Association <sup>1</sup>
+        <p class="explain">Falls gewünscht erhältst du eine kostenlose Aktivmitgliedschaft im Wert von 80€/Jahr und kannst an Abstimmungen etc. teilnehmen.</p>
+      </th>
+      <td class="bg--supporter">✗</td>
+      <td class="bg--supporter">✗</td>
+      <td class="bg--supporter">✓</td>
+      <td class="bg--supporter">✓</td>
+      <td class="bg--sponsor">✓</td>
+      <td class="bg--sponsor">✓</td>
+      <td class="bg--sponsor">✓</td>
+    </tr>
+    <tr class="planned">
+      <th>
+        Rabatt auf Veranstaltungen <sup>2</sup>
+        <p class="explain">Du erhältst eine Vergünstigung auf das Ticket zu offiziellen Contao-Veranstaltungen (z. B. Contao Konferenz und Contao Camp)</p>
+        <p class="planned">In Planung, Verfügbarkeit nicht garantiert!</p>
       </th>
       <td class="bg--supporter">✗</td>
       <td class="bg--supporter">✗</td>
@@ -101,8 +114,8 @@
     </tr>
     <tr>
       <th>
-        Auflistung im Abspann unserer Videos
-        <p class="explain">Wir führen deinen Firmenname bzw. dein Logo im Abspann unserer YouTube-Videos auf.<sup>2</sup></p>
+        Auflistung im Abspann unserer Videos <sup>3</sup>
+        <p class="explain">Wir führen deinen Firmenname bzw. dein Logo im Abspann unserer YouTube-Videos auf.</p>
       </th>
       <td></td>
       <td></td>
@@ -112,22 +125,22 @@
       <td class="bg--sponsor">✓ <div class="explain">Logo</div></td>
       <td class="bg--sponsor">✓ <div class="explain">Logo</div></td>
     </tr>
-    <!--
     <tr class="planned">
       <th>
-        Auflistung im Abspann unserer Videos
-        <p class="explain">Wir führen deinen Firmenname bzw. dein Logo im Abspann unserer YouTube-Videos auf.<sup>2</sup></p>
+        Anzeige für Erweiterung
+        <p class="explain">
+          <a href="https://contao.org/de/anzeigen-erweiterungsliste.html" target="_blank">Werbung für deine Contao-Erweiterung</a> im Contao Manager und der Erweiterungsliste.
+          Eine Anzeige der Kategorie <i>Sekundär</i> oder 50% Rabatt auf eine Anzeige <i>Primär</i> (Wert bis zu 600€/Jahr).</p>
         <p class="planned">In Planung, Verfügbarkeit nicht garantiert!</p>
       </th>
       <td></td>
       <td></td>
       <td></td>
       <td></td>
-      <td class="bg--sponsor">✓ <div class="explain">Name</div></td>
-      <td class="bg--sponsor">✓ <div class="explain">Logo</div></td>
-      <td class="bg--sponsor">✓ <div class="explain">Logo</div></td>
+      <td class="bg--sponsor">✗</td>
+      <td class="bg--sponsor">✓</td>
+      <td class="bg--sponsor">✓</td>
     </tr>
-    -->
     <tr>
       <th>
         Support von Contao Core-Entwicklern
@@ -160,5 +173,6 @@
 
 <p>
   <small><sup>1</sup> die Aktivmitgliedschaft gilt für die Inhaberin/den Inhaber des Kontos. Eine Aktivmitgliedschaft kann auch separat für 80€/Jahr gebucht werden.</small><br>
-  <small><sup>2</sup> entsprechend dem Zeitpunkt der Video-Veröffentlichung. Gilt nicht für Live-Streams sowie für gesponsorte Videos.</small>
+  <small><sup>2</sup> der Rabatt gilt für die Inhaberin/den Inhaber des Kontos. Die Verfügbarkeit ist abhängig vom Veranstalter und möglicherweise nicht für alle Ticketkategorien gültig.</small><br>
+  <small><sup>3</sup> entsprechend dem Zeitpunkt der Video-Veröffentlichung. Gilt nicht für Live-Streams sowie für gesponserte Videos.</small><br>
 </p>
