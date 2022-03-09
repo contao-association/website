@@ -34,8 +34,8 @@ class KofiController
             throw new AccessDeniedHttpException('Invalid verification token.');
         }
 
-        if ('EUR' !== $data['currency']) {
-            throw new BadRequestHttpException("Currency {$data['currency']} is not supported");
+        if ('EUR' !== strtoupper($data['currency'])) {
+            throw new BadRequestHttpException("Currency \"{$data['currency']}\" is not supported");
         }
 
         $journal = new Journal(
