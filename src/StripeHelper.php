@@ -14,10 +14,10 @@ class StripeHelper
     private CashctrlHelper $cashctrlHelper;
     private StripeClient $client;
 
-    public function __construct(CashctrlHelper $cashctrlHelper, string $stripeKey)
+    public function __construct(StripeClient $client, CashctrlHelper $cashctrlHelper)
     {
         $this->cashctrlHelper = $cashctrlHelper;
-        $this->client = new StripeClient(['api_key' => $stripeKey]);
+        $this->client = $client;
     }
 
     /**

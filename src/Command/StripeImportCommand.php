@@ -12,7 +12,7 @@ use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Style\SymfonyStyle;
 
-class StripeSyncCommand extends Command
+class StripeImportCommand extends Command
 {
     protected static $defaultName = 'app:stripe:import';
 
@@ -28,9 +28,9 @@ class StripeSyncCommand extends Command
     protected function configure(): void
     {
         $this
-            ->setDescription('Sync Stripe transactions with Cashctrl.')
+            ->setDescription('Import Stripe transactions into CashCtrl.')
             ->addArgument('from', InputArgument::REQUIRED, 'From-date for Stripe charges to import (Y-m-d).')
-            ->addArgument('to', InputArgument::REQUIRED, 'To-date for Stripe charges to import (Y-m-d).')
+            ->addArgument('to', InputArgument::OPTIONAL, 'To-date for Stripe charges to import (Y-m-d).')
         ;
     }
 
@@ -40,7 +40,7 @@ class StripeSyncCommand extends Command
 
         try {
             $from = $this->getDate($input->getArgument('from'));
-            $to = $this->getDate($input->getArgument('to'));
+            $to = $this->getDate($input->getArgument('to') ?: $input->getArgument('from'));
         } catch (\RuntimeException $exception) {
             $io->error('Invalid date format');
             return 1;

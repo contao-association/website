@@ -141,6 +141,6 @@ services:
             - '%env(RAPIDMAIL_PASSWORD)%'
             - '%env(RAPIDMAIL_LIST)%'
 
-    App\StripeHelper:
+    Stripe\StripeClient:
         arguments:
-            $stripeKey: '%env(STRIPE_KEY)%'
+            - '%env(STRIPE_KEY)%'
