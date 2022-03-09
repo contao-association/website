@@ -45,6 +45,7 @@ class CashctrlHelper
     private string $projectDir;
 
     private array $dateFormat = [];
+    private array $accountIds = [];
 
     public function __construct(
         PersonEndpoint $person,
@@ -284,11 +285,15 @@ class CashctrlHelper
 
     public function getAccountId(int $accountNumber): ?int
     {
+        if (isset($this->accountIds[$accountNumber])) {
+            return $this->accountIds[$accountNumber];
+        }
+
         $accounts = $this->account->list()->filter('number', (string) $accountNumber);
 
         foreach ($accounts as $account) {
             if ($account->getNumber() === (string) $accountNumber) {
-                return $account->getId();
+                return $this->accountIds[$accountNumber] = $account->getId();
             }
         }
 
