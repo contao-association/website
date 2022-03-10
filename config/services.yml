@@ -117,6 +117,10 @@ services:
         tags:
             - controller.service_arguments
 
+    App\Controller\Webhooks\PretixController:
+        tags:
+            - controller.service_arguments
+
     App\Controller\Webhooks\StripeController:
         arguments:
             $stripeSecret: '%env(STRIPE_SECRET)%'
@@ -140,6 +144,10 @@ services:
             - '%env(RAPIDMAIL_USERNAME)%'
             - '%env(RAPIDMAIL_PASSWORD)%'
             - '%env(RAPIDMAIL_LIST)%'
+
+    App\PretixHelper:
+        arguments:
+            $pretixToken: '%env(PRETIX_TOKEN)%'
 
     Stripe\StripeClient:
         arguments:
