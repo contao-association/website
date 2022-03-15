@@ -145,6 +145,10 @@ services:
             - '%env(RAPIDMAIL_PASSWORD)%'
             - '%env(RAPIDMAIL_LIST)%'
 
+    App\PaypalHelper:
+        arguments:
+            $teamMembers: '%env(PAYPAL_TEAM)%'
+
     App\PretixHelper:
         arguments:
             $pretixToken: '%env(PRETIX_TOKEN)%'
@@ -152,3 +156,11 @@ services:
     Stripe\StripeClient:
         arguments:
             - '%env(STRIPE_KEY)%'
+
+    PayPalCheckoutSdk\Core\PayPalHttpClient:
+        arguments:
+            - !service
+              class: PayPalCheckoutSdk\Core\ProductionEnvironment
+              arguments:
+                  - '%env(PAYPAL_CLIENT_ID)%'
+                  - '%env(PAYPAL_SECRET)%'
