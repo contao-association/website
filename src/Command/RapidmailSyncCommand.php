@@ -29,6 +29,11 @@ class RapidmailSyncCommand extends Command
         $this->rapidmail = $rapidmail;
     }
 
+    public function isEnabled(): bool
+    {
+        return $this->rapidmail->isConfigured();
+    }
+
     protected function configure(): void
     {
         $this

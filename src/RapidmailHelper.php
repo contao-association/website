@@ -15,13 +15,15 @@ class RapidmailHelper
 {
     private Client $client;
     private int $recipientlistId;
+    private array $memberships;
 
     private ?RecipientService $recipients = null;
 
-    public function __construct(string $username, string $password, string $recipientlistId)
+    public function __construct(string $username, string $password, string $recipientlistId, array $memberships)
     {
         $this->client = new Client($username, $password);
         $this->recipientlistId = (int) $recipientlistId;
+        $this->memberships = $memberships;
     }
 
     public function isConfigured(): bool
@@ -49,7 +51,7 @@ class RapidmailHelper
     public function createRecipient(MemberModel $member): void
     {
         // Do not create recipient for disabled members
-        if ($this->isMemberDisabled($member)) {
+        if (!$this->hasSubscription($member)) {
             return;
         }
 
@@ -66,9 +68,9 @@ class RapidmailHelper
     /**
      * @throws ApiException
      */
-    public function updateRecipient(array $recipient, MemberModel $member)
+    public function updateRecipient(array $recipient, MemberModel $member): void
     {
-        if ($this->isMemberDisabled($member)) {
+        if (!$this->hasSubscription($member)) {
             $this->recipients()->delete($recipient['id']);
             return;
         }
@@ -87,16 +89,28 @@ class RapidmailHelper
             ->setFirstname($member->firstname)
             ->setLastname($member->lastname)
             ->setEmail($member->email)
-            ->setAttribute('extra1', (string) StringUtil::deserialize($member->groups, true)[0])
+            ->setAttribute('extra1', $member->membership)
+            ->setAttribute('extra2', $this->isActiveMember($member) ? '1' : '0')
         ;
 
         return $data;
     }
 
-    private function isMemberDisabled(MemberModel $member): bool
+    private function hasSubscription(MemberModel $member): bool
     {
-        return $member->disable
-            || ($member->start && $member->start > time())
-            || ($member->stop && $member->stop <= time());
+        return !$member->disable
+            && (!$member->start || $member->start <= time())
+            && (!$member->stop || $member->stop > time())
+            && (!$member->membership_start || $member->membership_start <= time())
+            && (!$member->membership_stop || $member->membership_stop > time());
+    }
+
+    private function isActiveMember(MemberModel $member): bool
+    {
+        if ('active' === $member->membership) {
+            return true;
+        }
+
+        return $member->membership_member && ($this->memberships[$member->membership]['memberGroup'] ?? 0) > 0;
     }
 }
