@@ -82,6 +82,20 @@
       <td class="bg--sponsor">✓</td>
       <td class="bg--sponsor">✓</td>
     </tr>
+    <tr class="planned">
+      <th>
+        Supporter der Composer Cloud
+        <p class="explain">Die Konsole des Contao Managers zeigt bei jedem Cloud-Job zufällig den Namen eines Supporters an.</p>
+        <p class="planned">In Planung, Verfügbarkeit nicht garantiert!</p>
+      </th>
+      <td class="bg--supporter">✗</td>
+      <td class="bg--supporter">✗</td>
+      <td class="bg--supporter">✗</td>
+      <td class="bg--supporter">✓</td>
+      <td class="bg--sponsor">✗</td>
+      <td class="bg--sponsor">✗</td>
+      <td class="bg--sponsor">✗</td>
+    </tr>
     <tr>
       <th>
         #supporter Kanal auf Slack
