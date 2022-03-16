@@ -50,6 +50,32 @@
                 <source>Enter a stop date for the subscription.</source>
                 <target>Gib ein Stopdatum für das Abonnement ein.</target>
             </trans-unit>
+
+            <trans-unit id="tl_member.listing.0">
+                <source>Public display</source>
+                <target>Öffentliche Anzeige</target>
+            </trans-unit>
+            <trans-unit id="tl_member.listing.1">
+                <source>I want to be publicly displayed (e.g. on contao.org)</source>
+                <target>Ich möchte als Supporter/Sponsor genannt werden (z.B. auf contao.org).</target>
+            </trans-unit>
+            <trans-unit id="tl_member.listing_name.0">
+                <source>Listing name</source>
+                <target>Anzeigename</target>
+            </trans-unit>
+            <trans-unit id="tl_member.listing_name.1">
+                <source>Enter a custom name for the listing.</source>
+                <target>Gib einen eigenen Namen für die Auflistung ein.</target>
+            </trans-unit>
+            <trans-unit id="tl_member.listing_link.0">
+                <source>Link</source>
+                <target>Link</target>
+            </trans-unit>
+            <trans-unit id="tl_member.listing_link.1">
+                <source>Enter a custom link for the listing.</source>
+                <target>Gibt einen eigenen Link für die Auflistung ein.</target>
+            </trans-unit>
+
             <trans-unit id="tl_member.member_log_note.0">
                 <source>Note</source>
                 <target>Notiz</target>
@@ -72,6 +98,10 @@
             </trans-unit>
             <trans-unit id="tl_member.subscription_legend">
                 <source>Abonnement</source>
+            </trans-unit>
+            <trans-unit id="tl_member.listing_legend">
+                <source>Listing</source>
+                <target>Auflistung</target>
             </trans-unit>
         </body>
     </file>

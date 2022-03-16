@@ -38,6 +38,26 @@
             <trans-unit id="tl_member.membership_stop.1">
                 <source>Enter a stop date for the subscription.</source>
             </trans-unit>
+
+            <trans-unit id="tl_member.listing.0">
+                <source>Public display</source>
+            </trans-unit>
+            <trans-unit id="tl_member.listing.1">
+                <source>I want to be publicly displayed (e.g. on contao.org)</source>
+            </trans-unit>
+            <trans-unit id="tl_member.listing_name.0">
+                <source>Listing name</source>
+            </trans-unit>
+            <trans-unit id="tl_member.listing_link.1">
+                <source>Enter a custom name for the listing.</source>
+            </trans-unit>
+            <trans-unit id="tl_member.listing_link.0">
+                <source>Link</source>
+            </trans-unit>
+            <trans-unit id="tl_member.listing_link.1">
+                <source>Enter a custom link for the listing.</source>
+            </trans-unit>
+
             <trans-unit id="tl_member.member_log_note.0">
                 <source>Note</source>
             </trans-unit>
@@ -55,6 +75,9 @@
             </trans-unit>
             <trans-unit id="tl_member.subscription_legend">
                 <source>Subscription</source>
+            </trans-unit>
+            <trans-unit id="tl_member.listing_legend">
+                <source>Listing</source>
             </trans-unit>
         </body>
     </file>

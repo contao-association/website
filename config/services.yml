@@ -15,6 +15,8 @@ parameters:
             group: 4
             categoryId: 8
             accountId: 183
+            listing:
+                name: true
 
         support25:
             price: 25
@@ -24,6 +26,9 @@ parameters:
             memberGroup: 1
             categoryId: 8
             accountId: 183
+            listing:
+                name: true
+                link: true
 
         support50:
             price: 50
@@ -33,6 +38,10 @@ parameters:
             memberGroup: 1
             categoryId: 8
             accountId: 183
+            listing:
+                name: true
+                link: true
+                cloud: true
 
         sponsor:
             price: 100
@@ -42,6 +51,11 @@ parameters:
             memberGroup: 1
             categoryId: 9
             accountId: 183
+            listing:
+                name: true
+                link: true
+                logo: true
+                video: name
 
         gold_sponsor:
             price: 200
@@ -51,6 +65,11 @@ parameters:
             memberGroup: 1
             categoryId: 10
             accountId: 183
+            listing:
+                name: true
+                link: true
+                logo: true
+                video: logo
 
         diamond_sponsor:
             price: 500
@@ -60,6 +79,11 @@ parameters:
             memberGroup: 1
             categoryId: 11
             accountId: 183
+            listing:
+                name: true
+                link: true
+                logo: true
+                video: logo
 
         active:
             price: 80

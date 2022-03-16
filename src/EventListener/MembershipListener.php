@@ -11,6 +11,7 @@ use Contao\Date;
 use Contao\FrontendUser;
 use Contao\ModuleRegistration;
 use Contao\StringUtil;
+use Contao\Template;
 use Doctrine\DBAL\Connection;
 use Symfony\Component\Security\Core\Security;
 use Symfony\Contracts\Translation\TranslatorInterface;
@@ -131,6 +132,18 @@ class MembershipListener
             ],
             ['id' => $data->id]
         );
+    }
+
+    /**
+     * @Hook("parseTemplate")
+     */
+    public function addToMemberTemplate(Template $template): void
+    {
+        if (0 !== strpos($template->getName(), 'member_') || !($user = $this->security->getUser()) instanceof FrontendUser) {
+            return;
+        }
+
+        $template->membershipConfig = $this->memberships[$user->membership] ?? [];
     }
 
     private function getMembershipLabel(string $membership, string $amount = null): string

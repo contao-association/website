@@ -37,14 +37,16 @@
         <div class="col-xs-12 col-sm-6">
           <div class="widget widget-text">
             <label for="ctrl_membership"><?= $this->trans('tl_member.membership.0', [], 'contao_tl_member') ?></label>
-            <input type="text" id="ctrl_membership" class="text" value="{{subscription::label}}" disabled>
-          </div>
-          <div class="widget block">
-            <?php if ('de' === $GLOBALS['TL_LANGUAGE']): ?>
-              <p>Um deinen Namen oder dein Abonnement zu ändern oder zu kündigen, sende uns eine E-Mail an {{email::association@contao.org}}.</p>
-            <?php else: ?>
-              <p>To change your name or subscription or to cancel, please email us at {{email::association@contao.org}}.</p>
-            <?php endif; ?>
+            <div class="row">
+              <div class="col-8">
+                <input type="text" id="ctrl_membership" class="text" value="{{subscription::label}}" disabled>
+              </div>
+              <div class="col-4 center">
+                <div class="ce_hyperlink block">
+                  {{link::28}}
+                </div>
+              </div>
+            </div>
           </div>
         </div>
       </div>
@@ -73,6 +75,29 @@
       </div>
     </div>
 
+    <?php if ($this->membershipConfig['listing']['name'] ?? false): ?>
+    <fieldset>
+      <legend><?= $this->trans('tl_member.listing.0', [], 'contao_tl_member') ?></legend>
+      <?= $this->listing['listing'] ?>
+      <div class="row">
+        <div class="col-xs-12 col-sm-6">
+          <?= $this->listing['listing_name'] ?>
+        </div>
+        <div class="col-xs-12 col-sm-6">
+          <?php if ($this->membershipConfig['listing']['link'] ?? false): ?>
+            <?= $this->listing['listing_link'] ?>
+          <?php endif; ?>
+        </div>
+      </div>
+
+      <div class="widget">
+        <p>Wenn du keinen expliziten Namen oder Link eingibst, verwenden wir deinen Firmen- bzw. Vor- und Nachnamen sowie ggf. deine Webseite für die öffentliche Anzeige.
+          <?php if ($this->membershipConfig['listing']['logo'] ?? false): ?>Um dein Logo für contao.org zu ändern, kontaktiere uns bitte unter {{email::association@contao.org}}.<?php endif; ?>
+        </p>
+      </div>
+    </fieldset>
+    <?php endif; ?>
+
     <?= $this->captcha ?>
     <div class="submit_container widget widget-submit text-center">
       <button type="submit" class="submit"><?= $this->slabel ?></button>
@@ -80,5 +105,4 @@
   </div>
 </form>
 
-</div>
-<!-- indexer::continue -->
+</div><!-- indexer::continue -->
