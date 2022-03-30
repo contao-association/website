@@ -70,7 +70,7 @@ class MembershipListener
 
         switch ($t[1] ?? null) {
             case 'renew':
-                $date = new \DateTime($user->membership_start);
+                $date = \DateTime::createFromFormat('U', $user->membership_start);
                 $time = time();
                 while ($date->format('U') < $time) {
                     $date->modify('+1 year');
