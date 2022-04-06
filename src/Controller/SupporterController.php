@@ -40,12 +40,12 @@ class SupporterController
         foreach ($members->iterateAssociative() as $member) {
             $listing = $this->memberships[$member['membership']]['listing'] ?? [];
 
-            if (!$member['listing'] || true !== ($listing['name'] ?? false)) {
+            if (!$member['listing'] || empty($listing['name'])) {
                 continue;
             }
 
             $data = [
-                'level' => $member['membership'],
+                'level' => $listing['name'],
                 'name' => $member['listing_name'] ?: $member['company'] ?: ("{$member['firstname']} {$member['lastname']}"),
             ];
 
