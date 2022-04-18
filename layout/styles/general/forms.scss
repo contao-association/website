@@ -73,6 +73,10 @@ form {
         }
     }
 
+    fieldset[data-cff-condition] {
+        margin-bottom: 0;
+    }
+
   label {
       display: block;
       margin-bottom: .35em;
