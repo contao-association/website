@@ -112,7 +112,7 @@ class MembershipListener
     {
         $email = $data instanceof DataContainer ? $data->activeRecord->email : $data->email;
         $level = $data instanceof DataContainer ? $data->activeRecord->membership : $data->membership;
-        $member = $data instanceof DataContainer ? $data->activeRecord->membership_member : $data->membership_member;
+        $activeMember = $data instanceof DataContainer ? $data->activeRecord->membership_member : $data->membership_member;
 
         $groups = [];
 
@@ -120,8 +120,8 @@ class MembershipListener
             $groups[] = $this->memberships[$level]['group'];
         }
 
-        if ($member && ($this->memberships[$level]['memberGroup'] ?? 0) > 0) {
-            $groups[] = $this->memberships[$level]['memberGroup'];
+        if ($activeMember && 'active' !== $level && !($this->memberships[$level]['legacy'] ?? false)) {
+            $groups[] = $this->memberships['active']['group'];
         }
 
         $this->connection->update(

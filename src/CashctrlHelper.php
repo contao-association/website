@@ -163,23 +163,6 @@ class CashctrlHelper
 
         $membership = $this->memberships[$member->membership];
 
-        $itemName = $this->translator->trans(
-            'invoice_name.'.$member->membership,
-            [],
-            'messages',
-            $member->language ?: 'de'
-        );
-
-        $itemDescription = $this->translator->trans(
-            'invoice_description.'.$member->membership,
-            [
-                '{from}' => $invoiceDate->format('d.m.Y'),
-                '{to}' => $invoiceDate->modify('+1 year -1 day')->format('d.m.Y'),
-            ],
-            'messages',
-            $member->language ?: 'de'
-        );
-
         $invoiceDescription = sprintf(
             '%s/%s - %s %s%s',
             $member->id,
@@ -189,20 +172,22 @@ class CashctrlHelper
             ($member->company ? ', '.$member->company : '')
         );
 
-        $item = new OrderItem(
-            $membership['accountId'],
-            $itemName,
-            (float) ($membership['custom'] ? $member->membership_amount : $membership['price'])
-        );
-        $item->quantity = 'month' === $membership['type'] ? 12 : 1;
-        $item->description = $itemDescription;
-
         $order = new Order((int) $member->cashctrl_id, 4);
         $order->setNr($member->id.'/'.date('Y'));
         $order->setDate($invoiceDate);
         $order->setDueDays(30);
         $order->setDescription($invoiceDescription);
-        $order->addItem($item);
+
+        $order->addItem($this->createInvoiceItem($member->membership, $member, $invoiceDate));
+
+        if ('active' !== $member->membership && !($membership['legacy'] ?? false) && $member->membership_member) {
+            $order->addItem($this->createInvoiceItem(
+                'active',
+                $member,
+                $invoiceDate,
+                $membership['freeMember'] ? 0 : null,
+            ));
+        }
 
         return $order;
     }
@@ -432,5 +417,41 @@ class CashctrlHelper
         }
 
         throw new \RuntimeException('No fiscal period for current date found');
+    }
+
+    private function createInvoiceItem(string $subscription, MemberModel $member, \DateTimeImmutable $invoiceDate, $price = null): OrderItem
+    {
+        $itemName = $this->translator->trans(
+            'invoice_name.'.$subscription,
+            [],
+            'messages',
+            $member->language ?: 'de'
+        );
+
+        $itemDescription = $this->translator->trans(
+            'invoice_description.'.$subscription,
+            [
+                '{from}' => $invoiceDate->format('d.m.Y'),
+                '{to}' => $invoiceDate->modify('+1 year -1 day')->format('d.m.Y'),
+            ],
+            'messages',
+            $member->language ?: 'de'
+        );
+
+        $membership = $this->memberships[$subscription];
+
+        if (null === $price) {
+            $price = $membership['custom'] ? $member->membership_amount : $membership['price'];
+        }
+
+        $item = new OrderItem(
+            $membership['accountId'],
+            $itemName,
+            (float) $price
+        );
+        $item->quantity = 'month' === $membership['type'] ? 12 : 1;
+        $item->description = $itemDescription;
+
+        return $item;
     }
 }

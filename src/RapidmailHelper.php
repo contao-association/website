@@ -111,6 +111,10 @@ class RapidmailHelper
             return true;
         }
 
-        return $member->membership_member && ($this->memberships[$member->membership]['memberGroup'] ?? 0) > 0;
+        if ($this->memberships[$member->membership]['legacy'] ?? false) {
+            return false;
+        }
+
+        return (bool) $member->membership_member;
     }
 }

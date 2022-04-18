@@ -23,7 +23,7 @@ parameters:
             type: month
             custom: false
             group: 4
-            memberGroup: 1
+            freeMember: true
             categoryId: 8
             accountId: 183
             listing:
@@ -35,7 +35,7 @@ parameters:
             type: month
             custom: false
             group: 4
-            memberGroup: 1
+            freeMember: true
             categoryId: 8
             accountId: 183
             listing:
@@ -48,7 +48,7 @@ parameters:
             type: month
             custom: false
             group: 5
-            memberGroup: 1
+            freeMember: true
             categoryId: 9
             accountId: 183
             listing:
@@ -62,7 +62,7 @@ parameters:
             type: month
             custom: false
             group: 6
-            memberGroup: 1
+            freeMember: true
             categoryId: 10
             accountId: 183
             listing:
@@ -76,7 +76,7 @@ parameters:
             type: month
             custom: false
             group: 7
-            memberGroup: 1
+            freeMember: true
             categoryId: 11
             accountId: 183
             listing:
