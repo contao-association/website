@@ -27,11 +27,6 @@ class PaypalHelper
         $this->teamMembers = explode(',', $teamMembers);
     }
 
-    public function test(string $captureId)
-    {
-        return $this->client->execute(new CapturesGetRequest($captureId));
-    }
-
     public function getTransactions(\DateTimeInterface $startDate, \DateTimeInterface $endDate): array
     {
         $path = '/v1/reporting/transactions?'.http_build_query([
