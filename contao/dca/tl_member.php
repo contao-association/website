@@ -123,6 +123,11 @@ $GLOBALS['TL_DCA']['tl_member']['fields']['harvest_client_id'] = [
     'sql' => "int(10) unsigned NOT NULL default '0'",
 ];
 
+$GLOBALS['TL_DCA']['tl_member']['fields']['stripe_customer'] = [
+    'eval' => ['doNotShow' => true],
+    'sql' => "varchar(32) NOT NULL default ''",
+];
+
 $GLOBALS['TL_DCA']['tl_member']['fields']['street']['eval']['mandatory'] = true;
 $GLOBALS['TL_DCA']['tl_member']['fields']['postal']['eval']['mandatory'] = true;
 $GLOBALS['TL_DCA']['tl_member']['fields']['city']['eval']['mandatory'] = true;

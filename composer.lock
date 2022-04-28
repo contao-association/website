@@ -12821,12 +12821,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/terminal42/cashctrl-api.git",
-                "reference": "6f3f915a27566adda06bae2c9465e079df72b744"
+                "reference": "f0a4b86a5bb8358f7fe7f8bf1536ba3ff7b37a0f"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/terminal42/cashctrl-api/zipball/6f3f915a27566adda06bae2c9465e079df72b744",
-                "reference": "6f3f915a27566adda06bae2c9465e079df72b744",
+                "url": "https://api.github.com/repos/terminal42/cashctrl-api/zipball/f0a4b86a5bb8358f7fe7f8bf1536ba3ff7b37a0f",
+                "reference": "f0a4b86a5bb8358f7fe7f8bf1536ba3ff7b37a0f",
                 "shasum": ""
             },
             "require": {
@@ -12874,7 +12874,7 @@
                     "type": "other"
                 }
             ],
-            "time": "2022-04-27T20:11:20+00:00"
+            "time": "2022-04-28T10:55:32+00:00"
         },
         {
             "name": "terminal42/cashctrl-bundle",

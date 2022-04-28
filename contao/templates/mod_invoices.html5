@@ -4,6 +4,10 @@
 <?php if (empty($this->invoices)): ?>
 <p class="message cta"><?= $this->trans('invoice_empty', [], 'messages') ?></p>
 <?php else: ?>
+  <?php if ($this->paymentError): ?>
+      <p class="message cta"><?= $this->trans('payment_error', [], 'messages') ?></p>
+  <?php endif; ?>
+
 <table>
     <thead>
     <tr>
@@ -12,6 +16,7 @@
         <th><?= $this->trans('invoice_due', [], 'messages') ?></th>
         <th><?= $this->trans('invoice_total', [], 'messages') ?></th>
         <th><?= $this->trans('invoice_status', [], 'messages') ?></th>
+        <th></th>
         <th></th>
     </tr>
     </thead>
@@ -24,6 +29,16 @@
         <td>€ <?= $invoice['total'] ?></td>
         <td><?= $this->trans($invoice['closed'] ? 'invoice_paid' : 'invoice_unpaid', [], 'messages') ?></td>
         <td><a href="<?= $invoice['href'] ?>" target="blank"><?= $this->trans($invoice['isPdf'] ? 'invoice_pdf' : 'invoice_link', [], 'messages') ?></a></td>
+        <td>
+          <?php if ($invoice['enablePayment']): ?>
+            <form method="POST">
+              <input type="hidden" name="FORM_SUBMIT" value="pay_invoice">
+              <input type="hidden" name="REQUEST_TOKEN" value="{{request_token}}">
+              <input type="hidden" name="invoice" value="<?= $invoice['id'] ?>">
+              <button type="submit"><?= $this->trans('pay', [], 'messages') ?></button>
+            </form>
+          <?php endif; ?>
+        </td>
     </tr>
     <?php endforeach; ?>
     </tbody>

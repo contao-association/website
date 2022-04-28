@@ -10,6 +10,14 @@
                 <source>download</source>
                 <target>Download</target>
             </trans-unit>
+            <trans-unit id="pay">
+                <source>pay</source>
+                <target>Bezahlen</target>
+            </trans-unit>
+            <trans-unit id="payment_error">
+                <source>payment_error</source>
+                <target>Die Online-Zahlung ist fehlgeschlagen, bitte versuche es ggf. erneut.</target>
+            </trans-unit>
             <trans-unit id="membership.active">
                 <source>membership.active</source>
                 <target>Aktivmitglied</target>

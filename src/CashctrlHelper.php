@@ -9,9 +9,11 @@ use Sentry\EventHint;
 use Terminal42\CashctrlApi\Api\AccountEndpoint;
 use Terminal42\CashctrlApi\Api\FiscalperiodEndpoint;
 use Terminal42\CashctrlApi\Api\JournalEndpoint;
+use Terminal42\CashctrlApi\Api\OrderBookentryEndpoint;
 use Terminal42\CashctrlApi\Api\PersonEndpoint;
 use Contao\MemberModel;
 use Terminal42\CashctrlApi\Entity\Journal;
+use Terminal42\CashctrlApi\Entity\OrderBookentry;
 use Terminal42\CashctrlApi\Entity\Person;
 use Terminal42\CashctrlApi\Entity\PersonAddress;
 use Terminal42\CashctrlApi\Entity\PersonContact;
@@ -38,6 +40,7 @@ class CashctrlHelper
     public OrderDocumentEndpoint $orderDocument;
     public FiscalperiodEndpoint $fiscalperiod;
     public JournalEndpoint $journal;
+    public OrderBookentryEndpoint $orderBookentry;
     public AccountEndpoint $account;
     private TranslatorInterface $translator;
     private Filesystem $filesystem;
@@ -53,6 +56,7 @@ class CashctrlHelper
         OrderDocumentEndpoint $orderDocument,
         FiscalperiodEndpoint $fiscalperiod,
         JournalEndpoint $journal,
+        OrderBookentryEndpoint $orderBookentry,
         AccountEndpoint $account,
         TranslatorInterface $translator,
         Filesystem $filesystem,
@@ -69,6 +73,7 @@ class CashctrlHelper
         $this->filesystem = $filesystem;
         $this->memberships = $memberships;
         $this->projectDir = $projectDir;
+        $this->orderBookentry = $orderBookentry;
     }
 
     public function syncMember(MemberModel $member): void
@@ -221,6 +226,11 @@ class CashctrlHelper
         $this->order->updateStatus($invoiceId, 16);
     }
 
+    public function markInvoicePaid(int $invoiceId): void
+    {
+        $this->order->updateStatus($invoiceId, 18);
+    }
+
     public function markInvoicePaymentConfirmed(int $invoiceId): void
     {
         $this->order->updateStatus($invoiceId, 87);
@@ -268,6 +278,13 @@ class CashctrlHelper
         return $this->journal->create($journal);
     }
 
+    public function addOrderBookentry(OrderBookentry $bookentry): Result
+    {
+        $this->setFiscalPeriod($bookentry->getDate());
+
+        return $this->orderBookentry->create($bookentry);
+    }
+
     public function getAccountId(int $accountNumber): ?int
     {
         if (isset($this->accountIds[$accountNumber])) {
@@ -313,10 +330,10 @@ class CashctrlHelper
         $person->setCustomfield(4, $member->tax_id);
 
         $invoiceAddress = $this->findAddress($person, PersonAddress::TYPE_MAIN);
-        $invoiceAddress->address = $member->street;
-        $invoiceAddress->zip = $member->postal;
-        $invoiceAddress->city = $member->city;
-        $invoiceAddress->country = $member->country;
+        $invoiceAddress->setAddress($member->street);
+        $invoiceAddress->setZip($member->postal);
+        $invoiceAddress->setCity($member->city);
+        $invoiceAddress->setCountry($member->country);
 
         $this->setContact($person, PersonContact::TYPE_EMAIL, PersonContact::PURPOSE_INVOICE, (string) $member->email);
         $this->setContact($person, PersonContact::TYPE_PHONE, PersonContact::PURPOSE_INVOICE, (string) $member->phone);
@@ -449,8 +466,8 @@ class CashctrlHelper
             $itemName,
             (float) $price
         );
-        $item->quantity = 'month' === $membership['type'] ? 12 : 1;
-        $item->description = $itemDescription;
+        $item->setQuantity('month' === $membership['type'] ? 12 : 1);
+        $item->setDescription($itemDescription);
 
         return $item;
     }

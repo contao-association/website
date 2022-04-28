@@ -35,6 +35,11 @@ class StripeController
                 $this->stripeHelper->importCharge($event->data->object);
                 break;
 
+            case 'checkout.session.completed':
+                /** @noinspection PhpPossiblePolymorphicInvocationInspection */
+                $this->stripeHelper->importCheckoutSession($event->data->object);
+                break;
+
             default:
                 throw new BadRequestHttpException('Unsupported Stripe event: '.$event->type);
         }
