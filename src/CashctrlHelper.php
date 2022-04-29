@@ -30,6 +30,7 @@ use Contao\Config;
 use Terminal42\CashctrlApi\ApiClient;
 use Haste\Util\StringUtil;
 use Contao\PageModel;
+use Terminal42\CashctrlApi\Exception\RuntimeException;
 use Terminal42\CashctrlApi\Result;
 use function Sentry\captureEvent;
 
@@ -91,12 +92,16 @@ class CashctrlHelper
 
         $this->updatePerson($person, $member);
 
-        if (null !== $person->getId()) {
-            $this->person->update($person);
-            return;
-        }
+        try {
+            if (null !== $person->getId()) {
+                $this->person->update($person);
+                return;
+            }
 
-        $result = $this->person->create($person);
+            $result = $this->person->create($person);
+        } catch (RuntimeException $exception) {
+            $this->sentryOrThrow("Error updating member ID {$member->id} in CashCtrl: ".$exception->getMessage());
+        }
 
         $member->cashctrl_id = $result->insertId();
         $member->save();
