@@ -139,13 +139,12 @@
       <td class="bg--sponsor">✓ <div class="explain">Logo</div></td>
       <td class="bg--sponsor">✓ <div class="explain">Logo</div></td>
     </tr>
-    <tr class="planned">
+    <tr>
       <th>
         Anzeige für Erweiterung
         <p class="explain">
           <a href="https://contao.org/de/anzeigen-erweiterungsliste.html" target="_blank">Werbung für deine Contao-Erweiterung</a> im Contao Manager und der Erweiterungsliste.
-          Eine Anzeige der Kategorie <i>Sekundär</i> oder 50% Rabatt auf eine Anzeige <i>Primär</i> (Wert bis zu 600€/Jahr).</p>
-        <p class="planned">In Planung, Verfügbarkeit nicht garantiert!</p>
+          Zwei Anzeigen der Kategorie <i>Sekundär</i> oder eine Anzeige <i>Primär</i> (Wert = 100€/Jahr).</p>
       </th>
       <td></td>
       <td></td>
