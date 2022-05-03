@@ -32,6 +32,8 @@ unset(
 );
 
 $GLOBALS['TL_DCA']['tl_member']['fields']['language']['options'] = ['de' => 'Deutsch', 'en' => 'English'];
+$GLOBALS['TL_DCA']['tl_member']['fields']['tstamp']['eval']['doNotLog'] = true;
+$GLOBALS['TL_DCA']['tl_member']['fields']['password']['eval']['doNotLog'] = true;
 
 $GLOBALS['TL_DCA']['tl_member']['fields']['tax_id'] = [
     'inputType' => 'text',
@@ -109,22 +111,22 @@ $GLOBALS['TL_DCA']['tl_member']['fields']['listing_link'] = [
 ];
 
 $GLOBALS['TL_DCA']['tl_member']['fields']['cashctrl_id'] = [
-    'eval' => ['doNotShow' => true],
+    'eval' => ['doNotShow' => true, 'doNotLog' => true],
     'sql' => "int(10) unsigned NOT NULL default '0'",
 ];
 
 $GLOBALS['TL_DCA']['tl_member']['fields']['cashctrl_invoice'] = [
-    'eval' => ['doNotShow' => true],
+    'eval' => ['doNotShow' => true, 'doNotLog' => true],
     'sql' => "int(10) unsigned NOT NULL default '0'",
 ];
 
 $GLOBALS['TL_DCA']['tl_member']['fields']['harvest_client_id'] = [
-    'eval' => ['doNotShow' => true],
+    'eval' => ['doNotShow' => true, 'doNotLog' => true],
     'sql' => "int(10) unsigned NOT NULL default '0'",
 ];
 
 $GLOBALS['TL_DCA']['tl_member']['fields']['stripe_customer'] = [
-    'eval' => ['doNotShow' => true],
+    'eval' => ['doNotShow' => true, 'doNotLog' => true],
     'sql' => "varchar(32) NOT NULL default ''",
 ];
 

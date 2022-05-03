@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\EventListener\MemberLog;
 
 use Contao\BackendUser;
+use Contao\Controller;
 use Contao\CoreBundle\ServiceAnnotation\Callback;
 use Contao\Input;
 use Contao\StringUtil;
@@ -117,10 +118,11 @@ class MemberVersionListener
 
     private function storeDiff(array $oldData, array $newData, int $memberId)
     {
+        Controller::loadDataContainer('tl_member');
         $diff = [];
 
         foreach ($oldData as $k => $v) {
-            if ('tstamp' === $k || 'password' === $k) {
+            if ($GLOBALS['TL_DCA']['tl_member']['fields'][$k]['eval']['doNotLog'] ?? false) {
                 continue;
             }
 
