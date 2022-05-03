@@ -1,4 +1,6 @@
-
+<?php
+  $GLOBALS['TL_JAVASCRIPT'][] = 'bundles/terminal42conditionalformfields/conditionalformfields.js';
+?>
 <!-- indexer::stop -->
 <div class="<?= $this->class ?> block"<?= $this->cssID ?><?php if ($this->style): ?> style="<?= $this->style ?>"<?php endif; ?>>
 
@@ -21,9 +23,14 @@
                     <?= $this->personal['firstname'] ?>
                     <?= $this->personal['lastname'] ?>
                 </div>
-                <div class="col-xs-12 col-sm-6 membership">
+                <div class="col-xs-12 col-sm-6">
                     <?= $this->membership['membership'] ?>
+                  <fieldset data-cff-condition="in_array(membership, ['support5', 'support10', 'support25', 'support50', 'sponsor', 'gold_sponsor', 'diamond_sponsor'])">
                     <?= $this->membership['membership_member'] ?>
+                  </fieldset>
+                  <fieldset data-cff-condition="in_array(membership, ['support5', 'support10'])">
+                    <strong>Die Aktivmitgliedschaft ist im gewählten Supporter-Preis nicht enthalten und wird zusätzlich mit EUR 80.00/Jahr verrechnet!</strong>
+                  </fieldset>
                   <p>{{link_open::23}}Übersicht der Abonnements und Leistungen{{link_close}}</p>
                 </div>
             </div>
