@@ -82,10 +82,18 @@ class RegistrationController extends ModuleRegistration
         $data['username'] = $data['email'];
         $data['language'] = $GLOBALS['TL_LANGUAGE'];
 
-        if (isset($this->memberships[$data['membership']])) {
-            $membership = $this->memberships[$data['membership']];
-            $data['groups'] = [$membership['group']];
+        $level = $data['membership'];
+        $groups = [];
+
+        if ($this->memberships[$level]['group'] ?? null) {
+            $groups[] = $this->memberships[$level]['group'];
         }
+
+        if ($data['membership_member'] && 'active' !== $level && !($this->memberships[$level]['legacy'] ?? false)) {
+            $groups[] = $this->memberships['active']['group'];
+        }
+
+        $data['groups'] = $groups;
 
         $newMember = new MemberModel();
         $newMember->setRow($data);
