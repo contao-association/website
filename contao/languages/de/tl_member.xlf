@@ -26,6 +26,22 @@
                 <source>Become an active member of the Contao Association</source>
                 <target>Aktivmitglied der Contao Association werden</target>
             </trans-unit>
+            <trans-unit id="tl_member.membership_interval.0">
+                <source>Billing</source>
+                <target>Abrechnung</target>
+            </trans-unit>
+            <trans-unit id="tl_member.membership_interval.1">
+                <source>Select if the subscription is paid monthly or yearly (if applicable)</source>
+                <target>Wähle monatliche oder jährliche Abrechnung (falls zutreffend).</target>
+            </trans-unit>
+            <trans-unit id="tl_member.membership_interval.month">
+                <source>monthly</source>
+                <target>monatlich</target>
+            </trans-unit>
+            <trans-unit id="tl_member.membership_interval.year">
+                <source>yearly</source>
+                <target>jährlich</target>
+            </trans-unit>
             <trans-unit id="tl_member.membership_amount.0">
                 <source>Invoice Amount</source>
                 <target>Rechnungsbetrag</target>
@@ -44,11 +60,19 @@
             </trans-unit>
             <trans-unit id="tl_member.membership_stop.0">
                 <source>Subscription stop date</source>
-                <target>Enddatum Abonnement</target>
+                <target>Stopdatum Abonnement</target>
             </trans-unit>
             <trans-unit id="tl_member.membership_stop.1">
                 <source>Enter a stop date for the subscription.</source>
                 <target>Gib ein Stopdatum für das Abonnement ein.</target>
+            </trans-unit>
+            <trans-unit id="tl_member.membership_invoiced.0">
+                <source>Subscription invoiced until</source>
+                <target>Abonnement verrechnet bis</target>
+            </trans-unit>
+            <trans-unit id="tl_member.membership_invoiced.1">
+                <source>The subscription has been invoiced until this date.</source>
+                <target>Das Abonnement wurde bis zu diesem Datum verrechnet.</target>
             </trans-unit>
 
             <trans-unit id="tl_member.listing.0">

@@ -55,7 +55,7 @@ class RecurringInvoicesCommand extends Command
 
         $io = new SymfonyStyle($input, $output);
 
-        if (!preg_match('/^\d{4}-\d{2}-\d{2}$/', $input->getArgument('date'))) {
+        if (!preg_match('/^\d{4}-\d{2}-\d{2}$/', $input->getArgument('date') ?? '')) {
             $io->error('Invalid date format');
             return 1;
         }
@@ -73,20 +73,37 @@ class RecurringInvoicesCommand extends Command
             SELECT id
             FROM tl_member
             WHERE
-                DATE_FORMAT(FROM_UNIXTIME(dateAdded),'%m-%d') = ?
-                AND DATE_FORMAT(FROM_UNIXTIME(dateAdded),'%Y-%m-%d') != ?
+                DATE_FORMAT(FROM_UNIXTIME(membership_start),'%Y-%m-%d') != ?
+                AND (
+                    (
+                        membership_interval != 'month'
+                        AND DATE_FORMAT(FROM_UNIXTIME(membership_start),'%m-%d') = ?
+                    ) OR (
+                        membership_interval = 'month'
+                        AND DATE_FORMAT(FROM_UNIXTIME(membership_start),'%d') = ?
+                    )
+                )
                 AND disable=''
                 AND (start='' OR start<=UNIX_TIMESTAMP())
                 AND (stop='' OR stop>UNIX_TIMESTAMP())
-        ", [$date->format('m-d'), $date->format('Y-m-d')]);
+                AND (membership_stop='' OR membership_stop>UNIX_TIMESTAMP())
+        ", [$date->format('Y-m-d'), $date->format('m-d'), $date->format('d')]);
 
         if (false === $ids || null === ($members = MemberModel::findMultipleByIds($ids))) {
-            $io->warning('No members found that renew on '.$date->format('l, d F Y'));
+            $io->warning('No members found that renew on '.$date->format('F jS, Y'));
             return 0;
         }
 
         foreach ($members as $member) {
-            if (!$io->confirm(sprintf('Create and send invoice for %s %s (%s)?', $member->firstname, $member->lastname, $member->email))) {
+            $invoiced = (new \DateTime())->setTimestamp((int) $member->membership_invoiced);
+            if (!$io->confirm(sprintf(
+                'Invoicing %s %s (%s), membership invoiced until %s (%s). Continue?',
+                $member->firstname,
+                $member->lastname,
+                $member->email,
+                $invoiced->format('F jS, Y'),
+                $invoiced->format('Y-m-d')
+            ))) {
                 continue;
             }
 

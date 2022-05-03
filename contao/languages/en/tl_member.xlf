@@ -20,6 +20,18 @@
             <trans-unit id="tl_member.membership_member.1">
                 <source>Become an active member of the Contao Association</source>
             </trans-unit>
+            <trans-unit id="tl_member.membership_interval.0">
+                <source>Billing</source>
+            </trans-unit>
+            <trans-unit id="tl_member.membership_interval.1">
+                <source>Select if the subscription is paid monthly or yearly (if applicable)</source>
+            </trans-unit>
+            <trans-unit id="tl_member.membership_interval.month">
+                <source>monthly</source>
+            </trans-unit>
+            <trans-unit id="tl_member.membership_interval.year">
+                <source>yearly</source>
+            </trans-unit>
             <trans-unit id="tl_member.membership_amount.0">
                 <source>Invoice Amount</source>
             </trans-unit>
@@ -37,6 +49,12 @@
             </trans-unit>
             <trans-unit id="tl_member.membership_stop.1">
                 <source>Enter a stop date for the subscription.</source>
+            </trans-unit>
+            <trans-unit id="tl_member.membership_invoiced.0">
+                <source>Subscription invoiced until</source>
+            </trans-unit>
+            <trans-unit id="tl_member.membership_invoiced.1">
+                <source>The subscription has been invoiced until this date.</source>
             </trans-unit>
 
             <trans-unit id="tl_member.listing.0">

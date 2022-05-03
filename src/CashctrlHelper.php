@@ -130,6 +130,10 @@ class CashctrlHelper
             return null;
         }
 
+        $invoiceDate = $invoiceDate ?? new \DateTimeImmutable();
+        /** @noinspection CallableParameterUseCaseInTypeContextInspection */
+        $invoiceDate = $invoiceDate->setTime(0, 0);
+
         $invoice = $this->createMemberInvoice($member, $invoiceDate);
         $pdf = $this->archiveInvoice($invoice, 'ch' === $member->country ? 1011 : 1013, $member->language ?: 'de');
 
@@ -172,7 +176,7 @@ class CashctrlHelper
         return true;
     }
 
-    public function createMemberInvoice(MemberModel $member, \DateTimeImmutable $invoiceDate = null): Order
+    public function createMemberInvoice(MemberModel $member, \DateTimeImmutable $invoiceDate): Order
     {
         $order = $this->prepareMemberInvoice($member, $invoiceDate);
 
@@ -181,13 +185,12 @@ class CashctrlHelper
         return $this->order->read($insertId);
     }
 
-    public function prepareMemberInvoice(MemberModel $member, \DateTimeImmutable $invoiceDate = null): Order
+    public function prepareMemberInvoice(MemberModel $member, \DateTimeImmutable $invoiceDate): Order
     {
-        $invoiceDate = $invoiceDate ?? new \DateTimeImmutable();
-
         $this->setFiscalPeriod($invoiceDate);
 
         $membership = $this->memberships[$member->membership];
+        $monthly = 'month' === $member->membership_interval && 'month' === $membership['type'] && ($membership['freeMember'] ?? false);
 
         $invoiceDescription = sprintf(
             '%s/%s - %s %s%s',
@@ -199,12 +202,12 @@ class CashctrlHelper
         );
 
         $order = new Order((int) $member->cashctrl_id, 4);
-        $order->setNr($member->id.'/'.date('Y'));
+        $order->setNr($member->id.'/'.$invoiceDate->format($monthly ? 'm-Y' : 'Y'));
         $order->setDate($invoiceDate);
         $order->setDueDays(30);
         $order->setDescription($invoiceDescription);
 
-        $order->addItem($this->createInvoiceItem($member->membership, $member, $invoiceDate));
+        $order->addItem($this->createInvoiceItem($member->membership, $member, $invoiceDate, null, $monthly));
 
         if ('active' !== $member->membership && !($membership['legacy'] ?? false) && $member->membership_member) {
             $order->addItem($this->createInvoiceItem(
@@ -212,7 +215,14 @@ class CashctrlHelper
                 $member,
                 $invoiceDate,
                 $membership['freeMember'] ? 0 : null,
+                $monthly
             ));
+        }
+
+        $paidUntil = $invoiceDate->add(new \DateInterval($monthly ? 'P1M' : 'P1Y'))->sub(new \DateInterval('P1D'));
+        if ($member->membership_invoiced < $paidUntil->getTimestamp()) {
+            $member->membership_invoiced = $paidUntil->getTimestamp();
+            $member->save();
         }
 
         return $order;
@@ -494,7 +504,7 @@ class CashctrlHelper
         throw new \RuntimeException('No fiscal period for current date found');
     }
 
-    private function createInvoiceItem(string $subscription, MemberModel $member, \DateTimeImmutable $invoiceDate, $price = null): OrderItem
+    private function createInvoiceItem(string $subscription, MemberModel $member, \DateTimeImmutable $invoiceDate, $price = null, bool $monthly = false): OrderItem
     {
         $itemName = $this->translator->trans(
             'invoice_name.'.$subscription,
@@ -507,7 +517,7 @@ class CashctrlHelper
             'invoice_description.'.$subscription,
             [
                 '{from}' => $invoiceDate->format('d.m.Y'),
-                '{to}' => $invoiceDate->modify('+1 year -1 day')->format('d.m.Y'),
+                '{to}' => $invoiceDate->add(new \DateInterval($monthly ? 'P1M' : 'P1Y'))->sub(new \DateInterval('P1D'))->format('d.m.Y'),
             ],
             'messages',
             $member->language ?: 'de'
@@ -524,7 +534,7 @@ class CashctrlHelper
             $itemName,
             (float) $price
         );
-        $item->setQuantity('month' === $membership['type'] ? 12 : 1);
+        $item->setQuantity(('month' === $membership['type'] && !$monthly) ? 12 : 1);
         $item->setDescription($itemDescription);
 
         return $item;

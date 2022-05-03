@@ -19,8 +19,8 @@ $GLOBALS['TL_DCA']['tl_member']['list']['operations']['log'] = [
 
 $GLOBALS['TL_DCA']['tl_member']['palettes'] = [
     '__selector__' => ['membership', 'listing'],
-    'default' => '{personal_legend},firstname,lastname,dateOfBirth,gender;{address_legend:hide},company,tax_id,street,postal,city,state,country;{contact_legend:hide},phone,mobile,fax,website,language;{login_legend:hide},email,password;{subscription_legend},membership,membership_member,membership_start,membership_stop;{listing_legend:hide},listing;{account_legend:hide},disable,start,stop;{log_legend},member_log_note',
-    'support' => '{personal_legend},firstname,lastname,dateOfBirth,gender;{address_legend:hide},company,tax_id,street,postal,city,state,country;{contact_legend:hide},phone,mobile,fax,website,language;{login_legend:hide},email,password;{subscription_legend},membership,membership_amount,membership_start,membership_stop;{listing_legend:hide},listing;{account_legend:hide},disable,start,stop;{log_legend},member_log_note',
+    'default' => '{personal_legend},firstname,lastname,dateOfBirth,gender;{address_legend:hide},company,tax_id,street,postal,city,state,country;{contact_legend:hide},phone,mobile,fax,website,language;{login_legend:hide},email,password;{subscription_legend},membership,membership_member,membership_start,membership_stop,membership_invoiced,membership_interval;{listing_legend:hide},listing;{account_legend:hide},disable,start,stop;{log_legend},member_log_note',
+    'support' => '{personal_legend},firstname,lastname,dateOfBirth,gender;{address_legend:hide},company,tax_id,street,postal,city,state,country;{contact_legend:hide},phone,mobile,fax,website,language;{login_legend:hide},email,password;{subscription_legend},membership,membership_amount,membership_member,membership_start,membership_stop,membership_invoiced,membership_interval;{listing_legend:hide},listing;{account_legend:hide},disable,start,stop;{log_legend},member_log_note',
 ];
 
 $GLOBALS['TL_DCA']['tl_member']['subpalettes']['listing'] = 'listing_name,listing_link';
@@ -55,6 +55,15 @@ $GLOBALS['TL_DCA']['tl_member']['fields']['membership_member'] = [
     'sql' => "char(1) NOT NULL default ''",
 ];
 
+$GLOBALS['TL_DCA']['tl_member']['fields']['membership_interval'] = [
+    'inputType' => TL_MODE === 'BE' ? 'select' : 'radio',
+    'default' => 'year',
+    'options' => ['month', 'year'],
+    'reference' => &$GLOBALS['TL_LANG']['tl_member']['membership_interval'],
+    'eval' => ['mandatory' => true, 'feEditable' => true, 'feViewable' => true, 'feGroup' => 'membership', 'tl_class' => 'w50'],
+    'sql' => "varchar(8) NOT NULL default 'year'",
+];
+
 $GLOBALS['TL_DCA']['tl_member']['fields']['membership_amount'] = [
     'default' => '200',
     'sorting' => true,
@@ -78,6 +87,15 @@ $GLOBALS['TL_DCA']['tl_member']['fields']['membership_stop'] = [
     'flag' => \Contao\DataContainer::SORT_DAY_DESC,
     'inputType' => 'text',
     'eval' => ['rgxp' => 'date', 'datepicker' => true, 'tl_class' => 'w50 wizard'],
+    'sql' => "varchar(10) NOT NULL default ''",
+];
+
+$GLOBALS['TL_DCA']['tl_member']['fields']['membership_invoiced'] = [
+    'exclude' => true,
+    'sorting' => true,
+    'flag' => \Contao\DataContainer::SORT_DAY_DESC,
+    'inputType' => 'text',
+    'eval' => ['rgxp' => 'date', 'disabled' => true, 'tl_class' => 'w50 wizard'],
     'sql' => "varchar(10) NOT NULL default ''",
 ];
 

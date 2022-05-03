@@ -16,6 +16,8 @@
     <div class="formbody">
         <input type="hidden" name="FORM_SUBMIT" value="<?= $this->formId ?>">
         <input type="hidden" name="REQUEST_TOKEN" value="{{request_token}}">
+        <input type="hidden" name="membership_member" value="">
+        <input type="hidden" name="membership_interval" value="month">
 
         <fieldset>
             <div class="row">
@@ -30,6 +32,9 @@
                   </fieldset>
                   <fieldset data-cff-condition="in_array(membership, ['support5', 'support10'])">
                     <strong>Die Aktivmitgliedschaft ist im gewählten Supporter-Preis nicht enthalten und wird zusätzlich mit EUR 80.00/Jahr verrechnet!</strong>
+                  </fieldset>
+                  <fieldset data-cff-condition="in_array(membership, ['support25', 'support50', 'sponsor', 'gold_sponsor', 'diamond_sponsor'])">
+                    <?= $this->membership['membership_interval'] ?>
                   </fieldset>
                   <p>{{link_open::23}}Übersicht der Abonnements und Leistungen{{link_close}}</p>
                 </div>
