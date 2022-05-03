@@ -69,6 +69,8 @@ class InvoicesController extends AbstractFrontendModuleController
         $this->addCashctrlInvoices($member, $invoices, $dateFormat);
         $this->addHarvestInvoices($member, $invoices, $dateFormat);
 
+        usort($invoices, static fn ($a, $b) => $b['tstamp'] <=> $a['tstamp']);
+
         $template->invoices = $invoices;
         $template->paymentError = (bool) $request->query->get('paymentError');
 
@@ -107,6 +109,7 @@ class InvoicesController extends AbstractFrontendModuleController
             $invoices[] = [
                 'id' => $order->getId(),
                 'nr' => $order->getNr(),
+                'tstamp' => $order->getDate()->format('U'),
                 'date' => $order->getDate()->format($dateFormat),
                 'due' => $due->format($dateFormat),
                 'closed' => $order->isClosed,
@@ -144,6 +147,7 @@ class InvoicesController extends AbstractFrontendModuleController
             $invoices[] = [
                 'id' => $invoice['number'],
                 'nr' => $invoice['number'],
+                'tstamp' => strtotime($invoice['issue_date']),
                 'date' => Date::parse($dateFormat, strtotime($invoice['issue_date'])),
                 'due' => Date::parse($dateFormat, strtotime($invoice['due_date'])),
                 'closed' => 'paid' === $invoice['state'],
