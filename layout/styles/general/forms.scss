@@ -157,10 +157,11 @@ form {
     }
 }
 
-.checkbox_container {
-  span {
+.checkbox_container,
+.radio_container {
+  > span {
     display: flex;
-    align-items: center;
+    align-items: baseline;
   }
 }
 
