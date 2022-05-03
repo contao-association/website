@@ -6,6 +6,7 @@
 /var/
 /vendor/
 /web/*
+!/web/.well-known/
 !/web/.htaccess.*
 /.env.*
 /composer.phar
