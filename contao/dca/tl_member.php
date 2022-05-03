@@ -130,6 +130,11 @@ $GLOBALS['TL_DCA']['tl_member']['fields']['stripe_customer'] = [
     'sql' => "varchar(32) NOT NULL default ''",
 ];
 
+$GLOBALS['TL_DCA']['tl_member']['fields']['stripe_payment_method'] = [
+    'eval' => ['doNotShow' => true, 'doNotLog' => true],
+    'sql' => "varchar(32) NOT NULL default ''",
+];
+
 $GLOBALS['TL_DCA']['tl_member']['fields']['street']['eval']['mandatory'] = true;
 $GLOBALS['TL_DCA']['tl_member']['fields']['postal']['eval']['mandatory'] = true;
 $GLOBALS['TL_DCA']['tl_member']['fields']['city']['eval']['mandatory'] = true;

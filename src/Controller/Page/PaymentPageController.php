@@ -73,6 +73,7 @@ class PaymentPageController
             'customer' => $customer->id,
             'metadata' => [
                 'cashctrl_order_id' => $order->getId(),
+                'contao_member_id' => $member->id,
             ],
             'mode' => 'payment',
             'line_items' => $lineItems,

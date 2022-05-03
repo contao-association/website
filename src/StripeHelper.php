@@ -10,6 +10,8 @@ use Stripe\Checkout\Session;
 use Stripe\Customer;
 use Stripe\Exception\ApiErrorException;
 use Stripe\PaymentIntent;
+use Stripe\PaymentMethod;
+use Stripe\SetupIntent;
 use Stripe\StripeClient;
 use Terminal42\CashctrlApi\Entity\Journal;
 use Terminal42\CashctrlApi\Entity\OrderBookentry;
@@ -80,10 +82,10 @@ class StripeHelper
         }
     }
 
-    public function importCheckoutSession(Session $session): void
+    public function importOrderPayment(Session $session): void
     {
         if (null === $session->payment_intent || empty($session->metadata->cashctrl_order_id)) {
-            // Ignore unknown Stripe payments
+            // Ignore Stripe sessions that are not for an invoice
             return;
         }
 
@@ -122,6 +124,31 @@ class StripeHelper
                 );
             }
         }
+    }
+
+    public function storePaymentMethod(Session $session): void
+    {
+        if (null === $session->setup_intent || empty($session->metadata->contao_member_id)) {
+            // Ignore Stripe sessions without setup intent
+            return;
+        }
+
+        $member = MemberModel::findByPk((int) $session->metadata->contao_member_id);
+
+        if (null === $member) {
+            $this->cashctrlHelper->sentryOrThrow('Member ID "'.$session->metadata->contao_member_id.'" for Stripe checkout session "'.$session->id.'" not found');
+            return;
+        }
+
+        $setupIntent = $session->setup_intent instanceof SetupIntent ? $session->setup_intent : $this->client->setupIntents->retrieve($session->setup_intent);
+
+        if (null === $setupIntent->payment_method) {
+            $this->cashctrlHelper->sentryOrThrow('Stripe checkout session "'.$session->id.'" has no payment method');
+            return;
+        }
+
+        $member->stripe_payment_method = $setupIntent->payment_method instanceof PaymentMethod ? $setupIntent->payment_method->id : $setupIntent->payment_method;
+        $member->save();
     }
 
     private function addChargeToJournal(float $amount, \DateTimeInterface $created, int $account, string $reference, string $title, ?string $balanceTransaction): void

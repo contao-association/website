@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Controller\Webhooks;
 
 use App\StripeHelper;
+use Stripe\Checkout\Session;
 use Stripe\Webhook;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -36,8 +37,13 @@ class StripeController
                 break;
 
             case 'checkout.session.completed':
-                /** @noinspection PhpPossiblePolymorphicInvocationInspection */
-                $this->stripeHelper->importCheckoutSession($event->data->object);
+                /**
+                 * @var Session
+                 * @noinspection PhpPossiblePolymorphicInvocationInspection
+                 */
+                $session = $event->data->object;
+                $this->stripeHelper->importOrderPayment($session);
+                $this->stripeHelper->storePaymentMethod($session);
                 break;
 
             default:
