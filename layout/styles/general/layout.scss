@@ -186,6 +186,11 @@ div[class^="mod_"] {
   a {
     @include button-default;
   }
+
+  &.subscription a {
+    padding-top: 10px;
+    padding-bottom: 10px;
+  }
 }
 
 @media (max-width : 991px) {
