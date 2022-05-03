@@ -118,22 +118,17 @@ services:
         bind:
             $memberships: '%memberships%'
             $projectDir: '%kernel.project_dir%'
+            $registrationNotificationId: '%env(REGISTRATION_NOTIFICATION)%'
+            $invoiceNotificationId: '%env(INVOICE_NOTIFICATION)%'
+            $paymentNotificationId: '%env(PAYMENT_NOTIFICATION)%'
 
     App\:
         resource: ../src
-
-    App\Command\RecurringInvoicesCommand:
-        arguments:
-            $notificationId: '%env(RECURRING_NOTIFICATION)%'
 
     App\Controller\FrontendModule\InvoicesController:
         arguments:
             $harvestId: '%env(HARVEST_ID)%'
             $harvestToken: '%env(HARVEST_TOKEN)%'
-
-    App\Controller\FrontendModule\RegistrationController:
-        arguments:
-            $notificationId: '%env(REGISTRATION_NOTIFICATION)%'
 
     App\Controller\Webhooks\KofiController:
         arguments:
@@ -150,18 +145,6 @@ services:
             $stripeSecret: '%env(STRIPE_SECRET)%'
         tags:
             - controller.service_arguments
-
-    App\Cron\ActivateMemberCron:
-        arguments:
-            $notificationId: '%env(ACTIVATION_NOTIFICATION)%'
-
-    App\Cron\RecurringInvoicesCron:
-        arguments:
-            $notificationId: '%env(RECURRING_NOTIFICATION)%'
-
-    App\Cron\PaymentNotificationCron:
-        arguments:
-            $notificationId: '%env(PAYMENT_NOTIFICATION)%'
 
     App\RapidmailHelper:
         arguments:

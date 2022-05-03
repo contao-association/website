@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App;
 
 use Contao\MemberModel;
+use NotificationCenter\Model\Notification;
 use Stripe\Charge;
 use Stripe\Checkout\Session;
 use Stripe\Customer;
@@ -20,11 +21,13 @@ class StripeHelper
 {
     private CashctrlHelper $cashctrlHelper;
     private StripeClient $client;
+    private int $notificationId;
 
-    public function __construct(StripeClient $client, CashctrlHelper $cashctrlHelper)
+    public function __construct(StripeClient $client, CashctrlHelper $cashctrlHelper, int $paymentNotificationId)
     {
         $this->cashctrlHelper = $cashctrlHelper;
         $this->client = $client;
+        $this->notificationId = $paymentNotificationId;
     }
 
     /**
@@ -111,10 +114,6 @@ class StripeHelper
             // Re-fetch order with updated booking entry
             $order = $this->cashctrlHelper->order->read((int) $session->metadata->cashctrl_order_id);
 
-            if ($order->open <= 0) {
-                $this->cashctrlHelper->markInvoicePaid($order->getId());
-            }
-
             if ($charge->balance_transaction) {
                 $this->addStripeChargesToJournal(
                     $charge->balance_transaction,
@@ -122,6 +121,17 @@ class StripeHelper
                     $entry->getReference(),
                     'Stripe Gebühren für '.$order->getNr()
                 );
+            }
+
+            if ($order->open <= 0) {
+                $member = MemberModel::findOneBy('cashctrl_id', $order->getAssociateId());
+                $notification = Notification::findByPk($this->notificationId);
+
+                if (null === $member || null === $notification) {
+                    $this->cashctrlHelper->order->updateStatus($order->getId(), 18);
+                } else {
+                    $this->cashctrlHelper->notifyInvoicePaid($order, $member, $notification);
+                }
             }
         }
     }

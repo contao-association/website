@@ -30,13 +30,13 @@ class RegistrationController extends ModuleRegistration
      * @noinspection MagicMethodsValidityInspection
      * @noinspection PhpMissingParentConstructorInspection
      */
-    public function __construct(CashctrlHelper $cashctrl, array $memberships, int $notificationId)
+    public function __construct(CashctrlHelper $cashctrl, array $memberships, int $registrationNotificationId)
     {
         // do not call parent constructor
 
         $this->cashctrl = $cashctrl;
         $this->memberships = $memberships;
-        $this->notificationId = $notificationId;
+        $this->notificationId = $registrationNotificationId;
     }
 
     public function __invoke(Request $request, ModuleModel $model, string $section): Response

@@ -6,6 +6,8 @@ namespace App;
 
 use Contao\CoreBundle\Security\Authentication\Token\TokenChecker;
 use Contao\Date;
+use Contao\Versions;
+use Psr\Log\LoggerInterface;
 use Sentry\Event;
 use Sentry\EventHint;
 use Symfony\Cmf\Component\Routing\RouteObjectInterface;
@@ -53,6 +55,7 @@ class CashctrlHelper
     private UrlGeneratorInterface $urlGenerator;
     private UriSigner $uriSigner;
     private Filesystem $filesystem;
+    private LoggerInterface $logger;
     private array $memberships;
     private string $projectDir;
 
@@ -72,6 +75,7 @@ class CashctrlHelper
         UrlGeneratorInterface $urlGenerator,
         UriSigner $uriSigner,
         Filesystem $filesystem,
+        LoggerInterface $logger,
         array $memberships,
         string $projectDir
     ) {
@@ -87,6 +91,7 @@ class CashctrlHelper
         $this->urlGenerator = $urlGenerator;
         $this->uriSigner = $uriSigner;
         $this->filesystem = $filesystem;
+        $this->logger = $logger;
         $this->memberships = $memberships;
         $this->projectDir = $projectDir;
     }
@@ -142,7 +147,7 @@ class CashctrlHelper
             return $invoice;
         }
 
-        $this->markInvoiceSent($invoice->getId());
+        $this->order->updateStatus($invoice->getId(), 16);
 
         return $invoice;
     }
@@ -156,6 +161,7 @@ class CashctrlHelper
             'invoice_date' => $invoice->getDate()->format($this->getDateFormat($member)),
             'invoice_due_days' => $invoice->getDueDays(),
             'invoice_total' => number_format($invoice->total, 2, '.', "'"),
+            'payment_first' => $invoice->getId() === $member->cashctrl_invoice,
         ]);
 
         if ($invoice->isClosed) {
@@ -252,21 +258,6 @@ class CashctrlHelper
         return $targetFile;
     }
 
-    public function markInvoiceSent(int $invoiceId): void
-    {
-        $this->order->updateStatus($invoiceId, 16);
-    }
-
-    public function markInvoicePaid(int $invoiceId): void
-    {
-        $this->order->updateStatus($invoiceId, 18);
-    }
-
-    public function markInvoicePaymentConfirmed(int $invoiceId): void
-    {
-        $this->order->updateStatus($invoiceId, 87);
-    }
-
     public function listInvoices(MemberModel $member): array
     {
         if (!$member->cashctrl_id) {
@@ -300,6 +291,39 @@ class CashctrlHelper
             ->withStatus(18)
             ->sortBy('lastUpdated', 'DESC')
             ->get();
+    }
+
+    public function notifyInvoicePaid(Order $order, MemberModel $member, Notification $notification): void
+    {
+        try {
+            if (!$this->sendInvoiceNotification($notification, $order, $member)) {
+                $this->sentryOrThrow('Unable to send payment notification to '.$member->email);
+                return;
+            }
+        } catch (\Exception $e) {
+            $this->sentryOrThrow('Unable to send payment notification to '.$member->email, $e);
+            return;
+        }
+
+        $this->logger->info('Sent payment notification for CashCtrl invoice '.$order->getNr().' to '.$member->email);
+
+        if ($order->getId() === (int) $member->cashctrl_invoice) {
+            $objVersions = new Versions('tl_member', $member->id);
+            $objVersions->setUsername($member->username);
+            $objVersions->setUserId(0);
+            $objVersions->setEditUrl('contao/main.php?do=member&act=edit&id=%s&rt=1');
+            $objVersions->initialize();
+
+            $member->cashctrl_invoice = 0;
+            $member->disable = '';
+            $member->save();
+
+            $objVersions->create(true);
+        }
+
+        $this->syncMember($member);
+
+        $this->order->updateStatus($order->getId(), 87);
     }
 
     public function addJournalEntry(Journal $journal): Result

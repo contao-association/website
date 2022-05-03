@@ -27,13 +27,13 @@ class RecurringInvoicesCron
         Connection $connection,
         CashctrlHelper $cashctrl,
         LoggerInterface $logger,
-        int $notificationId
+        int $invoiceNotificationId
     ) {
         $this->framework = $framework;
         $this->connection = $connection;
         $this->cashctrl = $cashctrl;
         $this->logger = $logger;
-        $this->notificationId = $notificationId;
+        $this->notificationId = $invoiceNotificationId;
     }
 
     public function __invoke(): void

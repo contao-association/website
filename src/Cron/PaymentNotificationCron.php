@@ -18,15 +18,13 @@ class PaymentNotificationCron
 {
     private ContaoFramework $framework;
     private CashctrlHelper $cashctrl;
-    private LoggerInterface $logger;
     private int $notificationId;
 
-    public function __construct(ContaoFramework $framework, CashctrlHelper $cashctrl, LoggerInterface $logger, int $notificationId)
+    public function __construct(ContaoFramework $framework, CashctrlHelper $cashctrl, int $paymentNotificationId)
     {
         $this->framework = $framework;
         $this->cashctrl = $cashctrl;
-        $this->logger = $logger;
-        $this->notificationId = $notificationId;
+        $this->notificationId = $paymentNotificationId;
     }
 
     public function __invoke(): void
@@ -47,26 +45,11 @@ class PaymentNotificationCron
 
             $member = MemberModel::findOneBy('cashctrl_id', $order->getAssociateId());
 
-            // Do not send payment confirmation for first invoice (account activation)
-            if (null === $member || $member->cashctrl_invoice === $order->getId()) {
+            if (null === $member) {
                 continue;
             }
 
-            $this->logger->info('Sent payment notification for CashCtrl invoice '.$order->getNr().' to '.$member->email);
-
-            $this->cashctrl->syncMember($member);
-
-            try {
-                if (!$this->cashctrl->sendInvoiceNotification($notification, $order, $member)) {
-                    $this->cashctrl->sentryOrThrow('Unable to send payment notification to '.$member->email);
-                    continue;
-                }
-            } catch (\Exception $e) {
-                $this->cashctrl->sentryOrThrow('Unable to send payment notification to '.$member->email, $e);
-                continue;
-            }
-
-            $this->cashctrl->markInvoicePaymentConfirmed($order->getId());
+            $this->cashctrl->notifyInvoicePaid($order, $member, $notification);
         }
     }
 }

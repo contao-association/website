@@ -30,7 +30,7 @@ class RecurringInvoicesCommand extends Command
         Connection $connection,
         CashctrlHelper $cashctrl,
         LoggerInterface $logger,
-        int $notificationId
+        int $invoiceNotificationId
     ) {
         parent::__construct();
 
@@ -38,7 +38,7 @@ class RecurringInvoicesCommand extends Command
         $this->connection = $connection;
         $this->cashctrl = $cashctrl;
         $this->logger = $logger;
-        $this->notificationId = $notificationId;
+        $this->notificationId = $invoiceNotificationId;
     }
 
     protected function configure()
