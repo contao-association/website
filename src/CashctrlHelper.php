@@ -99,12 +99,12 @@ class CashctrlHelper
             }
 
             $result = $this->person->create($person);
-        } catch (RuntimeException $exception) {
-            $this->sentryOrThrow("Error updating member ID {$member->id} in CashCtrl: ".$exception->getMessage());
-        }
 
-        $member->cashctrl_id = $result->insertId();
-        $member->save();
+            $member->cashctrl_id = $result->insertId();
+            $member->save();
+        } catch (RuntimeException $exception) {
+            $this->sentryOrThrow("Error updating member ID {$member->id} in CashCtrl: ".$exception->getMessage(), $exception, ['person' => $person->toArray()]);
+        }
     }
 
     public function createAndSendInvoice(MemberModel $member, int $notificationId, \DateTimeImmutable $invoiceDate = null): ?Order
@@ -307,10 +307,14 @@ class CashctrlHelper
         return null;
     }
 
-    public function sentryOrThrow(string $message, \Exception $exception = null): void
+    public function sentryOrThrow(string $message, \Exception $exception = null, array $contexts = []): void
     {
         $event = Event::createEvent();
         $event->setMessage($message);
+
+        foreach ($contexts as $name => $data) {
+            $event->setContext($name, $data);
+        }
 
         if (null === captureEvent($event, EventHint::fromArray(['exception' => $exception]))) {
             throw new \RuntimeException($message, 0, $exception);
