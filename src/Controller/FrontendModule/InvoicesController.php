@@ -102,7 +102,7 @@ class InvoicesController extends AbstractFrontendModuleController
             $paymentHref = '';
 
             if ($paymentPage instanceof PageModel && !$order->isClosed) {
-                $paymentHref = $this->urlGenerator->generate(RouteObjectInterface::OBJECT_BASED_ROUTE_NAME, array(RouteObjectInterface::CONTENT_OBJECT => $paymentPage, 'orderId' => $order->getId(), 'cancel_url' => $this->getPageModel()->getAbsoluteUrl()), UrlGeneratorInterface::ABSOLUTE_URL);
+                $paymentHref = $this->urlGenerator->generate(RouteObjectInterface::OBJECT_BASED_ROUTE_NAME, [RouteObjectInterface::CONTENT_OBJECT => $paymentPage, 'orderId' => $order->getId(), 'cancel_url' => $this->getPageModel()->getAbsoluteUrl()], UrlGeneratorInterface::ABSOLUTE_URL);
                 $paymentHref = $this->uriSigner->sign($paymentHref);
             }
 

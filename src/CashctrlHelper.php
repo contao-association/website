@@ -4,8 +4,13 @@ declare(strict_types=1);
 
 namespace App;
 
+use Contao\CoreBundle\Security\Authentication\Token\TokenChecker;
+use Contao\Date;
 use Sentry\Event;
 use Sentry\EventHint;
+use Symfony\Cmf\Component\Routing\RouteObjectInterface;
+use Symfony\Component\HttpKernel\UriSigner;
+use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 use Terminal42\CashctrlApi\Api\AccountEndpoint;
 use Terminal42\CashctrlApi\Api\FiscalperiodEndpoint;
 use Terminal42\CashctrlApi\Api\JournalEndpoint;
@@ -44,6 +49,9 @@ class CashctrlHelper
     public OrderBookentryEndpoint $orderBookentry;
     public AccountEndpoint $account;
     private TranslatorInterface $translator;
+    private TokenChecker $tokenChecker;
+    private UrlGeneratorInterface $urlGenerator;
+    private UriSigner $uriSigner;
     private Filesystem $filesystem;
     private array $memberships;
     private string $projectDir;
@@ -60,6 +68,9 @@ class CashctrlHelper
         OrderBookentryEndpoint $orderBookentry,
         AccountEndpoint $account,
         TranslatorInterface $translator,
+        TokenChecker $tokenChecker,
+        UrlGeneratorInterface $urlGenerator,
+        UriSigner $uriSigner,
         Filesystem $filesystem,
         array $memberships,
         string $projectDir
@@ -69,12 +80,15 @@ class CashctrlHelper
         $this->orderDocument = $orderDocument;
         $this->fiscalperiod = $fiscalperiod;
         $this->journal = $journal;
+        $this->orderBookentry = $orderBookentry;
         $this->account = $account;
         $this->translator = $translator;
+        $this->tokenChecker = $tokenChecker;
+        $this->urlGenerator = $urlGenerator;
+        $this->uriSigner = $uriSigner;
         $this->filesystem = $filesystem;
         $this->memberships = $memberships;
         $this->projectDir = $projectDir;
-        $this->orderBookentry = $orderBookentry;
     }
 
     public function syncMember(MemberModel $member): void
@@ -143,6 +157,8 @@ class CashctrlHelper
         if ($invoice->isClosed) {
             $tokens['payment_date'] = ApiClient::parseDateTime($invoice->dateLastBooked)->format($this->getDateFormat($member));
             $tokens['payment_total'] = number_format($invoice->total - $invoice->open, 2, '.', "'");
+        } else {
+            $tokens['payment_link'] = $this->getPaymentLink($invoice, $member);
         }
 
         StringUtil::flatten($member->row(), 'member', $tokens);
@@ -420,13 +436,46 @@ class CashctrlHelper
             return $this->dateFormat[$locale];
         }
 
-        $page = PageModel::findOneBy(['language=?', "type='root'"], [$locale]);
+        $page = $this->getRootPageForLocale($locale);
 
         if (null !== $page && $page->dateFormat) {
             return $this->dateFormat[$locale] = $page->dateFormat;
         }
 
         return $this->dateFormat[$locale] = $GLOBALS['TL_CONFIG']['dateFormat'];
+    }
+
+    private function getRootPageForLocale(string $locale): ?PageModel
+    {
+        $t = PageModel::getTable();
+        $columns = ["$t.language=? AND $t.type='root'"];
+
+        if (!$this->tokenChecker->isPreviewMode())
+        {
+            $time = Date::floorToMinute();
+            $columns[] = "$t.published='1' AND ($t.start='' OR $t.start<='$time') AND ($t.stop='' OR $t.stop>'$time')";
+        }
+
+        return PageModel::findOneBy($columns, [$locale]);
+    }
+
+    private function getPaymentLink(Order $order, MemberModel $member): ?string
+    {
+        $rootPage = $this->getRootPageForLocale($member->language ?: 'de');
+
+        if (null === $rootPage) {
+            return null;
+        }
+
+        $paymentPage = PageModel::findFirstPublishedByTypeAndPid('payment', $rootPage->id);
+
+        if (null === $paymentPage) {
+            return null;
+        }
+
+        $url = $this->urlGenerator->generate(RouteObjectInterface::OBJECT_BASED_ROUTE_NAME, [RouteObjectInterface::CONTENT_OBJECT => $paymentPage, 'orderId' => $order->getId()], UrlGeneratorInterface::ABSOLUTE_URL);
+
+        return $this->uriSigner->sign($url);
     }
 
     private function setFiscalPeriod(\DateTimeInterface $date = null): void
