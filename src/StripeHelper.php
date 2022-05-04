@@ -19,6 +19,8 @@ use Terminal42\CashctrlApi\Entity\OrderBookentry;
 
 class StripeHelper
 {
+    use ErrorHandlingTrait;
+
     private CashctrlHelper $cashctrlHelper;
     private StripeClient $client;
     private int $notificationId;
@@ -95,7 +97,7 @@ class StripeHelper
         $order = $this->cashctrlHelper->order->read((int) $session->metadata->cashctrl_order_id);
 
         if (null === $order) {
-            $this->cashctrlHelper->sentryOrThrow('Order ID "'.$session->metadata->cashctrl_order_id.'" for Stripe checkout session "'.$session->id.'" not found');
+            $this->sentryOrThrow('Order ID "'.$session->metadata->cashctrl_order_id.'" for Stripe checkout session "'.$session->id.'" not found');
             return;
         }
 
@@ -146,14 +148,14 @@ class StripeHelper
         $member = MemberModel::findByPk((int) $session->metadata->contao_member_id);
 
         if (null === $member) {
-            $this->cashctrlHelper->sentryOrThrow('Member ID "'.$session->metadata->contao_member_id.'" for Stripe checkout session "'.$session->id.'" not found');
+            $this->sentryOrThrow('Member ID "'.$session->metadata->contao_member_id.'" for Stripe checkout session "'.$session->id.'" not found');
             return;
         }
 
         $setupIntent = $session->setup_intent instanceof SetupIntent ? $session->setup_intent : $this->client->setupIntents->retrieve($session->setup_intent);
 
         if (null === $setupIntent->payment_method) {
-            $this->cashctrlHelper->sentryOrThrow('Stripe checkout session "'.$session->id.'" has no payment method');
+            $this->sentryOrThrow('Stripe checkout session "'.$session->id.'" has no payment method');
             return;
         }
 

@@ -8,8 +8,6 @@ use Contao\CoreBundle\Security\Authentication\Token\TokenChecker;
 use Contao\Date;
 use Contao\Versions;
 use Psr\Log\LoggerInterface;
-use Sentry\Event;
-use Sentry\EventHint;
 use Symfony\Cmf\Component\Routing\RouteObjectInterface;
 use Symfony\Component\HttpKernel\UriSigner;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
@@ -39,10 +37,11 @@ use Haste\Util\StringUtil;
 use Contao\PageModel;
 use Terminal42\CashctrlApi\Exception\RuntimeException;
 use Terminal42\CashctrlApi\Result;
-use function Sentry\captureEvent;
 
 class CashctrlHelper
 {
+    use ErrorHandlingTrait;
+
     public PersonEndpoint $person;
     public OrderEndpoint $order;
     public OrderDocumentEndpoint $orderDocument;
@@ -355,20 +354,6 @@ class CashctrlHelper
         }
 
         return null;
-    }
-
-    public function sentryOrThrow(string $message, \Exception $exception = null, array $contexts = []): void
-    {
-        $event = Event::createEvent();
-        $event->setMessage($message);
-
-        foreach ($contexts as $name => $data) {
-            $event->setContext($name, $data);
-        }
-
-        if (null === captureEvent($event, EventHint::fromArray(['exception' => $exception]))) {
-            throw new \RuntimeException($message, 0, $exception);
-        }
     }
 
     private function updatePerson(Person $person, MemberModel $member): void

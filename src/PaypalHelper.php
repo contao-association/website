@@ -14,6 +14,8 @@ use Terminal42\CashctrlApi\Entity\OrderBookentry;
 
 class PaypalHelper
 {
+    use ErrorHandlingTrait;
+
     private PayPalHttpClient $client;
     private CashctrlHelper $cashctrlHelper;
     private OrderBookentryEndpoint $bookentry;
@@ -111,7 +113,7 @@ class PaypalHelper
 
             default:
                 $journal->setCreditId($this->cashctrlHelper->getAccountId(1100));
-                $this->cashctrlHelper->sentryOrThrow('PayPal-Zahlung in CashCtrl prüfen: '.$journal->getReference().' von '.$this->getName($transaction));
+                $this->sentryOrThrow('PayPal-Zahlung in CashCtrl prüfen: '.$journal->getReference().' von '.$this->getName($transaction));
                 break;
         }
 

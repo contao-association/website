@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Cron;
 
+use App\ErrorHandlingTrait;
 use App\PaypalHelper;
 use Contao\CoreBundle\ServiceAnnotation\CronJob;
 use App\CashctrlHelper;
@@ -13,6 +14,8 @@ use App\CashctrlHelper;
  */
 class PaypalImportCron
 {
+    use ErrorHandlingTrait;
+
     private PaypalHelper $paypalHelper;
     private CashctrlHelper $cashctrlHelper;
 
@@ -33,7 +36,7 @@ class PaypalImportCron
             try {
                 $this->paypalHelper->bookTransaction($transaction);
             } catch (\RuntimeException $exception) {
-                $this->cashctrlHelper->sentryOrThrow('Error in PayPal cronjob', $exception);
+                $this->sentryOrThrow('Error in PayPal cronjob', $exception);
                 continue;
             }
         }

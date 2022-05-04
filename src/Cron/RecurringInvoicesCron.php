@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Cron;
 
+use App\ErrorHandlingTrait;
 use Contao\CoreBundle\Framework\ContaoFramework;
 use Contao\MemberModel;
 use Contao\CoreBundle\ServiceAnnotation\CronJob;
@@ -16,6 +17,8 @@ use App\CashctrlHelper;
  */
 class RecurringInvoicesCron
 {
+    use ErrorHandlingTrait;
+
     private ContaoFramework $framework;
     private Connection $connection;
     private CashctrlHelper $cashctrl;
@@ -64,7 +67,7 @@ class RecurringInvoicesCron
                     $this->logger->info('Recurring membership invoice '.$invoice->getNr().' sent to '.$member->email);
                 }
             } catch (\Exception $e) {
-                $this->cashctrl->sentryOrThrow('Unable to send recurring invoice to '.$member->email.' (member ID '.$member->id.')', $e);
+                $this->sentryOrThrow('Unable to send recurring invoice to '.$member->email.' (member ID '.$member->id.')', $e);
             }
         }
     }

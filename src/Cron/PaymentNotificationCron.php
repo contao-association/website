@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Cron;
 
+use App\ErrorHandlingTrait;
 use Contao\CoreBundle\Framework\ContaoFramework;
 use Contao\MemberModel;
 use Contao\CoreBundle\ServiceAnnotation\CronJob;
@@ -16,6 +17,8 @@ use App\CashctrlHelper;
  */
 class PaymentNotificationCron
 {
+    use ErrorHandlingTrait;
+
     private ContaoFramework $framework;
     private CashctrlHelper $cashctrl;
     private int $notificationId;
@@ -34,7 +37,7 @@ class PaymentNotificationCron
         $notification = Notification::findByPk($this->notificationId);
 
         if (null === $notification) {
-            $this->cashctrl->sentryOrThrow('Notification ID "'.$this->notificationId.'" not found, cannot send payment notification');
+            $this->sentryOrThrow('Notification ID "'.$this->notificationId.'" not found, cannot send payment notification');
             return;
         }
 
