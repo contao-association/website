@@ -5,6 +5,9 @@
             <trans-unit id="FMD.invoices.0">
                 <source>Invoices (CashCtrl &amp; Harvest)</source>
             </trans-unit>
+            <trans-unit id="FMD.payments.0">
+                <source>Stripe Payments</source>
+            </trans-unit>
         </body>
     </file>
 </xliff>

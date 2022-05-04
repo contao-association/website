@@ -8,6 +8,8 @@ use Contao\CoreBundle\Security\Authentication\Token\TokenChecker;
 use Contao\Date;
 use Contao\Versions;
 use Psr\Log\LoggerInterface;
+use Stripe\Exception\ApiErrorException;
+use Stripe\StripeClient;
 use Symfony\Cmf\Component\Routing\RouteObjectInterface;
 use Symfony\Component\HttpKernel\UriSigner;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
@@ -49,6 +51,7 @@ class CashctrlHelper
     public JournalEndpoint $journal;
     public OrderBookentryEndpoint $orderBookentry;
     public AccountEndpoint $account;
+    private StripeClient $stripeClient;
     private TranslatorInterface $translator;
     private TokenChecker $tokenChecker;
     private UrlGeneratorInterface $urlGenerator;
@@ -70,6 +73,7 @@ class CashctrlHelper
         OrderBookentryEndpoint $orderBookentry,
         AccountEndpoint $account,
         TranslatorInterface $translator,
+        StripeClient $stripeClient,
         TokenChecker $tokenChecker,
         UrlGeneratorInterface $urlGenerator,
         UriSigner $uriSigner,
@@ -85,6 +89,7 @@ class CashctrlHelper
         $this->journal = $journal;
         $this->orderBookentry = $orderBookentry;
         $this->account = $account;
+        $this->stripeClient = $stripeClient;
         $this->translator = $translator;
         $this->tokenChecker = $tokenChecker;
         $this->urlGenerator = $urlGenerator;
@@ -141,7 +146,12 @@ class CashctrlHelper
         $invoice = $this->createMemberInvoice($member, $invoiceDate);
         $pdf = $this->archiveInvoice($invoice, 'ch' === $member->country ? 1011 : 1013, $member->language ?: 'de');
 
-        if (!$this->sendInvoiceNotification($notification, $invoice, $member, ['invoice_pdf' => $pdf])) {
+        $status = 'manual';
+        if (!empty($member->stripe_payment_method)) {
+            $status = $this->chargeWithStripe($invoice, $member) ? 'paid' : 'error';
+        }
+
+        if (!$this->sendInvoiceNotification($notification, $invoice, $member, ['invoice_pdf' => $pdf, 'payment_status' => $status])) {
             $this->sentryOrThrow('Unable to send invoice email to '.$member->email);
             return $invoice;
         }
@@ -151,7 +161,7 @@ class CashctrlHelper
         return $invoice;
     }
 
-    public function sendInvoiceNotification(Notification $notification, Order $invoice, MemberModel $member, array $tokens = []): bool
+    private function sendInvoiceNotification(Notification $notification, Order $invoice, MemberModel $member, array $tokens = []): bool
     {
         $tokens = array_merge($tokens, [
             'admin_email' => Config::get('adminEmail'),
@@ -181,7 +191,7 @@ class CashctrlHelper
         return true;
     }
 
-    public function createMemberInvoice(MemberModel $member, \DateTimeImmutable $invoiceDate): Order
+    private function createMemberInvoice(MemberModel $member, \DateTimeImmutable $invoiceDate): Order
     {
         $order = $this->prepareMemberInvoice($member, $invoiceDate);
 
@@ -190,7 +200,7 @@ class CashctrlHelper
         return $this->order->read($insertId);
     }
 
-    public function prepareMemberInvoice(MemberModel $member, \DateTimeImmutable $invoiceDate): Order
+    private function prepareMemberInvoice(MemberModel $member, \DateTimeImmutable $invoiceDate): Order
     {
         $this->setFiscalPeriod($invoiceDate);
 
@@ -242,7 +252,7 @@ class CashctrlHelper
         return $this->orderDocument->downloadPdf([$invoice->getId()], $language);
     }
 
-    public function archiveInvoice(Order $invoice, int $templateId = null, string $language): string
+    private function archiveInvoice(Order $invoice, int $templateId = null, string $language): string
     {
         $year = $invoice->getDate()->format('Y');
         $quarter = ceil($invoice->getDate()->format('n') / 3);
@@ -547,5 +557,43 @@ class CashctrlHelper
         $item->setDescription($itemDescription);
 
         return $item;
+    }
+
+    private function chargeWithStripe(Order $order, MemberModel $member): bool
+    {
+        if (empty($member->stripe_payment_method)) {
+            return false;
+        }
+
+        try {
+            $paymentIntent = $this->stripeClient->paymentIntents->create([
+                'amount' => (int) round($order->total * 100),
+                'currency' => strtolower($order->currencyCode),
+                'confirm' => true,
+                'customer' => $member->stripe_customer,
+                'description' => $order->getDescription(),
+                'metadata' => [
+                    'cashctrl_order_id' => $order->getId(),
+                ],
+                'off_session' => true,
+                'payment_method' => $member->stripe_payment_method,
+            ]);
+
+            if ('succeeded' !== $paymentIntent->status) {
+                $this->sentryOrThrow("Stripe PaymentIntent created with status \"{$paymentIntent->status}\"", null, [
+                    'payment_intent' => $paymentIntent->toArray(),
+                    'order' => $order->toArray(),
+                    'member' => $member->row(),
+                ]);
+            }
+
+            return true;
+        } catch (ApiErrorException $exception) {
+            $this->sentryOrThrow('Failed charging member invoice through Stripe.', $exception, [
+                'order' => $order->toArray(),
+                'member' => $member->row(),
+            ]);
+            return false;
+        }
     }
 }

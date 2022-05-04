@@ -26,6 +26,19 @@
                 <source>payment_yearly</source>
                 <target>EUR {amount} pro Jahr</target>
             </trans-unit>
+            <trans-unit id="payment_card">
+                <source>payment_card</source>
+                <target>{brand} Kreditkarte (XXXX XXXX XXXX {digits}), gültig bis {month} {year}.</target>
+            </trans-unit>
+            <trans-unit id="payment_card.visa">
+                <source>payment_card.visa</source>
+                <target>VISA</target>
+            </trans-unit>
+            <trans-unit id="payment_card.mastercard">
+                <source>payment_card.mastercard</source>
+                <target>Mastercard</target>
+            </trans-unit>
+
             <trans-unit id="membership.active">
                 <source>membership.active</source>
                 <target>Aktivmitglied</target>

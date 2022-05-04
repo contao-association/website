@@ -95,7 +95,7 @@ $GLOBALS['TL_DCA']['tl_member']['fields']['membership_invoiced'] = [
     'sorting' => true,
     'flag' => \Contao\DataContainer::SORT_DAY_DESC,
     'inputType' => 'text',
-    'eval' => ['rgxp' => 'date', 'disabled' => true, 'tl_class' => 'w50 wizard'],
+    'eval' => ['rgxp' => 'date', 'datepicker' => true, 'tl_class' => 'w50 wizard'],
     'sql' => "varchar(10) NOT NULL default ''",
 ];
 

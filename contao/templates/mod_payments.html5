@@ -1,0 +1,39 @@
+<?php $this->extend('block_unsearchable'); ?><?php $this->block('content'); ?>
+
+<?php if ($this->paymentMethod): ?>
+  <p>Zukünftige Rechnungen werden automatisch folgendem Zahlungsmittel belastet:</p>
+  <p><?= $this->paymentMethod ?></p>
+
+  <form method="post">
+    <div class="formbody">
+      <input type="hidden" name="FORM_SUBMIT" value="stripe_payment">
+      <input type="hidden" name="REQUEST_TOKEN" value="{{request_token}}">
+      <button name="action" value="setup">Zahlungsdaten ändern</button>
+      <button name="action" value="delete">Zahlungsdaten löschen</button>
+      <?php if ('de' === $GLOBALS['TL_LANGUAGE']): ?>
+        <a href="{{link_open::28}}" class="button">{{link_title::28}}</a>
+      <?php else: ?>
+        <a href="{{link_open::40}}" class="button">{{link_title::40}}</a>
+      <?php endif; ?>
+    </div>
+  </form>
+
+<?php else : ?>
+
+  <p>Wir können zukünftige Rechnungen automatisch deiner Kreditkarte oder Bank zu belasten.<br>Hinterlege dazu deine Daten bei unserem Zahlungsanbieter Stripe.</p>
+  <form method="post">
+    <div class="formbody">
+      <input type="hidden" name="FORM_SUBMIT" value="stripe_payment">
+      <input type="hidden" name="REQUEST_TOKEN" value="{{request_token}}">
+      <button name="action" value="setup">Zahlungsdaten hinterlegen</button>
+      <?php if ('de' === $GLOBALS['TL_LANGUAGE']): ?>
+        <a href="{{link_open::28}}" class="button">{{link_title::28}}</a>
+      <?php else: ?>
+        <a href="{{link_open::40}}" class="button">{{link_title::40}}</a>
+      <?php endif; ?>
+    </div>
+  </form>
+
+<?php endif; ?>
+
+<?php $this->endblock(); ?>

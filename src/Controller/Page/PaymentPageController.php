@@ -70,12 +70,13 @@ class PaymentPageController
 
         $customer = $this->stripeHelper->createOrUpdateCustomer($member);
         $session = $this->stripeClient->checkout->sessions->create([
+            'mode' => 'payment',
             'customer' => $customer->id,
+            'locale' => strtolower($member->language),
             'metadata' => [
                 'cashctrl_order_id' => $order->getId(),
                 'contao_member_id' => $member->id,
             ],
-            'mode' => 'payment',
             'line_items' => $lineItems,
             'success_url' => $this->getTargetPage($pageModel)->getAbsoluteUrl(),
             'cancel_url' => $request->query->get('cancel_url') ?: PageModel::findByPk($pageModel->rootId)->getAbsoluteUrl(),

@@ -193,6 +193,17 @@ div[class^="mod_"] {
   }
 }
 
+.mod_payments {
+  margin-top: 0 !important;
+
+  .formbody {
+    display: flex;
+    gap: 20px;
+    margin-top: 30px;
+  }
+}
+
+
 @media (max-width : 991px) {
   .mod_article {
     overflow : visible
