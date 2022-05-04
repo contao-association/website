@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App;
 
+use Contao\CoreBundle\Framework\ContaoFramework;
 use Contao\MemberModel;
 use NotificationCenter\Model\Notification;
 use Stripe\Charge;
@@ -15,19 +16,20 @@ use Stripe\PaymentMethod;
 use Stripe\SetupIntent;
 use Stripe\StripeClient;
 use Terminal42\CashctrlApi\Entity\Journal;
-use Terminal42\CashctrlApi\Entity\Order;
 use Terminal42\CashctrlApi\Entity\OrderBookentry;
 
 class StripeHelper
 {
     use ErrorHandlingTrait;
 
+    private ContaoFramework $framework;
     private CashctrlHelper $cashctrlHelper;
     private StripeClient $client;
     private int $notificationId;
 
-    public function __construct(StripeClient $client, CashctrlHelper $cashctrlHelper, int $paymentNotificationId)
+    public function __construct(ContaoFramework $framework, StripeClient $client, CashctrlHelper $cashctrlHelper, int $paymentNotificationId)
     {
+        $this->framework = $framework;
         $this->cashctrlHelper = $cashctrlHelper;
         $this->client = $client;
         $this->notificationId = $paymentNotificationId;
@@ -127,6 +129,8 @@ class StripeHelper
             }
 
             if ($order->open <= 0) {
+                $this->framework->initialize();
+
                 $member = MemberModel::findOneBy('cashctrl_id', $order->getAssociateId());
                 $notification = Notification::findByPk($this->notificationId);
 
@@ -145,6 +149,8 @@ class StripeHelper
             // Ignore Stripe sessions without setup intent
             return;
         }
+
+        $this->framework->initialize();
 
         $member = MemberModel::findByPk((int) $session->metadata->contao_member_id);
 
