@@ -70,25 +70,27 @@ class MembershipListener
 
         switch ($t[1] ?? null) {
             case 'renew':
-                $date = \DateTime::createFromFormat('U', $user->membership_start);
-                $time = time();
-                while ($date->format('U') < $time) {
-                    $date->modify('+1 year');
-                }
+                $date = \DateTime::createFromFormat('U', $user->membership_invoiced);
+                $date->add(new \DateInterval('P1D'));
 
                 return Date::parse('d. F Y', $date->format('U'));
 
-            case 'yearly':
+            case 'payment':
                 $config = $this->memberships[$user->membership];
+                $transId = 'payment_yearly';
                 $price = $config['price'];
 
                 if ($config['custom'] ?? false) {
                     $price = $user->membership_amount;
-                } elseif ($config['type'] === 'month') {
-                    $price = 12 * $config['price'];
+                } elseif ('month' === $config['type']) {
+                    if (($config['freeMember'] ?? false) && 'month' === $user->membership_interval) {
+                        $transId = 'payment_monthly';
+                    } else {
+                        $price = 12 * $config['price'];
+                    }
                 }
 
-                return number_format((float) $price, 2, '.', "'");
+                return $this->translator->trans($transId, ['{amount}' => number_format((float) $price, 2, '.', "'")]);
 
             case 'amount':
                 return $this->formatAmount($user->membership, $user->membership_amount);

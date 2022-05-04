@@ -18,6 +18,14 @@
                 <source>payment_error</source>
                 <target>Online payment failed, please try again.</target>
             </trans-unit>
+            <trans-unit id="payment_monthly">
+                <source>payment_monthly</source>
+                <target>EUR {amount} per month</target>
+            </trans-unit>
+            <trans-unit id="payment_yearly">
+                <source>payment_yearly</source>
+                <target>EUR {amount} per year</target>
+            </trans-unit>
             <trans-unit id="membership.active">
                 <source>membership.active</source>
                 <target>Active member</target>
@@ -210,7 +218,7 @@
             </trans-unit>
             <trans-unit id="invoice_pdf">
                 <source>invoice_pdf</source>
-                <target>Download PDF</target>
+                <target>Show PDF</target>
             </trans-unit>
             <trans-unit id="invoice_link">
                 <source>invoice_link</source>
