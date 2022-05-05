@@ -1184,16 +1184,16 @@
         },
         {
             "name": "contao/core-bundle",
-            "version": "4.13.2",
+            "version": "4.13.4",
             "source": {
                 "type": "git",
                 "url": "https://github.com/contao/core-bundle.git",
-                "reference": "835ce301f12ed52ef798a60ff96d49bcff25c73c"
+                "reference": "3137960c4002f56b96ab3d685d9519236528dc46"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/contao/core-bundle/zipball/835ce301f12ed52ef798a60ff96d49bcff25c73c",
-                "reference": "835ce301f12ed52ef798a60ff96d49bcff25c73c",
+                "url": "https://api.github.com/repos/contao/core-bundle/zipball/3137960c4002f56b96ab3d685d9519236528dc46",
+                "reference": "3137960c4002f56b96ab3d685d9519236528dc46",
                 "shasum": ""
             },
             "require": {
@@ -1272,7 +1272,7 @@
                 "symfony/config": "^5.4",
                 "symfony/console": "^5.4",
                 "symfony/dependency-injection": "^5.4",
-                "symfony/deprecation-contracts": "^2.1",
+                "symfony/deprecation-contracts": "^2.1 || ^3.0",
                 "symfony/doctrine-bridge": "^5.4",
                 "symfony/dom-crawler": "^5.4",
                 "symfony/event-dispatcher": "^5.4",
@@ -1309,7 +1309,7 @@
                 "symfony/uid": "^5.4",
                 "symfony/var-dumper": "^5.4",
                 "symfony/yaml": "^5.4",
-                "terminal42/escargot": "^1.2",
+                "terminal42/escargot": "^1.4.1",
                 "terminal42/service-annotation-bundle": "^1.1",
                 "twig/twig": "^3.0",
                 "ua-parser/uap-php": "^3.9",
@@ -1382,7 +1382,7 @@
                 "issues": "https://github.com/contao/contao/issues",
                 "source": "https://github.com/contao/core-bundle"
             },
-            "time": "2022-03-31T14:53:48+00:00"
+            "time": "2022-05-05T07:50:48+00:00"
         },
         {
             "name": "contao/image",
@@ -1504,16 +1504,16 @@
         },
         {
             "name": "contao/installation-bundle",
-            "version": "4.13.2",
+            "version": "4.13.4",
             "source": {
                 "type": "git",
                 "url": "https://github.com/contao/installation-bundle.git",
-                "reference": "13438e9550d3e15dce6afd6a8339fb3d70c9d887"
+                "reference": "aff3ba5e49e3d0003980c1ab3079b0f999030373"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/contao/installation-bundle/zipball/13438e9550d3e15dce6afd6a8339fb3d70c9d887",
-                "reference": "13438e9550d3e15dce6afd6a8339fb3d70c9d887",
+                "url": "https://api.github.com/repos/contao/installation-bundle/zipball/aff3ba5e49e3d0003980c1ab3079b0f999030373",
+                "reference": "aff3ba5e49e3d0003980c1ab3079b0f999030373",
                 "shasum": ""
             },
             "require": {
@@ -1525,7 +1525,7 @@
                 "symfony/config": "^5.4",
                 "symfony/console": "^5.4",
                 "symfony/dependency-injection": "^5.4",
-                "symfony/deprecation-contracts": "^2.1",
+                "symfony/deprecation-contracts": "^2.1 || ^3.0",
                 "symfony/event-dispatcher": "^5.4",
                 "symfony/filesystem": "^5.4",
                 "symfony/finder": "^5.4",
@@ -1576,20 +1576,20 @@
                 "issues": "https://github.com/contao/contao/issues",
                 "source": "https://github.com/contao/installation-bundle"
             },
-            "time": "2022-03-31T14:53:48+00:00"
+            "time": "2022-05-02T15:20:14+00:00"
         },
         {
             "name": "contao/manager-bundle",
-            "version": "4.13.2",
+            "version": "4.13.4",
             "source": {
                 "type": "git",
                 "url": "https://github.com/contao/manager-bundle.git",
-                "reference": "3488dbacdf888e088750ea14c184fececc5e06ab"
+                "reference": "f4dff6835ef2390d5ccdc8eef7e563f2660dd371"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/contao/manager-bundle/zipball/3488dbacdf888e088750ea14c184fececc5e06ab",
-                "reference": "3488dbacdf888e088750ea14c184fececc5e06ab",
+                "url": "https://api.github.com/repos/contao/manager-bundle/zipball/f4dff6835ef2390d5ccdc8eef7e563f2660dd371",
+                "reference": "f4dff6835ef2390d5ccdc8eef7e563f2660dd371",
                 "shasum": ""
             },
             "require": {
@@ -1609,7 +1609,7 @@
                 "symfony/console": "^5.4",
                 "symfony/debug-bundle": "^5.4",
                 "symfony/dependency-injection": "^5.4",
-                "symfony/deprecation-contracts": "^2.1",
+                "symfony/deprecation-contracts": "^2.1 || ^3.0",
                 "symfony/doctrine-bridge": "^5.4",
                 "symfony/dotenv": "^5.4",
                 "symfony/error-handler": "^5.4",
@@ -1679,7 +1679,7 @@
                 "issues": "https://github.com/contao/contao/issues",
                 "source": "https://github.com/contao/manager-bundle"
             },
-            "time": "2022-03-31T14:53:48+00:00"
+            "time": "2022-05-02T15:20:14+00:00"
         },
         {
             "name": "contao/manager-plugin",
@@ -3189,16 +3189,16 @@
         },
         {
             "name": "friendsofphp/proxy-manager-lts",
-            "version": "v1.0.10",
+            "version": "v1.0.11",
             "source": {
                 "type": "git",
                 "url": "https://github.com/FriendsOfPHP/proxy-manager-lts.git",
-                "reference": "88dda72c48633326c81a01b861c8b6a923948f56"
+                "reference": "d1eadf86d5b843c496614ef075a8f655a880f1d8"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/FriendsOfPHP/proxy-manager-lts/zipball/88dda72c48633326c81a01b861c8b6a923948f56",
-                "reference": "88dda72c48633326c81a01b861c8b6a923948f56",
+                "url": "https://api.github.com/repos/FriendsOfPHP/proxy-manager-lts/zipball/d1eadf86d5b843c496614ef075a8f655a880f1d8",
+                "reference": "d1eadf86d5b843c496614ef075a8f655a880f1d8",
                 "shasum": ""
             },
             "require": {
@@ -3255,7 +3255,7 @@
             ],
             "support": {
                 "issues": "https://github.com/FriendsOfPHP/proxy-manager-lts/issues",
-                "source": "https://github.com/FriendsOfPHP/proxy-manager-lts/tree/v1.0.10"
+                "source": "https://github.com/FriendsOfPHP/proxy-manager-lts/tree/v1.0.11"
             },
             "funding": [
                 {
@@ -3267,7 +3267,7 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2022-05-01T10:41:21+00:00"
+            "time": "2022-05-04T11:03:58+00:00"
         },
         {
             "name": "friendsofsymfony/http-cache",
@@ -7419,16 +7419,16 @@
         },
         {
             "name": "stripe/stripe-php",
-            "version": "v7.125.0",
+            "version": "v7.126.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/stripe/stripe-php.git",
-                "reference": "822c00aa380c10c2a3c55d105c5da72ad577b7c4"
+                "reference": "c36de62a89475e81d9c75ec08de19376466f67b7"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/stripe/stripe-php/zipball/822c00aa380c10c2a3c55d105c5da72ad577b7c4",
-                "reference": "822c00aa380c10c2a3c55d105c5da72ad577b7c4",
+                "url": "https://api.github.com/repos/stripe/stripe-php/zipball/c36de62a89475e81d9c75ec08de19376466f67b7",
+                "reference": "c36de62a89475e81d9c75ec08de19376466f67b7",
                 "shasum": ""
             },
             "require": {
@@ -7473,9 +7473,9 @@
             ],
             "support": {
                 "issues": "https://github.com/stripe/stripe-php/issues",
-                "source": "https://github.com/stripe/stripe-php/tree/v7.125.0"
+                "source": "https://github.com/stripe/stripe-php/tree/v7.126.0"
             },
-            "time": "2022-04-21T22:31:37+00:00"
+            "time": "2022-05-03T15:37:27+00:00"
         },
         {
             "name": "symfony-cmf/routing",
