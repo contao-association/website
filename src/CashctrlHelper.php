@@ -130,7 +130,7 @@ class CashctrlHelper
         }
     }
 
-    public function createAndSendInvoice(MemberModel $member, int $notificationId, \DateTimeImmutable $invoiceDate = null): ?Order
+    public function createAndSendInvoice(MemberModel $member, int $notificationId, \DateTimeImmutable $invoiceDate): ?Order
     {
         $notification = Notification::findByPk($notificationId);
 
@@ -210,7 +210,7 @@ class CashctrlHelper
         $invoiceDescription = sprintf(
             '%s/%s - %s %s%s',
             $member->id,
-            $invoiceDate->format('Y'),
+            $invoiceDate->format($monthly ? 'm-Y' : 'Y'),
             $member->firstname,
             $member->lastname,
             ($member->company ? ', '.$member->company : '')
@@ -568,7 +568,7 @@ class CashctrlHelper
         try {
             $paymentIntent = $this->stripeClient->paymentIntents->create([
                 'amount' => (int) round($order->total * 100),
-                'currency' => strtolower($order->currencyCode),
+                'currency' => strtolower($order->currencyCode ?: 'eur'),
                 'confirm' => true,
                 'customer' => $member->stripe_customer,
                 'description' => $order->getDescription(),

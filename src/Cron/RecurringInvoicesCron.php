@@ -61,7 +61,8 @@ class RecurringInvoicesCron
         foreach ($members as $member) {
             try {
                 $this->cashctrl->syncMember($member);
-                $invoice = $this->cashctrl->createAndSendInvoice($member, $this->notificationId);
+                $invoiceDate = (new \DateTimeImmutable())->setTimestamp((int) $member->membership_invoiced)->add(new \DateInterval('P1D'));
+                $invoice = $this->cashctrl->createAndSendInvoice($member, $this->notificationId, $invoiceDate);
 
                 if (null !== $invoice) {
                     $this->logger->info('Recurring membership invoice '.$invoice->getNr().' sent to '.$member->email);

@@ -55,7 +55,7 @@ class RegistrationController extends ModuleRegistration
     protected function createNewUser($arrData): void
     {
         $member = $this->createMember($arrData);
-        $invoice = $this->cashctrl->createAndSendInvoice($member, $this->notificationId);
+        $invoice = $this->cashctrl->createAndSendInvoice($member, $this->notificationId, new \DateTimeImmutable());
 
         if (null !== $invoice) {
             $member->cashctrl_invoice = $invoice->getId();
