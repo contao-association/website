@@ -79,7 +79,7 @@ class PaymentPageController
             ],
             'line_items' => $lineItems,
             'success_url' => $this->getTargetPage($pageModel)->getAbsoluteUrl(),
-            'cancel_url' => $request->query->get('cancel_url') ?: PageModel::findByPk($pageModel->rootId)->getAbsoluteUrl(),
+            'cancel_url' => $request->query->get('cancel_url') ?: PageModel::findFirstPublishedRegularByPid($pageModel->rootId)->getAbsoluteUrl(),
         ]);
 
         return new RedirectResponse($session->url);
