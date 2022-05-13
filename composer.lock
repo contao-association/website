@@ -264,16 +264,16 @@
         },
         {
             "name": "codefog/contao-haste",
-            "version": "4.25.12",
+            "version": "4.25.13",
             "source": {
                 "type": "git",
                 "url": "https://github.com/codefog/contao-haste.git",
-                "reference": "ba1bcd271840d1a46af789a5a955b172fccfd5f0"
+                "reference": "d24bb14c1d46835656c51c22c93e935815a12f06"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/codefog/contao-haste/zipball/ba1bcd271840d1a46af789a5a955b172fccfd5f0",
-                "reference": "ba1bcd271840d1a46af789a5a955b172fccfd5f0",
+                "url": "https://api.github.com/repos/codefog/contao-haste/zipball/d24bb14c1d46835656c51c22c93e935815a12f06",
+                "reference": "d24bb14c1d46835656c51c22c93e935815a12f06",
                 "shasum": ""
             },
             "require": {
@@ -331,7 +331,7 @@
             ],
             "support": {
                 "issues": "https://github.com/codefog/contao-haste/issues",
-                "source": "https://github.com/codefog/contao-haste/tree/4.25.12"
+                "source": "https://github.com/codefog/contao-haste/tree/4.25.13"
             },
             "funding": [
                 {
@@ -339,7 +339,7 @@
                     "type": "github"
                 }
             ],
-            "time": "2022-04-22T09:43:34+00:00"
+            "time": "2022-05-07T12:28:07+00:00"
         },
         {
             "name": "composer/ca-bundle",
@@ -2903,16 +2903,16 @@
         },
         {
             "name": "doctrine/persistence",
-            "version": "2.5.2",
+            "version": "2.5.3",
             "source": {
                 "type": "git",
                 "url": "https://github.com/doctrine/persistence.git",
-                "reference": "4276c6cbc0ca692c190f650a2678623bf04af2d2"
+                "reference": "d7edf274b6d35ad82328e223439cc2bb2f92bd9e"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/doctrine/persistence/zipball/4276c6cbc0ca692c190f650a2678623bf04af2d2",
-                "reference": "4276c6cbc0ca692c190f650a2678623bf04af2d2",
+                "url": "https://api.github.com/repos/doctrine/persistence/zipball/d7edf274b6d35ad82328e223439cc2bb2f92bd9e",
+                "reference": "d7edf274b6d35ad82328e223439cc2bb2f92bd9e",
                 "shasum": ""
             },
             "require": {
@@ -2985,7 +2985,7 @@
             ],
             "support": {
                 "issues": "https://github.com/doctrine/persistence/issues",
-                "source": "https://github.com/doctrine/persistence/tree/2.5.2"
+                "source": "https://github.com/doctrine/persistence/tree/2.5.3"
             },
             "funding": [
                 {
@@ -3001,7 +3001,7 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2022-05-02T17:29:02+00:00"
+            "time": "2022-05-03T09:16:53+00:00"
         },
         {
             "name": "doctrine/sql-formatter",
@@ -3189,16 +3189,16 @@
         },
         {
             "name": "friendsofphp/proxy-manager-lts",
-            "version": "v1.0.11",
+            "version": "v1.0.12",
             "source": {
                 "type": "git",
                 "url": "https://github.com/FriendsOfPHP/proxy-manager-lts.git",
-                "reference": "d1eadf86d5b843c496614ef075a8f655a880f1d8"
+                "reference": "8419f0158715b30d4b99a5bd37c6a39671994ad7"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/FriendsOfPHP/proxy-manager-lts/zipball/d1eadf86d5b843c496614ef075a8f655a880f1d8",
-                "reference": "d1eadf86d5b843c496614ef075a8f655a880f1d8",
+                "url": "https://api.github.com/repos/FriendsOfPHP/proxy-manager-lts/zipball/8419f0158715b30d4b99a5bd37c6a39671994ad7",
+                "reference": "8419f0158715b30d4b99a5bd37c6a39671994ad7",
                 "shasum": ""
             },
             "require": {
@@ -3255,7 +3255,7 @@
             ],
             "support": {
                 "issues": "https://github.com/FriendsOfPHP/proxy-manager-lts/issues",
-                "source": "https://github.com/FriendsOfPHP/proxy-manager-lts/tree/v1.0.11"
+                "source": "https://github.com/FriendsOfPHP/proxy-manager-lts/tree/v1.0.12"
             },
             "funding": [
                 {
@@ -3267,7 +3267,7 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2022-05-04T11:03:58+00:00"
+            "time": "2022-05-05T09:31:05+00:00"
         },
         {
             "name": "friendsofsymfony/http-cache",
@@ -3356,24 +3356,24 @@
         },
         {
             "name": "friendsofsymfony/http-cache-bundle",
-            "version": "2.11.2",
+            "version": "2.12.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/FriendsOfSymfony/FOSHttpCacheBundle.git",
-                "reference": "e299661dd9157033fca3f670a1e248002206ce17"
+                "reference": "91f5e625e0b8c5e667a43849a44a7f34042b6aab"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/FriendsOfSymfony/FOSHttpCacheBundle/zipball/e299661dd9157033fca3f670a1e248002206ce17",
-                "reference": "e299661dd9157033fca3f670a1e248002206ce17",
+                "url": "https://api.github.com/repos/FriendsOfSymfony/FOSHttpCacheBundle/zipball/91f5e625e0b8c5e667a43849a44a7f34042b6aab",
+                "reference": "91f5e625e0b8c5e667a43849a44a7f34042b6aab",
                 "shasum": ""
             },
             "require": {
                 "friendsofsymfony/http-cache": "^2.6",
                 "php": "^7.3 || ^8.0",
-                "symfony/framework-bundle": "^3.4.26 || ^4.2.7 || ^5.0",
-                "symfony/http-foundation": "^3.4.26 || ^4.2.7 || ^5.0",
-                "symfony/http-kernel": "^3.4.26 || ^4.2.7 || ^5.0"
+                "symfony/framework-bundle": "^4.4.0 || ^5.0 || ^6.0",
+                "symfony/http-foundation": "^4.4.0 || ^5.0 || ^6.0",
+                "symfony/http-kernel": "^4.4.0 || ^5.0 || ^6.0"
             },
             "conflict": {
                 "symfony/monolog-bridge": "<3.4.4",
@@ -3390,18 +3390,18 @@
                 "php-http/httplug": "^2.2.0",
                 "php-http/message": "^1.0 || ^2.0",
                 "sebastian/exporter": "^2.0",
-                "sensio/framework-extra-bundle": "^3.0 || ^4.0 || ^5.5.1",
-                "symfony/browser-kit": "^3.4.4 || ^4.2.7 || ^5.0",
-                "symfony/console": "^3.4.26 || ^4.2.7 || ^5.0",
-                "symfony/css-selector": "^3.4.26 || ^4.2.7 || ^5.0",
-                "symfony/expression-language": "^3.4.26 || ^4.2.7 || ^5.0",
-                "symfony/finder": "^3.4.26 || ^4.2.7 || ^5.0",
-                "symfony/monolog-bundle": "^3.0 || ^4.2.7 || ^5.0",
+                "sensio/framework-extra-bundle": "^4.0 || ^5.5.1 || ^6.0",
+                "symfony/browser-kit": "^4.4 || ^5.0 || ^6.0",
+                "symfony/console": "^4.4 || ^5.0 || ^6.0",
+                "symfony/css-selector": "^4.4 || ^5.0 || ^6.0",
+                "symfony/expression-language": "^4.4 || ^5.0 || ^6.0",
+                "symfony/finder": "^4.4 || ^5.0 || ^6.0",
+                "symfony/monolog-bundle": "^3.0",
                 "symfony/phpunit-bridge": "v5.3.7",
-                "symfony/routing": "^3.4.26 || ^4.2.7 || ^5.0",
-                "symfony/security-bundle": "^3.4.26 || ^4.2.7 || ^5.0",
-                "symfony/twig-bundle": "^3.4.26 || ^4.2.7 || ^5.0",
-                "symfony/yaml": "^3.4.26 || ^4.2.7 || ^5.0",
+                "symfony/routing": "^4.4 || ^5.0 || ^6.0",
+                "symfony/security-bundle": "^4.4 || ^5.0 || ^6.0",
+                "symfony/twig-bundle": "^4.4 || ^5.0 || ^6.0",
+                "symfony/yaml": "^4.4 || ^5.0 || ^6.0",
                 "twig/twig": "^2.13"
             },
             "suggest": {
@@ -3451,9 +3451,9 @@
             ],
             "support": {
                 "issues": "https://github.com/FriendsOfSymfony/FOSHttpCacheBundle/issues",
-                "source": "https://github.com/FriendsOfSymfony/FOSHttpCacheBundle/tree/2.11.2"
+                "source": "https://github.com/FriendsOfSymfony/FOSHttpCacheBundle/tree/2.12.1"
             },
-            "time": "2021-11-08T07:27:23+00:00"
+            "time": "2022-05-11T06:16:11+00:00"
         },
         {
             "name": "guzzlehttp/guzzle",
@@ -4095,16 +4095,16 @@
         },
         {
             "name": "knplabs/knp-time-bundle",
-            "version": "v1.18.0",
+            "version": "v1.19.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/KnpLabs/KnpTimeBundle.git",
-                "reference": "239c964c67087f3e1e9dbcfe6fb1d4af36ff884b"
+                "reference": "56e4d154bcd14c1b67c0d1defa1e7d00d27430e3"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/KnpLabs/KnpTimeBundle/zipball/239c964c67087f3e1e9dbcfe6fb1d4af36ff884b",
-                "reference": "239c964c67087f3e1e9dbcfe6fb1d4af36ff884b",
+                "url": "https://api.github.com/repos/KnpLabs/KnpTimeBundle/zipball/56e4d154bcd14c1b67c0d1defa1e7d00d27430e3",
+                "reference": "56e4d154bcd14c1b67c0d1defa1e7d00d27430e3",
                 "shasum": ""
             },
             "require": {
@@ -4162,9 +4162,9 @@
             ],
             "support": {
                 "issues": "https://github.com/KnpLabs/KnpTimeBundle/issues",
-                "source": "https://github.com/KnpLabs/KnpTimeBundle/tree/v1.18.0"
+                "source": "https://github.com/KnpLabs/KnpTimeBundle/tree/v1.19.0"
             },
-            "time": "2022-02-07T18:02:40+00:00"
+            "time": "2022-05-10T00:14:22+00:00"
         },
         {
             "name": "laminas/laminas-code",
@@ -4950,16 +4950,16 @@
         },
         {
             "name": "monolog/monolog",
-            "version": "2.5.0",
+            "version": "2.6.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/Seldaek/monolog.git",
-                "reference": "4192345e260f1d51b365536199744b987e160edc"
+                "reference": "247918972acd74356b0a91dfaa5adcaec069b6c0"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/Seldaek/monolog/zipball/4192345e260f1d51b365536199744b987e160edc",
-                "reference": "4192345e260f1d51b365536199744b987e160edc",
+                "url": "https://api.github.com/repos/Seldaek/monolog/zipball/247918972acd74356b0a91dfaa5adcaec069b6c0",
+                "reference": "247918972acd74356b0a91dfaa5adcaec069b6c0",
                 "shasum": ""
             },
             "require": {
@@ -4972,18 +4972,23 @@
             "require-dev": {
                 "aws/aws-sdk-php": "^2.4.9 || ^3.0",
                 "doctrine/couchdb": "~1.0@dev",
-                "elasticsearch/elasticsearch": "^7",
+                "elasticsearch/elasticsearch": "^7 || ^8",
+                "ext-json": "*",
                 "graylog2/gelf-php": "^1.4.2",
+                "guzzlehttp/guzzle": "^7.4",
+                "guzzlehttp/psr7": "^2.2",
                 "mongodb/mongodb": "^1.8",
                 "php-amqplib/php-amqplib": "~2.4 || ^3",
                 "php-console/php-console": "^3.1.3",
-                "phpspec/prophecy": "^1.6.1",
+                "phpspec/prophecy": "^1.15",
                 "phpstan/phpstan": "^0.12.91",
-                "phpunit/phpunit": "^8.5",
+                "phpunit/phpunit": "^8.5.14",
                 "predis/predis": "^1.1",
                 "rollbar/rollbar": "^1.3 || ^2 || ^3",
-                "ruflin/elastica": ">=0.90@dev",
-                "swiftmailer/swiftmailer": "^5.3|^6.0"
+                "ruflin/elastica": "^7",
+                "swiftmailer/swiftmailer": "^5.3|^6.0",
+                "symfony/mailer": "^5.4 || ^6",
+                "symfony/mime": "^5.4 || ^6"
             },
             "suggest": {
                 "aws/aws-sdk-php": "Allow sending log messages to AWS services like DynamoDB",
@@ -5033,7 +5038,7 @@
             ],
             "support": {
                 "issues": "https://github.com/Seldaek/monolog/issues",
-                "source": "https://github.com/Seldaek/monolog/tree/2.5.0"
+                "source": "https://github.com/Seldaek/monolog/tree/2.6.0"
             },
             "funding": [
                 {
@@ -5045,7 +5050,7 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2022-04-08T15:43:54+00:00"
+            "time": "2022-05-10T09:36:00+00:00"
         },
         {
             "name": "nelmio/cors-bundle",
@@ -7419,16 +7424,16 @@
         },
         {
             "name": "stripe/stripe-php",
-            "version": "v7.126.0",
+            "version": "v7.128.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/stripe/stripe-php.git",
-                "reference": "c36de62a89475e81d9c75ec08de19376466f67b7"
+                "reference": "c704949c49b72985c76cc61063aa26fefbd2724e"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/stripe/stripe-php/zipball/c36de62a89475e81d9c75ec08de19376466f67b7",
-                "reference": "c36de62a89475e81d9c75ec08de19376466f67b7",
+                "url": "https://api.github.com/repos/stripe/stripe-php/zipball/c704949c49b72985c76cc61063aa26fefbd2724e",
+                "reference": "c704949c49b72985c76cc61063aa26fefbd2724e",
                 "shasum": ""
             },
             "require": {
@@ -7473,9 +7478,9 @@
             ],
             "support": {
                 "issues": "https://github.com/stripe/stripe-php/issues",
-                "source": "https://github.com/stripe/stripe-php/tree/v7.126.0"
+                "source": "https://github.com/stripe/stripe-php/tree/v7.128.0"
             },
-            "time": "2022-05-03T15:37:27+00:00"
+            "time": "2022-05-05T17:18:02+00:00"
         },
         {
             "name": "symfony-cmf/routing",
@@ -9887,20 +9892,20 @@
         },
         {
             "name": "symfony/monolog-bundle",
-            "version": "v3.7.1",
+            "version": "v3.8.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/monolog-bundle.git",
-                "reference": "fde12fc628162787a4e53877abadc30047fd868b"
+                "reference": "a41bbcdc1105603b6d73a7d9a43a3788f8e0fb7d"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/monolog-bundle/zipball/fde12fc628162787a4e53877abadc30047fd868b",
-                "reference": "fde12fc628162787a4e53877abadc30047fd868b",
+                "url": "https://api.github.com/repos/symfony/monolog-bundle/zipball/a41bbcdc1105603b6d73a7d9a43a3788f8e0fb7d",
+                "reference": "a41bbcdc1105603b6d73a7d9a43a3788f8e0fb7d",
                 "shasum": ""
             },
             "require": {
-                "monolog/monolog": "~1.22 || ~2.0",
+                "monolog/monolog": "^1.22 || ^2.0 || ^3.0",
                 "php": ">=7.1.3",
                 "symfony/config": "~4.4 || ^5.0 || ^6.0",
                 "symfony/dependency-injection": "^4.4 || ^5.0 || ^6.0",
@@ -9948,7 +9953,7 @@
             ],
             "support": {
                 "issues": "https://github.com/symfony/monolog-bundle/issues",
-                "source": "https://github.com/symfony/monolog-bundle/tree/v3.7.1"
+                "source": "https://github.com/symfony/monolog-bundle/tree/v3.8.0"
             },
             "funding": [
                 {
@@ -9964,7 +9969,7 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2021-11-05T10:34:29+00:00"
+            "time": "2022-05-10T14:24:36+00:00"
         },
         {
             "name": "symfony/options-resolver",
@@ -12835,12 +12840,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/terminal42/cashctrl-api.git",
-                "reference": "03fade75cec0f62f3b5e06db7586ec8558c5e364"
+                "reference": "9145cd3cbf05130337473ce2d016550acb03ebfe"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/terminal42/cashctrl-api/zipball/03fade75cec0f62f3b5e06db7586ec8558c5e364",
-                "reference": "03fade75cec0f62f3b5e06db7586ec8558c5e364",
+                "url": "https://api.github.com/repos/terminal42/cashctrl-api/zipball/9145cd3cbf05130337473ce2d016550acb03ebfe",
+                "reference": "9145cd3cbf05130337473ce2d016550acb03ebfe",
                 "shasum": ""
             },
             "require": {
@@ -12888,7 +12893,7 @@
                     "type": "other"
                 }
             ],
-            "time": "2022-05-03T13:03:59+00:00"
+            "time": "2022-05-13T11:57:30+00:00"
         },
         {
             "name": "terminal42/cashctrl-bundle",
@@ -12957,12 +12962,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/terminal42/contao-conditionalformfields.git",
-                "reference": "6749cab50682fee16c3d5a81aba2f08dd0cb4cd0"
+                "reference": "84beea72594179207d2eab7180225d18c242ae64"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/terminal42/contao-conditionalformfields/zipball/6749cab50682fee16c3d5a81aba2f08dd0cb4cd0",
-                "reference": "6749cab50682fee16c3d5a81aba2f08dd0cb4cd0",
+                "url": "https://api.github.com/repos/terminal42/contao-conditionalformfields/zipball/84beea72594179207d2eab7180225d18c242ae64",
+                "reference": "84beea72594179207d2eab7180225d18c242ae64",
                 "shasum": ""
             },
             "require": {
@@ -13019,7 +13024,7 @@
                     "type": "other"
                 }
             ],
-            "time": "2022-04-06T16:27:59+00:00"
+            "time": "2022-05-09T07:55:31+00:00"
         },
         {
             "name": "terminal42/dcawizard",
