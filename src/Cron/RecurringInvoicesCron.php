@@ -46,8 +46,8 @@ class RecurringInvoicesCron
         $ids = $this->connection->fetchFirstColumn("
             SELECT id
             FROM tl_member
-            WHERE membership_invoiced < UNIX_TIMESTAMP()
-                AND DATE_FORMAT(FROM_UNIXTIME(membership_start),'%Y-%m-%d') != DATE_FORMAT(NOW(),'%Y-%m-%d')
+            WHERE membership_invoiced != ''
+                AND DATE_FORMAT(FROM_UNIXTIME(membership_invoiced),'%Y%m%d') < DATE_FORMAT(NOW(),'%Y%m%d')
                 AND disable=''
                 AND (start='' OR start<=UNIX_TIMESTAMP())
                 AND (stop='' OR stop>UNIX_TIMESTAMP())
