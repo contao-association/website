@@ -58,21 +58,6 @@ class StripeController
                 // TODO handle failed payments
                 break;
 
-            case 'charge.succeeded':
-                /** @noinspection PhpPossiblePolymorphicInvocationInspection */
-                $this->stripeHelper->importCharge($event->data->object);
-                break;
-
-            case 'checkout.session.completed':
-                /**
-                 * @var Session
-                 * @noinspection PhpPossiblePolymorphicInvocationInspection
-                 */
-                $session = $event->data->object;
-                $this->stripeHelper->importOrderPayment($session);
-                $this->stripeHelper->storePaymentMethod($session);
-                break;
-
             default:
                 $this->sentryOrThrow('Unsupported Stripe event: '.$event->type, null, [
                     'event' => $event->toArray(),

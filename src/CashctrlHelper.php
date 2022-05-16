@@ -42,6 +42,9 @@ use Terminal42\CashctrlApi\Result;
 
 class CashctrlHelper
 {
+    public const STATUS_PAID = 18;
+    public const STATUS_NOTIFIED = 87;
+
     use ErrorHandlingTrait;
 
     public PersonEndpoint $person;
@@ -144,12 +147,14 @@ class CashctrlHelper
         $invoiceDate = $invoiceDate->setTime(0, 0);
 
         $invoice = $this->createMemberInvoice($member, $invoiceDate);
-        $pdf = $this->archiveInvoice($invoice, 'ch' === $member->country ? 1011 : 1013, $member->language ?: 'de');
 
         $status = 'manual';
         if (!empty($member->stripe_payment_method)) {
             $status = $this->chargeWithStripe($invoice, $member) ? 'paid' : 'error';
         }
+
+        // Archive invoice AFTER Stripe payment, so the PDF includes the payment information
+        $pdf = $this->archiveInvoice($invoice, 'ch' === $member->country ? 1011 : 1013, $member->language ?: 'de');
 
         if (!$this->sendInvoiceNotification($notification, $invoice, $member, ['invoice_pdf' => $pdf, 'payment_status' => $status])) {
             $this->sentryOrThrow('Unable to send invoice email to '.$member->email);
@@ -173,10 +178,12 @@ class CashctrlHelper
             'payment_first' => $invoice->getId() === $member->cashctrl_invoice,
         ]);
 
-        if ($invoice->isClosed) {
+        if ($invoice->dateLastBooked) {
             $tokens['payment_date'] = ApiClient::parseDateTime($invoice->dateLastBooked)->format($this->getDateFormat($member));
             $tokens['payment_total'] = number_format($invoice->total - $invoice->open, 2, '.', "'");
-        } else {
+        }
+
+        if (!$invoice->isClosed) {
             $tokens['payment_link'] = $this->getPaymentLink($invoice, $member);
         }
 
@@ -297,7 +304,7 @@ class CashctrlHelper
         return $this->order
             ->list()
             ->ofType(OrderListFilter::TYPE_SALES)
-            ->withStatus(18)
+            ->withStatus(self::STATUS_PAID)
             ->sortBy('lastUpdated', 'DESC')
             ->get();
     }
@@ -332,7 +339,7 @@ class CashctrlHelper
 
         $this->syncMember($member);
 
-        $this->order->updateStatus($order->getId(), 87);
+        $this->order->updateStatus($order->getId(), self::STATUS_NOTIFIED);
     }
 
     public function addJournalEntry(Journal $journal): Result
@@ -416,11 +423,11 @@ class CashctrlHelper
     {
         if (null !== ($contacts = $person->getContacts())) {
             foreach ($contacts as $contact) {
-                if ($type === $contact->type && $purpose === $contact->purpose) {
+                if ($type === $contact->getType() && $purpose === $contact->getPurpose()) {
                     if (empty($address)) {
                         $person->removeContact($contact);
                     } else {
-                        $contact->address = $address;
+                        $contact->setAddress($address);
                     }
                     return;
                 }
@@ -574,6 +581,7 @@ class CashctrlHelper
                 'description' => $order->getDescription(),
                 'metadata' => [
                     'cashctrl_order_id' => $order->getId(),
+                    'disable_notification' => true,
                 ],
                 'off_session' => true,
                 'payment_method' => $member->stripe_payment_method,

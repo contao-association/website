@@ -82,6 +82,13 @@ class PaymentPageController
             'cancel_url' => $request->query->get('cancel_url') ?: PageModel::findFirstPublishedRegularByPid($pageModel->rootId)->getAbsoluteUrl(),
         ]);
 
+        $this->stripeClient->paymentIntents->update($session->payment_intent, [
+            'metadata' => [
+                'cashctrl_order_id' => $order->getId(),
+                'contao_member_id' => $member->id,
+            ],
+        ]);
+
         return new RedirectResponse($session->url);
     }
 
