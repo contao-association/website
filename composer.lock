@@ -264,16 +264,16 @@
         },
         {
             "name": "codefog/contao-haste",
-            "version": "4.25.13",
+            "version": "4.25.14",
             "source": {
                 "type": "git",
                 "url": "https://github.com/codefog/contao-haste.git",
-                "reference": "d24bb14c1d46835656c51c22c93e935815a12f06"
+                "reference": "1b2d29070e59b9d473398b3fd528cd00f5f9da1d"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/codefog/contao-haste/zipball/d24bb14c1d46835656c51c22c93e935815a12f06",
-                "reference": "d24bb14c1d46835656c51c22c93e935815a12f06",
+                "url": "https://api.github.com/repos/codefog/contao-haste/zipball/1b2d29070e59b9d473398b3fd528cd00f5f9da1d",
+                "reference": "1b2d29070e59b9d473398b3fd528cd00f5f9da1d",
                 "shasum": ""
             },
             "require": {
@@ -331,7 +331,7 @@
             ],
             "support": {
                 "issues": "https://github.com/codefog/contao-haste/issues",
-                "source": "https://github.com/codefog/contao-haste/tree/4.25.13"
+                "source": "https://github.com/codefog/contao-haste/tree/4.25.14"
             },
             "funding": [
                 {
@@ -339,7 +339,7 @@
                     "type": "github"
                 }
             ],
-            "time": "2022-05-07T12:28:07+00:00"
+            "time": "2022-05-16T08:08:40+00:00"
         },
         {
             "name": "composer/ca-bundle",
@@ -7087,16 +7087,16 @@
         },
         {
             "name": "sentry/sentry-symfony",
-            "version": "4.2.9",
+            "version": "4.2.10",
             "source": {
                 "type": "git",
                 "url": "https://github.com/getsentry/sentry-symfony.git",
-                "reference": "a31ea51f7270db461660de6de7e0a3e6b76c9183"
+                "reference": "d1d2895c028676113cb191516b80b91abcde31f3"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/getsentry/sentry-symfony/zipball/a31ea51f7270db461660de6de7e0a3e6b76c9183",
-                "reference": "a31ea51f7270db461660de6de7e0a3e6b76c9183",
+                "url": "https://api.github.com/repos/getsentry/sentry-symfony/zipball/d1d2895c028676113cb191516b80b91abcde31f3",
+                "reference": "d1d2895c028676113cb191516b80b91abcde31f3",
                 "shasum": ""
             },
             "require": {
@@ -7186,7 +7186,7 @@
             ],
             "support": {
                 "issues": "https://github.com/getsentry/sentry-symfony/issues",
-                "source": "https://github.com/getsentry/sentry-symfony/tree/4.2.9"
+                "source": "https://github.com/getsentry/sentry-symfony/tree/4.2.10"
             },
             "funding": [
                 {
@@ -7198,7 +7198,7 @@
                     "type": "custom"
                 }
             ],
-            "time": "2022-05-02T08:23:30+00:00"
+            "time": "2022-05-17T08:20:17+00:00"
         },
         {
             "name": "simplepie/simplepie",
@@ -13559,16 +13559,16 @@
         },
         {
             "name": "twig/twig",
-            "version": "v3.4.0",
+            "version": "v3.4.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/twigphp/Twig.git",
-                "reference": "ed19f4bf9d19c4ef920b5d8243910bd32e85b9ba"
+                "reference": "e939eae92386b69b49cfa4599dd9bead6bf4a342"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/twigphp/Twig/zipball/ed19f4bf9d19c4ef920b5d8243910bd32e85b9ba",
-                "reference": "ed19f4bf9d19c4ef920b5d8243910bd32e85b9ba",
+                "url": "https://api.github.com/repos/twigphp/Twig/zipball/e939eae92386b69b49cfa4599dd9bead6bf4a342",
+                "reference": "e939eae92386b69b49cfa4599dd9bead6bf4a342",
                 "shasum": ""
             },
             "require": {
@@ -13619,7 +13619,7 @@
             ],
             "support": {
                 "issues": "https://github.com/twigphp/Twig/issues",
-                "source": "https://github.com/twigphp/Twig/tree/v3.4.0"
+                "source": "https://github.com/twigphp/Twig/tree/v3.4.1"
             },
             "funding": [
                 {
@@ -13631,7 +13631,7 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2022-05-15T06:25:28+00:00"
+            "time": "2022-05-17T05:48:52+00:00"
         },
         {
             "name": "ua-parser/uap-php",

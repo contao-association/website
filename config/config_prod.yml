@@ -3,6 +3,8 @@ imports:
 
 sentry:
     dsn: '%env(SENTRY_DSN)%'
+    tracing:
+        enabled: false
     options:
         send_default_pii: true
         environment: "%env(SENTRY_ENV)%"
