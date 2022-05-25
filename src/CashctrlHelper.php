@@ -129,7 +129,7 @@ class CashctrlHelper
             $member->cashctrl_id = $result->insertId();
             $member->save();
         } catch (RuntimeException $exception) {
-            $this->sentryOrThrow("Error updating member ID {$member->id} in CashCtrl: ".$exception->getMessage(), $exception, ['person' => $person->toArray()]);
+            $this->sentryOrThrow("Error updating member ID {$member->id} in CashCtrl: ".$exception->getMessage(), null, ['person' => $person->toArray()]);
         }
     }
 
