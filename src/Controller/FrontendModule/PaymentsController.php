@@ -12,6 +12,7 @@ use Contao\CoreBundle\ServiceAnnotation\FrontendModule;
 use Contao\FrontendUser;
 use Contao\MemberModel;
 use Contao\ModuleModel;
+use Contao\PageModel;
 use Contao\Template;
 use Stripe\Card;
 use Stripe\Exception\ApiErrorException;
@@ -128,6 +129,12 @@ class PaymentsController extends AbstractFrontendModuleController
                     $member->save();
                 }
             }
+        }
+
+        $jumpTo = PageModel::findByPk($model->jumpTo);
+        if ($jumpTo instanceof PageModel) {
+            $template->linkHref = $jumpTo->getFrontendUrl();
+            $template->linkTitle = $jumpTo->pageTitle ?: $jumpTo->title;
         }
 
         return $template->getResponse();
