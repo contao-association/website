@@ -2,129 +2,118 @@
 
 namespace Deployer;
 
-use Deployer\Exception\RuntimeException;
+require_once 'recipe/contao.php';
 
-$recipes = [
-    'common',
-    'symfony4',
-    'deployer/recipes/recipe/rsync',
-    'terminal42/deployer-recipes/recipe/contao',
-    'terminal42/deployer-recipes/recipe/deploy',
-    'terminal42/deployer-recipes/recipe/encore',
-];
+host('test', 'prod')
+    ->setHostname('s001.cyon.net')
+    ->setRemoteUser('contaoro')
+    ->set('bin/php', 'php81')
+;
 
-// Require the recipes
-foreach ($recipes as $recipe) {
-    if (false === strpos($recipe, '/')) {
-        require_once sprintf('recipe/%s.php', $recipe);
-        continue;
+host('test')
+    ->setDeployPath('/home/contaoro/public_html/test.members.contao.org')
+    ->set('htaccess_filename', '.htaccess.test')
+;
+
+host('prod')
+    ->setDeployPath('/home/contaoro/public_html/members.contao.org')
+    ->set('htaccess_filename', '.htaccess.prod')
+;
+
+set('keep_releases', 10);
+set('allow_anonymous_stats', false);
+add('shared_dirs', ['var/backups', 'var/invoices']);
+
+// Task: upload files
+task('deploy:upload', static function () {
+    $paths = [
+        'config',
+        'contao',
+        'src',
+        'templates',
+        'translations',
+        'web/layout',
+        '.env',
+        'composer.json',
+        'composer.lock',
+    ];
+
+    if ($htaccess = currentHost()->get('htaccess_filename')) {
+        $paths[] = 'web/'.$htaccess;
     }
 
-    require_once sprintf('%s/vendor/%s.php', getcwd(), $recipe);
-}
-
-// Load the hosts
-inventory('deploy-hosts.yml');
-
-/**
- * ===============================================================
- * Configuration
- *
- * Define the deployment configuration. Each of the variables
- * can be overridden individually per each host.
- * ===============================================================
- */
-// Enable SSH multiplexing
-set('ssh_multiplexing', true);
-
-// Number of releases to keep
-set('keep_releases', 3);
-
-// Disable anonymous stats
-set('allow_anonymous_stats', false);
-
-// Rsync
-set('rsync_src', __DIR__);
-set('rsync', function () {
-    return [
-        'exclude' => array_unique(get('exclude', [])),
-        'exclude-file' => false,
-        'include' => [],
-        'include-file' => false,
-        'filter' => [],
-        'filter-file' => false,
-        'filter-perdir' => false,
-        'flags' => 'rz',
-        'options' => ['delete'],
-        'timeout' => 300,
-    ];
+    foreach ($paths as $path) {
+        upload($path, '{{release_path}}/', [
+            'options' => ['--recursive', '--relative'],
+            'progress_bar' => false,
+        ]);
+    }
 });
 
-set('shared_dirs', [
-    'assets/images',
-    'contao-manager',
-    'files',
-    'var/backups',
-    'var/invoices',
-    'var/logs',
-    'web/share',
-]);
-add('shared_files', ['.env.local']);
 
 task('deploy:opcache', function () {
     try {
         run('pkill lsphp');
-    } catch (RuntimeException $e) {
-        writeln("\r\033[1A\033[40C … skipped");
-        output()->setWasWritten(false);
-
-        return;
+    } catch (\RuntimeException $e) {
+        info(' … skipped');
     }
 })->desc('Clear OpCode cache');
 
+// Task: Contao migrate
+task('contao:migrate', static function () {
+    run('{{bin/php}} {{bin/console}} contao:migrate --with-deletes {{console_options}}');
+});
 
-// Enable maintenance mode
-task('maintenance:enable', function () {
-    run('{{bin/php}} {{bin/console}} contao:maintenance-mode enable {{console_options}}');
-})->desc('Enable maintenance mode');
+// Task: Composer self update
+task('deploy:composer-self-update', static function () {
+    run('{{bin/composer}} self-update');
+});
 
-// Disable maintenance mode
-task('maintenance:disable', function () {
-    run('{{bin/php}} {{bin/console}} contao:maintenance-mode disable {{console_options}}');
-})->desc('Disable maintenance mode');
-
-task('contao:lock_manager', function () {
+task('contao:manager:lock', function () {
     run('echo \'3\' > {{release_path}}/contao-manager/login.lock');
 })->desc('Lock the Contao Manager');
 
+// Task: deploy the .htaccess file
+task('deploy:htaccess', static function () {
+    $file = currentHost()->get('htaccess_filename');
 
-// Main task
-task('deploy', [
-    // Prepare
-    'contao:validate',
-    'encore:compile',
+    if (!$file) {
+        info(' … skipped');
+        return;
+    }
 
-    // Deploy
+    run('cd {{release_path}}/web && if [ -f "./.htaccess" ]; then rm -f ./.htaccess; fi');
+    run('cd {{release_path}}/web && if [ -f "./'.$file.'" ]; then mv ./'.$file.' ./.htaccess; fi');
+});
+
+// Task: build assets
+task('deploy:build-assets', static function () {
+    runLocally('yarn prod');
+});
+
+// Task: override deploy:prepare
+task('deploy:prepare', [
+    'deploy:build-assets',
     'deploy:info',
-    'deploy:prepare',
+    'deploy:setup',
     'deploy:release',
-    'rsync',
-    'deploy:create_initial_dirs',
     'deploy:shared',
-    'deploy:vendors',
-    'deploy:entry_points',
+]);
 
-    // Release
-    'maintenance:enable',
-    'contao:download_manager',
-    'contao:lock_install_tool',
-    'contao:lock_manager',
+// Task: override deploy
+task('deploy', [
+    'deploy:prepare',
+    'deploy:upload',
+    'deploy:composer-self-update',
+    'deploy:vendors',
+    'deploy:htaccess',
+    'contao:maintenance:enable',
+    'contao:manager:download',
+    'contao:manager:lock',
     'deploy:symlink',
     'deploy:opcache',
     'contao:migrate',
-    'maintenance:disable',
-
-    // Cleanup
-    'cleanup',
-    'success',
-])->desc('Deploy your project');
+    'contao:maintenance:disable',
+    'deploy:cleanup',
+    'deploy:success',
+]);

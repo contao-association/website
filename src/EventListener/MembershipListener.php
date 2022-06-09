@@ -93,13 +93,13 @@ class MembershipListener
                 return $this->translator->trans($transId, ['{amount}' => number_format((float) $price, 2, '.', "'")]);
 
             case 'amount':
-                return $this->formatAmount($user->membership, $user->membership_amount);
+                return $this->formatAmount($user->membership, (string) $user->membership_amount);
 
             case 'title':
                 return $this->translator->trans('membership.'.$user->membership);
 
             case 'label':
-                return $this->getMembershipLabel($user->membership, $user->membership_amount);
+                return $this->getMembershipLabel($user->membership, (string) $user->membership_amount);
         }
 
         return '';

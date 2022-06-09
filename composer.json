@@ -5,7 +5,7 @@
     "type": "project",
     "license": "proprietary",
     "require": {
-        "php": "^7.4",
+        "php": "^8.1",
         "ext-json": "*",
         "contao/conflicts": "*@dev",
         "contao/manager-bundle": "4.13.*",
@@ -21,9 +21,7 @@
         "paypal/paypal-checkout-sdk": "^1.0.2"
     },
     "require-dev": {
-        "deployer/deployer": "^6.5",
-        "deployer/recipes": "^6.2",
-        "terminal42/deployer-recipes": "dev-main"
+        "deployer/deployer": "v7.0.0-rc.8"
     },
     "repositories": [
         {
