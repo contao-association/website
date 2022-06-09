@@ -419,16 +419,16 @@
         },
         {
             "name": "contao-association/contao-voting",
-            "version": "2.3.1",
+            "version": "2.3.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/contao-association/contao-voting.git",
-                "reference": "4cdd1323045a5bb5945cdf1c5fc62f1e43cec24d"
+                "reference": "26daa154beff6f491fee863ad3b71b0f6282f33a"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/contao-association/contao-voting/zipball/4cdd1323045a5bb5945cdf1c5fc62f1e43cec24d",
-                "reference": "4cdd1323045a5bb5945cdf1c5fc62f1e43cec24d",
+                "url": "https://api.github.com/repos/contao-association/contao-voting/zipball/26daa154beff6f491fee863ad3b71b0f6282f33a",
+                "reference": "26daa154beff6f491fee863ad3b71b0f6282f33a",
                 "shasum": ""
             },
             "require": {
@@ -470,10 +470,10 @@
                 "voting"
             ],
             "support": {
-                "source": "https://github.com/contao-association/contao-voting/tree/2.3.1",
+                "source": "https://github.com/contao-association/contao-voting/tree/2.3.2",
                 "issues": "https://github.com/contao-association/contao-voting/issues"
             },
-            "time": "2022-06-09T06:57:53+00:00"
+            "time": "2022-06-09T09:49:02+00:00"
         },
         {
             "name": "contao-community-alliance/composer-plugin",
@@ -3682,16 +3682,16 @@
         },
         {
             "name": "guzzlehttp/psr7",
-            "version": "2.2.2",
+            "version": "2.3.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/guzzle/psr7.git",
-                "reference": "a119247127ff95789a2d95c347cd74721fbedaa4"
+                "reference": "83260bb50b8fc753c72d14dc1621a2dac31877ee"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/guzzle/psr7/zipball/a119247127ff95789a2d95c347cd74721fbedaa4",
-                "reference": "a119247127ff95789a2d95c347cd74721fbedaa4",
+                "url": "https://api.github.com/repos/guzzle/psr7/zipball/83260bb50b8fc753c72d14dc1621a2dac31877ee",
+                "reference": "83260bb50b8fc753c72d14dc1621a2dac31877ee",
                 "shasum": ""
             },
             "require": {
@@ -3715,7 +3715,7 @@
             "type": "library",
             "extra": {
                 "branch-alias": {
-                    "dev-master": "2.2-dev"
+                    "dev-master": "2.3-dev"
                 }
             },
             "autoload": {
@@ -3777,7 +3777,7 @@
             ],
             "support": {
                 "issues": "https://github.com/guzzle/psr7/issues",
-                "source": "https://github.com/guzzle/psr7/tree/2.2.2"
+                "source": "https://github.com/guzzle/psr7/tree/2.3.0"
             },
             "funding": [
                 {
@@ -3793,7 +3793,7 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2022-06-08T19:55:23+00:00"
+            "time": "2022-06-09T08:26:02+00:00"
         },
         {
             "name": "http-interop/http-factory-guzzle",
@@ -4971,16 +4971,16 @@
         },
         {
             "name": "monolog/monolog",
-            "version": "2.6.0",
+            "version": "2.7.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/Seldaek/monolog.git",
-                "reference": "247918972acd74356b0a91dfaa5adcaec069b6c0"
+                "reference": "5579edf28aee1190a798bfa5be8bc16c563bd524"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/Seldaek/monolog/zipball/247918972acd74356b0a91dfaa5adcaec069b6c0",
-                "reference": "247918972acd74356b0a91dfaa5adcaec069b6c0",
+                "url": "https://api.github.com/repos/Seldaek/monolog/zipball/5579edf28aee1190a798bfa5be8bc16c563bd524",
+                "reference": "5579edf28aee1190a798bfa5be8bc16c563bd524",
                 "shasum": ""
             },
             "require": {
@@ -5059,7 +5059,7 @@
             ],
             "support": {
                 "issues": "https://github.com/Seldaek/monolog/issues",
-                "source": "https://github.com/Seldaek/monolog/tree/2.6.0"
+                "source": "https://github.com/Seldaek/monolog/tree/2.7.0"
             },
             "funding": [
                 {
@@ -5071,7 +5071,7 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2022-05-10T09:36:00+00:00"
+            "time": "2022-06-09T08:59:12+00:00"
         },
         {
             "name": "nelmio/cors-bundle",
@@ -12905,12 +12905,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/terminal42/cashctrl-api.git",
-                "reference": "66be864e6eeaf4fe82beb248c7cd480559783682"
+                "reference": "cecfe1cec9217d89b46ec2192d448652e2e29e41"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/terminal42/cashctrl-api/zipball/66be864e6eeaf4fe82beb248c7cd480559783682",
-                "reference": "66be864e6eeaf4fe82beb248c7cd480559783682",
+                "url": "https://api.github.com/repos/terminal42/cashctrl-api/zipball/cecfe1cec9217d89b46ec2192d448652e2e29e41",
+                "reference": "cecfe1cec9217d89b46ec2192d448652e2e29e41",
                 "shasum": ""
             },
             "require": {
@@ -12958,7 +12958,7 @@
                     "type": "other"
                 }
             ],
-            "time": "2022-05-25T11:35:41+00:00"
+            "time": "2022-06-09T10:01:29+00:00"
         },
         {
             "name": "terminal42/cashctrl-bundle",
