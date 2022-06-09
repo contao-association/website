@@ -6,18 +6,12 @@ namespace App;
 
 use Contao\CoreBundle\Framework\ContaoFramework;
 use Contao\MemberModel;
-use NotificationCenter\Model\Notification;
 use Stripe\Charge;
 use Stripe\Checkout\Session;
 use Stripe\Customer;
-use Stripe\Exception\ApiErrorException;
-use Stripe\PaymentIntent;
 use Stripe\PaymentMethod;
 use Stripe\SetupIntent;
 use Stripe\StripeClient;
-use Terminal42\CashctrlApi\Entity\Journal;
-use Terminal42\CashctrlApi\Entity\Order;
-use Terminal42\CashctrlApi\Entity\OrderBookentry;
 
 class StripeHelper
 {
@@ -65,7 +59,7 @@ class StripeHelper
 
         switch ($charge->application) {
             case 'ca_BNCWzVqBWfaL53LdFYzpoumNOsvo2936': // Ko-fi
-                $this->bookToJournal(
+                $this->cashctrlHelper->bookToJournal(
                     (float) ($charge->amount / 100),
                     \DateTime::createFromFormat('U', (string) $charge->created),
                     1090,
@@ -76,7 +70,7 @@ class StripeHelper
                 break;
 
             case 'ca_9uvq9hdD9LslRRCLivQ5cDhHsmFLX023': // Pretix
-                $this->bookToJournal(
+                $this->cashctrlHelper->bookToJournal(
                     (float) ($charge->amount / 100),
                     \DateTime::createFromFormat('U', (string) $charge->created),
                     1105,
@@ -100,49 +94,18 @@ class StripeHelper
                     return;
                 }
 
-                $this->bookToOrder(
-                    $order,
-                    (float) ($charge->amount / 100),
-                    \DateTime::createFromFormat('U', (string) $charge->created),
-                    $charge->description ?? $charge->payment_intent,
-                    $charge->balance_transaction,
-                    (bool) ($charge->metadata->disable_notification ?? false)
-                );
+                // Ignore payment if it was charged automatically and order is already marked as paid
+                if ($order->open <= 0 && ($charge->metadata->auto_payment ?? false)) {
+                    return;
+                }
+
+                $this->cashctrlHelper->bookToOrder($charge, $order);
                 break;
 
             default:
                 $this->sentryOrThrow("Unknown Stripe application \"$charge->application\"", null, [
                     'charge' => $charge->toArray(),
                 ]);
-        }
-    }
-
-    public function importOrderPayment(Session $session): void
-    {
-        if (null === $session->payment_intent || empty($session->metadata->cashctrl_order_id)) {
-            // Ignore Stripe sessions that are not for an invoice
-            return;
-        }
-
-        $order = $this->cashctrlHelper->order->read((int) $session->metadata->cashctrl_order_id);
-
-        if (null === $order) {
-            $this->sentryOrThrow('Order ID "'.$session->metadata->cashctrl_order_id.'" for Stripe checkout session "'.$session->id.'" not found');
-            return;
-        }
-
-        $paymentIntent = $session->payment_intent instanceof PaymentIntent ? $session->payment_intent : $this->client->paymentIntents->retrieve($session->payment_intent);
-
-        /** @var Charge $charge */
-        foreach ($paymentIntent->charges as $charge) {
-            $this->bookToOrder(
-                $order,
-                (float) ($charge->amount / 100),
-                \DateTime::createFromFormat('U', (string) $charge->created),
-                $charge->description ?? $charge->payment_intent,
-                $charge->balance_transaction,
-                (bool) ($paymentIntent->metadata->disable_notification ?? false)
-            );
         }
     }
 
@@ -171,85 +134,6 @@ class StripeHelper
 
         $member->stripe_payment_method = $setupIntent->payment_method instanceof PaymentMethod ? $setupIntent->payment_method->id : $setupIntent->payment_method;
         $member->save();
-    }
-
-    private function bookToJournal(float $amount, \DateTimeInterface $created, int $account, string $reference, string $title, ?string $balanceTransaction): void
-    {
-        $entry = new Journal(
-            $amount,
-            $this->cashctrlHelper->getAccountId($account),
-            $this->cashctrlHelper->getAccountId(1106),
-            $created
-        );
-        $entry->setReference($reference);
-        $entry->setTitle($title);
-
-        $this->cashctrlHelper->addJournalEntry($entry);
-
-        if ($balanceTransaction) {
-            $this->bookBalanceTransaction($balanceTransaction, $created, $reference, 'Stripe Gebühren für '.$title);
-        }
-    }
-
-    private function bookToOrder(Order $order, float $amount, \DateTimeInterface $created, string $reference, ?string $balanceTransaction, bool $disableNotification = false): void
-    {
-        $entry = new OrderBookentry($this->cashctrlHelper->getAccountId(1106), $order->getId());
-        $entry->setDescription('Zahlung Stripe');
-        $entry->setAmount($amount);
-        $entry->setReference($reference);
-        $entry->setDate($created);
-
-        $this->cashctrlHelper->addOrderBookentry($entry);
-
-        if ($balanceTransaction) {
-            $this->bookBalanceTransaction(
-                $balanceTransaction,
-                $created,
-                $entry->getReference(),
-                'Stripe Gebühren für '.$order->getNr()
-            );
-        }
-
-        // Re-fetch order with updated booking entry
-        $order = $this->cashctrlHelper->order->read($order->getId());
-
-        if ($order->open <= 0) {
-            if ($disableNotification) {
-                $this->cashctrlHelper->order->updateStatus($order->getId(), CashctrlHelper::STATUS_NOTIFIED);
-                return;
-            }
-
-            $this->framework->initialize();
-
-            $member = MemberModel::findOneBy('cashctrl_id', $order->getAssociateId());
-            $notification = Notification::findByPk($this->notificationId);
-
-            if (null === $member || null === $notification) {
-                $this->cashctrlHelper->order->updateStatus($order->getId(), CashctrlHelper::STATUS_PAID);
-            } else {
-                $this->cashctrlHelper->notifyInvoicePaid($order, $member, $notification);
-            }
-        }
-    }
-
-    private function bookBalanceTransaction(string $id, \DateTimeInterface $created, string $reference, string $title): void
-    {
-        try {
-            $transaction = $this->client->balanceTransactions->retrieve($id);
-
-            $fee = new Journal(
-                (float) ($transaction->fee / 100),
-                $this->cashctrlHelper->getAccountId(1106),
-                $this->cashctrlHelper->getAccountId(6842),
-                $created
-            );
-            $fee->setReference($reference);
-            $fee->setTitle($title);
-
-            $this->cashctrlHelper->addJournalEntry($fee);
-        } catch (ApiErrorException $exception) {
-            // Balance transaction not found
-        }
     }
 
     /**

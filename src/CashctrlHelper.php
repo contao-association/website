@@ -4,10 +4,12 @@ declare(strict_types=1);
 
 namespace App;
 
+use Contao\CoreBundle\Framework\ContaoFramework;
 use Contao\CoreBundle\Security\Authentication\Token\TokenChecker;
 use Contao\Date;
 use Contao\Versions;
 use Psr\Log\LoggerInterface;
+use Stripe\Charge;
 use Stripe\Exception\ApiErrorException;
 use Stripe\StripeClient;
 use Symfony\Cmf\Component\Routing\RouteObjectInterface;
@@ -42,65 +44,35 @@ use Terminal42\CashctrlApi\Result;
 
 class CashctrlHelper
 {
+    public const STATUS_OPEN = 16;
     public const STATUS_PAID = 18;
     public const STATUS_NOTIFIED = 87;
 
     use ErrorHandlingTrait;
 
-    public PersonEndpoint $person;
-    public OrderEndpoint $order;
-    public OrderDocumentEndpoint $orderDocument;
-    public FiscalperiodEndpoint $fiscalperiod;
-    public JournalEndpoint $journal;
-    public OrderBookentryEndpoint $orderBookentry;
-    public AccountEndpoint $account;
-    private StripeClient $stripeClient;
-    private TranslatorInterface $translator;
-    private TokenChecker $tokenChecker;
-    private UrlGeneratorInterface $urlGenerator;
-    private UriSigner $uriSigner;
-    private Filesystem $filesystem;
-    private LoggerInterface $logger;
-    private array $memberships;
-    private string $projectDir;
-
     private array $dateFormat = [];
     private array $accountIds = [];
 
     public function __construct(
-        PersonEndpoint $person,
-        OrderEndpoint $order,
-        OrderDocumentEndpoint $orderDocument,
-        FiscalperiodEndpoint $fiscalperiod,
-        JournalEndpoint $journal,
-        OrderBookentryEndpoint $orderBookentry,
-        AccountEndpoint $account,
-        TranslatorInterface $translator,
-        StripeClient $stripeClient,
-        TokenChecker $tokenChecker,
-        UrlGeneratorInterface $urlGenerator,
-        UriSigner $uriSigner,
-        Filesystem $filesystem,
-        LoggerInterface $logger,
-        array $memberships,
-        string $projectDir
+        public PersonEndpoint $person,
+        public OrderEndpoint $order,
+        public OrderDocumentEndpoint $orderDocument,
+        public FiscalperiodEndpoint $fiscalperiod,
+        public JournalEndpoint $journal,
+        public OrderBookentryEndpoint $orderBookentry,
+        public AccountEndpoint $account,
+        private readonly ContaoFramework $framework,
+        private readonly TranslatorInterface $translator,
+        private readonly StripeClient $stripeClient,
+        private readonly TokenChecker $tokenChecker,
+        private readonly UrlGeneratorInterface $urlGenerator,
+        private readonly UriSigner $uriSigner,
+        private readonly Filesystem $filesystem,
+        private readonly LoggerInterface $logger,
+        private readonly array $memberships,
+        private readonly string $projectDir,
+        private readonly int $paymentNotificationId
     ) {
-        $this->person = $person;
-        $this->order = $order;
-        $this->orderDocument = $orderDocument;
-        $this->fiscalperiod = $fiscalperiod;
-        $this->journal = $journal;
-        $this->orderBookentry = $orderBookentry;
-        $this->account = $account;
-        $this->stripeClient = $stripeClient;
-        $this->translator = $translator;
-        $this->tokenChecker = $tokenChecker;
-        $this->urlGenerator = $urlGenerator;
-        $this->uriSigner = $uriSigner;
-        $this->filesystem = $filesystem;
-        $this->logger = $logger;
-        $this->memberships = $memberships;
-        $this->projectDir = $projectDir;
     }
 
     public function syncMember(MemberModel $member): void
@@ -129,7 +101,7 @@ class CashctrlHelper
             $member->cashctrl_id = $result->insertId();
             $member->save();
         } catch (RuntimeException $exception) {
-            $this->sentryOrThrow("Error updating member ID {$member->id} in CashCtrl: ".$exception->getMessage(), null, ['person' => $person->toArray()]);
+            $this->sentryOrThrow("Error updating member ID $member->id in CashCtrl: ".$exception->getMessage(), null, ['person' => $person->toArray()]);
         }
     }
 
@@ -161,7 +133,7 @@ class CashctrlHelper
             return $invoice;
         }
 
-        $this->order->updateStatus($invoice->getId(), 16);
+        $this->order->updateStatus($invoice->getId(), 'paid' === $status ? self::STATUS_NOTIFIED : self::STATUS_OPEN);
 
         return $invoice;
     }
@@ -250,7 +222,7 @@ class CashctrlHelper
         return $order;
     }
 
-    public function downloadInvoice(Order $invoice, int $templateId = null, string $language): string
+    public function downloadInvoice(Order $invoice, int|null $templateId, string $language): string
     {
         if (null !== $templateId) {
             $this->orderDocument->update($invoice->getId(), ['templateId' => $templateId]);
@@ -373,6 +345,82 @@ class CashctrlHelper
         return null;
     }
 
+    public function bookToJournal(float $amount, \DateTimeInterface $created, int $account, string $reference, string $title, ?string $balanceTransaction): void
+    {
+        $entry = new Journal(
+            $amount,
+            $this->getAccountId($account),
+            $this->getAccountId(1106),
+            $created
+        );
+        $entry->setReference($reference);
+        $entry->setTitle($title);
+
+        $this->addJournalEntry($entry);
+
+        if ($balanceTransaction) {
+            $this->bookBalanceTransaction($balanceTransaction, $created, $reference, 'Stripe Gebühren für '.$title);
+        }
+    }
+
+    public function bookToOrder(Charge $charge, Order $order, bool $updateOrderStatus = false): void
+    {
+        $created = \DateTime::createFromFormat('U', (string) $charge->created);
+
+        $entry = new OrderBookentry($this->getAccountId(1106), $order->getId());
+        $entry->setDescription($this->getStripePaymentDescription($charge));
+        $entry->setAmount((float) ($charge->amount / 100));
+        $entry->setReference($charge->description ?? $charge->payment_intent);
+        $entry->setDate($created);
+
+        $this->addOrderBookentry($entry);
+
+        if ($charge->balance_transaction) {
+            $this->bookBalanceTransaction(
+                $charge->balance_transaction,
+                $created,
+                $entry->getReference(),
+                'Stripe Gebühren für '.$order->getNr()
+            );
+        }
+
+        // Re-fetch order with updated booking entry
+        $order = $this->order->read($order->getId());
+
+        if ($updateOrderStatus && $order->open <= 0) {
+            $this->framework->initialize();
+
+            $member = MemberModel::findOneBy('cashctrl_id', $order->getAssociateId());
+            $notification = Notification::findByPk($this->paymentNotificationId);
+
+            if (null === $member || null === $notification) {
+                $this->order->updateStatus($order->getId(), self::STATUS_PAID);
+            } else {
+                $this->notifyInvoicePaid($order, $member, $notification);
+            }
+        }
+    }
+
+    private function bookBalanceTransaction(string $id, \DateTimeInterface $created, string $reference, string $title): void
+    {
+        try {
+            $transaction = $this->stripeClient->balanceTransactions->retrieve($id);
+
+            $fee = new Journal(
+                (float) ($transaction->fee / 100),
+                $this->getAccountId(1106),
+                $this->getAccountId(6842),
+                $created
+            );
+            $fee->setReference($reference);
+            $fee->setTitle($title);
+
+            $this->addJournalEntry($fee);
+        } catch (ApiErrorException $exception) {
+            // Balance transaction not found
+        }
+    }
+
     private function updatePerson(Person $person, MemberModel $member): void
     {
         $person->setNr('M-'.str_pad((string) $member->id, 4, '0', STR_PAD_LEFT));
@@ -450,18 +498,12 @@ class CashctrlHelper
 
     private function getTitleId(string $gender): int
     {
-        switch ($gender) {
-            case 'male':
-                return 1;
-
-            case 'female':
-                return 2;
-
-            case 'other':
-                return 5;
-        }
-
-        return 0;
+        return match ($gender) {
+            'male' => 1,
+            'female' => 2,
+            'other' => 5,
+            default => 0,
+        };
     }
 
     private function getDateFormat(MemberModel $member): string
@@ -581,7 +623,7 @@ class CashctrlHelper
                 'description' => $order->getDescription(),
                 'metadata' => [
                     'cashctrl_order_id' => $order->getId(),
-                    'disable_notification' => true,
+                    'auto_payment' => true,
                 ],
                 'off_session' => true,
                 'payment_method' => $member->stripe_payment_method,
@@ -595,6 +637,10 @@ class CashctrlHelper
                 ]);
             }
 
+            foreach ($paymentIntent->charges as $charge) {
+                $this->bookToOrder($charge, $order, true);
+            }
+
             return true;
         } catch (ApiErrorException $exception) {
             $this->sentryOrThrow('Failed charging member invoice through Stripe.', $exception, [
@@ -603,5 +649,28 @@ class CashctrlHelper
             ]);
             return false;
         }
+    }
+
+    private function getStripePaymentDescription(Charge $charge): string
+    {
+        if ($charge->payment_method_details) {
+            switch ($charge->payment_method_details['type'] ?? '') {
+                case 'card':
+                    $card = $charge->payment_method_details['card'] ?? [];
+                    switch ($card['brand']) {
+                        case 'mastercard':
+                            return 'MasterCard '.($card['last4'] ?? '');
+
+                        case 'visa':
+                            return 'VISA '.($card['last4'] ?? '');
+                    }
+                    break;
+
+                case 'sepa_debit':
+                    return 'SEPA Lastschrift';
+            }
+        }
+
+        return 'Zahlung Stripe';
     }
 }
