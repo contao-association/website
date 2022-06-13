@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "e3831cd01c1d6b2c5f90972e317d08d7",
+    "content-hash": "52aeeb575cad55afa1b4f4de3f34c9a3",
     "packages": [
         {
             "name": "ausi/slug-generator",
@@ -2376,16 +2376,16 @@
         },
         {
             "name": "doctrine/doctrine-bundle",
-            "version": "2.6.3",
+            "version": "2.7.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/doctrine/DoctrineBundle.git",
-                "reference": "527970d22b8ca6472ebd88d7c42e512550bd874e"
+                "reference": "d2088fc50494e4e7441fecca54732245a613eeb6"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/doctrine/DoctrineBundle/zipball/527970d22b8ca6472ebd88d7c42e512550bd874e",
-                "reference": "527970d22b8ca6472ebd88d7c42e512550bd874e",
+                "url": "https://api.github.com/repos/doctrine/DoctrineBundle/zipball/d2088fc50494e4e7441fecca54732245a613eeb6",
+                "reference": "d2088fc50494e4e7441fecca54732245a613eeb6",
                 "shasum": ""
             },
             "require": {
@@ -2410,7 +2410,7 @@
             },
             "require-dev": {
                 "doctrine/coding-standard": "^9.0",
-                "doctrine/orm": "^2.10 || ^3.0",
+                "doctrine/orm": "^2.11 || ^3.0",
                 "friendsofphp/proxy-manager-lts": "^1.0",
                 "phpunit/phpunit": "^7.5 || ^8.0 || ^9.3 || ^10.0",
                 "psalm/plugin-phpunit": "^0.16.1",
@@ -2470,7 +2470,7 @@
             ],
             "support": {
                 "issues": "https://github.com/doctrine/DoctrineBundle/issues",
-                "source": "https://github.com/doctrine/DoctrineBundle/tree/2.6.3"
+                "source": "https://github.com/doctrine/DoctrineBundle/tree/2.7.0"
             },
             "funding": [
                 {
@@ -2486,7 +2486,7 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2022-04-22T09:59:53+00:00"
+            "time": "2022-06-10T10:55:26+00:00"
         },
         {
             "name": "doctrine/event-manager",
@@ -3474,16 +3474,16 @@
         },
         {
             "name": "guzzlehttp/guzzle",
-            "version": "7.4.3",
+            "version": "7.4.4",
             "source": {
                 "type": "git",
                 "url": "https://github.com/guzzle/guzzle.git",
-                "reference": "74a8602c6faec9ef74b7a9391ac82c5e65b1cdab"
+                "reference": "e3ff079b22820c2029d4c2a87796b6a0b8716ad8"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/guzzle/guzzle/zipball/74a8602c6faec9ef74b7a9391ac82c5e65b1cdab",
-                "reference": "74a8602c6faec9ef74b7a9391ac82c5e65b1cdab",
+                "url": "https://api.github.com/repos/guzzle/guzzle/zipball/e3ff079b22820c2029d4c2a87796b6a0b8716ad8",
+                "reference": "e3ff079b22820c2029d4c2a87796b6a0b8716ad8",
                 "shasum": ""
             },
             "require": {
@@ -3578,7 +3578,7 @@
             ],
             "support": {
                 "issues": "https://github.com/guzzle/guzzle/issues",
-                "source": "https://github.com/guzzle/guzzle/tree/7.4.3"
+                "source": "https://github.com/guzzle/guzzle/tree/7.4.4"
             },
             "funding": [
                 {
@@ -3594,7 +3594,7 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2022-05-25T13:24:33+00:00"
+            "time": "2022-06-09T21:39:15+00:00"
         },
         {
             "name": "guzzlehttp/promises",
@@ -4574,16 +4574,16 @@
         },
         {
             "name": "league/flysystem",
-            "version": "3.0.20",
+            "version": "3.0.21",
             "source": {
                 "type": "git",
                 "url": "https://github.com/thephpleague/flysystem.git",
-                "reference": "42a2f47dcf39944e2aee1b660ee55ab6ef69b535"
+                "reference": "8f1fcf9d2304ff77a006aa36dd2cb5f236999b12"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/thephpleague/flysystem/zipball/42a2f47dcf39944e2aee1b660ee55ab6ef69b535",
-                "reference": "42a2f47dcf39944e2aee1b660ee55ab6ef69b535",
+                "url": "https://api.github.com/repos/thephpleague/flysystem/zipball/8f1fcf9d2304ff77a006aa36dd2cb5f236999b12",
+                "reference": "8f1fcf9d2304ff77a006aa36dd2cb5f236999b12",
                 "shasum": ""
             },
             "require": {
@@ -4644,7 +4644,7 @@
             ],
             "support": {
                 "issues": "https://github.com/thephpleague/flysystem/issues",
-                "source": "https://github.com/thephpleague/flysystem/tree/3.0.20"
+                "source": "https://github.com/thephpleague/flysystem/tree/3.0.21"
             },
             "funding": [
                 {
@@ -4660,7 +4660,7 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2022-05-25T19:18:39+00:00"
+            "time": "2022-06-12T17:54:28+00:00"
         },
         {
             "name": "league/flysystem-bundle",
@@ -5484,16 +5484,16 @@
         },
         {
             "name": "paragonie/constant_time_encoding",
-            "version": "v2.5.0",
+            "version": "v2.6.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/paragonie/constant_time_encoding.git",
-                "reference": "9229e15f2e6ba772f0c55dd6986c563b937170a8"
+                "reference": "c1b1d82d109846ba58a4664dc5480c69ad2fc097"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/paragonie/constant_time_encoding/zipball/9229e15f2e6ba772f0c55dd6986c563b937170a8",
-                "reference": "9229e15f2e6ba772f0c55dd6986c563b937170a8",
+                "url": "https://api.github.com/repos/paragonie/constant_time_encoding/zipball/c1b1d82d109846ba58a4664dc5480c69ad2fc097",
+                "reference": "c1b1d82d109846ba58a4664dc5480c69ad2fc097",
                 "shasum": ""
             },
             "require": {
@@ -5547,7 +5547,7 @@
                 "issues": "https://github.com/paragonie/constant_time_encoding/issues",
                 "source": "https://github.com/paragonie/constant_time_encoding"
             },
-            "time": "2022-01-17T05:32:27+00:00"
+            "time": "2022-06-13T05:29:16+00:00"
         },
         {
             "name": "paragonie/random_compat",
@@ -7003,16 +7003,16 @@
         },
         {
             "name": "sentry/sentry",
-            "version": "3.5.0",
+            "version": "3.6.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/getsentry/sentry-php.git",
-                "reference": "5b611e3f09035f5ad5edf494443e3236bd5ea482"
+                "reference": "6d1a6ee29c558be373bfe08d454a3c116c02dd0d"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/getsentry/sentry-php/zipball/5b611e3f09035f5ad5edf494443e3236bd5ea482",
-                "reference": "5b611e3f09035f5ad5edf494443e3236bd5ea482",
+                "url": "https://api.github.com/repos/getsentry/sentry-php/zipball/6d1a6ee29c558be373bfe08d454a3c116c02dd0d",
+                "reference": "6d1a6ee29c558be373bfe08d454a3c116c02dd0d",
                 "shasum": ""
             },
             "require": {
@@ -7041,7 +7041,7 @@
             "require-dev": {
                 "friendsofphp/php-cs-fixer": "^2.19|3.4.*",
                 "http-interop/http-factory-guzzle": "^1.0",
-                "monolog/monolog": "^1.3|^2.0",
+                "monolog/monolog": "^1.6|^2.0|^3.0",
                 "nikic/php-parser": "^4.10.3",
                 "php-http/mock-client": "^1.3",
                 "phpbench/phpbench": "^1.0",
@@ -7058,7 +7058,7 @@
             "type": "library",
             "extra": {
                 "branch-alias": {
-                    "dev-master": "3.5.x-dev"
+                    "dev-master": "3.6.x-dev"
                 }
             },
             "autoload": {
@@ -7092,7 +7092,7 @@
             ],
             "support": {
                 "issues": "https://github.com/getsentry/sentry-php/issues",
-                "source": "https://github.com/getsentry/sentry-php/tree/3.5.0"
+                "source": "https://github.com/getsentry/sentry-php/tree/3.6.0"
             },
             "funding": [
                 {
@@ -7104,7 +7104,7 @@
                     "type": "custom"
                 }
             ],
-            "time": "2022-05-19T07:14:12+00:00"
+            "time": "2022-06-09T20:33:39+00:00"
         },
         {
             "name": "sentry/sentry-symfony",
@@ -11142,16 +11142,16 @@
         },
         {
             "name": "symfony/property-info",
-            "version": "v6.1.0",
+            "version": "v6.1.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/property-info.git",
-                "reference": "3034b470009cd673c6409c3c1952869c197bc8cd"
+                "reference": "3d328abe4aac447360cafa6ba6f019db0c12f378"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/property-info/zipball/3034b470009cd673c6409c3c1952869c197bc8cd",
-                "reference": "3034b470009cd673c6409c3c1952869c197bc8cd",
+                "url": "https://api.github.com/repos/symfony/property-info/zipball/3d328abe4aac447360cafa6ba6f019db0c12f378",
+                "reference": "3d328abe4aac447360cafa6ba6f019db0c12f378",
                 "shasum": ""
             },
             "require": {
@@ -11211,7 +11211,7 @@
                 "validator"
             ],
             "support": {
-                "source": "https://github.com/symfony/property-info/tree/v6.1.0"
+                "source": "https://github.com/symfony/property-info/tree/v6.1.1"
             },
             "funding": [
                 {
@@ -11227,7 +11227,7 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2022-05-24T19:09:44+00:00"
+            "time": "2022-05-31T17:22:23+00:00"
         },
         {
             "name": "symfony/proxy-manager-bridge",
@@ -12674,16 +12674,16 @@
         },
         {
             "name": "symfony/var-exporter",
-            "version": "v6.1.0",
+            "version": "v6.1.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/var-exporter.git",
-                "reference": "33c301d3177150a52350ac893490a9289eb143dd"
+                "reference": "ce1452317b1210ddfe18d143fa8a09c18f034b89"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/var-exporter/zipball/33c301d3177150a52350ac893490a9289eb143dd",
-                "reference": "33c301d3177150a52350ac893490a9289eb143dd",
+                "url": "https://api.github.com/repos/symfony/var-exporter/zipball/ce1452317b1210ddfe18d143fa8a09c18f034b89",
+                "reference": "ce1452317b1210ddfe18d143fa8a09c18f034b89",
                 "shasum": ""
             },
             "require": {
@@ -12726,7 +12726,7 @@
                 "serialize"
             ],
             "support": {
-                "source": "https://github.com/symfony/var-exporter/tree/v6.1.0"
+                "source": "https://github.com/symfony/var-exporter/tree/v6.1.1"
             },
             "funding": [
                 {
@@ -12742,7 +12742,7 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2022-05-21T13:34:40+00:00"
+            "time": "2022-05-27T12:58:07+00:00"
         },
         {
             "name": "symfony/web-profiler-bundle",
@@ -13358,16 +13358,16 @@
         },
         {
             "name": "thecodingmachine/safe",
-            "version": "v2.2.0",
+            "version": "v2.2.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/thecodingmachine/safe.git",
-                "reference": "5570fbf82d3d27dfaff59db2bd1c9000838d66d9"
+                "reference": "2a8d758fd17763faf86e4aa798193e17b9fac38c"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/thecodingmachine/safe/zipball/5570fbf82d3d27dfaff59db2bd1c9000838d66d9",
-                "reference": "5570fbf82d3d27dfaff59db2bd1c9000838d66d9",
+                "url": "https://api.github.com/repos/thecodingmachine/safe/zipball/2a8d758fd17763faf86e4aa798193e17b9fac38c",
+                "reference": "2a8d758fd17763faf86e4aa798193e17b9fac38c",
                 "shasum": ""
             },
             "require": {
@@ -13490,9 +13490,9 @@
             "description": "PHP core functions that throw exceptions instead of returning FALSE on error",
             "support": {
                 "issues": "https://github.com/thecodingmachine/safe/issues",
-                "source": "https://github.com/thecodingmachine/safe/tree/v2.2.0"
+                "source": "https://github.com/thecodingmachine/safe/tree/v2.2.1"
             },
-            "time": "2022-05-25T13:37:55+00:00"
+            "time": "2022-06-09T15:36:45+00:00"
         },
         {
             "name": "toflar/psr6-symfony-http-cache-store",

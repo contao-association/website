@@ -110,6 +110,7 @@ task('deploy', [
     'contao:maintenance:enable',
     'contao:manager:download',
     'contao:manager:lock',
+    'contao:install:lock',
     'deploy:symlink',
     'deploy:opcache',
     'contao:migrate',
