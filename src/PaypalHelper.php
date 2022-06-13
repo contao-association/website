@@ -126,7 +126,9 @@ class PaypalHelper
 
     private function bookFee(array $transaction, Journal $journal): void
     {
-        if (($feeAmount = ($transaction['transaction_info']['fee_amount']['value'] ?? 0)) >= 0) {
+        $feeAmount = (float) ($transaction['transaction_info']['fee_amount']['value'] ?? 0);
+
+        if ($feeAmount >= 0) {
             return;
         }
 

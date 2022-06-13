@@ -22,7 +22,7 @@
 
   <div class="enquiries">
     <?php foreach ($this->enquiries as $enquiry): ?>
-      <div class="enquiry<?= $enquiry['class'] ?><?php if ($this->canVote): ?> can-vote<?php endif; ?>">
+      <div class="enquiry<?= $enquiry['class'] ?? '' ?><?php if ($this->canVote): ?> can-vote<?php endif; ?>">
         <div class="text">
           <h3>
             <?php if ($enquiry['description']): ?><a href="<?= $enquiry['href']; ?>" target="_blank"><?php endif; ?>
