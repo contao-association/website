@@ -57,7 +57,7 @@ class RapidmailHelper
 
         $data = $this->compileRecipientData($member)
             ->setRecipientlistId($this->recipientlistId)
-            ->setForeignId($member->id)
+            ->setForeignId((string) $member->id)
             ->setActivated(new \DateTime())
             ->setAttribute('status', 'active')
         ;

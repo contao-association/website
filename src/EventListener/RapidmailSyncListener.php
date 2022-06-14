@@ -7,6 +7,7 @@ namespace App\EventListener;
 use App\RapidmailHelper;
 use Contao\CoreBundle\ServiceAnnotation\Callback;
 use Contao\MemberModel;
+use Rapidmail\ApiClient\Exception\ApiException;
 
 /**
  * @Callback(table="tl_member", target="config.oncreate_version")
@@ -45,12 +46,20 @@ class RapidmailSyncListener
             ->params()
             ->newQueryParam()
             ->setRecipientlistId($this->rapidmail->getRecipientlistId())
-            ->setForeignId($member->id)
+            ->setForeignId((int) $member->id)
         ;
 
-        $recipients = $this->rapidmail->recipients()->query($queryParams);
+        try {
+            $recipients = $this->rapidmail->recipients()->query($queryParams);
+        } catch (ApiException $e) {
+            if (!str_contains($e->getMessage(), 'API error 404')) {
+                throw $e;
+            }
 
-        if (0 === $recipients->count()) {
+            $recipients = false;
+        }
+
+        if (false === $recipients || 0 === $recipients->count()) {
             $this->rapidmail->createRecipient($member);
         } elseif (1 === $recipients->count()) {
             $recipients->rewind();
