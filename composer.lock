@@ -526,16 +526,16 @@
         },
         {
             "name": "contao-components/ace",
-            "version": "1.5.3",
+            "version": "1.6.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/contao-components/ace.git",
-                "reference": "aacad01159ab9ded2bb34a63faff264abd0d4949"
+                "reference": "359c749830e52a22eea6b2c9cbd6dbefdc4d221c"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/contao-components/ace/zipball/aacad01159ab9ded2bb34a63faff264abd0d4949",
-                "reference": "aacad01159ab9ded2bb34a63faff264abd0d4949",
+                "url": "https://api.github.com/repos/contao-components/ace/zipball/359c749830e52a22eea6b2c9cbd6dbefdc4d221c",
+                "reference": "359c749830e52a22eea6b2c9cbd6dbefdc4d221c",
                 "shasum": ""
             },
             "require": {
@@ -555,9 +555,9 @@
             "description": "ACE code editor integration for Contao Open Source CMS",
             "support": {
                 "issues": "https://github.com/contao-components/ace/issues",
-                "source": "https://github.com/contao-components/ace/tree/1.5.3"
+                "source": "https://github.com/contao-components/ace/tree/1.6.0"
             },
-            "time": "2022-06-01T16:22:49+00:00"
+            "time": "2022-06-13T09:21:24+00:00"
         },
         {
             "name": "contao-components/chosen",
@@ -5484,16 +5484,16 @@
         },
         {
             "name": "paragonie/constant_time_encoding",
-            "version": "v2.6.2",
+            "version": "v2.6.3",
             "source": {
                 "type": "git",
                 "url": "https://github.com/paragonie/constant_time_encoding.git",
-                "reference": "c1b1d82d109846ba58a4664dc5480c69ad2fc097"
+                "reference": "58c3f47f650c94ec05a151692652a868995d2938"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/paragonie/constant_time_encoding/zipball/c1b1d82d109846ba58a4664dc5480c69ad2fc097",
-                "reference": "c1b1d82d109846ba58a4664dc5480c69ad2fc097",
+                "url": "https://api.github.com/repos/paragonie/constant_time_encoding/zipball/58c3f47f650c94ec05a151692652a868995d2938",
+                "reference": "58c3f47f650c94ec05a151692652a868995d2938",
                 "shasum": ""
             },
             "require": {
@@ -5547,7 +5547,7 @@
                 "issues": "https://github.com/paragonie/constant_time_encoding/issues",
                 "source": "https://github.com/paragonie/constant_time_encoding"
             },
-            "time": "2022-06-13T05:29:16+00:00"
+            "time": "2022-06-14T06:56:20+00:00"
         },
         {
             "name": "paragonie/random_compat",
@@ -13023,16 +13023,16 @@
         },
         {
             "name": "terminal42/contao-conditionalformfields",
-            "version": "3.0.3",
+            "version": "3.0.4",
             "source": {
                 "type": "git",
                 "url": "https://github.com/terminal42/contao-conditionalformfields.git",
-                "reference": "8a8d9dad3eb6cd764c98573b1d4171f0c866619c"
+                "reference": "82d2c4d7d6a8df1f5e74dce5bf84932203497065"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/terminal42/contao-conditionalformfields/zipball/8a8d9dad3eb6cd764c98573b1d4171f0c866619c",
-                "reference": "8a8d9dad3eb6cd764c98573b1d4171f0c866619c",
+                "url": "https://api.github.com/repos/terminal42/contao-conditionalformfields/zipball/82d2c4d7d6a8df1f5e74dce5bf84932203497065",
+                "reference": "82d2c4d7d6a8df1f5e74dce5bf84932203497065",
                 "shasum": ""
             },
             "require": {
@@ -13089,7 +13089,7 @@
                     "type": "other"
                 }
             ],
-            "time": "2022-05-31T08:40:48+00:00"
+            "time": "2022-06-14T19:33:05+00:00"
         },
         {
             "name": "terminal42/dcawizard",
@@ -13214,16 +13214,16 @@
         },
         {
             "name": "terminal42/notification_center",
-            "version": "1.6.10",
+            "version": "1.6.11",
             "source": {
                 "type": "git",
                 "url": "https://github.com/terminal42/contao-notification_center.git",
-                "reference": "bd923f0419b09f83502662e6e233c59dba14a36e"
+                "reference": "c3f24bef083eed3dea81d744fc318f046344b471"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/terminal42/contao-notification_center/zipball/bd923f0419b09f83502662e6e233c59dba14a36e",
-                "reference": "bd923f0419b09f83502662e6e233c59dba14a36e",
+                "url": "https://api.github.com/repos/terminal42/contao-notification_center/zipball/c3f24bef083eed3dea81d744fc318f046344b471",
+                "reference": "c3f24bef083eed3dea81d744fc318f046344b471",
                 "shasum": ""
             },
             "require": {
@@ -13298,7 +13298,7 @@
                     "type": "other"
                 }
             ],
-            "time": "2022-05-20T11:36:40+00:00"
+            "time": "2022-06-14T19:46:17+00:00"
         },
         {
             "name": "terminal42/service-annotation-bundle",
