@@ -150,7 +150,7 @@ class PaymentsController extends AbstractFrontendModuleController
             'metadata' => [
                 'contao_member_id' => $member->id,
             ],
-            'payment_method_types' => ['card'],
+            'payment_method_types' => ['card', 'sepa_debit'],
             'success_url' => $this->getPageModel()->getAbsoluteUrl().'?session_id={CHECKOUT_SESSION_ID}',
             'cancel_url' => $this->getPageModel()->getAbsoluteUrl(),
         ]);
