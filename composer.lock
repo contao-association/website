@@ -12905,12 +12905,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/terminal42/cashctrl-api.git",
-                "reference": "cecfe1cec9217d89b46ec2192d448652e2e29e41"
+                "reference": "74e4d74eb9de79f78162667e604f82f896b42027"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/terminal42/cashctrl-api/zipball/cecfe1cec9217d89b46ec2192d448652e2e29e41",
-                "reference": "cecfe1cec9217d89b46ec2192d448652e2e29e41",
+                "url": "https://api.github.com/repos/terminal42/cashctrl-api/zipball/74e4d74eb9de79f78162667e604f82f896b42027",
+                "reference": "74e4d74eb9de79f78162667e604f82f896b42027",
                 "shasum": ""
             },
             "require": {
@@ -12958,7 +12958,7 @@
                     "type": "other"
                 }
             ],
-            "time": "2022-06-09T10:01:29+00:00"
+            "time": "2022-06-16T07:28:09+00:00"
         },
         {
             "name": "terminal42/cashctrl-bundle",
@@ -13023,16 +13023,16 @@
         },
         {
             "name": "terminal42/contao-conditionalformfields",
-            "version": "3.0.4",
+            "version": "3.0.5",
             "source": {
                 "type": "git",
                 "url": "https://github.com/terminal42/contao-conditionalformfields.git",
-                "reference": "82d2c4d7d6a8df1f5e74dce5bf84932203497065"
+                "reference": "25e5815fa67a7766fbb0c0db2703efbd8834bbfb"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/terminal42/contao-conditionalformfields/zipball/82d2c4d7d6a8df1f5e74dce5bf84932203497065",
-                "reference": "82d2c4d7d6a8df1f5e74dce5bf84932203497065",
+                "url": "https://api.github.com/repos/terminal42/contao-conditionalformfields/zipball/25e5815fa67a7766fbb0c0db2703efbd8834bbfb",
+                "reference": "25e5815fa67a7766fbb0c0db2703efbd8834bbfb",
                 "shasum": ""
             },
             "require": {
@@ -13089,7 +13089,7 @@
                     "type": "other"
                 }
             ],
-            "time": "2022-06-14T19:33:05+00:00"
+            "time": "2022-06-14T20:02:41+00:00"
         },
         {
             "name": "terminal42/dcawizard",

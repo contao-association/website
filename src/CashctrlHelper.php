@@ -444,11 +444,11 @@ class CashctrlHelper
         $invoiceAddress->setCity($member->city);
         $invoiceAddress->setCountry($member->country);
 
-        $this->setContact($person, PersonContact::TYPE_EMAIL, PersonContact::PURPOSE_INVOICE, (string) $member->email);
-        $this->setContact($person, PersonContact::TYPE_PHONE, PersonContact::PURPOSE_INVOICE, (string) $member->phone);
-        $this->setContact($person, PersonContact::TYPE_MOBILE, PersonContact::PURPOSE_INVOICE, (string) $member->mobile);
-        $this->setContact($person, PersonContact::TYPE_FAX, PersonContact::PURPOSE_INVOICE, (string) $member->fax);
-        $this->setContact($person, PersonContact::TYPE_WEBSITE, PersonContact::PURPOSE_INVOICE, (string) $member->website);
+        $this->setContact($person, PersonContact::TYPE_EMAIL_WORK, (string) $member->email);
+        $this->setContact($person, PersonContact::TYPE_PHONE_WORK, (string) $member->phone);
+        $this->setContact($person, PersonContact::TYPE_MOBILE_WORK, (string) $member->mobile);
+        $this->setContact($person, PersonContact::TYPE_FAX, (string) $member->fax);
+        $this->setContact($person, PersonContact::TYPE_WEBSITE, (string) $member->website);
     }
 
     private function findAddress(Person $person, string $type): PersonAddress
@@ -467,11 +467,11 @@ class CashctrlHelper
         return $address;
     }
 
-    private function setContact(Person $person, string $type, string $purpose, string $address): void
+    private function setContact(Person $person, string $type, string $address): void
     {
         if (null !== ($contacts = $person->getContacts())) {
             foreach ($contacts as $contact) {
-                if ($type === $contact->getType() && $purpose === $contact->getPurpose()) {
+                if ($type === $contact->getType()) {
                     if (empty($address)) {
                         $person->removeContact($contact);
                     } else {
@@ -483,7 +483,7 @@ class CashctrlHelper
         }
 
         if (!empty($address)) {
-            $person->addContact(new PersonContact($address, $purpose, $type));
+            $person->addContact(new PersonContact($address, $type));
         }
     }
 
