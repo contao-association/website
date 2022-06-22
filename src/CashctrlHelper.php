@@ -659,15 +659,15 @@ class CashctrlHelper
                     $card = $charge->payment_method_details['card'] ?? [];
                     switch ($card['brand']) {
                         case 'mastercard':
-                            return 'MasterCard '.($card['last4'] ?? '');
+                            return 'Zahlung (MasterCard '.($card['last4'] ?? '').')';
 
                         case 'visa':
-                            return 'VISA '.($card['last4'] ?? '');
+                            return 'Zahlung (VISA '.($card['last4'] ?? '').')';
                     }
                     break;
 
                 case 'sepa_debit':
-                    return 'SEPA Lastschrift';
+                    return 'Zahlung (SEPA Lastschrift)';
             }
         }
 
