@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace App;
 
 use Contao\MemberModel;
-use Contao\StringUtil;
 use Rapidmail\ApiClient\Client;
 use Rapidmail\ApiClient\Exception\ApiException;
 use Rapidmail\ApiClient\Service\V1\Api\Recipients\Recipient\Parameter\RecipientCreateParam;
