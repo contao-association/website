@@ -637,6 +637,9 @@ class CashctrlHelper
                 ]);
             }
 
+            // Set order to "open" otherwise we can't add book entries
+            $this->order->updateStatus($order->getId(), self::STATUS_OPEN);
+
             foreach ($paymentIntent->charges as $charge) {
                 $this->bookToOrder($charge, $order, true);
             }
