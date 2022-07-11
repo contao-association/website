@@ -264,16 +264,16 @@
         },
         {
             "name": "codefog/contao-haste",
-            "version": "4.25.19",
+            "version": "4.25.20",
             "source": {
                 "type": "git",
                 "url": "https://github.com/codefog/contao-haste.git",
-                "reference": "cc4bd7bffc456c2ad6101fff0f3728f143ccf08a"
+                "reference": "a880f7655ee61232ed1b9dad25c3e5cafb6f5093"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/codefog/contao-haste/zipball/cc4bd7bffc456c2ad6101fff0f3728f143ccf08a",
-                "reference": "cc4bd7bffc456c2ad6101fff0f3728f143ccf08a",
+                "url": "https://api.github.com/repos/codefog/contao-haste/zipball/a880f7655ee61232ed1b9dad25c3e5cafb6f5093",
+                "reference": "a880f7655ee61232ed1b9dad25c3e5cafb6f5093",
                 "shasum": ""
             },
             "require": {
@@ -331,7 +331,7 @@
             ],
             "support": {
                 "issues": "https://github.com/codefog/contao-haste/issues",
-                "source": "https://github.com/codefog/contao-haste/tree/4.25.19"
+                "source": "https://github.com/codefog/contao-haste/tree/4.25.20"
             },
             "funding": [
                 {
@@ -339,7 +339,7 @@
                     "type": "github"
                 }
             ],
-            "time": "2022-06-24T09:14:26+00:00"
+            "time": "2022-07-05T11:25:26+00:00"
         },
         {
             "name": "composer/ca-bundle",
@@ -526,16 +526,16 @@
         },
         {
             "name": "contao-components/ace",
-            "version": "1.7.0",
+            "version": "1.7.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/contao-components/ace.git",
-                "reference": "cb5549278e512dfe0a503d55146dd15b53d87feb"
+                "reference": "31d703aefaebd35b733ea5881e72a5cb195d9e7e"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/contao-components/ace/zipball/cb5549278e512dfe0a503d55146dd15b53d87feb",
-                "reference": "cb5549278e512dfe0a503d55146dd15b53d87feb",
+                "url": "https://api.github.com/repos/contao-components/ace/zipball/31d703aefaebd35b733ea5881e72a5cb195d9e7e",
+                "reference": "31d703aefaebd35b733ea5881e72a5cb195d9e7e",
                 "shasum": ""
             },
             "require": {
@@ -555,9 +555,9 @@
             "description": "ACE code editor integration for Contao Open Source CMS",
             "support": {
                 "issues": "https://github.com/contao-components/ace/issues",
-                "source": "https://github.com/contao-components/ace/tree/1.7.0"
+                "source": "https://github.com/contao-components/ace/tree/1.7.1"
             },
-            "time": "2022-06-29T09:55:59+00:00"
+            "time": "2022-07-01T09:10:49+00:00"
         },
         {
             "name": "contao-components/chosen",
@@ -1189,16 +1189,16 @@
         },
         {
             "name": "contao/core-bundle",
-            "version": "4.13.5",
+            "version": "4.13.6",
             "source": {
                 "type": "git",
                 "url": "https://github.com/contao/core-bundle.git",
-                "reference": "dc6298b544a516f2e3801a253101f4613ceb8d92"
+                "reference": "e731c368b3fe137a6c6176834a752dfc5ea2b622"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/contao/core-bundle/zipball/dc6298b544a516f2e3801a253101f4613ceb8d92",
-                "reference": "dc6298b544a516f2e3801a253101f4613ceb8d92",
+                "url": "https://api.github.com/repos/contao/core-bundle/zipball/e731c368b3fe137a6c6176834a752dfc5ea2b622",
+                "reference": "e731c368b3fe137a6c6176834a752dfc5ea2b622",
                 "shasum": ""
             },
             "require": {
@@ -1393,7 +1393,7 @@
                     "type": "custom"
                 }
             ],
-            "time": "2022-06-03T12:24:00+00:00"
+            "time": "2022-07-05T11:01:11+00:00"
         },
         {
             "name": "contao/image",
@@ -1515,16 +1515,16 @@
         },
         {
             "name": "contao/installation-bundle",
-            "version": "4.13.5",
+            "version": "4.13.6",
             "source": {
                 "type": "git",
                 "url": "https://github.com/contao/installation-bundle.git",
-                "reference": "e7feb0d977b3fcfcec81fc162d4597fea132a0d1"
+                "reference": "015657c0cb68964f5b2b6be1e064dff3662d29d2"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/contao/installation-bundle/zipball/e7feb0d977b3fcfcec81fc162d4597fea132a0d1",
-                "reference": "e7feb0d977b3fcfcec81fc162d4597fea132a0d1",
+                "url": "https://api.github.com/repos/contao/installation-bundle/zipball/015657c0cb68964f5b2b6be1e064dff3662d29d2",
+                "reference": "015657c0cb68964f5b2b6be1e064dff3662d29d2",
                 "shasum": ""
             },
             "require": {
@@ -1593,20 +1593,20 @@
                     "type": "custom"
                 }
             ],
-            "time": "2022-06-03T12:24:00+00:00"
+            "time": "2022-07-05T11:01:11+00:00"
         },
         {
             "name": "contao/manager-bundle",
-            "version": "4.13.5",
+            "version": "4.13.6",
             "source": {
                 "type": "git",
                 "url": "https://github.com/contao/manager-bundle.git",
-                "reference": "6d1434060cf25b1f9e6bb74aa5f110159b5bd686"
+                "reference": "52a37819597a339d0165f1169d6629256e0077f6"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/contao/manager-bundle/zipball/6d1434060cf25b1f9e6bb74aa5f110159b5bd686",
-                "reference": "6d1434060cf25b1f9e6bb74aa5f110159b5bd686",
+                "url": "https://api.github.com/repos/contao/manager-bundle/zipball/52a37819597a339d0165f1169d6629256e0077f6",
+                "reference": "52a37819597a339d0165f1169d6629256e0077f6",
                 "shasum": ""
             },
             "require": {
@@ -1702,7 +1702,7 @@
                     "type": "custom"
                 }
             ],
-            "time": "2022-06-03T12:24:00+00:00"
+            "time": "2022-07-05T11:01:11+00:00"
         },
         {
             "name": "contao/manager-plugin",
@@ -1898,16 +1898,16 @@
         },
         {
             "name": "doctrine/annotations",
-            "version": "1.13.2",
+            "version": "1.13.3",
             "source": {
                 "type": "git",
                 "url": "https://github.com/doctrine/annotations.git",
-                "reference": "5b668aef16090008790395c02c893b1ba13f7e08"
+                "reference": "648b0343343565c4a056bfc8392201385e8d89f0"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/doctrine/annotations/zipball/5b668aef16090008790395c02c893b1ba13f7e08",
-                "reference": "5b668aef16090008790395c02c893b1ba13f7e08",
+                "url": "https://api.github.com/repos/doctrine/annotations/zipball/648b0343343565c4a056bfc8392201385e8d89f0",
+                "reference": "648b0343343565c4a056bfc8392201385e8d89f0",
                 "shasum": ""
             },
             "require": {
@@ -1919,9 +1919,10 @@
             "require-dev": {
                 "doctrine/cache": "^1.11 || ^2.0",
                 "doctrine/coding-standard": "^6.0 || ^8.1",
-                "phpstan/phpstan": "^0.12.20",
+                "phpstan/phpstan": "^1.4.10 || ^1.8.0",
                 "phpunit/phpunit": "^7.5 || ^8.0 || ^9.1.5",
-                "symfony/cache": "^4.4 || ^5.2"
+                "symfony/cache": "^4.4 || ^5.2",
+                "vimeo/psalm": "^4.10"
             },
             "type": "library",
             "autoload": {
@@ -1964,9 +1965,9 @@
             ],
             "support": {
                 "issues": "https://github.com/doctrine/annotations/issues",
-                "source": "https://github.com/doctrine/annotations/tree/1.13.2"
+                "source": "https://github.com/doctrine/annotations/tree/1.13.3"
             },
-            "time": "2021-08-05T19:00:23+00:00"
+            "time": "2022-07-02T10:48:51+00:00"
         },
         {
             "name": "doctrine/cache",
@@ -3288,16 +3289,16 @@
         },
         {
             "name": "friendsofsymfony/http-cache",
-            "version": "2.13.0",
+            "version": "2.14.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/FriendsOfSymfony/FOSHttpCache.git",
-                "reference": "8e46af3721e032a87b2b27782efa173ecda3cc1a"
+                "reference": "b20ba13dec0b3d6c0b2ecf692f0b6a6eed6d89fd"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/FriendsOfSymfony/FOSHttpCache/zipball/8e46af3721e032a87b2b27782efa173ecda3cc1a",
-                "reference": "8e46af3721e032a87b2b27782efa173ecda3cc1a",
+                "url": "https://api.github.com/repos/FriendsOfSymfony/FOSHttpCache/zipball/b20ba13dec0b3d6c0b2ecf692f0b6a6eed6d89fd",
+                "reference": "b20ba13dec0b3d6c0b2ecf692f0b6a6eed6d89fd",
                 "shasum": ""
             },
             "require": {
@@ -3367,9 +3368,9 @@
             ],
             "support": {
                 "issues": "https://github.com/FriendsOfSymfony/FOSHttpCache/issues",
-                "source": "https://github.com/FriendsOfSymfony/FOSHttpCache/tree/2.13.0"
+                "source": "https://github.com/FriendsOfSymfony/FOSHttpCache/tree/2.14.1"
             },
-            "time": "2022-01-25T12:27:12+00:00"
+            "time": "2022-07-07T06:13:40+00:00"
         },
         {
             "name": "friendsofsymfony/http-cache-bundle",
@@ -4574,16 +4575,16 @@
         },
         {
             "name": "league/flysystem",
-            "version": "3.0.23",
+            "version": "3.1.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/thephpleague/flysystem.git",
-                "reference": "5b461a96d01144744077343908a2c196682c71e6"
+                "reference": "34a68067b7ae3b836ea5e57e1fc432478372a4f5"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/thephpleague/flysystem/zipball/5b461a96d01144744077343908a2c196682c71e6",
-                "reference": "5b461a96d01144744077343908a2c196682c71e6",
+                "url": "https://api.github.com/repos/thephpleague/flysystem/zipball/34a68067b7ae3b836ea5e57e1fc432478372a4f5",
+                "reference": "34a68067b7ae3b836ea5e57e1fc432478372a4f5",
                 "shasum": ""
             },
             "require": {
@@ -4644,7 +4645,7 @@
             ],
             "support": {
                 "issues": "https://github.com/thephpleague/flysystem/issues",
-                "source": "https://github.com/thephpleague/flysystem/tree/3.0.23"
+                "source": "https://github.com/thephpleague/flysystem/tree/3.1.0"
             },
             "funding": [
                 {
@@ -4660,7 +4661,7 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2022-06-29T08:19:13+00:00"
+            "time": "2022-06-29T17:29:54+00:00"
         },
         {
             "name": "league/flysystem-bundle",
@@ -7492,16 +7493,16 @@
         },
         {
             "name": "stripe/stripe-php",
-            "version": "v8.8.0",
+            "version": "v8.10.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/stripe/stripe-php.git",
-                "reference": "06bfb65639cfecae7c2b57d340f740599c548753"
+                "reference": "ae44989a37e0785f325d696719afa46e3503dc7d"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/stripe/stripe-php/zipball/06bfb65639cfecae7c2b57d340f740599c548753",
-                "reference": "06bfb65639cfecae7c2b57d340f740599c548753",
+                "url": "https://api.github.com/repos/stripe/stripe-php/zipball/ae44989a37e0785f325d696719afa46e3503dc7d",
+                "reference": "ae44989a37e0785f325d696719afa46e3503dc7d",
                 "shasum": ""
             },
             "require": {
@@ -7546,9 +7547,9 @@
             ],
             "support": {
                 "issues": "https://github.com/stripe/stripe-php/issues",
-                "source": "https://github.com/stripe/stripe-php/tree/v8.8.0"
+                "source": "https://github.com/stripe/stripe-php/tree/v8.10.0"
             },
-            "time": "2022-06-23T16:42:38+00:00"
+            "time": "2022-07-07T17:46:57+00:00"
         },
         {
             "name": "symfony-cmf/routing",
@@ -13214,16 +13215,16 @@
         },
         {
             "name": "terminal42/notification_center",
-            "version": "1.6.12",
+            "version": "1.6.13",
             "source": {
                 "type": "git",
                 "url": "https://github.com/terminal42/contao-notification_center.git",
-                "reference": "6460e0086a6b05577f42f51b115655f8631b30ed"
+                "reference": "a833d757726969a94b93391dc08a893b9485fb74"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/terminal42/contao-notification_center/zipball/6460e0086a6b05577f42f51b115655f8631b30ed",
-                "reference": "6460e0086a6b05577f42f51b115655f8631b30ed",
+                "url": "https://api.github.com/repos/terminal42/contao-notification_center/zipball/a833d757726969a94b93391dc08a893b9485fb74",
+                "reference": "a833d757726969a94b93391dc08a893b9485fb74",
                 "shasum": ""
             },
             "require": {
@@ -13264,7 +13265,8 @@
                     ]
                 },
                 "classmap": [
-                    "classes/"
+                    "classes/",
+                    "modules/"
                 ]
             },
             "notification-url": "https://packagist.org/downloads/",
@@ -13298,7 +13300,7 @@
                     "type": "other"
                 }
             ],
-            "time": "2022-06-28T13:54:58+00:00"
+            "time": "2022-07-01T06:15:31+00:00"
         },
         {
             "name": "terminal42/service-annotation-bundle",

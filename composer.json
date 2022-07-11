@@ -29,6 +29,13 @@
             "url": "https://github.com/contao-association/contao-voting"
         }
     ],
+    "config": {
+        "allow-plugins": {
+            "contao/manager-plugin": true,
+            "contao-components/installer": true,
+            "contao-community-alliance/composer-plugin": true
+        }
+    },
     "extra": {
         "public-dir": "web",
         "contao-component-dir": "assets"
