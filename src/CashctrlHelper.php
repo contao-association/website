@@ -363,14 +363,14 @@ class CashctrlHelper
         }
     }
 
-    public function bookToOrder(Charge $charge, Order $order, bool $updateOrderStatus = false): void
+    public function bookToOrder(Charge $charge, Order $order): void
     {
         $created = \DateTime::createFromFormat('U', (string) $charge->created);
 
         $entry = new OrderBookentry($this->getAccountId(1106), $order->getId());
         $entry->setDescription($this->getStripePaymentDescription($charge));
         $entry->setAmount((float) ($charge->amount / 100));
-        $entry->setReference($charge->description ?? $charge->payment_intent);
+        $entry->setReference($charge->payment_intent);
         $entry->setDate($created);
 
         $this->addOrderBookentry($entry);
@@ -387,7 +387,7 @@ class CashctrlHelper
         // Re-fetch order with updated booking entry
         $order = $this->order->read($order->getId());
 
-        if ($updateOrderStatus && $order->open <= 0) {
+        if ($order->open <= 0) {
             $this->framework->initialize();
 
             $member = MemberModel::findOneBy('cashctrl_id', $order->getAssociateId());
@@ -641,7 +641,7 @@ class CashctrlHelper
             $this->order->updateStatus($order->getId(), self::STATUS_OPEN);
 
             foreach ($paymentIntent->charges as $charge) {
-                $this->bookToOrder($charge, $order, true);
+                $this->bookToOrder($charge, $order);
             }
 
             return true;

@@ -17,17 +17,8 @@ class StripeHelper
 {
     use ErrorHandlingTrait;
 
-    private ContaoFramework $framework;
-    private CashctrlHelper $cashctrlHelper;
-    private StripeClient $client;
-    private int $notificationId;
-
-    public function __construct(ContaoFramework $framework, StripeClient $client, CashctrlHelper $cashctrlHelper, int $paymentNotificationId)
+    public function __construct(private readonly ContaoFramework $framework, private readonly StripeClient $client, private readonly CashctrlHelper $cashctrlHelper)
     {
-        $this->framework = $framework;
-        $this->cashctrlHelper = $cashctrlHelper;
-        $this->client = $client;
-        $this->notificationId = $paymentNotificationId;
     }
 
     /**

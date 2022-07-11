@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace App\Command;
 
+use App\CashctrlHelper;
 use App\StripeHelper;
-use Stripe\Charge;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
@@ -16,13 +16,9 @@ class StripeImportCommand extends Command
 {
     protected static $defaultName = 'app:stripe:import';
 
-    private StripeHelper $stripeHelper;
-
-    public function __construct(StripeHelper $stripeHelper)
+    public function __construct(private readonly StripeHelper $stripeHelper, private readonly CashctrlHelper $cashctrlHelper)
     {
         parent::__construct();
-
-        $this->stripeHelper = $stripeHelper;
     }
 
     protected function configure(): void
@@ -46,9 +42,64 @@ class StripeImportCommand extends Command
             return 1;
         }
 
-        /** @var Charge $charge */
-        foreach ($io->progressIterate($this->stripeHelper->getCharges($from, $to)) as $charge) {
-            $this->stripeHelper->importCharge($charge);
+        $io->title('Importing Stripe charges from '.$from->format('d.m.Y').' to '.$to->format('d.m.Y'));
+
+        foreach ($this->stripeHelper->getCharges($from, $to) as $charge) {
+            switch ($charge->application) {
+                case 'ca_BNCWzVqBWfaL53LdFYzpoumNOsvo2936': // Ko-fi
+                    $message = sprintf(
+                        'Ko-fi donation from %s (%s %s on %s)',
+                        $charge->billing_details['name'],
+                        strtoupper($charge->currency),
+                        ($charge->amount / 100),
+                        \DateTime::createFromFormat('U', (string) $charge->created)->format('d.m.Y'),
+                    );
+                    break;
+
+                case 'ca_9uvq9hdD9LslRRCLivQ5cDhHsmFLX023': // Pretix
+                    $message = sprintf(
+                        'Pretix Bestellung %s (%s %s on %s)',
+                        $charge->metadata['order'],
+                        strtoupper($charge->currency),
+                        ($charge->amount / 100),
+                        \DateTime::createFromFormat('U', (string) $charge->created)->format('d.m.Y'),
+                    );
+                    break;
+
+                case null: // Payments from Stripe API
+                    if (empty($charge->metadata->cashctrl_order_id)) {
+                        continue(2);
+                    }
+
+                    $order = $this->cashctrlHelper->order->read((int) $charge->metadata->cashctrl_order_id);
+
+                    if (null === $order) {
+                        $io->error('CashCtrl order ID "'.$charge->metadata->cashctrl_order_id.'" not found');
+                        continue(2);
+                    }
+
+                    $message = sprintf(
+                        'CashCtrl order %s from %s (%s %s on %s)',
+                        $order->getNr(),
+                        $order->associateName,
+                        strtoupper($charge->currency),
+                        ($charge->amount / 100),
+                        \DateTime::createFromFormat('U', (string) $charge->created)->format('d.m.Y'),
+                    );
+                    break;
+
+                default:
+                    $io->error("Unknown Stripe application \"$charge->application\"");
+                    continue(2);
+            }
+
+            if ($io->confirm($message)) {
+                try {
+                    $this->stripeHelper->importCharge($charge);
+                } catch (\Exception $exception) {
+                    $io->error($exception->getMessage());
+                }
+            }
         }
 
         return 0;
