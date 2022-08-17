@@ -59,11 +59,6 @@ task('deploy:opcache', function () {
     }
 })->desc('Clear OpCode cache');
 
-// Task: Contao migrate
-task('contao:migrate', static function () {
-    run('{{bin/php}} {{bin/console}} contao:migrate --with-deletes {{console_options}}');
-});
-
 // Task: Composer self update
 task('deploy:composer-self-update', static function () {
     run('{{bin/composer}} self-update');

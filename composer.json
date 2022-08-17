@@ -21,7 +21,7 @@
         "paypal/paypal-checkout-sdk": "^1.0.2"
     },
     "require-dev": {
-        "deployer/deployer": "v7.0.0-rc.8"
+        "deployer/deployer": "^7.0"
     },
     "repositories": [
         {
