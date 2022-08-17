@@ -10,7 +10,6 @@ use Symfony\Component\Routing\Annotation\Route;
 use Terminal42\ServiceAnnotationBundle\Annotation\ServiceTag;
 
 /**
- * @Route("/supporter.json")
  * @ServiceTag("controller.service_arguments")
  */
 class SupporterController
@@ -24,20 +23,14 @@ class SupporterController
         $this->memberships = $memberships;
     }
 
-    public function __invoke()
+    /**
+     * @Route("/supporter.json")
+     */
+    public function supporterAction(): JsonResponse
     {
         $json = [];
-        $members = $this->connection->executeQuery("
-            SELECT *
-            FROM tl_member
-            WHERE disable=''
-              AND (start='' OR start<UNIX_TIMESTAMP())
-              AND (stop='' OR stop>UNIX_TIMESTAMP())
-              AND (membership_start='' OR membership_start<UNIX_TIMESTAMP())
-              AND (membership_stop='' OR membership_stop>UNIX_TIMESTAMP())
-        ");
 
-        foreach ($members->iterateAssociative() as $member) {
+        foreach ($this->getActiveMembers() as $member) {
             $listing = $this->memberships[$member['membership']]['listing'] ?? [];
 
             if (!$member['listing'] || empty($listing['name'])) {
@@ -46,19 +39,15 @@ class SupporterController
 
             $data = [
                 'level' => $listing['name'],
-                'name' => $member['listing_name'] ?: $member['company'] ?: ("{$member['firstname']} {$member['lastname']}"),
+                'name' => $this->getName($member),
             ];
 
             if ($listing['link'] ?? false) {
-                $data['link'] = $member['listing_link'] ?: $member['website'];
+                $data['link'] = $this->getLink($member);
             }
 
             if ($listing['logo'] ?? false) {
                 $data['logo'] = '...';
-            }
-
-            if ($listing['cloud'] ?? false) {
-                $data['cloud'] = [$data['name'], '', $data['link']];
             }
 
             if (isset($listing['video'])) {
@@ -71,5 +60,53 @@ class SupporterController
         usort($json, fn ($a, $b) => strnatcasecmp($a['name'], $b['name']));
 
         return new JsonResponse($json);
+    }
+
+    /**
+     * @Route("/cloud-supporter.json")
+     */
+    public function cloudAction(): JsonResponse
+    {
+        $json = [];
+
+        foreach ($this->getActiveMembers() as $member) {
+            $listing = $this->memberships[$member['membership']]['listing'] ?? [];
+
+            if (!$member['listing'] || empty($listing['name']) || !($listing['cloud'] ?? false)) {
+                continue;
+            }
+
+            $json[] = [
+                'name' => $this->getName($member),
+                'link' => $this->getLink($member),
+            ];
+        }
+
+        usort($json, fn ($a, $b) => strnatcasecmp($a['name'], $b['name']));
+
+        return new JsonResponse($json);
+    }
+
+    private function getActiveMembers(): \Traversable
+    {
+        return $this->connection->executeQuery("
+            SELECT *
+            FROM tl_member
+            WHERE disable=''
+              AND (start='' OR start<UNIX_TIMESTAMP())
+              AND (stop='' OR stop>UNIX_TIMESTAMP())
+              AND (membership_start='' OR membership_start<UNIX_TIMESTAMP())
+              AND (membership_stop='' OR membership_stop>UNIX_TIMESTAMP())
+        ")->iterateAssociative();
+    }
+
+    private function getName(array $member): string
+    {
+        return $member['listing_name'] ?: $member['company'] ?: ("{$member['firstname']} {$member['lastname']}");
+    }
+
+    private function getLink(array $member): string
+    {
+        return $member['listing_link'] ?: $member['website'];
     }
 }
