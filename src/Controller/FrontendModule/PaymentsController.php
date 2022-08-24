@@ -113,6 +113,13 @@ class PaymentsController extends AbstractFrontendModuleController
                         }
                         break;
 
+                    case 'sepa_debit':
+                        $sepa = $paymentMethod->sepa_debit;
+                        $template->paymentMethod = $this->translator->trans('payment_sepa_debit', [
+                            '{digits}' => $sepa['last4'],
+                        ]);
+                        break;
+
                     default:
                         $this->sentryOrThrow(
                             "Unknown payment method \"{$paymentMethod->type}\"",
