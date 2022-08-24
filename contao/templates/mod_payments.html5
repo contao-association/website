@@ -18,7 +18,7 @@
 
 <?php else : ?>
 
-  <p>Wir können zukünftige Rechnungen automatisch deiner Kreditkarte oder Bank zu belasten.<br>Hinterlege dazu deine Daten bei unserem Zahlungsanbieter Stripe.</p>
+  <p>Wir können zukünftige Rechnungen automatisch deiner Kreditkarte oder Bank belasten.<br>Hinterlege dazu deine Daten bei unserem Zahlungsanbieter Stripe.</p>
   <form method="post">
     <div class="formbody">
       <input type="hidden" name="FORM_SUBMIT" value="stripe_payment">

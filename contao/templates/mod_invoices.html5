@@ -27,7 +27,7 @@
         <td class="<?= $invoice['closed'] ? 'closed' : 'open' ?>"><?= $invoice['due'] ?></td>
         <td>€ <?= $invoice['total'] ?></td>
         <td>
-          <?= $this->trans($invoice['closed'] ? 'invoice_paid' : 'invoice_unpaid', [], 'messages') ?>
+          <?= $invoice['status'] ?>
           <?php if ($invoice['paymentHref'] ?? null): ?>
             <a href="<?= $invoice['paymentHref'] ?>"><?= $this->trans('pay', [], 'messages') ?></a>
           <?php endif; ?>

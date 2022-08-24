@@ -12,6 +12,7 @@ use Stripe\Customer;
 use Stripe\PaymentMethod;
 use Stripe\SetupIntent;
 use Stripe\StripeClient;
+use Terminal42\CashctrlApi\Entity\Order;
 
 class StripeHelper
 {
@@ -36,6 +37,22 @@ class StripeHelper
         ]);
 
         return $charges->autoPagingIterator();
+    }
+
+    /**
+     * @return Charge[]
+     */
+    public function findPaymentForMember(MemberModel $member, Order $order): array
+    {
+        if (!$member->stripe_customer || $order->isClosed) {
+            return [];
+        }
+
+        $result = $this->client->charges->search([
+            'query' => 'customer:"'.$member->stripe_customer.'" AND metadata["cashctrl_order_id"]:"'.$order->getId().'"',
+        ]);
+
+        return $result->data;
     }
 
     public function importCharge(Charge $charge): void

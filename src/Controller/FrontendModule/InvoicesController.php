@@ -4,49 +4,43 @@ declare(strict_types=1);
 
 namespace App\Controller\FrontendModule;
 
-use Contao\CoreBundle\Controller\FrontendModule\AbstractFrontendModuleController;
-use Contao\Date;
-use Contao\PageModel;
-use Symfony\Cmf\Component\Routing\RouteObjectInterface;
-use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\HttpFoundation\Request;
-use Contao\ModuleModel;
-use Contao\Template;
 use App\CashctrlHelper;
+use App\StripeHelper;
+use Contao\CoreBundle\Controller\FrontendModule\AbstractFrontendModuleController;
+use Contao\CoreBundle\DependencyInjection\Attribute\AsFrontendModule;
+use Contao\CoreBundle\Exception\ResponseException;
+use Contao\Date;
+use Contao\FrontendUser;
+use Contao\Input;
+use Contao\MemberModel;
+use Contao\ModuleModel;
+use Contao\PageModel;
+use Contao\Template;
+use Symfony\Cmf\Component\Routing\RouteObjectInterface;
+use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\UriSigner;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 use Symfony\Component\Security\Core\Security;
-use Contao\FrontendUser;
-use Contao\MemberModel;
-use Contao\CoreBundle\ServiceAnnotation\FrontendModule;
 use Symfony\Contracts\HttpClient\HttpClientInterface;
-use Terminal42\CashctrlApi\Entity\Order;
-use Contao\Input;
-use Contao\CoreBundle\Exception\ResponseException;
+use Symfony\Contracts\Translation\TranslatorInterface;
 use Terminal42\CashctrlApi\ApiClient;
+use Terminal42\CashctrlApi\Entity\Order;
 
-/**
- * @FrontendModule(category="user")
- */
+#[AsFrontendModule(category: 'user')]
 class InvoicesController extends AbstractFrontendModuleController
 {
-    private Security $security;
-    private CashctrlHelper $cashctrl;
-    private HttpClientInterface $httpClient;
-    private UrlGeneratorInterface $urlGenerator;
-    private UriSigner $uriSigner;
-    private string $harvestId;
-    private string $harvestToken;
-
-    public function __construct(Security $security, CashctrlHelper $cashctrl, HttpClientInterface $httpClient, UrlGeneratorInterface $urlGenerator, UriSigner $uriSigner, string $harvestId, string $harvestToken)
-    {
-        $this->security = $security;
-        $this->cashctrl = $cashctrl;
-        $this->httpClient = $httpClient;
-        $this->urlGenerator = $urlGenerator;
-        $this->uriSigner = $uriSigner;
-        $this->harvestId = $harvestId;
-        $this->harvestToken = $harvestToken;
+    public function __construct(
+        private readonly Security $security,
+        private readonly CashctrlHelper $cashctrl,
+        private readonly StripeHelper $stripeHelper,
+        private readonly HttpClientInterface $httpClient,
+        private readonly TranslatorInterface $translator,
+        private readonly UrlGeneratorInterface $urlGenerator,
+        private readonly UriSigner $uriSigner,
+        private readonly string $harvestId,
+        private readonly string $harvestToken
+    ) {
     }
 
     protected function getResponse(Template $template, ModuleModel $model, Request $request): ?Response
@@ -100,8 +94,22 @@ class InvoicesController extends AbstractFrontendModuleController
 
             $due = ApiClient::parseDateTime($order->dateDue);
             $paymentHref = '';
+            $isClosed = $order->isClosed;
+            $status = $this->translator->trans($isClosed ? 'invoice_paid' : 'invoice_unpaid');
 
-            if ($paymentPage instanceof PageModel && !$order->isClosed) {
+            if (!$isClosed) {
+                $charges = $this->stripeHelper->findPaymentForMember($member, $order);
+
+                foreach ($charges as $charge) {
+                    if ('pending' === $charge->status) {
+                        $isClosed = true;
+                        $status = $this->translator->trans('sepa_debit' === $charge->payment_method_details['type'] ? 'invoice_pending_sepa' : 'invoice_pending');
+                        break;
+                    }
+                }
+            }
+
+            if (!$isClosed && $paymentPage instanceof PageModel) {
                 $paymentHref = $this->urlGenerator->generate(RouteObjectInterface::OBJECT_BASED_ROUTE_NAME, [RouteObjectInterface::CONTENT_OBJECT => $paymentPage, 'orderId' => $order->getId(), 'cancel_url' => $this->getPageModel()->getAbsoluteUrl()], UrlGeneratorInterface::ABSOLUTE_URL);
                 $paymentHref = $this->uriSigner->sign($paymentHref);
             }
@@ -112,7 +120,8 @@ class InvoicesController extends AbstractFrontendModuleController
                 'tstamp' => $order->getDate()->format('U'),
                 'date' => $order->getDate()->format($dateFormat),
                 'due' => $due->format($dateFormat),
-                'closed' => $order->isClosed,
+                'closed' => $isClosed,
+                'status' => $status,
                 'total' => number_format($order->total, 2, '.', "'"),
                 'href' => $this->getPageModel()->getFrontendUrl().'?invoice='.$order->getId(),
                 'isPdf' => true,
@@ -151,6 +160,7 @@ class InvoicesController extends AbstractFrontendModuleController
                 'date' => Date::parse($dateFormat, strtotime($invoice['issue_date'])),
                 'due' => Date::parse($dateFormat, strtotime($invoice['due_date'])),
                 'closed' => 'paid' === $invoice['state'],
+                'status' => $this->translator->trans('paid' === $invoice['state'] ? 'invoice_paid' : 'invoice_unpaid'),
                 'total' => number_format($invoice['amount'], 2, '.', "'"),
                 'href' => 'https://contaoassociation.harvestapp.com/client/invoices/' . $invoice['client_key'],
                 'isPdf' => false,
