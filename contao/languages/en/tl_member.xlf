@@ -75,6 +75,12 @@
             <trans-unit id="tl_member.listing_link.1">
                 <source>Enter a custom link for the listing.</source>
             </trans-unit>
+            <trans-unit id="tl_member.listing_logo.0">
+                <source>Sponsor Logo</source>
+            </trans-unit>
+            <trans-unit id="tl_member.listing_link.1">
+                <source>Enter a path to the sponsor logo.</source>
+            </trans-unit>
 
             <trans-unit id="tl_member.member_log_note.0">
                 <source>Note</source>

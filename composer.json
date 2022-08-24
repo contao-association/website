@@ -12,6 +12,7 @@
         "contao-association/contao-voting": "^2.3",
         "terminal42/notification_center": "^1.4",
         "terminal42/contao-conditionalformfields": "^3.0",
+        "terminal42/contao-fineuploader": "^3.3",
         "madeyourday/contao-rocksolid-custom-elements": "^2.2",
         "sentry/sentry-symfony": "^4.0",
         "terminal42/cashctrl-bundle": "^1.0@dev",

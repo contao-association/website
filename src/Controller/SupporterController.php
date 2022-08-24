@@ -6,6 +6,7 @@ namespace App\Controller;
 
 use Doctrine\DBAL\Connection;
 use Symfony\Component\HttpFoundation\JsonResponse;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
 use Terminal42\ServiceAnnotationBundle\Annotation\ServiceTag;
 
@@ -26,7 +27,7 @@ class SupporterController
     /**
      * @Route("/supporter.json")
      */
-    public function supporterAction(): JsonResponse
+    public function supporterAction(Request $request): JsonResponse
     {
         $json = [];
 
@@ -47,7 +48,7 @@ class SupporterController
             }
 
             if ($listing['logo'] ?? false) {
-                $data['logo'] = '...';
+                $data['logo'] = $member['listing_logo'] ? ($request->getSchemeAndHttpHost().$request->getBaseUrl().'/'.$member['listing_logo']) : '';
             }
 
             if (isset($listing['video'])) {

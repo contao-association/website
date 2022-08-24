@@ -1,5 +1,7 @@
 <?php
 
+use App\EventListener\MemberLogoListener;
+
 $GLOBALS['TL_DCA']['tl_member']['config']['closed'] = true;
 $GLOBALS['TL_DCA']['tl_member']['config']['notCopyable'] = true;
 $GLOBALS['TL_DCA']['tl_member']['config']['ctable'][] = 'tl_member_log';
@@ -23,7 +25,7 @@ $GLOBALS['TL_DCA']['tl_member']['palettes'] = [
     'support' => '{personal_legend},firstname,lastname,dateOfBirth,gender;{address_legend:hide},company,tax_id,street,postal,city,state,country;{contact_legend:hide},phone,mobile,fax,website,language;{login_legend:hide},email,password;{subscription_legend},membership,membership_amount,membership_member,membership_start,membership_stop,membership_invoiced,membership_interval;{listing_legend:hide},listing;{account_legend:hide},disable,start,stop;{log_legend},member_log_note',
 ];
 
-$GLOBALS['TL_DCA']['tl_member']['subpalettes']['listing'] = 'listing_name,listing_link';
+$GLOBALS['TL_DCA']['tl_member']['subpalettes']['listing'] = 'listing_name,listing_link,listing_logo';
 
 unset(
     $GLOBALS['TL_DCA']['tl_member']['fields']['assignDir'],
@@ -125,6 +127,24 @@ $GLOBALS['TL_DCA']['tl_member']['fields']['listing_name'] = [
 $GLOBALS['TL_DCA']['tl_member']['fields']['listing_link'] = [
     'inputType' => 'text',
     'eval' => ['maxlength' => 255, 'feEditable' => true, 'feViewable' => true, 'feGroup' => 'listing', 'tl_class' => 'w50'],
+    'sql' => "varchar(255) NOT NULL default ''",
+];
+
+$GLOBALS['TL_DCA']['tl_member']['fields']['listing_logo'] = [
+    'inputType' => 'fineUploader',
+    'eval' => [
+        'multiple' => false,
+        'storeFile' => true,
+        'uploadFolder' => MemberLogoListener::UPLOAD_DIR,
+        'uploaderLimit' => 1,
+        'addToDbafs' => false,
+        'doNotOverwrite' => true,
+        'extensions' => 'jpg,jpeg,png,svg',
+        'feEditable' => true,
+        'feViewable' => true,
+        'feGroup' => 'listing',
+        'tl_class' => 'clr',
+    ],
     'sql' => "varchar(255) NOT NULL default ''",
 ];
 

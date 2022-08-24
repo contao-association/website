@@ -96,8 +96,12 @@
         </div>
       </div>
 
+      <?php if ($this->membershipConfig['listing']['logo'] ?? false): ?>
+      <?= $this->listing['listing_logo'] ?>
+      <?php endif; ?>
+
       <div class="widget">
-        <p>Wenn du keinen expliziten Namen oder Link eingibst, verwenden wir deinen Firmen- bzw. Vor- und Nachnamen sowie ggf. deine Webseite für die öffentliche Anzeige.
+        <p>Wenn du keine expliziten Daten eingibst, verwenden wir deinen Firmen- bzw. Vor- und Nachnamen sowie ggf. deine Webseite für die öffentliche Anzeige.
           <?php if ($this->membershipConfig['listing']['logo'] ?? false): ?>Um dein Logo für contao.org zu ändern, kontaktiere uns bitte unter {{email::association@contao.org}}.<?php endif; ?>
         </p>
       </div>

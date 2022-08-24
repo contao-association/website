@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "1a2304d1ec4055d124fe3e3f7dd1362f",
+    "content-hash": "d45a2d23d243c725eeeeb2a08de01f0b",
     "packages": [
         {
             "name": "ausi/slug-generator",
@@ -13108,6 +13108,74 @@
             "time": "2022-07-13T05:33:27+00:00"
         },
         {
+            "name": "terminal42/contao-fineuploader",
+            "version": "3.3.1",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/terminal42/contao-fineuploader.git",
+                "reference": "be31474f562e0d4f3c4a7cc926f80be0de073eef"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/terminal42/contao-fineuploader/zipball/be31474f562e0d4f3c4a7cc926f80be0de073eef",
+                "reference": "be31474f562e0d4f3c4a7cc926f80be0de073eef",
+                "shasum": ""
+            },
+            "require": {
+                "codefog/contao-haste": "^4.17",
+                "contao/core-bundle": "^4.9",
+                "php": "^7.2 || ^8.0"
+            },
+            "conflict": {
+                "contao/manager-plugin": "<2.0 || >=3.0"
+            },
+            "require-dev": {
+                "contao/easy-coding-standard": "^3.0",
+                "contao/manager-plugin": "^2.0"
+            },
+            "type": "contao-bundle",
+            "extra": {
+                "contao-manager-plugin": "Terminal42\\FineUploaderBundle\\ContaoManager\\Plugin"
+            },
+            "autoload": {
+                "psr-4": {
+                    "Terminal42\\FineUploaderBundle\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "terminal42 gmbh",
+                    "homepage": "https://www.terminal42.ch"
+                }
+            ],
+            "description": "FineUploader bundle for Contao Open Source CMS",
+            "keywords": [
+                "FineUploader",
+                "chunking",
+                "contao",
+                "uploader"
+            ],
+            "support": {
+                "issues": "https://github.com/terminal42/contao-fineuploader/issues",
+                "source": "https://github.com/terminal42/contao-fineuploader"
+            },
+            "funding": [
+                {
+                    "url": "https://github.com/terminal42",
+                    "type": "github"
+                },
+                {
+                    "url": "https://ko-fi.com/terminal42",
+                    "type": "other"
+                }
+            ],
+            "time": "2022-08-09T08:07:58+00:00"
+        },
+        {
             "name": "terminal42/dcawizard",
             "version": "2.5.0",
             "source": {
@@ -13230,16 +13298,16 @@
         },
         {
             "name": "terminal42/notification_center",
-            "version": "1.6.13",
+            "version": "1.6.14",
             "source": {
                 "type": "git",
                 "url": "https://github.com/terminal42/contao-notification_center.git",
-                "reference": "a833d757726969a94b93391dc08a893b9485fb74"
+                "reference": "3415b79f545840817b70d9d02f5042a40b082fed"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/terminal42/contao-notification_center/zipball/a833d757726969a94b93391dc08a893b9485fb74",
-                "reference": "a833d757726969a94b93391dc08a893b9485fb74",
+                "url": "https://api.github.com/repos/terminal42/contao-notification_center/zipball/3415b79f545840817b70d9d02f5042a40b082fed",
+                "reference": "3415b79f545840817b70d9d02f5042a40b082fed",
                 "shasum": ""
             },
             "require": {
@@ -13315,7 +13383,7 @@
                     "type": "other"
                 }
             ],
-            "time": "2022-07-01T06:15:31+00:00"
+            "time": "2022-08-24T11:58:11+00:00"
         },
         {
             "name": "terminal42/service-annotation-bundle",
