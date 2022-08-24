@@ -35,4 +35,5 @@ services:
                 - Symfony\Component\HttpKernel\Exception\NotFoundHttpException
                 - Symfony\Component\HttpKernel\Exception\AccessDeniedHttpException
                 - Symfony\Component\HttpKernel\Exception\UnauthorizedHttpException
+                - Symfony\Component\HttpFoundation\Exception\BadRequestException
                 - Symfony\Component\Security\Core\Exception\AccessDeniedException
