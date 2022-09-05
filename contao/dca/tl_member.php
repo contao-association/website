@@ -1,6 +1,7 @@
 <?php
 
 use App\EventListener\MemberLogoListener;
+use Contao\CoreBundle\EventListener\Widget\HttpUrlListener;
 
 $GLOBALS['TL_DCA']['tl_member']['config']['closed'] = true;
 $GLOBALS['TL_DCA']['tl_member']['config']['notCopyable'] = true;
@@ -126,7 +127,7 @@ $GLOBALS['TL_DCA']['tl_member']['fields']['listing_name'] = [
 
 $GLOBALS['TL_DCA']['tl_member']['fields']['listing_link'] = [
     'inputType' => 'text',
-    'eval' => ['maxlength' => 255, 'feEditable' => true, 'feViewable' => true, 'feGroup' => 'listing', 'tl_class' => 'w50'],
+    'eval' => ['maxlength' => 255, 'rgxp' => HttpUrlListener::RGXP_NAME, 'feEditable' => true, 'feViewable' => true, 'feGroup' => 'listing', 'tl_class' => 'w50'],
     'sql' => "varchar(255) NOT NULL default ''",
 ];
 
