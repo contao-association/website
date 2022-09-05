@@ -32,6 +32,7 @@ task('deploy:upload', static function () {
         'src',
         'templates',
         'translations',
+        'web/.well-known',
         'web/layout',
         '.env',
         'composer.json',
