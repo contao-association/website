@@ -82,7 +82,20 @@
       <td class="bg--sponsor">✓</td>
       <td class="bg--sponsor">✓</td>
     </tr>
-    <tr class="planned">
+    <tr>
+      <th>
+        Erweiterungen/Produkte im Rückblick
+        <p class="explain">Wir stellen Neuigkeiten zu deiner kommerziellen Erweiterung oder deinem Produkt im Zwei-Monatsrückblick auf contao.org vor.</p>
+      </th>
+      <td class="bg--supporter">✗</td>
+      <td class="bg--supporter">✗</td>
+      <td class="bg--supporter">✗</td>
+      <td class="bg--supporter">✓</td>
+      <td class="bg--sponsor">✓</td>
+      <td class="bg--sponsor">✓</td>
+      <td class="bg--sponsor">✓</td>
+    </tr>
+    <tr>
       <th>
         Supporter der Composer Cloud
         <p class="explain">Die Konsole des Contao Managers zeigt bei jedem Cloud-Job zufällig den Namen eines Supporters an.</p>
