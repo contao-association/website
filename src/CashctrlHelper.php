@@ -366,7 +366,7 @@ class CashctrlHelper
         }
     }
 
-    public function bookToOrder(Charge $charge, Order $order): void
+    public function bookToOrder(Charge $charge, Order $order, bool $sendNotification = true): void
     {
         $created = \DateTime::createFromFormat('U', (string) $charge->created);
 
@@ -390,7 +390,7 @@ class CashctrlHelper
         // Re-fetch order with updated booking entry
         $order = $this->order->read($order->getId());
 
-        if ($order->open <= 0) {
+        if ($sendNotification && $order->open <= 0) {
             $this->framework->initialize();
 
             $member = MemberModel::findOneBy('cashctrl_id', $order->getAssociateId());
@@ -645,7 +645,7 @@ class CashctrlHelper
             $this->order->updateStatus($order->getId(), self::STATUS_OPEN);
 
             foreach ($paymentIntent->charges as $charge) {
-                $this->bookToOrder($charge, $order);
+                $this->bookToOrder($charge, $order, false);
             }
 
             return true;
