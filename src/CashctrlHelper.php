@@ -347,6 +347,9 @@ class CashctrlHelper
 
     public function bookToJournal(float $amount, \DateTimeInterface $created, int $account, string $reference, string $title, ?string $balanceTransaction): void
     {
+        // Make sure timezone in bookkeeping is set to Switzerland
+        $created = $created->setTimezone(new \DateTimeZone('Europe/Zurich'));
+
         $entry = new Journal(
             $amount,
             $this->getAccountId($account),
