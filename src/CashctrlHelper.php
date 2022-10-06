@@ -633,7 +633,7 @@ class CashctrlHelper
                 'payment_method' => $member->stripe_payment_method,
             ]);
 
-            if ('succeeded' !== $paymentIntent->status) {
+            if (!\in_array($paymentIntent->status, ['succeeded', 'processing'], true)) {
                 $this->sentryOrThrow("Stripe PaymentIntent created with status \"{$paymentIntent->status}\"", null, [
                     'payment_intent' => $paymentIntent->toArray(),
                     'order' => $order->toArray(),
