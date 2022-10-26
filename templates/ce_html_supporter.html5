@@ -55,11 +55,10 @@
       <td class="bg--sponsor">✓</td>
       <td class="bg--sponsor">✓</td>
     </tr>
-    <tr class="planned">
+    <tr>
       <th>
         Rabatt auf Veranstaltungen <sup>2</sup>
         <p class="explain">Du erhältst eine Vergünstigung auf das Ticket zu offiziellen Contao-Veranstaltungen (z. B. Contao Konferenz und Contao Camp)</p>
-        <p class="planned">In Planung, Verfügbarkeit nicht garantiert!</p>
       </th>
       <td class="bg--supporter">✗</td>
       <td class="bg--supporter">✗</td>
@@ -99,7 +98,6 @@
       <th>
         Supporter der Composer Cloud
         <p class="explain">Die Konsole des Contao Managers zeigt bei jedem Cloud-Job zufällig den Namen eines Supporters an.</p>
-        <p class="planned">In Planung, Verfügbarkeit nicht garantiert!</p>
       </th>
       <td class="bg--supporter">✗</td>
       <td class="bg--supporter">✗</td>
