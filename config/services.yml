@@ -54,6 +54,7 @@ parameters:
             listing:
                 name: sponsor
                 link: true
+                cloud: true
                 logo: true
                 video: name
 
@@ -68,6 +69,7 @@ parameters:
             listing:
                 name: gold_sponsor
                 link: true
+                cloud: true
                 logo: true
                 video: logo
 
@@ -82,6 +84,7 @@ parameters:
             listing:
                 name: diamond_sponsor
                 link: true
+                cloud: true
                 logo: true
                 video: logo
 
