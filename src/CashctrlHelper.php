@@ -458,7 +458,7 @@ class CashctrlHelper
     {
         if (null !== ($addresses = $person->getAddresses())) {
             foreach ($addresses as $address) {
-                if ($type === $address->type) {
+                if ($type === $address->getType()) {
                     return $address;
                 }
             }
