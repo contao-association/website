@@ -1,4 +1,4 @@
-var Encore = require('@symfony/webpack-encore');
+const Encore = require('@symfony/webpack-encore');
 
 Encore
     .setOutputPath('web/layout/')
@@ -7,31 +7,27 @@ Encore
     .cleanupOutputBeforeBuild()
     .disableSingleRuntimeChunk()
 
-    .addEntry('app', './layout/scripts/app.js')
-
-    .copyFiles({
-        from: './layout/icons',
-        pattern: /\.(png|svg|ico)$/i,
-        to: 'icons/[path][name].[hash:8].[ext]'
-    })
-
-    // will require minified scripts without packing them
-    .addLoader({
-        test: /\.min\.js$/,
-        use: [ 'script-loader' ]
-    })
-
-    // optimize and minify images
-    .addLoader({
-        test: /\.(gif|png|jpe?g|svg)$/i,
-        use: [ 'image-webpack-loader' ]
-    })
-
     .enableSassLoader()
     .enablePostCssLoader()
     .enableSourceMaps()
-    .enableVersioning()
+    .enableVersioning(Encore.isProduction())
+
+    .addEntry('app', './layout/app.js')
+
+    .copyFiles({
+        from: './layout/icons',
+        to: 'icons/[name].[ext]'
+    })
+
+    .addLoader({
+        test: /\.(gif|png|jpe?g|svg)$/i,
+        use: ['image-webpack-loader']
+    })
+
+    .configureDevServerOptions(() => ({
+        allowedHosts: 'all',
+        watchFiles: ['config/*', 'contao/**/*', 'src/**/*', 'templates/**/*', 'translations/**/*'],
+    }))
 ;
 
-// export the final configuration
 module.exports = Encore.getWebpackConfig();

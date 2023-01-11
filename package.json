@@ -2,20 +2,26 @@
   "private": true,
   "license": "commercial",
   "scripts": {
-    "dev": "node_modules/.bin/encore dev --watch",
-    "prod": "node_modules/.bin/encore production"
+    "dev-server": "encore dev-server",
+    "dev": "encore dev",
+    "watch": "encore dev --watch",
+    "build": "encore production --progress"
   },
   "devDependencies": {
-    "@symfony/webpack-encore": "^1.5.0",
-    "autoprefixer": "^10.2.6",
+    "@babel/core": "^7.19.3",
+    "@babel/preset-env": "^7.19.4",
+    "@symfony/webpack-encore": "^4.0.0",
+    "autoprefixer": "^10.4.12",
     "file-loader": "^6.0.0",
-    "image-webpack-loader": "^7.0.1",
-    "postcss-loader": "^5.0.0",
-    "sass": "^1.35.1",
-    "sass-loader": "^12.0.0"
+    "image-webpack-loader": "^8.1.0",
+    "postcss": "^8.4.17",
+    "postcss-loader": "^7.0.1",
+    "sass": "^1.55.0",
+    "sass-loader": "^13.1.0",
+    "webpack": "^5.74.0",
+    "webpack-cli": "^4.10.0"
   },
   "browserslist": [
-    "last 2 versions",
-    "ios >= 8"
+    "defaults"
   ]
 }

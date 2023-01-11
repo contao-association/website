@@ -65,10 +65,6 @@ task('deploy:composer-self-update', static function () {
     run('{{bin/composer}} self-update');
 });
 
-task('contao:manager:lock', function () {
-    run('echo \'3\' > {{release_path}}/contao-manager/login.lock');
-})->desc('Lock the Contao Manager');
-
 // Task: deploy the .htaccess file
 task('deploy:htaccess', static function () {
     $file = currentHost()->get('htaccess_filename');
@@ -84,7 +80,7 @@ task('deploy:htaccess', static function () {
 
 // Task: build assets
 task('deploy:build-assets', static function () {
-    runLocally('yarn prod');
+    runLocally('yarn build');
 });
 
 // Task: override deploy:prepare
@@ -103,10 +99,10 @@ task('deploy', [
     'deploy:composer-self-update',
     'deploy:vendors',
     'deploy:htaccess',
-    'contao:maintenance:enable',
     'contao:manager:download',
-    'contao:manager:lock',
     'contao:install:lock',
+    'contao:manager:lock',
+    'contao:maintenance:enable',
     'deploy:symlink',
     'deploy:opcache',
     'contao:migrate',
