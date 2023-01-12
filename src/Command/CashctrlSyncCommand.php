@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Command;
 
 use Symfony\Component\Console\Command\Command;
+use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Style\SymfonyStyle;
@@ -30,13 +31,19 @@ class CashctrlSyncCommand extends Command
     {
         $this
             ->setDescription('Updates all member data in Cashctrl.')
+            ->addArgument('member_ids', InputArgument::OPTIONAL, 'A comma separated list of member IDs if not all should be synced.')
         ;
     }
 
     protected function execute(InputInterface $input, OutputInterface $output): int
     {
         $this->framework->initialize();
-        $members = MemberModel::findAll();
+
+        if ($ids = $input->getArgument('member_ids')) {
+            $members = MemberModel::findBy(['tl_member.id IN ('.implode(',', array_map('intval', explode(',', $ids))).')'], []);
+        } else {
+            $members = MemberModel::findAll();
+        }
 
         $io = new SymfonyStyle($input, $output);
 
