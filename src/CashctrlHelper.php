@@ -75,7 +75,7 @@ class CashctrlHelper
     ) {
     }
 
-    public function syncMember(MemberModel $member): void
+    public function syncMember(MemberModel $member): bool
     {
         $person = null;
 
@@ -93,7 +93,8 @@ class CashctrlHelper
         try {
             if (null !== $person->getId()) {
                 $this->person->update($person);
-                return;
+
+                return true;
             }
 
             $result = $this->person->create($person);
@@ -102,7 +103,11 @@ class CashctrlHelper
             $member->save();
         } catch (RuntimeException $exception) {
             $this->sentryOrThrow("Error updating member ID $member->id in CashCtrl: ".$exception->getMessage(), null, ['person' => $person->toArray()]);
+
+            return false;
         }
+
+        return true;
     }
 
     public function createAndSendInvoice(MemberModel $member, int $notificationId, \DateTimeImmutable $invoiceDate): ?Order

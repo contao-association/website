@@ -55,6 +55,11 @@ class RegistrationController extends ModuleRegistration
     protected function createNewUser($arrData): void
     {
         $member = $this->createMember($arrData);
+
+        if (!$this->cashctrl->syncMember($member)) {
+            throw new \RuntimeException('Unable to create new member ID '.$member->id.' in CashCtrl');
+        }
+
         $invoice = $this->cashctrl->createAndSendInvoice($member, $this->notificationId, new \DateTimeImmutable());
 
         if (null !== $invoice) {
@@ -98,13 +103,6 @@ class RegistrationController extends ModuleRegistration
         $newMember = new MemberModel();
         $newMember->setRow($data);
         $newMember->save();
-
-        // Create the initial version, this will sync with CashCtrl
-        $objVersions = new Versions('tl_member', $newMember->id);
-        $objVersions->setUsername($data['username']);
-        $objVersions->setUserId(0);
-        $objVersions->setEditUrl('contao/main.php?do=member&act=edit&id=%s&rt=1');
-        $objVersions->initialize();
 
         return $newMember;
     }
