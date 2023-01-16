@@ -102,7 +102,7 @@
 
       <div class="widget">
         <p>Wenn du keine expliziten Daten eingibst, verwenden wir deinen Firmen- bzw. Vor- und Nachnamen sowie ggf. deine Webseite für die öffentliche Anzeige.
-          <?php if ($this->membershipConfig['listing']['logo'] ?? false): ?>Um dein Logo für contao.org zu ändern, kontaktiere uns bitte unter {{email::association@contao.org}}.<?php endif; ?>
+          <?php if ($this->membershipConfig['listing']['logo'] ?? false): ?>Dein Logo wird auf der <a href="https://to.contao.org/supporter" target="_blank">Supporter-Seite auf contao.org</a> angezeigt.<?php endif; ?>
         </p>
       </div>
     </fieldset>
