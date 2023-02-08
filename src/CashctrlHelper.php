@@ -213,7 +213,7 @@ class CashctrlHelper
                 'active',
                 $member,
                 $invoiceDate,
-                $membership['freeMember'] ? 0 : null,
+                ($membership['freeMember'] ?? false) ? 0 : null,
                 $monthly
             ));
         }
