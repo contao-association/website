@@ -9,6 +9,7 @@ use Contao\CoreBundle\Security\Authentication\Token\TokenChecker;
 use Contao\Date;
 use Contao\Versions;
 use Psr\Log\LoggerInterface;
+use Stripe\BalanceTransaction;
 use Stripe\Charge;
 use Stripe\Exception\ApiErrorException;
 use Stripe\StripeClient;
@@ -373,24 +374,30 @@ class CashctrlHelper
 
     public function bookToOrder(Charge $charge, Order $order, bool $sendNotification = true): void
     {
-        $created = \DateTime::createFromFormat('U', (string) $charge->created);
+        if (!$charge->balance_transaction) {
+            $this->sentryOrThrow('Missing balance_transaction to book Stripe charge '.$charge->id, null, [
+                'charge' => $charge->toArray()
+            ]);
+            return;
+        }
+
+        $transaction = $this->stripeClient->balanceTransactions->retrieve($charge->balance_transaction);
+        $created = \DateTime::createFromFormat('U', (string) $transaction->created);
 
         $entry = new OrderBookentry($this->getAccountId(1106), $order->getId());
         $entry->setDescription($this->getStripePaymentDescription($charge));
-        $entry->setAmount((float) ($charge->amount / 100));
-        $entry->setReference($charge->payment_intent);
+        $entry->setAmount((float) ($transaction->amount / 100));
+        $entry->setReference($transaction->id);
         $entry->setDate($created);
 
         $this->addOrderBookentry($entry);
 
-        if ($charge->balance_transaction) {
-            $this->bookBalanceTransaction(
-                $charge->balance_transaction,
-                $created,
-                $entry->getReference(),
-                'Stripe Gebühren für '.$order->getNr()
-            );
-        }
+        $this->bookBalanceTransaction(
+            $transaction,
+            $created,
+            $entry->getReference(),
+            'Stripe Gebühren für '.$order->getNr()
+        );
 
         // Re-fetch order with updated booking entry
         $order = $this->order->read($order->getId());
@@ -409,10 +416,12 @@ class CashctrlHelper
         }
     }
 
-    private function bookBalanceTransaction(string $id, \DateTimeInterface $created, string $reference, string $title): void
+    private function bookBalanceTransaction(string|BalanceTransaction $transaction, \DateTimeInterface $created, string $reference, string $title): void
     {
         try {
-            $transaction = $this->stripeClient->balanceTransactions->retrieve($id);
+            if (!$transaction instanceof BalanceTransaction) {
+                $transaction = $this->stripeClient->balanceTransactions->retrieve($transaction);
+            }
 
             $fee = new Journal(
                 (float) ($transaction->fee / 100),
@@ -650,7 +659,10 @@ class CashctrlHelper
             $this->order->updateStatus($order->getId(), self::STATUS_OPEN);
 
             foreach ($paymentIntent->charges as $charge) {
-                $this->bookToOrder($charge, $order, false);
+                // Only book transaction if it was "immediate" (e.g. credit card) but not SEPA etc.
+                if ($charge->balance_transaction) {
+                    $this->bookToOrder($charge, $order, false);
+                }
             }
 
             return true;
