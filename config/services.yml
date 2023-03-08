@@ -124,6 +124,7 @@ services:
             $registrationNotificationId: '%env(REGISTRATION_NOTIFICATION)%'
             $invoiceNotificationId: '%env(INVOICE_NOTIFICATION)%'
             $paymentNotificationId: '%env(PAYMENT_NOTIFICATION)%'
+            $overdueNotificationId: '%env(OVERDUE_NOTIFICATION)%'
 
     App\:
         resource: ../src

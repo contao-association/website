@@ -47,6 +47,7 @@ class CashctrlHelper
 {
     public const STATUS_OPEN = 16;
     public const STATUS_PAID = 18;
+    public const STATUS_OVERDUE = 86;
     public const STATUS_NOTIFIED = 87;
 
     use ErrorHandlingTrait;
@@ -144,14 +145,18 @@ class CashctrlHelper
         return $invoice;
     }
 
-    private function sendInvoiceNotification(Notification $notification, Order $invoice, MemberModel $member, array $tokens = []): bool
+    public function sendInvoiceNotification(Notification $notification, Order $invoice, MemberModel $member, array $tokens = []): bool
     {
+        $invoiceDueDate = clone $invoice->getDate();
+        $invoiceDueDate->add(new \DateInterval('P'.(int) $invoice->getDueDays().'D'));
+
         $tokens = array_merge($tokens, [
             'admin_email' => Config::get('adminEmail'),
             'membership_label' => $this->translator->trans('membership.'.$member->membership, [], null, $member->language ?: 'de'),
             'invoice_number' => $invoice->getNr(),
             'invoice_date' => $invoice->getDate()->format($this->getDateFormat($member)),
             'invoice_due_days' => $invoice->getDueDays(),
+            'invoice_due_date' => $invoiceDueDate->format($this->getDateFormat($member)),
             'invoice_total' => number_format($invoice->total, 2, '.', "'"),
             'payment_first' => $invoice->getId() === $member->cashctrl_invoice,
         ]);
@@ -228,7 +233,7 @@ class CashctrlHelper
         return $order;
     }
 
-    public function downloadInvoice(Order $invoice, int|null $templateId, string $language): string
+    public function downloadInvoice(Order $invoice, int|null $templateId = null, string|null $language = null): string
     {
         if (null !== $templateId) {
             $this->orderDocument->update($invoice->getId(), ['templateId' => $templateId]);
@@ -237,13 +242,18 @@ class CashctrlHelper
         return $this->orderDocument->downloadPdf([$invoice->getId()], $language);
     }
 
-    private function archiveInvoice(Order $invoice, int $templateId = null, string $language): string
+    public function archiveInvoice(Order $invoice, int|null $templateId = null, string|null $language = null): string
     {
         $year = $invoice->getDate()->format('Y');
         $quarter = ceil($invoice->getDate()->format('n') / 3);
 
         $name = str_replace('/', '-', $invoice->getNr());
         $targetFile = 'var/invoices/'.$year.'/Q'.$quarter.'/'.$name.'.pdf';
+
+        if ($this->filesystem->exists($targetFile)) {
+            return $targetFile;
+        }
+
         $this->filesystem->dumpFile(
             $this->projectDir.'/'.$targetFile,
             $this->downloadInvoice($invoice, $templateId, $language)
@@ -272,6 +282,19 @@ class CashctrlHelper
         }
 
         return array_merge(...$invoices);
+    }
+
+    /**
+     * @return Order[]
+     */
+    public function getOverdueInvoices(): array
+    {
+        return $this->order
+            ->list()
+            ->ofType(OrderListFilter::TYPE_SALES)
+            ->onlyOverdue()
+            ->sortBy('lastUpdated')
+            ->get();
     }
 
     /**
