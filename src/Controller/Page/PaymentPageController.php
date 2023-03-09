@@ -72,7 +72,7 @@ class PaymentPageController
         $session = $this->stripeClient->checkout->sessions->create([
             'mode' => 'payment',
             'customer' => $customer->id,
-            'locale' => strtolower($member->language),
+            'locale' => strtolower($member->language ?: $GLOBALS['TL_LANGUAGE'] ?? 'de'),
             'payment_intent_data' => [
                 'description' => $order->getDescription(),
                 'metadata' => [
