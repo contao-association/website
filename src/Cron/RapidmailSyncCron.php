@@ -2,48 +2,31 @@
 
 declare(strict_types=1);
 
-namespace App\Command;
+namespace App\Cron;
 
+use App\ErrorHandlingTrait;
 use App\RapidmailHelper;
-use Rapidmail\ApiClient\Exception\ApiException;
-use Rapidmail\ApiClient\Service\Response\HalResponse;
-use Symfony\Component\Console\Command\Command;
-use Symfony\Component\Console\Input\InputInterface;
-use Symfony\Component\Console\Output\OutputInterface;
-use Symfony\Component\Console\Style\SymfonyStyle;
+use Contao\CoreBundle\DependencyInjection\Attribute\AsCronJob;
 use Contao\CoreBundle\Framework\ContaoFramework;
 use Contao\MemberModel;
+use Rapidmail\ApiClient\Exception\ApiException;
+use Rapidmail\ApiClient\Service\Response\HalResponse;
 
-class RapidmailSyncCommand extends Command
+#[AsCronJob('weekly')]
+class RapidmailSyncCron
 {
-    protected static $defaultName = 'app:rapidmail:sync';
+    use ErrorHandlingTrait;
 
     public function __construct(
         private readonly ContaoFramework $framework,
         private readonly RapidmailHelper $rapidmail
-    ) {
-        parent::__construct();
-    }
+    ) {}
 
-    public function isEnabled(): bool
-    {
-        return $this->rapidmail->isConfigured();
-    }
-
-    protected function configure(): void
-    {
-        $this
-            ->setDescription('Updates recipient list in Rapidmail.')
-        ;
-    }
-
-    protected function execute(InputInterface $input, OutputInterface $output): int
+    public function __invoke(): void
     {
         $members = $this->getMembers();
         $recipients = $this->getRecipients();
         $recipientForeignIds = array_column($recipients, 'foreign_id', 'id');
-
-        $io = new SymfonyStyle($input, $output);
 
         $recipientsWithoutModel = array_diff(
             $recipientForeignIds,
@@ -51,9 +34,6 @@ class RapidmailSyncCommand extends Command
         );
 
         if (!empty($recipientsWithoutModel)) {
-            $io->writeln('Deleting recipients without matching member');
-            $io->progressStart(count($recipientsWithoutModel));
-
             // Prevent API rate limit
             sleep(1);
 
@@ -67,17 +47,11 @@ class RapidmailSyncCommand extends Command
 
                 $this->rapidmail->recipients()->delete($recipientId);
 
-                $io->progressAdvance();
                 ++$throttle;
             }
-
-            $io->progressFinish();
         }
 
         if (!empty($members)) {
-            $io->writeln('Updating members');
-            $io->progressStart(count($members));
-
             // Prevent API rate limit
             sleep(1);
 
@@ -98,22 +72,12 @@ class RapidmailSyncCommand extends Command
                         $this->rapidmail->updateRecipient($recipients[$recipientId], $member);
                     }
                 } catch (ApiException $exception) {
-                    $io->error([
-                        'Error synchronizing member ID '.$member->id,
-                        $exception->getMessage()
-                    ]);
+                    $this->sentryOrThrow('RapidMail error synchronizing member ID '.$member->id, $exception);
                 }
 
-                $io->progressAdvance();
                 ++$throttle;
             }
-
-            $io->progressFinish();
         }
-
-        $io->success('Synchronization complete.');
-
-        return 0;
     }
 
     /**
