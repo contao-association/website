@@ -4,42 +4,42 @@ declare(strict_types=1);
 
 namespace App;
 
+use Contao\Config;
 use Contao\CoreBundle\Framework\ContaoFramework;
 use Contao\CoreBundle\Security\Authentication\Token\TokenChecker;
 use Contao\Date;
+use Contao\MemberModel;
+use Contao\PageModel;
 use Contao\Versions;
+use Haste\Util\StringUtil;
+use NotificationCenter\Model\Notification;
 use Psr\Log\LoggerInterface;
 use Stripe\BalanceTransaction;
 use Stripe\Charge;
 use Stripe\Exception\ApiErrorException;
 use Stripe\StripeClient;
 use Symfony\Cmf\Component\Routing\RouteObjectInterface;
+use Symfony\Component\Filesystem\Filesystem;
 use Symfony\Component\HttpKernel\UriSigner;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
+use Symfony\Contracts\Translation\TranslatorInterface;
 use Terminal42\CashctrlApi\Api\AccountEndpoint;
+use Terminal42\CashctrlApi\Api\Filter\ListFilter;
+use Terminal42\CashctrlApi\Api\Filter\OrderListFilter;
 use Terminal42\CashctrlApi\Api\FiscalperiodEndpoint;
 use Terminal42\CashctrlApi\Api\JournalEndpoint;
 use Terminal42\CashctrlApi\Api\OrderBookentryEndpoint;
+use Terminal42\CashctrlApi\Api\OrderDocumentEndpoint;
+use Terminal42\CashctrlApi\Api\OrderEndpoint;
 use Terminal42\CashctrlApi\Api\PersonEndpoint;
-use Contao\MemberModel;
+use Terminal42\CashctrlApi\ApiClient;
 use Terminal42\CashctrlApi\Entity\Journal;
+use Terminal42\CashctrlApi\Entity\Order;
 use Terminal42\CashctrlApi\Entity\OrderBookentry;
+use Terminal42\CashctrlApi\Entity\OrderItem;
 use Terminal42\CashctrlApi\Entity\Person;
 use Terminal42\CashctrlApi\Entity\PersonAddress;
 use Terminal42\CashctrlApi\Entity\PersonContact;
-use Terminal42\CashctrlApi\Entity\Order;
-use Terminal42\CashctrlApi\Entity\OrderItem;
-use Terminal42\CashctrlApi\Api\OrderEndpoint;
-use Symfony\Contracts\Translation\TranslatorInterface;
-use Terminal42\CashctrlApi\Api\OrderDocumentEndpoint;
-use Symfony\Component\Filesystem\Filesystem;
-use Terminal42\CashctrlApi\Api\Filter\ListFilter;
-use Terminal42\CashctrlApi\Api\Filter\OrderListFilter;
-use NotificationCenter\Model\Notification;
-use Contao\Config;
-use Terminal42\CashctrlApi\ApiClient;
-use Haste\Util\StringUtil;
-use Contao\PageModel;
 use Terminal42\CashctrlApi\Exception\RuntimeException;
 use Terminal42\CashctrlApi\Result;
 
@@ -278,7 +278,8 @@ class CashctrlHelper
                 ->list()
                 ->inFiscalPeriod($period->getId())
                 ->filter('associateId', $member->cashctrl_id, ListFilter::EQUALS)
-                ->get();
+                ->get()
+            ;
         }
 
         return array_merge(...$invoices);
@@ -294,7 +295,8 @@ class CashctrlHelper
             ->ofType(OrderListFilter::TYPE_SALES)
             ->onlyOverdue()
             ->sortBy('lastUpdated')
-            ->get();
+            ->get()
+        ;
     }
 
     /**
@@ -307,7 +309,8 @@ class CashctrlHelper
             ->ofType(OrderListFilter::TYPE_SALES)
             ->withStatus(self::STATUS_PAID)
             ->sortBy('lastUpdated', 'DESC')
-            ->get();
+            ->get()
+        ;
     }
 
     public function notifyInvoicePaid(Order $order, MemberModel $member, Notification $notification): void
@@ -340,7 +343,17 @@ class CashctrlHelper
 
         $this->syncMember($member);
 
-        $this->order->updateStatus($order->getId(), self::STATUS_NOTIFIED);
+        try {
+            $this->order->updateStatus($order->getId(), self::STATUS_NOTIFIED);
+        } catch (RuntimeException $exception) {
+            $this->sentryOrThrow(
+                'Failed to update invoice status to "notified": '.$exception->getMessage(),
+                $exception,
+                [
+                    'order' => $order->toArray(),
+                    'member' => $member->row(),
+                ]);
+        }
     }
 
     public function addJournalEntry(Journal $journal): Result
@@ -399,7 +412,7 @@ class CashctrlHelper
     {
         if (!$charge->balance_transaction) {
             $this->sentryOrThrow('Missing balance_transaction to book Stripe charge '.$charge->id, null, [
-                'charge' => $charge->toArray()
+                'charge' => $charge->toArray(),
             ]);
             return;
         }
@@ -568,8 +581,7 @@ class CashctrlHelper
         $t = PageModel::getTable();
         $columns = ["$t.language=? AND $t.type='root'"];
 
-        if (!$this->tokenChecker->isPreviewMode())
-        {
+        if (!$this->tokenChecker->isPreviewMode()) {
             $time = Date::floorToMinute();
             $columns[] = "$t.published='1' AND ($t.start='' OR $t.start<='$time') AND ($t.stop='' OR $t.stop>'$time')";
         }
@@ -591,7 +603,10 @@ class CashctrlHelper
             return null;
         }
 
-        $url = $this->urlGenerator->generate(RouteObjectInterface::OBJECT_BASED_ROUTE_NAME, [RouteObjectInterface::CONTENT_OBJECT => $paymentPage, 'orderId' => $order->getId()], UrlGeneratorInterface::ABSOLUTE_URL);
+        $url = $this->urlGenerator->generate(RouteObjectInterface::OBJECT_BASED_ROUTE_NAME, [
+            RouteObjectInterface::CONTENT_OBJECT => $paymentPage,
+            'orderId' => $order->getId(),
+        ], UrlGeneratorInterface::ABSOLUTE_URL);
 
         return $this->uriSigner->sign($url);
     }
