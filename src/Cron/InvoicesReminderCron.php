@@ -11,7 +11,7 @@ use Contao\CoreBundle\Framework\ContaoFramework;
 use Contao\MemberModel;
 use NotificationCenter\Model\Notification;
 
-#[AsCronJob('weekly')]
+#[AsCronJob('0 9 * * 1')] // run every monday at 9am
 class InvoicesReminderCron
 {
     use ErrorHandlingTrait;
