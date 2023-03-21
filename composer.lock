@@ -819,16 +819,16 @@
         },
         {
             "name": "contao-components/jquery",
-            "version": "3.6.3",
+            "version": "3.6.4",
             "source": {
                 "type": "git",
                 "url": "https://github.com/contao-components/jquery.git",
-                "reference": "5a7ac7f93fed678d60ebde66d175e5a9376d1c17"
+                "reference": "f1247ccdfbf86f7657ed9b73e505928e9df84e81"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/contao-components/jquery/zipball/5a7ac7f93fed678d60ebde66d175e5a9376d1c17",
-                "reference": "5a7ac7f93fed678d60ebde66d175e5a9376d1c17",
+                "url": "https://api.github.com/repos/contao-components/jquery/zipball/f1247ccdfbf86f7657ed9b73e505928e9df84e81",
+                "reference": "f1247ccdfbf86f7657ed9b73e505928e9df84e81",
                 "shasum": ""
             },
             "require": {
@@ -848,9 +848,9 @@
             "description": "jQuery integration for Contao Open Source CMS",
             "support": {
                 "issues": "https://github.com/contao-components/jquery/issues",
-                "source": "https://github.com/contao-components/jquery/tree/3.6.3"
+                "source": "https://github.com/contao-components/jquery/tree/3.6.4"
             },
-            "time": "2022-12-21T08:06:23+00:00"
+            "time": "2023-03-16T09:58:03+00:00"
         },
         {
             "name": "contao-components/jquery-ui",
@@ -1193,16 +1193,16 @@
         },
         {
             "name": "contao/core-bundle",
-            "version": "4.13.16",
+            "version": "4.13.18",
             "source": {
                 "type": "git",
                 "url": "https://github.com/contao/core-bundle.git",
-                "reference": "687396016e56ccaacb00301bfbed5045b51317d4"
+                "reference": "82402ea484c0be3f9295e40aa5c6399d67acffb0"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/contao/core-bundle/zipball/687396016e56ccaacb00301bfbed5045b51317d4",
-                "reference": "687396016e56ccaacb00301bfbed5045b51317d4",
+                "url": "https://api.github.com/repos/contao/core-bundle/zipball/82402ea484c0be3f9295e40aa5c6399d67acffb0",
+                "reference": "82402ea484c0be3f9295e40aa5c6399d67acffb0",
                 "shasum": ""
             },
             "require": {
@@ -1399,7 +1399,7 @@
                     "type": "custom"
                 }
             ],
-            "time": "2023-02-22T11:47:32+00:00"
+            "time": "2023-03-16T07:27:11+00:00"
         },
         {
             "name": "contao/image",
@@ -1527,7 +1527,7 @@
         },
         {
             "name": "contao/installation-bundle",
-            "version": "4.13.16",
+            "version": "4.13.18",
             "source": {
                 "type": "git",
                 "url": "https://github.com/contao/installation-bundle.git",
@@ -1609,7 +1609,7 @@
         },
         {
             "name": "contao/manager-bundle",
-            "version": "4.13.16",
+            "version": "4.13.18",
             "source": {
                 "type": "git",
                 "url": "https://github.com/contao/manager-bundle.git",
@@ -3706,16 +3706,16 @@
         },
         {
             "name": "guzzlehttp/psr7",
-            "version": "2.4.3",
+            "version": "2.4.4",
             "source": {
                 "type": "git",
                 "url": "https://github.com/guzzle/psr7.git",
-                "reference": "67c26b443f348a51926030c83481b85718457d3d"
+                "reference": "3cf1b6d4f0c820a2cf8bcaec39fc698f3443b5cf"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/guzzle/psr7/zipball/67c26b443f348a51926030c83481b85718457d3d",
-                "reference": "67c26b443f348a51926030c83481b85718457d3d",
+                "url": "https://api.github.com/repos/guzzle/psr7/zipball/3cf1b6d4f0c820a2cf8bcaec39fc698f3443b5cf",
+                "reference": "3cf1b6d4f0c820a2cf8bcaec39fc698f3443b5cf",
                 "shasum": ""
             },
             "require": {
@@ -3805,7 +3805,7 @@
             ],
             "support": {
                 "issues": "https://github.com/guzzle/psr7/issues",
-                "source": "https://github.com/guzzle/psr7/tree/2.4.3"
+                "source": "https://github.com/guzzle/psr7/tree/2.4.4"
             },
             "funding": [
                 {
@@ -3821,7 +3821,7 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2022-10-26T14:07:24+00:00"
+            "time": "2023-03-09T13:19:02+00:00"
         },
         {
             "name": "http-interop/http-factory-guzzle",
@@ -4213,16 +4213,16 @@
         },
         {
             "name": "laminas/laminas-code",
-            "version": "4.9.0",
+            "version": "4.10.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/laminas/laminas-code.git",
-                "reference": "c1706ecde17f87ae8bab169c4b88006c9253d3a5"
+                "reference": "ad8b36073f9ac792716478befadca0798cc15635"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/laminas/laminas-code/zipball/c1706ecde17f87ae8bab169c4b88006c9253d3a5",
-                "reference": "c1706ecde17f87ae8bab169c4b88006c9253d3a5",
+                "url": "https://api.github.com/repos/laminas/laminas-code/zipball/ad8b36073f9ac792716478befadca0798cc15635",
+                "reference": "ad8b36073f9ac792716478befadca0798cc15635",
                 "shasum": ""
             },
             "require": {
@@ -4272,7 +4272,7 @@
                     "type": "community_bridge"
                 }
             ],
-            "time": "2023-03-04T10:09:37+00:00"
+            "time": "2023-03-08T11:55:01+00:00"
         },
         {
             "name": "lcobucci/clock",
@@ -4811,16 +4811,16 @@
         },
         {
             "name": "madeyourday/contao-rocksolid-custom-elements",
-            "version": "v2.4.3",
+            "version": "v2.4.4",
             "source": {
                 "type": "git",
                 "url": "https://github.com/madeyourday/contao-rocksolid-custom-elements.git",
-                "reference": "b14c7142a016185f7da1298335170fc864e74c2c"
+                "reference": "4b029c297a0f635d728ad048d3e1741dd95b1256"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/madeyourday/contao-rocksolid-custom-elements/zipball/b14c7142a016185f7da1298335170fc864e74c2c",
-                "reference": "b14c7142a016185f7da1298335170fc864e74c2c",
+                "url": "https://api.github.com/repos/madeyourday/contao-rocksolid-custom-elements/zipball/4b029c297a0f635d728ad048d3e1741dd95b1256",
+                "reference": "4b029c297a0f635d728ad048d3e1741dd95b1256",
                 "shasum": ""
             },
             "require": {
@@ -4874,7 +4874,7 @@
                 "issues": "https://github.com/madeyourday/contao-rocksolid-custom-elements/issues",
                 "source": "https://github.com/madeyourday/contao-rocksolid-custom-elements"
             },
-            "time": "2023-02-07T20:20:11+00:00"
+            "time": "2023-03-16T18:27:10+00:00"
         },
         {
             "name": "matthiasmullie/minify",
@@ -5804,44 +5804,38 @@
         },
         {
             "name": "php-http/discovery",
-            "version": "1.15.2",
+            "version": "1.14.3",
             "source": {
                 "type": "git",
                 "url": "https://github.com/php-http/discovery.git",
-                "reference": "5cc428320191ac1d0b6520034c2dc0698628ced5"
+                "reference": "31d8ee46d0215108df16a8527c7438e96a4d7735"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/php-http/discovery/zipball/5cc428320191ac1d0b6520034c2dc0698628ced5",
-                "reference": "5cc428320191ac1d0b6520034c2dc0698628ced5",
+                "url": "https://api.github.com/repos/php-http/discovery/zipball/31d8ee46d0215108df16a8527c7438e96a4d7735",
+                "reference": "31d8ee46d0215108df16a8527c7438e96a4d7735",
                 "shasum": ""
             },
             "require": {
-                "composer-plugin-api": "^1.0|^2.0",
                 "php": "^7.1 || ^8.0"
             },
             "conflict": {
                 "nyholm/psr7": "<1.0"
             },
-            "provide": {
-                "php-http/async-client-implementation": "*",
-                "php-http/client-implementation": "*",
-                "psr/http-client-implementation": "*",
-                "psr/http-factory-implementation": "*",
-                "psr/http-message-implementation": "*"
-            },
             "require-dev": {
-                "composer/composer": "^1.0.2|^2.0",
                 "graham-campbell/phpspec-skip-example-extension": "^5.0",
                 "php-http/httplug": "^1.0 || ^2.0",
                 "php-http/message-factory": "^1.0",
-                "phpspec/phpspec": "^5.1 || ^6.1 || ^7.3",
-                "symfony/phpunit-bridge": "^6.2"
+                "phpspec/phpspec": "^5.1 || ^6.1"
             },
-            "type": "composer-plugin",
+            "suggest": {
+                "php-http/message": "Allow to use Guzzle, Diactoros or Slim Framework factories"
+            },
+            "type": "library",
             "extra": {
-                "class": "Http\\Discovery\\Composer\\Plugin",
-                "plugin-optional": true
+                "branch-alias": {
+                    "dev-master": "1.9-dev"
+                }
             },
             "autoload": {
                 "psr-4": {
@@ -5858,7 +5852,7 @@
                     "email": "mark.sagikazar@gmail.com"
                 }
             ],
-            "description": "Finds and installs PSR-7, PSR-17, PSR-18 and HTTPlug implementations",
+            "description": "Finds installed HTTPlug implementations and PSR-7 message factories",
             "homepage": "http://php-http.org",
             "keywords": [
                 "adapter",
@@ -5867,14 +5861,13 @@
                 "factory",
                 "http",
                 "message",
-                "psr17",
                 "psr7"
             ],
             "support": {
                 "issues": "https://github.com/php-http/discovery/issues",
-                "source": "https://github.com/php-http/discovery/tree/1.15.2"
+                "source": "https://github.com/php-http/discovery/tree/1.14.3"
             },
-            "time": "2023-02-11T08:28:41+00:00"
+            "time": "2022-07-11T14:04:40+00:00"
         },
         {
             "name": "php-http/httplug",
@@ -7097,16 +7090,16 @@
         },
         {
             "name": "sentry/sentry",
-            "version": "3.13.0",
+            "version": "3.16.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/getsentry/sentry-php.git",
-                "reference": "a046ff5a37f5a0a0c285a6543dc17a7fc93b47f8"
+                "reference": "5326a8786b8c7c3a51ea0c6d06e6cb6a9dfa6779"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/getsentry/sentry-php/zipball/a046ff5a37f5a0a0c285a6543dc17a7fc93b47f8",
-                "reference": "a046ff5a37f5a0a0c285a6543dc17a7fc93b47f8",
+                "url": "https://api.github.com/repos/getsentry/sentry-php/zipball/5326a8786b8c7c3a51ea0c6d06e6cb6a9dfa6779",
+                "reference": "5326a8786b8c7c3a51ea0c6d06e6cb6a9dfa6779",
                 "shasum": ""
             },
             "require": {
@@ -7118,7 +7111,7 @@
                 "php": "^7.2|^8.0",
                 "php-http/async-client-implementation": "^1.0",
                 "php-http/client-common": "^1.5|^2.0",
-                "php-http/discovery": "^1.11",
+                "php-http/discovery": "^1.11, <1.15",
                 "php-http/httplug": "^1.1|^2.0",
                 "php-http/message": "^1.5",
                 "psr/http-factory": "^1.0",
@@ -7164,7 +7157,7 @@
             },
             "notification-url": "https://packagist.org/downloads/",
             "license": [
-                "BSD-3-Clause"
+                "MIT"
             ],
             "authors": [
                 {
@@ -7185,7 +7178,7 @@
             ],
             "support": {
                 "issues": "https://github.com/getsentry/sentry-php/issues",
-                "source": "https://github.com/getsentry/sentry-php/tree/3.13.0"
+                "source": "https://github.com/getsentry/sentry-php/tree/3.16.0"
             },
             "funding": [
                 {
@@ -7197,27 +7190,27 @@
                     "type": "custom"
                 }
             ],
-            "time": "2023-02-03T10:03:13+00:00"
+            "time": "2023-03-16T10:37:16+00:00"
         },
         {
             "name": "sentry/sentry-symfony",
-            "version": "4.6.0",
+            "version": "4.7.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/getsentry/sentry-symfony.git",
-                "reference": "59beaa2c480b024cade50770f799de6652ee48ca"
+                "reference": "cd2bc2a1ffd5cacc3031feffb8d422cbc2daf5c0"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/getsentry/sentry-symfony/zipball/59beaa2c480b024cade50770f799de6652ee48ca",
-                "reference": "59beaa2c480b024cade50770f799de6652ee48ca",
+                "url": "https://api.github.com/repos/getsentry/sentry-symfony/zipball/cd2bc2a1ffd5cacc3031feffb8d422cbc2daf5c0",
+                "reference": "cd2bc2a1ffd5cacc3031feffb8d422cbc2daf5c0",
                 "shasum": ""
             },
             "require": {
                 "jean85/pretty-package-versions": "^1.5 || ^2.0",
                 "php": "^7.2||^8.0",
                 "sentry/sdk": "^3.3",
-                "sentry/sentry": "^3.12",
+                "sentry/sentry": "^3.15",
                 "symfony/cache-contracts": "^1.1||^2.4||^3.0",
                 "symfony/config": "^4.4.20||^5.0.11||^6.0",
                 "symfony/console": "^4.4.20||^5.0.11||^6.0",
@@ -7279,7 +7272,7 @@
             },
             "notification-url": "https://packagist.org/downloads/",
             "license": [
-                "Apache-2.0"
+                "MIT"
             ],
             "authors": [
                 {
@@ -7301,7 +7294,7 @@
             ],
             "support": {
                 "issues": "https://github.com/getsentry/sentry-symfony/issues",
-                "source": "https://github.com/getsentry/sentry-symfony/tree/4.6.0"
+                "source": "https://github.com/getsentry/sentry-symfony/tree/4.7.0"
             },
             "funding": [
                 {
@@ -7313,7 +7306,7 @@
                     "type": "custom"
                 }
             ],
-            "time": "2023-02-14T15:54:14+00:00"
+            "time": "2023-03-14T11:26:22+00:00"
         },
         {
             "name": "simplepie/simplepie",
@@ -13263,16 +13256,16 @@
         },
         {
             "name": "terminal42/contao-fineuploader",
-            "version": "3.4.0",
+            "version": "3.4.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/terminal42/contao-fineuploader.git",
-                "reference": "21aee35529c53c65e5d8f61cc6c0b3e55f79e90b"
+                "reference": "fd813068bfa9d5ff2c4d4e42915b40558b944a6b"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/terminal42/contao-fineuploader/zipball/21aee35529c53c65e5d8f61cc6c0b3e55f79e90b",
-                "reference": "21aee35529c53c65e5d8f61cc6c0b3e55f79e90b",
+                "url": "https://api.github.com/repos/terminal42/contao-fineuploader/zipball/fd813068bfa9d5ff2c4d4e42915b40558b944a6b",
+                "reference": "fd813068bfa9d5ff2c4d4e42915b40558b944a6b",
                 "shasum": ""
             },
             "require": {
@@ -13326,7 +13319,7 @@
                     "type": "other"
                 }
             ],
-            "time": "2022-10-27T09:04:26+00:00"
+            "time": "2023-03-14T11:06:57+00:00"
         },
         {
             "name": "terminal42/dcawizard",
@@ -13389,24 +13382,24 @@
         },
         {
             "name": "terminal42/escargot",
-            "version": "1.5.1",
+            "version": "1.5.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/terminal42/escargot.git",
-                "reference": "d0e5a3105e5d41f5b48417965691b1877c087203"
+                "reference": "060c436b65706cad338766d32f02fa3cc9442b3b"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/terminal42/escargot/zipball/d0e5a3105e5d41f5b48417965691b1877c087203",
-                "reference": "d0e5a3105e5d41f5b48417965691b1877c087203",
+                "url": "https://api.github.com/repos/terminal42/escargot/zipball/060c436b65706cad338766d32f02fa3cc9442b3b",
+                "reference": "060c436b65706cad338766d32f02fa3cc9442b3b",
                 "shasum": ""
             },
             "require": {
                 "ext-simplexml": "*",
                 "nyholm/psr7": "^1.1",
-                "php": "^7.2 || ^8.0",
+                "php": "^7.4 || ^8.0",
                 "psr/http-message": "^1.0",
-                "psr/log": "^1.1",
+                "psr/log": "^1.1 || ^2.0 || ^3.0",
                 "symfony/dom-crawler": "^4.4 || ^5.0 || ^6.0",
                 "symfony/event-dispatcher": "^4.4 || ^5.0 || ^6.0",
                 "symfony/http-client": "^4.4 || ^5.0 || ^6.0",
@@ -13414,6 +13407,7 @@
             },
             "require-dev": {
                 "doctrine/dbal": "^2.13 || ^3.0",
+                "fig/log-test": "^1.0",
                 "symfony/finder": "^4.4 || ^5.0 || ^6.0",
                 "symfony/phpunit-bridge": "^5.1.8 || ^6.0"
             },
@@ -13447,7 +13441,7 @@
                 "issues": "https://github.com/terminal42/escargot/issues",
                 "source": "https://github.com/terminal42/escargot"
             },
-            "time": "2023-01-10T16:11:27+00:00"
+            "time": "2023-03-17T07:35:26+00:00"
         },
         {
             "name": "terminal42/notification_center",
