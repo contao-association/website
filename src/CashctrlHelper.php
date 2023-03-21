@@ -274,15 +274,19 @@ class CashctrlHelper
                 continue;
             }
 
-            $invoices[] = $this->order
+            $orders = $this->order
                 ->list()
                 ->inFiscalPeriod($period->getId())
                 ->filter('associateId', $member->cashctrl_id, ListFilter::EQUALS)
                 ->get()
             ;
+
+            foreach ($orders as $order) {
+                $invoices[$order->getId()] = $order;
+            }
         }
 
-        return array_merge(...$invoices);
+        return $invoices;
     }
 
     /**
