@@ -1,0 +1,32 @@
+.ce_text {
+  width: 100%;
+}
+
+.intro {
+  @media (min-width: 992px) {
+    text-align: center;
+    max-width: 850px;
+    margin: 0 auto;
+  }
+  > *:not(:last-child) {
+    margin-bottom: 15px;
+  }
+}
+
+div[class^="ce_"] + div[class^="ce_"],
+div[class^="ce_"] + div[class^="mod_"],
+div[class^="mod_"] + div[class^="mod_"],
+div[class^="mod_"] + div[class^="ce_"] {
+  margin-top: 30px;
+}
+
+.mod_two_factor {
+  h2 {
+    margin-top: 2em;
+    margin-bottom: 1em;
+  }
+
+  .trusted_devices .tl_two_factor_form {
+    margin-top: 1em;
+  }
+}
