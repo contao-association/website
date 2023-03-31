@@ -419,16 +419,16 @@
         },
         {
             "name": "contao-association/contao-voting",
-            "version": "2.3.2",
+            "version": "2.3.3",
             "source": {
                 "type": "git",
                 "url": "https://github.com/contao-association/contao-voting.git",
-                "reference": "26daa154beff6f491fee863ad3b71b0f6282f33a"
+                "reference": "cbba7db89817b4bd3bbc5e826050b662c25f3406"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/contao-association/contao-voting/zipball/26daa154beff6f491fee863ad3b71b0f6282f33a",
-                "reference": "26daa154beff6f491fee863ad3b71b0f6282f33a",
+                "url": "https://api.github.com/repos/contao-association/contao-voting/zipball/cbba7db89817b4bd3bbc5e826050b662c25f3406",
+                "reference": "cbba7db89817b4bd3bbc5e826050b662c25f3406",
                 "shasum": ""
             },
             "require": {
@@ -470,10 +470,10 @@
                 "voting"
             ],
             "support": {
-                "source": "https://github.com/contao-association/contao-voting/tree/2.3.2",
+                "source": "https://github.com/contao-association/contao-voting/tree/2.3.3",
                 "issues": "https://github.com/contao-association/contao-voting/issues"
             },
-            "time": "2022-06-09T09:49:02+00:00"
+            "time": "2023-03-30T19:01:47+00:00"
         },
         {
             "name": "contao-community-alliance/composer-plugin",
@@ -13194,16 +13194,16 @@
         },
         {
             "name": "terminal42/contao-conditionalformfields",
-            "version": "3.0.9",
+            "version": "3.0.10",
             "source": {
                 "type": "git",
                 "url": "https://github.com/terminal42/contao-conditionalformfields.git",
-                "reference": "a7ab24a97bbf6690d1f3d40b745226fbf13f4ae9"
+                "reference": "d161f76782c4561be41c6aa7db6fb112ea57d0cb"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/terminal42/contao-conditionalformfields/zipball/a7ab24a97bbf6690d1f3d40b745226fbf13f4ae9",
-                "reference": "a7ab24a97bbf6690d1f3d40b745226fbf13f4ae9",
+                "url": "https://api.github.com/repos/terminal42/contao-conditionalformfields/zipball/d161f76782c4561be41c6aa7db6fb112ea57d0cb",
+                "reference": "d161f76782c4561be41c6aa7db6fb112ea57d0cb",
                 "shasum": ""
             },
             "require": {
@@ -13260,7 +13260,7 @@
                     "type": "other"
                 }
             ],
-            "time": "2023-02-15T13:54:51+00:00"
+            "time": "2023-03-31T08:26:21+00:00"
         },
         {
             "name": "terminal42/contao-fineuploader",
