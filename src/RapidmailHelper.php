@@ -110,7 +110,7 @@ class RapidmailHelper
             return true;
         }
 
-        if ($this->memberships[$member->membership]['legacy'] ?? false) {
+        if ($this->memberships[$member->membership]['invisible'] ?? false) {
             return false;
         }
 

@@ -39,7 +39,7 @@ class MembershipListener
         $options = [];
 
         foreach ($this->memberships as $membership => $config) {
-            if (!$dc instanceof DataContainer && ($config['legacy'] ?? false)) {
+            if (!$dc instanceof DataContainer && ($config['invisible'] ?? false)) {
                 continue;
             }
 
@@ -122,7 +122,7 @@ class MembershipListener
             $groups[] = $this->memberships[$level]['group'];
         }
 
-        if ($activeMember && 'active' !== $level && !($this->memberships[$level]['legacy'] ?? false)) {
+        if ($activeMember && 'active' !== $level && !($this->memberships[$level]['invisible'] ?? false)) {
             $groups[] = $this->memberships['active']['group'];
         }
 

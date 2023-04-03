@@ -103,7 +103,7 @@ parameters:
             group: 2
             categoryId: 6
             accountId: 151
-            legacy: true
+            invisible: true
 
         support:
             price: 200
@@ -112,7 +112,7 @@ parameters:
             group: 3
             categoryId: 7
             accountId: 152
-            legacy: true
+            invisible: true
 
 services:
     _defaults:

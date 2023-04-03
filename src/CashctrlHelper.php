@@ -214,7 +214,7 @@ class CashctrlHelper
 
         $order->addItem($this->createInvoiceItem($member->membership, $member, $invoiceDate, null, $monthly));
 
-        if ('active' !== $member->membership && !($membership['legacy'] ?? false) && $member->membership_member) {
+        if ('active' !== $member->membership && !($membership['invisible'] ?? false) && $member->membership_member) {
             $order->addItem($this->createInvoiceItem(
                 'active',
                 $member,

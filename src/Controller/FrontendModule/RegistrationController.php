@@ -94,7 +94,7 @@ class RegistrationController extends ModuleRegistration
             $groups[] = $this->memberships[$level]['group'];
         }
 
-        if ($data['membership_member'] && 'active' !== $level && !($this->memberships[$level]['legacy'] ?? false)) {
+        if ($data['membership_member'] && 'active' !== $level && !($this->memberships[$level]['invisible'] ?? false)) {
             $groups[] = $this->memberships['active']['group'];
         }
 
