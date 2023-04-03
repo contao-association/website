@@ -94,6 +94,7 @@ class SupporterController
             SELECT *
             FROM tl_member
             WHERE disable=''
+              AND membership!='inactive'
               AND (start='' OR start<UNIX_TIMESTAMP())
               AND (stop='' OR stop>UNIX_TIMESTAMP())
               AND (membership_start='' OR membership_start<UNIX_TIMESTAMP())

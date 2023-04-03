@@ -482,7 +482,7 @@ class CashctrlHelper
     {
         $person->setNr('M-'.str_pad((string) $member->id, 4, '0', STR_PAD_LEFT));
         $person->setCategoryId($this->getCategoryId($member->membership));
-        $person->setIsInactive((bool) $member->disable);
+        $person->setIsInactive(((bool) $member->disable) || 'inactive' === $member->membership);
 
         $person->setCompany($member->company);
         $person->setFirstName($member->firstname);
@@ -544,10 +544,10 @@ class CashctrlHelper
         }
     }
 
-    private function getCategoryId(string $membership): int
+    private function getCategoryId(string $membership): ?int
     {
-        if (!isset($this->memberships[$membership])) {
-            return 1;
+        if (!isset($this->memberships[$membership]['categoryId'])) {
+            return null;
         }
 
         return (int) $this->memberships[$membership]['categoryId'];

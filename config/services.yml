@@ -114,6 +114,10 @@ parameters:
             accountId: 152
             invisible: true
 
+        inactive:
+            invisible: true
+            group: 8
+
 services:
     _defaults:
         autoconfigure: true

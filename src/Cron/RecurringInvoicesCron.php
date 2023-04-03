@@ -49,6 +49,7 @@ class RecurringInvoicesCron
             WHERE membership_invoiced != ''
                 AND DATE_FORMAT(FROM_UNIXTIME(membership_invoiced),'%Y%m%d') < DATE_FORMAT(NOW(),'%Y%m%d')
                 AND disable=''
+                AND membership!='inactive'
                 AND (start='' OR start<=UNIX_TIMESTAMP())
                 AND (stop='' OR stop>UNIX_TIMESTAMP())
                 AND (membership_stop='' OR membership_stop>UNIX_TIMESTAMP())

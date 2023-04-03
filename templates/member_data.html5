@@ -48,7 +48,7 @@
               </div>
             </div>
           </div>
-          <?php if ('month' === $this->membershipConfig['type'] && ($this->membershipConfig['freeMember'] ?? false)): ?>
+          <?php if ('month' === ($this->membershipConfig['type'] ?? null) && ($this->membershipConfig['freeMember'] ?? false)): ?>
           <div class="widget widget-text">
             <label for="ctrl_membership_interval"><?= $this->trans('tl_member.membership_interval.0', [], 'contao_tl_member') ?></label>
             <input type="text" id="ctrl_membership_interval" class="text" value="{{user::membership_interval}}" disabled>

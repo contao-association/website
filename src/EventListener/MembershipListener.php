@@ -85,7 +85,7 @@ class MembershipListener
                 return $this->getMembershipLabel($user->membership, (string) $user->membership_amount);
 
             case '':
-                if (!empty($user->membership_stop) && $user->membership_stop <= time()) {
+                if ('inactive' === $user->membership || (!empty($user->membership_stop) && $user->membership_stop <= time())) {
                     return 'Du hast kein aktives Abonnement der Contao Association.';
                 }
 
@@ -156,6 +156,10 @@ class MembershipListener
             $price = number_format((float) $amount, 2, '.', "'");
 
             return $this->translator->trans('membership_year', ['{price}' => $price]);
+        }
+
+        if (!isset($config['price'])) {
+            return '';
         }
 
         $price = number_format($config['price'], 2, '.', "'");

@@ -98,6 +98,7 @@ class RapidmailHelper
     private function hasSubscription(MemberModel $member): bool
     {
         return !$member->disable
+            && 'inactive' !== $member->membership
             && (!$member->start || $member->start <= time())
             && (!$member->stop || $member->stop > time())
             && (!$member->membership_start || $member->membership_start <= time())
