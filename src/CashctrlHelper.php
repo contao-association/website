@@ -262,12 +262,8 @@ class CashctrlHelper
         return $targetFile;
     }
 
-    public function listInvoices(MemberModel $member): array
+    public function listInvoices(int $cahctrlId): array
     {
-        if (!$member->cashctrl_id) {
-            return [];
-        }
-
         $invoices = [];
         foreach ($this->fiscalperiod->list() as $period) {
             if ($period->getStart() < new \DateTime('2021-01-01')) {
@@ -277,7 +273,7 @@ class CashctrlHelper
             $orders = $this->order
                 ->list()
                 ->inFiscalPeriod($period->getId())
-                ->filter('associateId', $member->cashctrl_id, ListFilter::EQUALS)
+                ->filter('associateId', $cahctrlId, ListFilter::EQUALS)
                 ->get()
             ;
 

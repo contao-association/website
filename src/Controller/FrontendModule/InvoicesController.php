@@ -75,73 +75,91 @@ class InvoicesController extends AbstractFrontendModuleController
     {
         // Find the payment page in the current root
         $paymentPage = PageModel::findFirstPublishedByTypeAndPid('payment', $this->getPageModel()->rootId);
+        $cashctrlIds = array_filter(array_merge([$member->cashctrl_id], explode(',', $member->cashctrl_associates)));
 
-        /** @var Order $order */
-        foreach ($this->cashctrl->listInvoices($member) as $order) {
-            if (!$order->isBook || $order->getAssociateId() !== (int) $member->cashctrl_id) {
-                continue;
-            }
+        foreach ($cashctrlIds as $cashctrlId) {
+            /** @var Order $order */
+            foreach ($this->cashctrl->listInvoices((int) $cashctrlId) as $order) {
+                if (!$order->isBook || $order->getAssociateId() !== (int) $cashctrlId) {
+                    continue;
+                }
 
-            if ((int) Input::get('invoice') === $order->getId()) {
-                throw new ResponseException(new Response(
-                    $this->cashctrl->downloadInvoice($order, null, $member->language ?: 'de'),
-                    200,
-                    [
-                        'Content-Type' => 'application/pdf'
-                    ]
-                ));
-            }
+                if ((int) Input::get('invoice') === $order->getId()) {
+                    throw new ResponseException(new Response(
+                        $this->cashctrl->downloadInvoice($order, null, $member->language ?: 'de'),
+                        200,
+                        [
+                            'Content-Type' => 'application/pdf',
+                        ]
+                    ));
+                }
 
-            $due = ApiClient::parseDateTime($order->dateDue);
-            $paymentHref = '';
-            $isClosed = $order->isClosed;
-            $status = $this->translator->trans($isClosed ? 'invoice_paid' : 'invoice_unpaid');
+                $due = ApiClient::parseDateTime($order->dateDue);
+                $paymentHref = '';
+                $isClosed = $order->isClosed;
+                $status = $this->translator->trans($isClosed ? 'invoice_paid' : 'invoice_unpaid');
 
-            if (!$isClosed) {
-                $charges = $this->stripeHelper->findPaymentForMember($member, $order);
+                if (!$isClosed) {
+                    $charges = $this->stripeHelper->findPaymentForMember($member, $order);
 
-                foreach ($charges as $charge) {
-                    if ('pending' === $charge->status) {
-                        $isClosed = true;
-                        $status = $this->translator->trans('sepa_debit' === $charge->payment_method_details['type'] ? 'invoice_pending_sepa' : 'invoice_pending');
-                        break;
+                    foreach ($charges as $charge) {
+                        if ('pending' === $charge->status) {
+                            $isClosed = true;
+                            $status = $this->translator->trans('sepa_debit' === $charge->payment_method_details['type'] ? 'invoice_pending_sepa' : 'invoice_pending');
+                            break;
+                        }
                     }
                 }
-            }
 
-            if (!$isClosed && $paymentPage instanceof PageModel) {
-                $paymentHref = $this->urlGenerator->generate(RouteObjectInterface::OBJECT_BASED_ROUTE_NAME, [RouteObjectInterface::CONTENT_OBJECT => $paymentPage, 'orderId' => $order->getId(), 'cancel_url' => $this->getPageModel()->getAbsoluteUrl()], UrlGeneratorInterface::ABSOLUTE_URL);
-                $paymentHref = $this->uriSigner->sign($paymentHref);
-            }
+                if (!$isClosed && $paymentPage instanceof PageModel) {
+                    $paymentHref = $this->urlGenerator->generate(
+                        RouteObjectInterface::OBJECT_BASED_ROUTE_NAME,
+                        [
+                            RouteObjectInterface::CONTENT_OBJECT => $paymentPage,
+                            'orderId' => $order->getId(),
+                            'cancel_url' => $this->getPageModel()->getAbsoluteUrl(),
+                        ],
+                        UrlGeneratorInterface::ABSOLUTE_URL
+                    );
+                    $paymentHref = $this->uriSigner->sign($paymentHref);
+                }
 
-            $invoices[] = [
-                'id' => $order->getId(),
-                'nr' => $order->getNr(),
-                'tstamp' => $order->getDate()->format('U'),
-                'date' => $order->getDate()->format($dateFormat),
-                'due' => $due->format($dateFormat),
-                'closed' => $isClosed,
-                'status' => $status,
-                'total' => number_format($order->total, 2, '.', "'"),
-                'href' => $this->getPageModel()->getFrontendUrl().'?invoice='.$order->getId(),
-                'isPdf' => true,
-                'paymentHref' => $paymentHref,
-            ];
+                $invoices[] = [
+                    'id' => $order->getId(),
+                    'nr' => $order->getNr(),
+                    'tstamp' => $order->getDate()->format('U'),
+                    'date' => $order->getDate()->format($dateFormat),
+                    'due' => $due->format($dateFormat),
+                    'closed' => $isClosed,
+                    'status' => $status,
+                    'total' => number_format($order->total, 2, '.', "'"),
+                    'href' => $this->getPageModel()->getFrontendUrl().'?invoice='.$order->getId(),
+                    'isPdf' => true,
+                    'paymentHref' => $paymentHref,
+                ];
+            }
         }
     }
 
     private function addHarvestInvoices(MemberModel $member, array &$invoices, string $dateFormat): void
     {
         // New members don't have invoices in Harvest
-        if (!$member->harvest_client_id) {
+        if (empty($member->harvest_client_id)) {
             return;
         }
 
-        $response = $this->httpClient->request('GET', 'https://api.harvestapp.com/v2/invoices?client_id='.$member->harvest_client_id, [
+        foreach (explode(',', $member->harvest_client_id) as $clientId) {
+            $this->addHarvestInvoicesForId((int) $clientId, $invoices, $dateFormat);
+        }
+    }
+
+    private function addHarvestInvoicesForId(int $clientId, array &$invoices, string $dateFormat): void
+    {
+        $response = $this->httpClient->request('GET', 'https://api.harvestapp.com/v2/invoices?client_id='.$clientId, [
             'headers' => [
                 'Harvest-Account-Id' => $this->harvestId,
             ],
-            'auth_bearer' => $this->harvestToken
+            'auth_bearer' => $this->harvestToken,
         ]);
 
         if (200 !== $response->getStatusCode()) {
@@ -162,7 +180,7 @@ class InvoicesController extends AbstractFrontendModuleController
                 'closed' => 'paid' === $invoice['state'],
                 'status' => $this->translator->trans('paid' === $invoice['state'] ? 'invoice_paid' : 'invoice_unpaid'),
                 'total' => number_format($invoice['amount'], 2, '.', "'"),
-                'href' => 'https://contaoassociation.harvestapp.com/client/invoices/' . $invoice['client_key'],
+                'href' => 'https://contaoassociation.harvestapp.com/client/invoices/'.$invoice['client_key'],
                 'isPdf' => false,
             ];
         }

@@ -154,6 +154,11 @@ $GLOBALS['TL_DCA']['tl_member']['fields']['cashctrl_id'] = [
     'sql' => "int(10) unsigned NOT NULL default '0'",
 ];
 
+$GLOBALS['TL_DCA']['tl_member']['fields']['cashctrl_associates'] = [
+    'eval' => ['doNotShow' => true, 'doNotLog' => true],
+    'sql' => "varchar(255) NOT NULL default ''",
+];
+
 $GLOBALS['TL_DCA']['tl_member']['fields']['cashctrl_invoice'] = [
     'eval' => ['doNotShow' => true, 'doNotLog' => true],
     'sql' => "int(10) unsigned NOT NULL default '0'",
@@ -161,7 +166,7 @@ $GLOBALS['TL_DCA']['tl_member']['fields']['cashctrl_invoice'] = [
 
 $GLOBALS['TL_DCA']['tl_member']['fields']['harvest_client_id'] = [
     'eval' => ['doNotShow' => true, 'doNotLog' => true],
-    'sql' => "int(10) unsigned NOT NULL default '0'",
+    'sql' => "varchar(255) NOT NULL default ''",
 ];
 
 $GLOBALS['TL_DCA']['tl_member']['fields']['stripe_customer'] = [
