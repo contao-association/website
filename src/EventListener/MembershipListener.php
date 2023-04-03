@@ -70,27 +70,10 @@ class MembershipListener
 
         switch ($t[1] ?? null) {
             case 'renew':
-                $date = \DateTime::createFromFormat('U', $user->membership_invoiced);
-                $date->add(new \DateInterval('P1D'));
-
-                return Date::parse('d. F Y', $date->format('U'));
+                return $this->getRenewDate($user);
 
             case 'payment':
-                $config = $this->memberships[$user->membership];
-                $transId = 'payment_yearly';
-                $price = $config['price'];
-
-                if ($config['custom'] ?? false) {
-                    $price = $user->membership_amount;
-                } elseif ('month' === $config['type']) {
-                    if (($config['freeMember'] ?? false) && 'month' === $user->membership_interval) {
-                        $transId = 'payment_monthly';
-                    } else {
-                        $price = 12 * $config['price'];
-                    }
-                }
-
-                return $this->translator->trans($transId, ['{amount}' => number_format((float) $price, 2, '.', "'")]);
+                return $this->getPayment($user);
 
             case 'amount':
                 return $this->formatAmount($user->membership, (string) $user->membership_amount);
@@ -100,9 +83,21 @@ class MembershipListener
 
             case 'label':
                 return $this->getMembershipLabel($user->membership, (string) $user->membership_amount);
+
+            case '':
+                if (!empty($user->membership_stop) && $user->membership_stop <= time()) {
+                    return 'Du hast kein aktives Abonnement der Contao Association.';
+                }
+
+                $title = $this->translator->trans('membership.'.$user->membership);
+                $payment = $this->getPayment($user);
+                $date = $this->getRenewDate($user);
+
+                return "Du unterstützt Contao als <strong>$title</strong> mit <strong>$payment</strong>. Vielen Dank dafür! ❤️<br>"
+                    . (empty($user->membership_stop) ? "Die nächste Rechnung erhältst du am $date." : "Dein Abonnement endet am $date, du erhältst keine weitere Rechnung von uns.");
         }
 
-        return '';
+        return false;
     }
 
     /**
@@ -166,5 +161,32 @@ class MembershipListener
         $price = number_format($config['price'], 2, '.', "'");
 
         return $this->translator->trans('membership_'.$config['type'], ['{price}' => $price]);
+    }
+
+    private function getPayment(FrontendUser $user): string
+    {
+        $config = $this->memberships[$user->membership];
+        $transId = 'payment_yearly';
+        $price = $config['price'];
+
+        if ($config['custom'] ?? false) {
+            $price = $user->membership_amount;
+        } elseif ('month' === $config['type']) {
+            if (($config['freeMember'] ?? false) && 'month' === $user->membership_interval) {
+                $transId = 'payment_monthly';
+            } else {
+                $price = 12 * $config['price'];
+            }
+        }
+
+        return $this->translator->trans($transId, ['{amount}' => number_format((float) $price, 2, '.', "'")]);
+    }
+
+    private function getRenewDate(FrontendUser $user): string
+    {
+        $date = \DateTime::createFromFormat('U', $user->membership_invoiced);
+        $date->add(new \DateInterval('P1D'));
+
+        return Date::parse('d. F Y', $date->format('U'));
     }
 }
