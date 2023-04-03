@@ -331,7 +331,7 @@ class CashctrlHelper
             $objVersions = new Versions('tl_member', $member->id);
             $objVersions->setUsername($member->username);
             $objVersions->setUserId(0);
-            $objVersions->setEditUrl('contao/main.php?do=member&act=edit&id=%s&rt=1');
+            $objVersions->setEditUrl('contao/main.php?do=member&act=edit&id='.$member->id);
             $objVersions->initialize();
 
             $member->cashctrl_invoice = 0;
