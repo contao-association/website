@@ -52,6 +52,13 @@ class StripeController
                  * @noinspection PhpPossiblePolymorphicInvocationInspection
                  */
                 $paymentIntent = $event->data->object;
+                foreach ($paymentIntent->charges as $charge) {
+                    // Ignore failed Pretix payments
+                    if ('ca_9uvq9hdD9LslRRCLivQ5cDhHsmFLX023' === $charge->application) {
+                        break 2;
+                    }
+                }
+
                 $this->sentryOrThrow('Please handle payment_intent.payment_failed', null, [
                     'event' => $event->toArray(),
                 ]);
