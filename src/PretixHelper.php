@@ -57,6 +57,11 @@ class PretixHelper
 
     public function bookOrder(string $event, array $invoice): void
     {
+        // Invoices from Pretix shop in TEST mode
+        if (str_contains('TEST', $invoice['number'])) {
+            return;
+        }
+
         $creditAccount = $this->getAccountForInvoice($invoice);
         $debitAccount = $this->cashctrlHelper->getAccountId(1105);
         $dateAdded = new \DateTime($invoice['date']);
@@ -81,8 +86,12 @@ class PretixHelper
 
     private function getAccountForInvoice(array $invoice): int
     {
-        if (0 === strpos($invoice['number'], 'CAMP')) {
+        if (str_starts_with($invoice['number'], 'CAMP')) {
             return $this->cashctrlHelper->getAccountId(3421);
+        }
+
+        if (str_starts_with($invoice['number'], 'CK2023')) {
+            return $this->cashctrlHelper->getAccountId(3420);
         }
 
         throw new \RuntimeException("Cannot determine account for Pretix invoice \"{$invoice['number']}\"");

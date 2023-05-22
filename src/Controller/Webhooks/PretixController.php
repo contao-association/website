@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Controller\Webhooks;
 
+use App\ErrorHandlingTrait;
 use App\PretixHelper;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -15,6 +16,8 @@ use Symfony\Component\Routing\Annotation\Route;
  */
 class PretixController
 {
+    use ErrorHandlingTrait;
+
     private PretixHelper $pretixHelper;
 
     public function __construct(PretixHelper $pretixHelper)
@@ -32,7 +35,14 @@ class PretixController
                 $invoices = $this->pretixHelper->getInvoices($data['organizer'], $data['event'], $data['code']);
 
                 if (1 === count($invoices)) {
-                    $this->pretixHelper->bookOrder($data['event'], $invoices[0]);
+                    try {
+                        $this->pretixHelper->bookOrder($data['event'], $invoices[0]);
+                    } catch (\Exception $exception) {
+                        $this->sentryOrThrow($exception->getMessage(), $exception, [
+                            'data' => $data,
+                            'invoice' => $invoices[0],
+                        ]);
+                    }
                 }
                 break;
 
