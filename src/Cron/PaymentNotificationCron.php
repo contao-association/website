@@ -32,12 +32,15 @@ class PaymentNotificationCron
 
     public function __invoke(): void
     {
+        $this->sentryCheckIn();
+
         $this->framework->initialize();
 
         $notification = Notification::findByPk($this->notificationId);
 
         if (null === $notification) {
             $this->sentryOrThrow('Notification ID "'.$this->notificationId.'" not found, cannot send payment notification');
+            $this->sentryCheckIn(false);
             return;
         }
 
@@ -54,5 +57,7 @@ class PaymentNotificationCron
 
             $this->cashctrl->notifyInvoicePaid($order, $member, $notification);
         }
+
+        $this->sentryCheckIn(true);
     }
 }

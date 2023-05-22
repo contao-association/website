@@ -24,6 +24,8 @@ class RapidmailSyncCron
 
     public function __invoke(): void
     {
+        $this->sentryCheckIn();
+
         $members = $this->getMembers();
         $recipients = $this->getRecipients();
         $recipientForeignIds = array_column($recipients, 'foreign_id', 'id');
@@ -78,6 +80,8 @@ class RapidmailSyncCron
                 ++$throttle;
             }
         }
+
+        $this->sentryCheckIn(true);
     }
 
     /**

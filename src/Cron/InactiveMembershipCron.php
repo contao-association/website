@@ -23,6 +23,8 @@ class InactiveMembershipCron
 
     public function __invoke(): void
     {
+        $this->sentryCheckIn();
+
         $this->framework->initialize();
 
         $ids = $this->connection->fetchFirstColumn("
@@ -42,5 +44,7 @@ class InactiveMembershipCron
 
             $version->create(true);
         }
+
+        $this->sentryCheckIn(true);
     }
 }

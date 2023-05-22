@@ -24,8 +24,11 @@ class InvoicesReminderCron
 
     public function __invoke(): void
     {
+        $this->sentryCheckIn();
+
         // only send reminders on mondays
         if (1 !== (int) date('w')) {
+            $this->sentryCheckIn(true);
             return;
         }
 
@@ -35,6 +38,7 @@ class InvoicesReminderCron
 
         if (null === $notification) {
             $this->sentryOrThrow('Notification ID "'.$this->overdueNotificationId.'" not found, cannot send invoice reminders');
+            $this->sentryCheckIn(false);
             return;
         }
 
@@ -77,5 +81,7 @@ class InvoicesReminderCron
                 $this->cashctrl->order->updateStatus($order->getId(), CashctrlHelper::STATUS_OVERDUE);
             }
         }
+
+        $this->sentryCheckIn(true);
     }
 }

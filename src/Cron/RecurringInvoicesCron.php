@@ -41,6 +41,8 @@ class RecurringInvoicesCron
 
     public function __invoke(): void
     {
+        $this->sentryCheckIn();
+
         $this->framework->initialize();
 
         $ids = $this->connection->fetchFirstColumn("
@@ -55,7 +57,8 @@ class RecurringInvoicesCron
                 AND (membership_stop='' OR membership_stop>UNIX_TIMESTAMP())
         ");
 
-        if (false === $ids || null === ($members = MemberModel::findMultipleByIds($ids))) {
+        if (empty($ids) || null === ($members = MemberModel::findMultipleByIds($ids))) {
+            $this->sentryCheckIn(true);
             return;
         }
 
@@ -72,5 +75,7 @@ class RecurringInvoicesCron
                 $this->sentryOrThrow('Unable to send recurring invoice to '.$member->email.' (member ID '.$member->id.')', $e);
             }
         }
+
+        $this->sentryCheckIn(true);
     }
 }

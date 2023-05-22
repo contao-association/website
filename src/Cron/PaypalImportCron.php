@@ -27,6 +27,8 @@ class PaypalImportCron
 
     public function __invoke(): void
     {
+        $this->sentryCheckIn();
+
         $startDate = new \DateTime('yesterday 00:00:00');
         $endDate = new \DateTime('yesterday 23:59:59');
 
@@ -40,5 +42,7 @@ class PaypalImportCron
                 continue;
             }
         }
+
+        $this->sentryCheckIn(true);
     }
 }
