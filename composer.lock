@@ -526,16 +526,16 @@
         },
         {
             "name": "contao-components/ace",
-            "version": "1.21.1",
+            "version": "1.22.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/contao-components/ace.git",
-                "reference": "2b949eb8d7c9dc67f5ab3c0f762fcfc4eb4592b7"
+                "reference": "e8f364631bacef9d2ecb8bccc925c12cf3b0ab29"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/contao-components/ace/zipball/2b949eb8d7c9dc67f5ab3c0f762fcfc4eb4592b7",
-                "reference": "2b949eb8d7c9dc67f5ab3c0f762fcfc4eb4592b7",
+                "url": "https://api.github.com/repos/contao-components/ace/zipball/e8f364631bacef9d2ecb8bccc925c12cf3b0ab29",
+                "reference": "e8f364631bacef9d2ecb8bccc925c12cf3b0ab29",
                 "shasum": ""
             },
             "require": {
@@ -555,9 +555,9 @@
             "description": "ACE code editor integration for Contao Open Source CMS",
             "support": {
                 "issues": "https://github.com/contao-components/ace/issues",
-                "source": "https://github.com/contao-components/ace/tree/1.21.1"
+                "source": "https://github.com/contao-components/ace/tree/1.22.0"
             },
-            "time": "2023-05-16T15:00:29+00:00"
+            "time": "2023-05-23T09:06:16+00:00"
         },
         {
             "name": "contao-components/chosen",
@@ -1194,16 +1194,16 @@
         },
         {
             "name": "contao/core-bundle",
-            "version": "4.13.23",
+            "version": "4.13.24",
             "source": {
                 "type": "git",
                 "url": "https://github.com/contao/core-bundle.git",
-                "reference": "02a5f180c866e11ddf12469e498f3c85f907fe34"
+                "reference": "f6fe533d49f7e70eceb982abb18ae6dd5c7f3d82"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/contao/core-bundle/zipball/02a5f180c866e11ddf12469e498f3c85f907fe34",
-                "reference": "02a5f180c866e11ddf12469e498f3c85f907fe34",
+                "url": "https://api.github.com/repos/contao/core-bundle/zipball/f6fe533d49f7e70eceb982abb18ae6dd5c7f3d82",
+                "reference": "f6fe533d49f7e70eceb982abb18ae6dd5c7f3d82",
                 "shasum": ""
             },
             "require": {
@@ -1400,7 +1400,7 @@
                     "type": "custom"
                 }
             ],
-            "time": "2023-05-03T10:46:59+00:00"
+            "time": "2023-05-25T07:40:54+00:00"
         },
         {
             "name": "contao/image",
@@ -1528,16 +1528,16 @@
         },
         {
             "name": "contao/installation-bundle",
-            "version": "4.13.23",
+            "version": "4.13.24",
             "source": {
                 "type": "git",
                 "url": "https://github.com/contao/installation-bundle.git",
-                "reference": "ddd177137989bc948928c3916c46133b1a28e855"
+                "reference": "86bce4f2224092d7488172c3615fecea4b99ddbc"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/contao/installation-bundle/zipball/ddd177137989bc948928c3916c46133b1a28e855",
-                "reference": "ddd177137989bc948928c3916c46133b1a28e855",
+                "url": "https://api.github.com/repos/contao/installation-bundle/zipball/86bce4f2224092d7488172c3615fecea4b99ddbc",
+                "reference": "86bce4f2224092d7488172c3615fecea4b99ddbc",
                 "shasum": ""
             },
             "require": {
@@ -1606,20 +1606,20 @@
                     "type": "custom"
                 }
             ],
-            "time": "2023-03-20T10:32:09+00:00"
+            "time": "2023-05-24T07:09:32+00:00"
         },
         {
             "name": "contao/manager-bundle",
-            "version": "4.13.23",
+            "version": "4.13.24",
             "source": {
                 "type": "git",
                 "url": "https://github.com/contao/manager-bundle.git",
-                "reference": "724d41af23a3026d908c8e0d48aaedfe725aa225"
+                "reference": "e8001dc739641bbbf0f375c27af351985d87a310"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/contao/manager-bundle/zipball/724d41af23a3026d908c8e0d48aaedfe725aa225",
-                "reference": "724d41af23a3026d908c8e0d48aaedfe725aa225",
+                "url": "https://api.github.com/repos/contao/manager-bundle/zipball/e8001dc739641bbbf0f375c27af351985d87a310",
+                "reference": "e8001dc739641bbbf0f375c27af351985d87a310",
                 "shasum": ""
             },
             "require": {
@@ -1714,7 +1714,7 @@
                     "type": "custom"
                 }
             ],
-            "time": "2023-04-27T14:38:24+00:00"
+            "time": "2023-05-24T15:01:13+00:00"
         },
         {
             "name": "contao/manager-plugin",
@@ -3318,16 +3318,16 @@
         },
         {
             "name": "friendsofsymfony/http-cache-bundle",
-            "version": "2.16.0",
+            "version": "2.16.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/FriendsOfSymfony/FOSHttpCacheBundle.git",
-                "reference": "b7ebb1fb12a1f421579b8adacdd545b2afd0e9c8"
+                "reference": "cdee9b94504067d0a9d0e5b2c3b076bf10347d0c"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/FriendsOfSymfony/FOSHttpCacheBundle/zipball/b7ebb1fb12a1f421579b8adacdd545b2afd0e9c8",
-                "reference": "b7ebb1fb12a1f421579b8adacdd545b2afd0e9c8",
+                "url": "https://api.github.com/repos/FriendsOfSymfony/FOSHttpCacheBundle/zipball/cdee9b94504067d0a9d0e5b2c3b076bf10347d0c",
+                "reference": "cdee9b94504067d0a9d0e5b2c3b076bf10347d0c",
                 "shasum": ""
             },
             "require": {
@@ -3409,9 +3409,9 @@
             ],
             "support": {
                 "issues": "https://github.com/FriendsOfSymfony/FOSHttpCacheBundle/issues",
-                "source": "https://github.com/FriendsOfSymfony/FOSHttpCacheBundle/tree/2.16.0"
+                "source": "https://github.com/FriendsOfSymfony/FOSHttpCacheBundle/tree/2.16.1"
             },
-            "time": "2023-05-04T11:16:24+00:00"
+            "time": "2023-05-23T06:55:56+00:00"
         },
         {
             "name": "guzzlehttp/guzzle",
@@ -3541,29 +3541,33 @@
         },
         {
             "name": "guzzlehttp/promises",
-            "version": "1.5.3",
+            "version": "2.0.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/guzzle/promises.git",
-                "reference": "67ab6e18aaa14d753cc148911d273f6e6cb6721e"
+                "reference": "3a494dc7dc1d7d12e511890177ae2d0e6c107da6"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/guzzle/promises/zipball/67ab6e18aaa14d753cc148911d273f6e6cb6721e",
-                "reference": "67ab6e18aaa14d753cc148911d273f6e6cb6721e",
+                "url": "https://api.github.com/repos/guzzle/promises/zipball/3a494dc7dc1d7d12e511890177ae2d0e6c107da6",
+                "reference": "3a494dc7dc1d7d12e511890177ae2d0e6c107da6",
                 "shasum": ""
             },
             "require": {
-                "php": ">=5.5"
+                "php": "^7.2.5 || ^8.0"
             },
             "require-dev": {
-                "symfony/phpunit-bridge": "^4.4 || ^5.1"
+                "bamarni/composer-bin-plugin": "^1.8.1",
+                "phpunit/phpunit": "^8.5.29 || ^9.5.23"
             },
             "type": "library",
+            "extra": {
+                "bamarni-bin": {
+                    "bin-links": true,
+                    "forward-command": false
+                }
+            },
             "autoload": {
-                "files": [
-                    "src/functions_include.php"
-                ],
                 "psr-4": {
                     "GuzzleHttp\\Promise\\": "src/"
                 }
@@ -3600,7 +3604,7 @@
             ],
             "support": {
                 "issues": "https://github.com/guzzle/promises/issues",
-                "source": "https://github.com/guzzle/promises/tree/1.5.3"
+                "source": "https://github.com/guzzle/promises/tree/2.0.0"
             },
             "funding": [
                 {
@@ -3616,7 +3620,7 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2023-05-21T12:31:43+00:00"
+            "time": "2023-05-21T13:50:22+00:00"
         },
         {
             "name": "guzzlehttp/psr7",
@@ -6934,21 +6938,21 @@
         },
         {
             "name": "sentry/sdk",
-            "version": "3.3.0",
+            "version": "3.4.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/getsentry/sentry-php-sdk.git",
-                "reference": "d0678fc7274dbb03046ed05cb24eb92945bedf8e"
+                "reference": "7f1e04a5380a91e41a1a68c363ec19f88619a870"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/getsentry/sentry-php-sdk/zipball/d0678fc7274dbb03046ed05cb24eb92945bedf8e",
-                "reference": "d0678fc7274dbb03046ed05cb24eb92945bedf8e",
+                "url": "https://api.github.com/repos/getsentry/sentry-php-sdk/zipball/7f1e04a5380a91e41a1a68c363ec19f88619a870",
+                "reference": "7f1e04a5380a91e41a1a68c363ec19f88619a870",
                 "shasum": ""
             },
             "require": {
                 "http-interop/http-factory-guzzle": "^1.0",
-                "sentry/sentry": "^3.9",
+                "sentry/sentry": "^3.18",
                 "symfony/http-client": "^4.3|^5.0|^6.0"
             },
             "type": "metapackage",
@@ -6975,7 +6979,7 @@
             ],
             "support": {
                 "issues": "https://github.com/getsentry/sentry-php-sdk/issues",
-                "source": "https://github.com/getsentry/sentry-php-sdk/tree/3.3.0"
+                "source": "https://github.com/getsentry/sentry-php-sdk/tree/3.4.0"
             },
             "funding": [
                 {
@@ -6987,26 +6991,26 @@
                     "type": "custom"
                 }
             ],
-            "time": "2022-10-11T09:05:00+00:00"
+            "time": "2023-05-22T16:02:39+00:00"
         },
         {
             "name": "sentry/sentry",
-            "version": "3.18.2",
+            "version": "3.19.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/getsentry/sentry-php.git",
-                "reference": "c634615c09a69bfdc3bb5f6ffeee78db3711167c"
+                "reference": "dd1057fb37d4484ebb2d1bc9b05fa5969c078436"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/getsentry/sentry-php/zipball/c634615c09a69bfdc3bb5f6ffeee78db3711167c",
-                "reference": "c634615c09a69bfdc3bb5f6ffeee78db3711167c",
+                "url": "https://api.github.com/repos/getsentry/sentry-php/zipball/dd1057fb37d4484ebb2d1bc9b05fa5969c078436",
+                "reference": "dd1057fb37d4484ebb2d1bc9b05fa5969c078436",
                 "shasum": ""
             },
             "require": {
                 "ext-json": "*",
                 "ext-mbstring": "*",
-                "guzzlehttp/promises": "^1.4",
+                "guzzlehttp/promises": "^1.5.3|^2.0",
                 "jean85/pretty-package-versions": "^1.5|^2.0.4",
                 "php": "^7.2|^8.0",
                 "php-http/async-client-implementation": "^1.0",
@@ -7080,7 +7084,7 @@
             ],
             "support": {
                 "issues": "https://github.com/getsentry/sentry-php/issues",
-                "source": "https://github.com/getsentry/sentry-php/tree/3.18.2"
+                "source": "https://github.com/getsentry/sentry-php/tree/3.19.1"
             },
             "funding": [
                 {
@@ -7092,7 +7096,7 @@
                     "type": "custom"
                 }
             ],
-            "time": "2023-05-17T10:56:54+00:00"
+            "time": "2023-05-25T06:19:09+00:00"
         },
         {
             "name": "sentry/sentry-symfony",
@@ -12907,12 +12911,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/terminal42/cashctrl-api.git",
-                "reference": "74e4d74eb9de79f78162667e604f82f896b42027"
+                "reference": "5eb5e6921c784d48d447bc338039c8d2a524db45"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/terminal42/cashctrl-api/zipball/74e4d74eb9de79f78162667e604f82f896b42027",
-                "reference": "74e4d74eb9de79f78162667e604f82f896b42027",
+                "url": "https://api.github.com/repos/terminal42/cashctrl-api/zipball/5eb5e6921c784d48d447bc338039c8d2a524db45",
+                "reference": "5eb5e6921c784d48d447bc338039c8d2a524db45",
                 "shasum": ""
             },
             "require": {
@@ -12960,7 +12964,7 @@
                     "type": "other"
                 }
             ],
-            "time": "2022-06-16T07:28:09+00:00"
+            "time": "2023-05-26T15:19:43+00:00"
         },
         {
             "name": "terminal42/cashctrl-bundle",

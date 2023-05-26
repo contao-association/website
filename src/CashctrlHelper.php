@@ -486,10 +486,10 @@ class CashctrlHelper
         $person->setTitleId($this->getTitleId($member->gender));
         $person->setLanguage($member->language);
         $person->setDateBirth($member->dateOfBirth ? date('Y-m-d', (int) $member->dateOfBirth) : '');
+        $person->setVatUid($member->tax_id);
 
         $person->setCustomfield(2, date('Y-m-d', (int) $member->dateAdded));
         $person->setCustomfield(3, $member->stop ? date('Y-m-d', (int) $member->stop) : '');
-        $person->setCustomfield(4, $member->tax_id);
 
         $invoiceAddress = $this->findAddress($person, PersonAddress::TYPE_MAIN);
         $invoiceAddress->setAddress($member->street);
