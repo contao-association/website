@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace App\Controller\FrontendModule;
 
-use App\ErrorHandlingTrait;
 use App\StripeHelper;
 use Contao\CoreBundle\Controller\FrontendModule\AbstractFrontendModuleController;
 use Contao\CoreBundle\Exception\RedirectResponseException;
@@ -21,6 +20,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Security\Core\Security;
 use Symfony\Contracts\Translation\TranslatorInterface;
+use Terminal42\ContaoBuildTools\ErrorHandlingTrait;
 
 /**
  * @FrontendModule(category="user")

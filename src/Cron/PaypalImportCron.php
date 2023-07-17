@@ -4,10 +4,10 @@ declare(strict_types=1);
 
 namespace App\Cron;
 
-use App\ErrorHandlingTrait;
 use App\PaypalHelper;
 use Contao\CoreBundle\ServiceAnnotation\CronJob;
 use App\CashctrlHelper;
+use Terminal42\ContaoBuildTools\ErrorHandlingTrait;
 
 /**
  * @CronJob("daily")

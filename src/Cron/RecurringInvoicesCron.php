@@ -4,13 +4,13 @@ declare(strict_types=1);
 
 namespace App\Cron;
 
-use App\ErrorHandlingTrait;
 use Contao\CoreBundle\Framework\ContaoFramework;
 use Contao\MemberModel;
 use Contao\CoreBundle\ServiceAnnotation\CronJob;
 use Doctrine\DBAL\Connection;
 use Psr\Log\LoggerInterface;
 use App\CashctrlHelper;
+use Terminal42\ContaoBuildTools\ErrorHandlingTrait;
 
 /**
  * @CronJob("daily")

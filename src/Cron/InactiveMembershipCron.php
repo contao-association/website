@@ -4,11 +4,11 @@ declare(strict_types=1);
 
 namespace App\Cron;
 
-use App\ErrorHandlingTrait;
 use Contao\CoreBundle\DependencyInjection\Attribute\AsCronJob;
 use Contao\CoreBundle\Framework\ContaoFramework;
 use Contao\Versions;
 use Doctrine\DBAL\Connection;
+use Terminal42\ContaoBuildTools\ErrorHandlingTrait;
 
 #[AsCronJob('daily')]
 class InactiveMembershipCron

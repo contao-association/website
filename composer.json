@@ -19,7 +19,8 @@
         "terminal42/cashctrl-api": "^1.0@dev",
         "rapidmail/rapidmail-apiv3-client-php": "^1.1",
         "stripe/stripe-php": "^8",
-        "paypal/paypal-checkout-sdk": "^1.0.2"
+        "paypal/paypal-checkout-sdk": "^1.0.2",
+        "terminal42/contao-build-tools": "dev-main"
     },
     "require-dev": {
         "deployer/deployer": "^7.0"
@@ -34,7 +35,8 @@
         "allow-plugins": {
             "contao/manager-plugin": true,
             "contao-components/installer": true,
-            "contao-community-alliance/composer-plugin": true
+            "contao-community-alliance/composer-plugin": true,
+            "terminal42/contao-build-tools": true
         }
     },
     "extra": {

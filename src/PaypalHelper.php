@@ -11,6 +11,7 @@ use Terminal42\CashctrlApi\Api\OrderBookentryEndpoint;
 use Terminal42\CashctrlApi\Entity\Journal;
 use Terminal42\CashctrlApi\Entity\Order;
 use Terminal42\CashctrlApi\Entity\OrderBookentry;
+use Terminal42\ContaoBuildTools\ErrorHandlingTrait;
 
 class PaypalHelper
 {

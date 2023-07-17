@@ -4,15 +4,13 @@ declare(strict_types=1);
 
 namespace App\Controller\Webhooks;
 
-use App\ErrorHandlingTrait;
 use App\StripeHelper;
-use Stripe\Checkout\Session;
 use Stripe\PaymentIntent;
 use Stripe\Webhook;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\HttpKernel\Exception\BadRequestHttpException;
 use Symfony\Component\Routing\Annotation\Route;
+use Terminal42\ContaoBuildTools\ErrorHandlingTrait;
 
 /**
  * @Route("/_webhooks/stripe", methods={"POST"})

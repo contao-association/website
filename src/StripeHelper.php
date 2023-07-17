@@ -13,6 +13,7 @@ use Stripe\PaymentMethod;
 use Stripe\SetupIntent;
 use Stripe\StripeClient;
 use Terminal42\CashctrlApi\Entity\Order;
+use Terminal42\ContaoBuildTools\ErrorHandlingTrait;
 
 class StripeHelper
 {

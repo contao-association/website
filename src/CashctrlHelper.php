@@ -42,6 +42,7 @@ use Terminal42\CashctrlApi\Entity\PersonAddress;
 use Terminal42\CashctrlApi\Entity\PersonContact;
 use Terminal42\CashctrlApi\Exception\RuntimeException;
 use Terminal42\CashctrlApi\Result;
+use Terminal42\ContaoBuildTools\ErrorHandlingTrait;
 
 class CashctrlHelper
 {

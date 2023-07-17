@@ -1,33 +1,16 @@
-const Encore = require('@symfony/webpack-encore');
+const { Encore } = require('@terminal42/contao-build-tools');
 
-Encore
-    .setOutputPath('web/layout/')
-    .setPublicPath('/layout')
-    .setManifestKeyPrefix('')
-    .cleanupOutputBeforeBuild()
-    .disableSingleRuntimeChunk()
-
-    .enableSassLoader()
-    .enablePostCssLoader()
-    .enableSourceMaps()
-    .enableVersioning(Encore.isProduction())
-
-    .addEntry('app', './layout/app.js')
+module.exports = Encore()
 
     .copyFiles({
         from: './layout/icons',
         to: 'icons/[name].[ext]'
     })
 
-    .addLoader({
-        test: /\.(gif|png|jpe?g|svg)$/i,
-        use: ['image-webpack-loader']
+    .copyFiles({
+        from: './layout/newsletter',
+        to: 'newsletter/[path][name].[ext]'
     })
 
-    .configureDevServerOptions(() => ({
-        allowedHosts: 'all',
-        watchFiles: ['config/*', 'contao/**/*', 'src/**/*', 'templates/**/*', 'translations/**/*'],
-    }))
+    .getWebpackConfig()
 ;
-
-module.exports = Encore.getWebpackConfig();

@@ -4,12 +4,12 @@ declare(strict_types=1);
 
 namespace App\Controller\Webhooks;
 
-use App\ErrorHandlingTrait;
 use App\PretixHelper;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Exception\BadRequestHttpException;
 use Symfony\Component\Routing\Annotation\Route;
+use Terminal42\ContaoBuildTools\ErrorHandlingTrait;
 
 /**
  * @Route("/_webhooks/pretix", methods={"POST"})

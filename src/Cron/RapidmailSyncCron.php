@@ -4,13 +4,13 @@ declare(strict_types=1);
 
 namespace App\Cron;
 
-use App\ErrorHandlingTrait;
 use App\RapidmailHelper;
 use Contao\CoreBundle\DependencyInjection\Attribute\AsCronJob;
 use Contao\CoreBundle\Framework\ContaoFramework;
 use Contao\MemberModel;
 use Rapidmail\ApiClient\Exception\ApiException;
 use Rapidmail\ApiClient\Service\Response\HalResponse;
+use Terminal42\ContaoBuildTools\ErrorHandlingTrait;
 
 #[AsCronJob('weekly')]
 class RapidmailSyncCron

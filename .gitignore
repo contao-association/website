@@ -7,7 +7,7 @@
 /vendor/
 /web/*
 !/web/.well-known/
-!/web/.htaccess.*
+!/web/.htaccess_*
 /.env.*
 /composer.phar
 /contao-manager/
