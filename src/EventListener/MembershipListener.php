@@ -71,6 +71,11 @@ class MembershipListener
             case 'label':
                 return $this->getMembershipLabel($user->membership, (string) $user->membership_amount);
 
+            case 'member':
+                $isActive = 'active' === $user->membership || (!($this->memberships[$user->membership]['invisible'] ?? false) && $user->membership_member);
+
+                return $isActive ? 'Aktiviere die nachfolgende Checkbox, wenn du weiterhin Aktivmitglied bleiben möchtest.' : '';
+
             case '':
                 if ('inactive' === $user->membership || (!empty($user->membership_stop) && $user->membership_stop <= time())) {
                     return 'Du hast kein aktives Abonnement der Contao Association.';
