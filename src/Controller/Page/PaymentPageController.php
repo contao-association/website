@@ -15,23 +15,20 @@ use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\UriSigner;
+use Symfony\Contracts\Translation\TranslatorInterface;
 
 /**
  * @Page(path="{orderId}", requirements={"orderId"="\d+"}, contentComposition=false)
  */
 class PaymentPageController
 {
-    private UriSigner $uriSigner;
-    private CashctrlHelper $cashctrl;
-    private StripeHelper $stripeHelper;
-    private StripeClient $stripeClient;
-
-    public function __construct(UriSigner $uriSigner, CashctrlHelper $cashctrl, StripeHelper $stripeHelper, StripeClient $stripeClient)
-    {
-        $this->uriSigner = $uriSigner;
-        $this->cashctrl = $cashctrl;
-        $this->stripeHelper = $stripeHelper;
-        $this->stripeClient = $stripeClient;
+    public function __construct(
+        private readonly UriSigner $uriSigner,
+        private readonly CashctrlHelper $cashctrl,
+        private readonly StripeHelper $stripeHelper,
+        private readonly StripeClient $stripeClient,
+        private readonly TranslatorInterface $translator,
+    ) {
     }
 
     public function __invoke(int $orderId, PageModel $pageModel, Request $request)
@@ -58,6 +55,20 @@ class PaymentPageController
 
         $lineItems = [];
         foreach ($order->getItems() as $orderItem) {
+            // Stripe does not support line items with negative amounts (e.g. a discount)
+            // so we have to create one line item only with the invoice total
+            if ($orderItem->getUnitPrice() < 0) {
+                $lineItems = [[
+                    'quantity' => 1,
+                    'price_data' => [
+                        'currency' => strtolower($order->currencyCode ?: 'eur'),
+                        'product_data' => ['name' => $this->translator->trans('invoice_nr').' '.$order->getNr()],
+                        'unit_amount' => (int) round($order->total * 100),
+                    ],
+                ]];
+                break;
+            }
+
             $lineItems[] = [
                 'quantity' => $orderItem->getQuantity(),
                 'price_data' => [
