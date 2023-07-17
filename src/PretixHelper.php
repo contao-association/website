@@ -10,17 +10,12 @@ use Terminal42\CashctrlApi\Entity\Journal;
 
 class PretixHelper
 {
-    private HttpClientInterface $httpClient;
-    private CashctrlHelper $cashctrlHelper;
-    private TaxEndpoint $taxEndpoint;
-    private string $pretixToken;
-
-    public function __construct(HttpClientInterface $httpClient, CashctrlHelper $cashctrlHelper, TaxEndpoint $taxEndpoint, string $pretixToken)
-    {
-        $this->httpClient = $httpClient;
-        $this->cashctrlHelper = $cashctrlHelper;
-        $this->taxEndpoint = $taxEndpoint;
-        $this->pretixToken = $pretixToken;
+    public function __construct(
+        private readonly HttpClientInterface $httpClient,
+        private readonly CashctrlHelper $cashctrlHelper,
+        private readonly TaxEndpoint $taxEndpoint,
+        private readonly string $pretixToken,
+    ) {
     }
 
     public function getOrder(string $organizer, string $event, string $code): array
@@ -31,8 +26,8 @@ class PretixHelper
             [
                 'headers' => [
                     'Authorization' => 'Token '.$this->pretixToken,
-                    'Accept' => 'application/json'
-                ]
+                    'Accept' => 'application/json',
+                ],
             ]
         );
 
@@ -47,8 +42,8 @@ class PretixHelper
             [
                 'headers' => [
                     'Authorization' => 'Token '.$this->pretixToken,
-                    'Accept' => 'application/json'
-                ]
+                    'Accept' => 'application/json',
+                ],
             ]
         );
 
@@ -58,7 +53,7 @@ class PretixHelper
     public function bookOrder(string $event, array $invoice): void
     {
         // Invoices from Pretix shop in TEST mode
-        if (str_contains('TEST', $invoice['number'])) {
+        if (str_contains('TEST', (string) $invoice['number'])) {
             return;
         }
 
@@ -86,15 +81,15 @@ class PretixHelper
 
     private function getAccountForInvoice(array $invoice): int
     {
-        if (str_starts_with($invoice['number'], 'CAMP')) {
+        if (str_starts_with((string) $invoice['number'], 'CAMP')) {
             return $this->cashctrlHelper->getAccountId(3421);
         }
 
-        if (str_starts_with($invoice['number'], 'CK2023')) {
+        if (str_starts_with((string) $invoice['number'], 'CK2023')) {
             return $this->cashctrlHelper->getAccountId(3420);
         }
 
-        throw new \RuntimeException("Cannot determine account for Pretix invoice \"{$invoice['number']}\"");
+        throw new \RuntimeException(sprintf('Cannot determine account for Pretix invoice "%s"', $invoice['number']));
     }
 
     private function getTotal(array $invoice): float
@@ -108,7 +103,7 @@ class PretixHelper
         return $total;
     }
 
-    private function getTaxId(array $invoice): ?int
+    private function getTaxId(array $invoice): int|null
     {
         $rate = null;
 

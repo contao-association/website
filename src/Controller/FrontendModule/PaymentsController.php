@@ -6,8 +6,8 @@ namespace App\Controller\FrontendModule;
 
 use App\StripeHelper;
 use Contao\CoreBundle\Controller\FrontendModule\AbstractFrontendModuleController;
+use Contao\CoreBundle\DependencyInjection\Attribute\AsFrontendModule;
 use Contao\CoreBundle\Exception\RedirectResponseException;
-use Contao\CoreBundle\ServiceAnnotation\FrontendModule;
 use Contao\FrontendUser;
 use Contao\MemberModel;
 use Contao\ModuleModel;
@@ -22,27 +22,20 @@ use Symfony\Component\Security\Core\Security;
 use Symfony\Contracts\Translation\TranslatorInterface;
 use Terminal42\ContaoBuildTools\ErrorHandlingTrait;
 
-/**
- * @FrontendModule(category="user")
- */
+#[AsFrontendModule(category: 'user')]
 class PaymentsController extends AbstractFrontendModuleController
 {
     use ErrorHandlingTrait;
 
-    private Security $security;
-    private StripeHelper $stripeHelper;
-    private StripeClient $stripeClient;
-    private TranslatorInterface $translator;
-
-    public function __construct(Security $security, StripeHelper $stripeHelper, StripeClient $stripeClient, TranslatorInterface $translator)
-    {
-        $this->security = $security;
-        $this->stripeHelper = $stripeHelper;
-        $this->stripeClient = $stripeClient;
-        $this->translator = $translator;
+    public function __construct(
+        private readonly Security $security,
+        private readonly StripeHelper $stripeHelper,
+        private readonly StripeClient $stripeClient,
+        private readonly TranslatorInterface $translator,
+    ) {
     }
 
-    protected function getResponse(Template $template, ModuleModel $model, Request $request): ?Response
+    protected function getResponse(Template $template, ModuleModel $model, Request $request): Response|null
     {
         $user = $this->security->getUser();
 

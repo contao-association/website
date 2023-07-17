@@ -12,18 +12,13 @@ use Symfony\Component\HttpKernel\Exception\BadRequestHttpException;
 use Symfony\Component\Routing\Annotation\Route;
 use Terminal42\CashctrlApi\Entity\Journal;
 
-/**
- * @Route("/_webhooks/kofi", methods={"POST"})
- */
+#[Route(path: '/_webhooks/kofi', methods: ['POST'])]
 class KofiController
 {
-    private CashctrlHelper $cashctrlHelper;
-    private string $kofiToken;
-
-    public function __construct(CashctrlHelper $cashctrlHelper, string $kofiToken)
-    {
-        $this->cashctrlHelper = $cashctrlHelper;
-        $this->kofiToken = $kofiToken;
+    public function __construct(
+        private readonly CashctrlHelper $cashctrlHelper,
+        private readonly string $kofiToken,
+    ) {
     }
 
     public function __invoke(Request $request)
@@ -34,8 +29,8 @@ class KofiController
             throw new AccessDeniedHttpException('Invalid verification token.');
         }
 
-        if ('EUR' !== strtoupper($data['currency'])) {
-            throw new BadRequestHttpException("Currency \"{$data['currency']}\" is not supported");
+        if ('EUR' !== strtoupper((string) $data['currency'])) {
+            throw new BadRequestHttpException(sprintf('Currency "%s" is not supported', $data['currency']));
         }
 
         $journal = new Journal(

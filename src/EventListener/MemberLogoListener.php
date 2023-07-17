@@ -15,10 +15,12 @@ use Symfony\Component\Filesystem\Path;
 #[Autoconfigure(bind: ['$projectDir' => '%kernel.project_dir%'])]
 class MemberLogoListener
 {
-    public const UPLOAD_DIR = 'files/sponsors';
+    final public const UPLOAD_DIR = 'files/sponsors';
 
-    public function __construct(private readonly Filesystem $filesystem, private readonly string $projectDir)
-    {
+    public function __construct(
+        private readonly Filesystem $filesystem,
+        private readonly string $projectDir,
+    ) {
     }
 
     public function __invoke(mixed $value, DataContainer|FrontendUser $dc): mixed
@@ -34,7 +36,7 @@ class MemberLogoListener
         }
 
         $currentFile = $value;
-        $targetFile = Path::join(self::UPLOAD_DIR, $dc->id.'.'.pathinfo($value, PATHINFO_EXTENSION));
+        $targetFile = Path::join(self::UPLOAD_DIR, $dc->id.'.'.pathinfo((string) $value, PATHINFO_EXTENSION));
 
         if ($currentFile !== $targetFile) {
             $this->filesystem->rename(Path::join($this->projectDir, $currentFile), Path::join($this->projectDir, $targetFile), true);

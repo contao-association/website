@@ -4,35 +4,30 @@ declare(strict_types=1);
 
 namespace App\Command;
 
+use App\CashctrlHelper;
+use Contao\CoreBundle\Framework\ContaoFramework;
+use Contao\MemberModel;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Style\SymfonyStyle;
-use Contao\CoreBundle\Framework\ContaoFramework;
-use App\CashctrlHelper;
-use Contao\MemberModel;
 
 class CashctrlSyncCommand extends Command
 {
     protected static $defaultName = 'app:cashctrl:sync';
+    protected static $defaultDescription = 'Updates all member data in Cashctrl.';
 
-    private ContaoFramework $framework;
-    private CashctrlHelper $cashctrl;
-
-    public function __construct(ContaoFramework $framework, CashctrlHelper $cashctrl)
-    {
+    public function __construct(
+        private readonly ContaoFramework $framework,
+        private readonly CashctrlHelper $cashctrl,
+    ) {
         parent::__construct();
-        $this->framework = $framework;
-        $this->cashctrl = $cashctrl;
     }
 
     protected function configure(): void
     {
-        $this
-            ->setDescription('Updates all member data in Cashctrl.')
-            ->addArgument('member_ids', InputArgument::OPTIONAL, 'A comma separated list of member IDs if not all should be synced.')
-        ;
+        $this->addArgument('member_ids', InputArgument::OPTIONAL, 'A comma separated list of member IDs if not all should be synced.');
     }
 
     protected function execute(InputInterface $input, OutputInterface $output): int
@@ -40,7 +35,7 @@ class CashctrlSyncCommand extends Command
         $this->framework->initialize();
 
         if ($ids = $input->getArgument('member_ids')) {
-            $members = MemberModel::findBy(['tl_member.id IN ('.implode(',', array_map('intval', explode(',', $ids))).')'], []);
+            $members = MemberModel::findBy(['tl_member.id IN ('.implode(',', array_map('intval', explode(',', (string) $ids))).')'], []);
         } else {
             $members = MemberModel::findAll();
         }
@@ -49,10 +44,11 @@ class CashctrlSyncCommand extends Command
 
         if (null === $members) {
             $io->error('No members found');
-            return 1;
+
+            return Command::FAILURE;
         }
 
-        $io->progressStart(count($members));
+        $io->progressStart(is_countable($members) ? \count($members) : 0);
 
         foreach ($members as $member) {
             $this->cashctrl->syncMember($member);
@@ -62,6 +58,6 @@ class CashctrlSyncCommand extends Command
         $io->progressFinish();
         $io->success('Synchronization complete.');
 
-        return 0;
+        return Command::SUCCESS;
     }
 }

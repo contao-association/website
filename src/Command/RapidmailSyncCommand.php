@@ -5,22 +5,23 @@ declare(strict_types=1);
 namespace App\Command;
 
 use App\RapidmailHelper;
+use Contao\CoreBundle\Framework\ContaoFramework;
+use Contao\MemberModel;
 use Rapidmail\ApiClient\Exception\ApiException;
 use Rapidmail\ApiClient\Service\Response\HalResponse;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Style\SymfonyStyle;
-use Contao\CoreBundle\Framework\ContaoFramework;
-use Contao\MemberModel;
 
 class RapidmailSyncCommand extends Command
 {
     protected static $defaultName = 'app:rapidmail:sync';
+    protected static $defaultDescription = 'Updates recipient list in Rapidmail.';
 
     public function __construct(
         private readonly ContaoFramework $framework,
-        private readonly RapidmailHelper $rapidmail
+        private readonly RapidmailHelper $rapidmail,
     ) {
         parent::__construct();
     }
@@ -28,13 +29,6 @@ class RapidmailSyncCommand extends Command
     public function isEnabled(): bool
     {
         return $this->rapidmail->isConfigured();
-    }
-
-    protected function configure(): void
-    {
-        $this
-            ->setDescription('Updates recipient list in Rapidmail.')
-        ;
     }
 
     protected function execute(InputInterface $input, OutputInterface $output): int
@@ -52,13 +46,14 @@ class RapidmailSyncCommand extends Command
 
         if (!empty($recipientsWithoutModel)) {
             $io->writeln('Deleting recipients without matching member');
-            $io->progressStart(count($recipientsWithoutModel));
+            $io->progressStart(\count($recipientsWithoutModel));
 
             // Prevent API rate limit
             sleep(1);
 
             $throttle = 0;
-            foreach ($recipientsWithoutModel as $recipientId => $foreignId) {
+
+            foreach (array_keys($recipientsWithoutModel) as $recipientId) {
                 if ($throttle > 8) {
                     // Prevent API rate limit
                     sleep(1);
@@ -76,12 +71,13 @@ class RapidmailSyncCommand extends Command
 
         if (!empty($members)) {
             $io->writeln('Updating members');
-            $io->progressStart(count($members));
+            $io->progressStart(\count($members));
 
             // Prevent API rate limit
             sleep(1);
 
             $throttle = 0;
+
             foreach ($members as $member) {
                 if ($throttle > 8) {
                     // Prevent API rate limit
@@ -100,7 +96,7 @@ class RapidmailSyncCommand extends Command
                 } catch (ApiException $exception) {
                     $io->error([
                         'Error synchronizing member ID '.$member->id,
-                        $exception->getMessage()
+                        $exception->getMessage(),
                     ]);
                 }
 
@@ -113,11 +109,11 @@ class RapidmailSyncCommand extends Command
 
         $io->success('Synchronization complete.');
 
-        return 0;
+        return Command::SUCCESS;
     }
 
     /**
-     * @return MemberModel[]
+     * @return array<MemberModel>
      */
     private function getMembers(): array
     {

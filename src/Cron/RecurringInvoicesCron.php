@@ -4,39 +4,26 @@ declare(strict_types=1);
 
 namespace App\Cron;
 
+use App\CashctrlHelper;
+use Contao\CoreBundle\DependencyInjection\Attribute\AsCronJob;
 use Contao\CoreBundle\Framework\ContaoFramework;
 use Contao\MemberModel;
-use Contao\CoreBundle\ServiceAnnotation\CronJob;
 use Doctrine\DBAL\Connection;
 use Psr\Log\LoggerInterface;
-use App\CashctrlHelper;
 use Terminal42\ContaoBuildTools\ErrorHandlingTrait;
 
-/**
- * @CronJob("daily")
- */
+#[AsCronJob('daily')]
 class RecurringInvoicesCron
 {
     use ErrorHandlingTrait;
 
-    private ContaoFramework $framework;
-    private Connection $connection;
-    private CashctrlHelper $cashctrl;
-    private LoggerInterface $logger;
-    private int $notificationId;
-
     public function __construct(
-        ContaoFramework $framework,
-        Connection $connection,
-        CashctrlHelper $cashctrl,
-        LoggerInterface $logger,
-        int $invoiceNotificationId
+        private readonly ContaoFramework $framework,
+        private readonly Connection $connection,
+        private readonly CashctrlHelper $cashctrl,
+        private readonly LoggerInterface $logger,
+        private readonly int $invoiceNotificationId,
     ) {
-        $this->framework = $framework;
-        $this->connection = $connection;
-        $this->cashctrl = $cashctrl;
-        $this->logger = $logger;
-        $this->notificationId = $invoiceNotificationId;
     }
 
     public function __invoke(): void
@@ -59,6 +46,7 @@ class RecurringInvoicesCron
 
         if (empty($ids) || null === ($members = MemberModel::findMultipleByIds($ids))) {
             $this->sentryCheckIn(true);
+
             return;
         }
 
@@ -66,7 +54,7 @@ class RecurringInvoicesCron
             try {
                 $this->cashctrl->syncMember($member);
                 $invoiceDate = (new \DateTimeImmutable())->setTimestamp((int) $member->membership_invoiced)->add(new \DateInterval('P1D'));
-                $invoice = $this->cashctrl->createAndSendInvoice($member, $this->notificationId, $invoiceDate);
+                $invoice = $this->cashctrl->createAndSendInvoice($member, $this->invoiceNotificationId, $invoiceDate);
 
                 if (null !== $invoice) {
                     $this->logger->info('Recurring membership invoice '.$invoice->getNr().' sent to '.$member->email);

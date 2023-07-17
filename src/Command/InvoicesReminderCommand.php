@@ -13,26 +13,18 @@ use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Style\SymfonyStyle;
-use Symfony\Component\Filesystem\Filesystem;
 
 class InvoicesReminderCommand extends Command
 {
     protected static $defaultName = 'app:invoices:remind';
+    protected static $defaultDescription = 'Send reminders for overdue invoices.';
 
     public function __construct(
         private readonly ContaoFramework $framework,
         private readonly CashctrlHelper $cashctrl,
-        private readonly int $overdueNotificationId
+        private readonly int $overdueNotificationId,
     ) {
         parent::__construct();
-    }
-
-    protected function configure()
-    {
-        $this
-            ->setDescription('Send reminders for overdue invoices.')
-            ->addArgument('member', InputArgument::OPTIONAL, 'Send invoice reminders for a specific member ID')
-        ;
     }
 
     public function run(InputInterface $input, OutputInterface $output)
@@ -45,6 +37,7 @@ class InvoicesReminderCommand extends Command
 
         if (null === $notification) {
             $io->error('Notification ID "'.$this->overdueNotificationId.'" not found, cannot send invoice reminders');
+
             return -1;
         }
 
@@ -63,14 +56,16 @@ class InvoicesReminderCommand extends Command
             $invoiceDueDate = clone $order->getDate();
             $invoiceDueDate->add(new \DateInterval('P'.(int) $order->getDueDays().'D'));
 
-            if (!$io->confirm(sprintf(
-                'Sending reminder for %s %s (%s), invoices %s was due on %s. Continue?',
-                $member->firstname,
-                $member->lastname,
-                $member->email,
-                $order->getNr(),
-                $invoiceDueDate->format('Y-m-d')
-            ))) {
+            if (
+                !$io->confirm(sprintf(
+                    'Sending reminder for %s %s (%s), invoices %s was due on %s. Continue?',
+                    $member->firstname,
+                    $member->lastname,
+                    $member->email,
+                    $order->getNr(),
+                    $invoiceDueDate->format('Y-m-d')
+                ))
+            ) {
                 continue;
             }
 
@@ -86,11 +81,16 @@ class InvoicesReminderCommand extends Command
                 continue;
             }
 
-            if ($order->getStatusId() !== CashctrlHelper::STATUS_OVERDUE) {
+            if (CashctrlHelper::STATUS_OVERDUE !== $order->getStatusId()) {
                 $this->cashctrl->order->updateStatus($order->getId(), CashctrlHelper::STATUS_OVERDUE);
             }
         }
 
         return 0;
+    }
+
+    protected function configure(): void
+    {
+        $this->addArgument('member', InputArgument::OPTIONAL, 'Send invoice reminders for a specific member ID');
     }
 }

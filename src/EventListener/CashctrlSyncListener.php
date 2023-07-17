@@ -4,21 +4,16 @@ declare(strict_types=1);
 
 namespace App\EventListener;
 
-use Contao\CoreBundle\ServiceAnnotation\Callback;
-use Contao\MemberModel;
 use App\CashctrlHelper;
+use Contao\CoreBundle\DependencyInjection\Attribute\AsCallback;
+use Contao\MemberModel;
 
-/**
- * @Callback(table="tl_member", target="config.oncreate_version")
- * @Callback(table="tl_member", target="config.onrestore_version")
- */
+#[AsCallback(table: 'tl_member', target: 'config.oncreate_version')]
+#[AsCallback(table: 'tl_member', target: 'config.onrestore_version')]
 class CashctrlSyncListener
 {
-    private CashctrlHelper $cashctrl;
-
-    public function __construct(CashctrlHelper $cashctrl)
+    public function __construct(private readonly CashctrlHelper $cashctrl)
     {
-        $this->cashctrl = $cashctrl;
     }
 
     /**
@@ -27,13 +22,13 @@ class CashctrlSyncListener
     public function __invoke(string $table, $memberId): void
     {
         if ('tl_member' !== $table) {
-            throw new \InvalidArgumentException("Invalid call to sync table \"$table\" with Cashctrl.");
+            throw new \InvalidArgumentException(sprintf('Invalid call to sync table "%s" with Cashctrl.', $table));
         }
 
         $member = MemberModel::findByPk($memberId);
 
         if (null === $member) {
-            throw new \InvalidArgumentException("Member ID \"$memberId\" was not found.");
+            throw new \InvalidArgumentException(sprintf('Member ID "%s" was not found.', $memberId));
         }
 
         $this->cashctrl->syncMember($member);

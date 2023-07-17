@@ -39,11 +39,11 @@ class InvoicesController extends AbstractFrontendModuleController
         private readonly UrlGeneratorInterface $urlGenerator,
         private readonly UriSigner $uriSigner,
         private readonly string $harvestId,
-        private readonly string $harvestToken
+        private readonly string $harvestToken,
     ) {
     }
 
-    protected function getResponse(Template $template, ModuleModel $model, Request $request): ?Response
+    protected function getResponse(Template $template, ModuleModel $model, Request $request): Response|null
     {
         $user = $this->security->getUser();
 
@@ -75,7 +75,7 @@ class InvoicesController extends AbstractFrontendModuleController
     {
         // Find the payment page in the current root
         $paymentPage = PageModel::findFirstPublishedByTypeAndPid('payment', $this->getPageModel()->rootId);
-        $cashctrlIds = array_filter(array_merge([$member->cashctrl_id], explode(',', $member->cashctrl_associates)));
+        $cashctrlIds = array_filter(array_merge([$member->cashctrl_id], explode(',', (string) $member->cashctrl_associates)));
 
         foreach ($cashctrlIds as $cashctrlId) {
             /** @var Order $order */
@@ -85,13 +85,7 @@ class InvoicesController extends AbstractFrontendModuleController
                 }
 
                 if ((int) Input::get('invoice') === $order->getId()) {
-                    throw new ResponseException(new Response(
-                        $this->cashctrl->downloadInvoice($order, null, $member->language ?: 'de'),
-                        200,
-                        [
-                            'Content-Type' => 'application/pdf',
-                        ]
-                    ));
+                    throw new ResponseException(new Response($this->cashctrl->downloadInvoice($order, null, $member->language ?: 'de'), 200, ['Content-Type' => 'application/pdf']));
                 }
 
                 $due = ApiClient::parseDateTime($order->dateDue);
@@ -148,7 +142,7 @@ class InvoicesController extends AbstractFrontendModuleController
             return;
         }
 
-        foreach (explode(',', $member->harvest_client_id) as $clientId) {
+        foreach (explode(',', (string) $member->harvest_client_id) as $clientId) {
             $this->addHarvestInvoicesForId((int) $clientId, $invoices, $dateFormat);
         }
     }
@@ -174,9 +168,9 @@ class InvoicesController extends AbstractFrontendModuleController
             $invoices[] = [
                 'id' => $invoice['number'],
                 'nr' => $invoice['number'],
-                'tstamp' => strtotime($invoice['issue_date']),
-                'date' => Date::parse($dateFormat, strtotime($invoice['issue_date'])),
-                'due' => Date::parse($dateFormat, strtotime($invoice['due_date'])),
+                'tstamp' => strtotime((string) $invoice['issue_date']),
+                'date' => Date::parse($dateFormat, strtotime((string) $invoice['issue_date'])),
+                'due' => Date::parse($dateFormat, strtotime((string) $invoice['due_date'])),
                 'closed' => 'paid' === $invoice['state'],
                 'status' => $this->translator->trans('paid' === $invoice['state'] ? 'invoice_paid' : 'invoice_unpaid'),
                 'total' => number_format($invoice['amount'], 2, '.', "'"),

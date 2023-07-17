@@ -15,18 +15,13 @@ use Terminal42\ServiceAnnotationBundle\Annotation\ServiceTag;
  */
 class SupporterController
 {
-    private Connection $connection;
-    private array $memberships;
-
-    public function __construct(Connection $connection, array $memberships)
-    {
-        $this->connection = $connection;
-        $this->memberships = $memberships;
+    public function __construct(
+        private readonly Connection $connection,
+        private readonly array $memberships,
+    ) {
     }
 
-    /**
-     * @Route("/supporter.json")
-     */
+    #[Route(path: '/supporter.json')]
     public function supporterAction(Request $request): JsonResponse
     {
         $json = [];
@@ -58,14 +53,12 @@ class SupporterController
             $json[] = $data;
         }
 
-        usort($json, fn ($a, $b) => strnatcasecmp($a['name'], $b['name']));
+        usort($json, static fn ($a, $b) => strnatcasecmp($a['name'], $b['name']));
 
         return new JsonResponse($json);
     }
 
-    /**
-     * @Route("/cloud-supporter.json")
-     */
+    #[Route(path: '/cloud-supporter.json')]
     public function cloudAction(): JsonResponse
     {
         $json = [];
@@ -83,7 +76,7 @@ class SupporterController
             ];
         }
 
-        usort($json, fn ($a, $b) => strnatcasecmp($a['name'], $b['name']));
+        usort($json, static fn ($a, $b) => strnatcasecmp($a['name'], $b['name']));
 
         return new JsonResponse($json);
     }

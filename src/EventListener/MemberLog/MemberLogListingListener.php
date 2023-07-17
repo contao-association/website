@@ -4,30 +4,25 @@ declare(strict_types=1);
 
 namespace App\EventListener\MemberLog;
 
-use Contao\CoreBundle\ServiceAnnotation\Callback;
+use Contao\CoreBundle\DependencyInjection\Attribute\AsCallback;
 use Contao\StringUtil;
 use Doctrine\DBAL\Connection;
 use Haste\Util\Format;
 use Symfony\Contracts\Translation\TranslatorInterface;
 
-/**
- * @Callback(table="tl_member_log", target="list.sorting.child_record")
- */
+#[AsCallback(table: 'tl_member_log', target: 'list.sorting.child_record')]
 class MemberLogListingListener
 {
-    private Connection $connection;
-    private TranslatorInterface $translator;
-
-    public function __construct(Connection $connection, TranslatorInterface $translator)
-    {
-        $this->connection = $connection;
-        $this->translator = $translator;
+    public function __construct(
+        private readonly Connection $connection,
+        private readonly TranslatorInterface $translator,
+    ) {
     }
 
     public function __invoke(array $row)
     {
         if ('note' === $row['type']) {
-            return $this->generateLine(nl2br($row['text']), $row);
+            return $this->generateLine(nl2br((string) $row['text']), $row);
         }
 
         if ('registration' === $row['type']) {
@@ -39,7 +34,7 @@ class MemberLogListingListener
             $text = '';
 
             if ($row['text']) {
-                $text .= '<p>'.nl2br($row['text']).'</p>';
+                $text .= '<p>'.nl2br((string) $row['text']).'</p>';
             }
 
             $text .= '<table class="tl_listing">
@@ -89,7 +84,7 @@ class MemberLogListingListener
         }
 
         return '
-<div class="cte_type"><span class="tl_green"><strong class="tl_green">'.$type.' - '.$dateAdded.'</strong>'.($user ? (' - '.$user) : '').'</span></div>
+<div class="cte_type"><span class="tl_green"><strong class="tl_green">'.$type.' - '.$dateAdded.'</strong>'.($user ? ' - '.$user : '').'</span></div>
 '.$text;
     }
 }

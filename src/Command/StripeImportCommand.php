@@ -15,17 +15,18 @@ use Symfony\Component\Console\Style\SymfonyStyle;
 class StripeImportCommand extends Command
 {
     protected static $defaultName = 'app:stripe:import';
+    protected static $defaultDescription = 'Import Stripe transactions into CashCtrl.';
 
-    public function __construct(private readonly StripeHelper $stripeHelper, private readonly CashctrlHelper $cashctrlHelper)
-    {
+    public function __construct(
+        private readonly StripeHelper $stripeHelper,
+        private readonly CashctrlHelper $cashctrlHelper,
+    ) {
         parent::__construct();
     }
 
     protected function configure(): void
     {
-        $this
-            ->setDescription('Import Stripe transactions into CashCtrl.')
-            ->addArgument('from', InputArgument::REQUIRED, 'From-date for Stripe charges to import (Y-m-d).')
+        $this->addArgument('from', InputArgument::REQUIRED, 'From-date for Stripe charges to import (Y-m-d).')
             ->addArgument('to', InputArgument::OPTIONAL, 'To-date for Stripe charges to import (Y-m-d).')
         ;
     }
@@ -39,7 +40,8 @@ class StripeImportCommand extends Command
             $to = $this->getDate($input->getArgument('to') ?: $input->getArgument('from'));
         } catch (\RuntimeException $exception) {
             $io->error('Invalid date format');
-            return 1;
+
+            return Command::FAILURE;
         }
 
         $io->title('Importing Stripe charges from '.$from->format('d.m.Y').' to '.$to->format('d.m.Y'));
@@ -50,8 +52,8 @@ class StripeImportCommand extends Command
                     $message = sprintf(
                         'Ko-fi donation from %s (%s %s on %s)',
                         $charge->billing_details['name'],
-                        strtoupper($charge->currency),
-                        ($charge->amount / 100),
+                        strtoupper((string) $charge->currency),
+                        $charge->amount / 100,
                         \DateTime::createFromFormat('U', (string) $charge->created)->format('d.m.Y'),
                     );
                     break;
@@ -60,37 +62,37 @@ class StripeImportCommand extends Command
                     $message = sprintf(
                         'Pretix Bestellung %s (%s %s on %s)',
                         $charge->metadata['order'],
-                        strtoupper($charge->currency),
-                        ($charge->amount / 100),
+                        strtoupper((string) $charge->currency),
+                        $charge->amount / 100,
                         \DateTime::createFromFormat('U', (string) $charge->created)->format('d.m.Y'),
                     );
                     break;
 
                 case null: // Payments from Stripe API
                     if (empty($charge->metadata->cashctrl_order_id)) {
-                        continue(2);
+                        continue 2;
                     }
 
                     $order = $this->cashctrlHelper->order->read((int) $charge->metadata->cashctrl_order_id);
 
                     if (null === $order) {
                         $io->error('CashCtrl order ID "'.$charge->metadata->cashctrl_order_id.'" not found');
-                        continue(2);
+                        continue 2;
                     }
 
                     $message = sprintf(
                         'CashCtrl order %s from %s (%s %s on %s)',
                         $order->getNr(),
                         $order->associateName,
-                        strtoupper($charge->currency),
-                        ($charge->amount / 100),
+                        strtoupper((string) $charge->currency),
+                        $charge->amount / 100,
                         \DateTime::createFromFormat('U', (string) $charge->created)->format('d.m.Y'),
                     );
                     break;
 
                 default:
                     $io->error("Unknown Stripe application \"$charge->application\"");
-                    continue(2);
+                    continue 2;
             }
 
             if ($io->confirm($message)) {
@@ -102,7 +104,7 @@ class StripeImportCommand extends Command
             }
         }
 
-        return 0;
+        return Command::SUCCESS;
     }
 
     private function getDate(string $value): \DateTimeImmutable

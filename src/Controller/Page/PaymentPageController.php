@@ -6,7 +6,7 @@ namespace App\Controller\Page;
 
 use App\CashctrlHelper;
 use App\StripeHelper;
-use Contao\CoreBundle\ServiceAnnotation\Page;
+use Contao\CoreBundle\DependencyInjection\Attribute\AsPage;
 use Contao\MemberModel;
 use Contao\PageModel;
 use Stripe\StripeClient;
@@ -17,9 +17,7 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\UriSigner;
 use Symfony\Contracts\Translation\TranslatorInterface;
 
-/**
- * @Page(path="{orderId}", requirements={"orderId"="\d+"}, contentComposition=false)
- */
+#[AsPage(path: '{orderId}', requirements: ['orderId' => '\d+'], contentComposition: false)]
 class PaymentPageController
 {
     public function __construct(
@@ -54,6 +52,7 @@ class PaymentPageController
         }
 
         $lineItems = [];
+
         foreach ($order->getItems() as $orderItem) {
             // Stripe does not support line items with negative amounts (e.g. a discount)
             // so we have to create one line item only with the invoice total
@@ -83,13 +82,13 @@ class PaymentPageController
         $session = $this->stripeClient->checkout->sessions->create([
             'mode' => 'payment',
             'customer' => $customer->id,
-            'locale' => strtolower($member->language ?: $GLOBALS['TL_LANGUAGE'] ?? 'de'),
+            'locale' => strtolower((string) ($member->language ?: $GLOBALS['TL_LANGUAGE'] ?? 'de')),
             'payment_intent_data' => [
                 'description' => $order->getDescription(),
                 'metadata' => [
                     'cashctrl_order_id' => $order->getId(),
                     'contao_member_id' => $member->id,
-                ]
+                ],
             ],
             'metadata' => [
                 'cashctrl_order_id' => $order->getId(),

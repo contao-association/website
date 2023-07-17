@@ -4,29 +4,23 @@ declare(strict_types=1);
 
 namespace App\Cron;
 
+use App\CashctrlHelper;
+use Contao\CoreBundle\DependencyInjection\Attribute\AsCronJob;
 use Contao\CoreBundle\Framework\ContaoFramework;
 use Contao\MemberModel;
-use Contao\CoreBundle\ServiceAnnotation\CronJob;
 use NotificationCenter\Model\Notification;
-use App\CashctrlHelper;
 use Terminal42\ContaoBuildTools\ErrorHandlingTrait;
 
-/**
- * @CronJob("hourly")
- */
+#[AsCronJob('hourly')]
 class PaymentNotificationCron
 {
     use ErrorHandlingTrait;
 
-    private ContaoFramework $framework;
-    private CashctrlHelper $cashctrl;
-    private int $notificationId;
-
-    public function __construct(ContaoFramework $framework, CashctrlHelper $cashctrl, int $paymentNotificationId)
-    {
-        $this->framework = $framework;
-        $this->cashctrl = $cashctrl;
-        $this->notificationId = $paymentNotificationId;
+    public function __construct(
+        private readonly ContaoFramework $framework,
+        private readonly CashctrlHelper $cashctrl,
+        private readonly int $paymentNotificationId,
+    ) {
     }
 
     public function __invoke(): void
@@ -35,11 +29,12 @@ class PaymentNotificationCron
 
         $this->framework->initialize();
 
-        $notification = Notification::findByPk($this->notificationId);
+        $notification = Notification::findByPk($this->paymentNotificationId);
 
         if (null === $notification) {
-            $this->sentryOrThrow('Notification ID "'.$this->notificationId.'" not found, cannot send payment notification');
+            $this->sentryOrThrow('Notification ID "'.$this->paymentNotificationId.'" not found, cannot send payment notification');
             $this->sentryCheckIn(false);
+
             return;
         }
 

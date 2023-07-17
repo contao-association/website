@@ -2,13 +2,14 @@
 
 use App\EventListener\MemberLogoListener;
 use Contao\CoreBundle\EventListener\Widget\HttpUrlListener;
+use Contao\DataContainer;
 
 $GLOBALS['TL_DCA']['tl_member']['config']['closed'] = true;
 $GLOBALS['TL_DCA']['tl_member']['config']['notCopyable'] = true;
 $GLOBALS['TL_DCA']['tl_member']['config']['ctable'][] = 'tl_member_log';
 
-$GLOBALS['TL_DCA']['tl_member']['list']['label']['fields'] = array('icon', 'company', 'firstname', 'lastname', 'membership');
-$GLOBALS['TL_DCA']['tl_member']['list']['sorting']['fields'] = array('membership_start');
+$GLOBALS['TL_DCA']['tl_member']['list']['label']['fields'] = ['icon', 'company', 'firstname', 'lastname', 'membership'];
+$GLOBALS['TL_DCA']['tl_member']['list']['sorting']['fields'] = ['membership_start'];
 
 unset(
     $GLOBALS['TL_DCA']['tl_member']['list']['global_operations'],
@@ -78,7 +79,7 @@ $GLOBALS['TL_DCA']['tl_member']['fields']['membership_amount'] = [
 $GLOBALS['TL_DCA']['tl_member']['fields']['membership_start'] = [
     'exclude' => true,
     'sorting' => true,
-    'flag' => \Contao\DataContainer::SORT_DAY_DESC,
+    'flag' => DataContainer::SORT_DAY_DESC,
     'inputType' => 'text',
     'eval' => ['rgxp' => 'date', 'datepicker' => true, 'tl_class' => 'clr w50 wizard'],
     'sql' => "varchar(10) NOT NULL default ''",
@@ -87,7 +88,7 @@ $GLOBALS['TL_DCA']['tl_member']['fields']['membership_start'] = [
 $GLOBALS['TL_DCA']['tl_member']['fields']['membership_stop'] = [
     'exclude' => true,
     'sorting' => true,
-    'flag' => \Contao\DataContainer::SORT_DAY_DESC,
+    'flag' => DataContainer::SORT_DAY_DESC,
     'inputType' => 'text',
     'eval' => ['rgxp' => 'date', 'datepicker' => true, 'tl_class' => 'w50 wizard'],
     'sql' => "varchar(10) NOT NULL default ''",
@@ -96,7 +97,7 @@ $GLOBALS['TL_DCA']['tl_member']['fields']['membership_stop'] = [
 $GLOBALS['TL_DCA']['tl_member']['fields']['membership_invoiced'] = [
     'exclude' => true,
     'sorting' => true,
-    'flag' => \Contao\DataContainer::SORT_DAY_DESC,
+    'flag' => DataContainer::SORT_DAY_DESC,
     'inputType' => 'text',
     'eval' => ['rgxp' => 'date', 'datepicker' => true, 'tl_class' => 'w50 wizard'],
     'sql' => "varchar(10) NOT NULL default ''",
@@ -105,9 +106,10 @@ $GLOBALS['TL_DCA']['tl_member']['fields']['membership_invoiced'] = [
 $GLOBALS['TL_DCA']['tl_member']['fields']['member_log_note'] = [
     'inputType' => 'textarea',
     'eval' => ['doNotSaveEmpty' => true],
-    'save_callback' => [static function ($value, \Contao\DataContainer $dc) {
+    'save_callback' => [static function ($value, DataContainer $dc) {
         /** @noinspection PhpPossiblePolymorphicInvocationInspection */
         $dc->createNewVersion = $dc->createNewVersion || !empty($value);
+
         return null;
     }],
 ];

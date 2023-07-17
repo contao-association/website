@@ -6,8 +6,8 @@ namespace App\EventListener\MemberLog;
 
 use Contao\Backend;
 use Contao\BackendUser;
+use Contao\CoreBundle\DependencyInjection\Attribute\AsCallback;
 use Contao\CoreBundle\Exception\AccessDeniedException;
-use Contao\CoreBundle\ServiceAnnotation\Callback;
 use Contao\DataContainer;
 use Contao\Image;
 use Contao\Input;
@@ -17,18 +17,13 @@ use Symfony\Component\Security\Core\Security;
 
 class MemberLogPermissionListener
 {
-    private Connection $connection;
-    private Security $security;
-
-    public function __construct(Connection $connection, Security $security)
-    {
-        $this->connection = $connection;
-        $this->security = $security;
+    public function __construct(
+        private readonly Connection $connection,
+        private readonly Security $security,
+    ) {
     }
 
-    /**
-     * @Callback(table="tl_member_log", target="config.onload")
-     */
+    #[AsCallback(table: 'tl_member_log', target: 'config.onload')]
     public function checkPermissions(DataContainer $dc): void
     {
         switch (Input::get('act')) {
@@ -36,7 +31,6 @@ class MemberLogPermissionListener
             case 'create':
                 break;
 
-            /** @noinspection PhpMissingBreakStatementInspection */
             case 'edit':
                 $type = $this->connection->fetchOne('SELECT type FROM tl_member_log WHERE id=?', [$dc->id]);
 
@@ -50,9 +44,7 @@ class MemberLogPermissionListener
         }
     }
 
-    /**
-     * @Callback(table="tl_member_log", target="list.operations.edit.button")
-     */
+    #[AsCallback(table: 'tl_member_log', target: 'list.operations.edit.button')]
     public function editButton(array $row, string $href, string $label, string $title, string $icon, string $attributes): string
     {
         if ('note' !== $row['type']) {
@@ -62,10 +54,8 @@ class MemberLogPermissionListener
         return '<a href="'.Backend::addToUrl($href.'&amp;id='.$row['id']).'" title="'.StringUtil::specialchars($title).'"'.$attributes.'>'.Image::getHtml($icon, $label).'</a> ';
     }
 
-    /**
-     * @Callback(table="tl_member_log", target="config.onsubmit")
-     */
-    public function updateNote(DataContainer $dc)
+    #[AsCallback(table: 'tl_member_log', target: 'config.onsubmit')]
+    public function updateNote(DataContainer $dc): void
     {
         $user = $this->security->getUser();
 

@@ -12,20 +12,15 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Terminal42\ContaoBuildTools\ErrorHandlingTrait;
 
-/**
- * @Route("/_webhooks/stripe", methods={"POST"})
- */
+#[Route(path: '/_webhooks/stripe', methods: ['POST'])]
 class StripeController
 {
     use ErrorHandlingTrait;
 
-    private StripeHelper $stripeHelper;
-    private string $stripeSecret;
-
-    public function __construct(StripeHelper $stripeHelper, string $stripeSecret)
-    {
-        $this->stripeHelper = $stripeHelper;
-        $this->stripeSecret = $stripeSecret;
+    public function __construct(
+        private readonly StripeHelper $stripeHelper,
+        private readonly string $stripeSecret,
+    ) {
     }
 
     public function __invoke(Request $request)
@@ -36,9 +31,11 @@ class StripeController
             case 'payment_intent.succeeded':
                 /**
                  * @var PaymentIntent $paymentIntent
+                 *
                  * @noinspection PhpPossiblePolymorphicInvocationInspection
                  */
                 $paymentIntent = $event->data->object;
+
                 foreach ($paymentIntent->charges as $charge) {
                     $this->stripeHelper->importCharge($charge);
                 }
@@ -47,9 +44,11 @@ class StripeController
             case 'payment_intent.payment_failed':
                 /**
                  * @var PaymentIntent $paymentIntent
+                 *
                  * @noinspection PhpPossiblePolymorphicInvocationInspection
                  */
                 $paymentIntent = $event->data->object;
+
                 foreach ($paymentIntent->charges as $charge) {
                     // Ignore failed Pretix payments
                     if ('ca_9uvq9hdD9LslRRCLivQ5cDhHsmFLX023' === $charge->application) {

@@ -14,21 +14,16 @@ use Symfony\Component\Console\Style\SymfonyStyle;
 class PaypalImportCommand extends Command
 {
     protected static $defaultName = 'app:paypal:import';
+    protected static $defaultDescription = 'Import PayPal payments into CashCtrl.';
 
-    private PaypalHelper $paypalHelper;
-
-    public function __construct(PaypalHelper $paypalHelper)
+    public function __construct(private readonly PaypalHelper $paypalHelper)
     {
         parent::__construct();
-
-        $this->paypalHelper = $paypalHelper;
     }
 
     protected function configure(): void
     {
-        $this
-            ->setDescription('Import PayPal payments into CashCtrl.')
-            ->addArgument('from', InputArgument::REQUIRED, 'Start date for PayPal transactions to import (Y-m-d).')
+        $this->addArgument('from', InputArgument::REQUIRED, 'Start date for PayPal transactions to import (Y-m-d).')
             ->addArgument('to', InputArgument::OPTIONAL, 'End date for PayPal transactions to import (Y-m-d).')
         ;
     }
@@ -44,7 +39,8 @@ class PaypalImportCommand extends Command
             $endDate->setTime(23, 59, 59);
         } catch (\RuntimeException $exception) {
             $io->error('Invalid date format');
-            return 1;
+
+            return Command::FAILURE;
         }
 
         $transactions = $this->paypalHelper->getTransactions($startDate, $endDate);
@@ -64,7 +60,7 @@ class PaypalImportCommand extends Command
 
         $io->progressFinish();
 
-        return 0;
+        return Command::SUCCESS;
     }
 
     private function getDate(string $value): \DateTime

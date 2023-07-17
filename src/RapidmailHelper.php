@@ -12,17 +12,19 @@ use Rapidmail\ApiClient\Service\V1\Api\Recipients\Recipient\RecipientService;
 
 class RapidmailHelper
 {
-    private Client $client;
-    private int $recipientlistId;
-    private array $memberships;
+    private readonly Client $client;
+    private readonly int $recipientlistId;
 
-    private ?RecipientService $recipients = null;
+    private RecipientService|null $recipients = null;
 
-    public function __construct(string $username, string $password, string $recipientlistId, array $memberships)
-    {
+    public function __construct(
+        string $username,
+        string $password,
+        string $recipientlistId,
+        private readonly array $memberships,
+    ) {
         $this->client = new Client($username, $password);
         $this->recipientlistId = (int) $recipientlistId;
-        $this->memberships = $memberships;
     }
 
     public function isConfigured(): bool
@@ -71,6 +73,7 @@ class RapidmailHelper
     {
         if (!$this->hasSubscription($member)) {
             $this->recipients()->delete($recipient['id']);
+
             return;
         }
 

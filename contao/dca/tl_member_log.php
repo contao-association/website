@@ -12,8 +12,8 @@ $GLOBALS['TL_DCA']['tl_member_log'] = [
         'sql' => [
             'keys' => [
                 'id' => 'primary',
-            ]
-        ]
+            ],
+        ],
     ],
     'list' => [
         'sorting' => [
@@ -28,11 +28,11 @@ $GLOBALS['TL_DCA']['tl_member_log'] = [
                 'label' => &$GLOBALS['TL_LANG']['tl_member_log']['edit'],
                 'href' => 'act=edit',
                 'icon' => 'edit.gif',
-            ]
-        ]
+            ],
+        ],
     ],
     'palettes' => [
-        'default' => '{text_legend},text'
+        'default' => '{text_legend},text',
     ],
     'fields' => [
         'id' => [
@@ -73,6 +73,6 @@ $GLOBALS['TL_DCA']['tl_member_log'] = [
             'inputType' => 'textarea',
             'eval' => ['mandatory' => true],
             'sql' => 'text NULL',
-        ]
-    ]
+        ],
+    ],
 ];

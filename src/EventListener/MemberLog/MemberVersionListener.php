@@ -6,7 +6,7 @@ namespace App\EventListener\MemberLog;
 
 use Contao\BackendUser;
 use Contao\Controller;
-use Contao\CoreBundle\ServiceAnnotation\Callback;
+use Contao\CoreBundle\DependencyInjection\Attribute\AsCallback;
 use Contao\Input;
 use Contao\StringUtil;
 use Doctrine\DBAL\Connection;
@@ -14,22 +14,14 @@ use Symfony\Component\Security\Core\Security;
 
 class MemberVersionListener
 {
-    private Connection $connection;
-    private Security $security;
-
-    public function __construct(Connection $connection, Security $security)
-    {
-        $this->connection = $connection;
-        $this->security = $security;
+    public function __construct(
+        private readonly Connection $connection,
+        private readonly Security $security,
+    ) {
     }
 
-    /**
-     * @Callback(table="tl_member", target="config.oncreate_version")
-     *
-     * @param string|int $memberId
-     * @param string|int $versionNumber
-     */
-    public function onCreate(string $table, $memberId, $versionNumber, array $newData): void
+    #[AsCallback(table: 'tl_member', target: 'config.oncreate_version')]
+    public function onCreate(string $table, int|string $memberId, int|string $versionNumber, array $newData): void
     {
         $memberId = (int) $memberId;
         $versionNumber = (int) $versionNumber;
@@ -40,6 +32,7 @@ class MemberVersionListener
 
         if (1 === (int) $versionNumber) {
             $this->handleRegistration($memberId, $newData);
+
             return;
         }
 
@@ -53,13 +46,8 @@ class MemberVersionListener
         );
     }
 
-    /**
-     * @Callback(table="tl_member", target="config.onrestore_version")
-     *
-     * @param string|int $memberId
-     * @param string|int $versionNumber
-     */
-    public function onRestore(string $table, $memberId, $versionNumber, array $newData): void
+    #[AsCallback(table: 'tl_member', target: 'config.onrestore_version')]
+    public function onRestore(string $table, int|string $memberId, int|string $versionNumber, array $newData): void
     {
         $memberId = (int) $memberId;
         $versionNumber = (int) $versionNumber;
@@ -96,7 +84,7 @@ class MemberVersionListener
                 'tstamp' => $data['dateAdded'],
                 'dateAdded' => $data['dateAdded'],
                 'type' => 'registration',
-                'data' => $data['dateAdded']
+                'data' => $data['dateAdded'],
             ]
         );
     }
@@ -116,7 +104,7 @@ class MemberVersionListener
         $this->storeDiff($oldData, $newData, $memberId);
     }
 
-    private function storeDiff(array $oldData, array $newData, int $memberId)
+    private function storeDiff(array $oldData, array $newData, int $memberId): void
     {
         Controller::loadDataContainer('tl_member');
         $diff = [];
@@ -129,7 +117,7 @@ class MemberVersionListener
             if ($newData[$k] !== $v) {
                 $diff[$k] = [
                     'new' => $newData[$k],
-                    'old' => $v
+                    'old' => $v,
                 ];
             }
         }

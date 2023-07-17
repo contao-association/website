@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\ContaoManager;
 
 use Contao\ManagerPlugin\Bundle\BundlePluginInterface;
@@ -14,9 +16,7 @@ class Plugin implements BundlePluginInterface
     /**
      * Gets a list of autoload configurations for this bundle.
      *
-     * @param ParserInterface $parser
-     *
-     * @return ConfigInterface[]
+     * @return array<ConfigInterface>
      */
     public function getBundles(ParserInterface $parser)
     {

@@ -19,14 +19,17 @@ class StripeHelper
 {
     use ErrorHandlingTrait;
 
-    public function __construct(private readonly ContaoFramework $framework, private readonly StripeClient $client, private readonly CashctrlHelper $cashctrlHelper)
-    {
+    public function __construct(
+        private readonly ContaoFramework $framework,
+        private readonly StripeClient $client,
+        private readonly CashctrlHelper $cashctrlHelper,
+    ) {
     }
 
     /**
      * Retrieve Stripe charges for given day.
      *
-     * @return \Generator|Charge[]
+     * @return \Generator|array<Charge>
      */
     public function getCharges(\DateTimeInterface $from, \DateTimeInterface $to): \Generator
     {
@@ -41,7 +44,7 @@ class StripeHelper
     }
 
     /**
-     * @return Charge[]
+     * @return array<Charge>
      */
     public function findPaymentForMember(MemberModel $member, Order $order): array
     {
@@ -63,7 +66,7 @@ class StripeHelper
         }
 
         if ('eur' !== $charge->currency) {
-            throw new \RuntimeException("Stripe currency \"$charge->currency\" is not supported.");
+            throw new \RuntimeException(sprintf('Stripe currency "%s" is not supported.', $charge->currency));
         }
 
         switch ($charge->application) {
@@ -100,6 +103,7 @@ class StripeHelper
                     $this->sentryOrThrow('Order ID "'.$charge->metadata->cashctrl_order_id.'" for Stripe charge "'.$charge->id.'" not found', null, [
                         'charge' => $charge->toArray(),
                     ]);
+
                     return;
                 }
 
@@ -131,6 +135,7 @@ class StripeHelper
 
         if (null === $member) {
             $this->sentryOrThrow('Member ID "'.$session->metadata->contao_member_id.'" for Stripe checkout session "'.$session->id.'" not found');
+
             return;
         }
 
@@ -138,6 +143,7 @@ class StripeHelper
 
         if (null === $setupIntent->payment_method) {
             $this->sentryOrThrow('Stripe checkout session "'.$session->id.'" has no payment method');
+
             return;
         }
 

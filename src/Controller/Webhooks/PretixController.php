@@ -11,18 +11,13 @@ use Symfony\Component\HttpKernel\Exception\BadRequestHttpException;
 use Symfony\Component\Routing\Annotation\Route;
 use Terminal42\ContaoBuildTools\ErrorHandlingTrait;
 
-/**
- * @Route("/_webhooks/pretix", methods={"POST"})
- */
+#[Route(path: '/_webhooks/pretix', methods: ['POST'])]
 class PretixController
 {
     use ErrorHandlingTrait;
 
-    private PretixHelper $pretixHelper;
-
-    public function __construct(PretixHelper $pretixHelper)
+    public function __construct(private readonly PretixHelper $pretixHelper)
     {
-        $this->pretixHelper = $pretixHelper;
     }
 
     public function __invoke(Request $request)
@@ -34,7 +29,7 @@ class PretixController
             case 'pretix.event.order.approved':
                 $invoices = $this->pretixHelper->getInvoices($data['organizer'], $data['event'], $data['code']);
 
-                if (1 === count($invoices)) {
+                if (1 === \count($invoices)) {
                     try {
                         $this->pretixHelper->bookOrder($data['event'], $invoices[0]);
                     } catch (\Exception $exception) {
@@ -47,7 +42,7 @@ class PretixController
                 break;
 
             default:
-                throw new BadRequestHttpException("Unsupported Pretix action \"{$data['action']}\"");
+                throw new BadRequestHttpException(sprintf('Unsupported Pretix action "%s"', $data['action']));
         }
 
         return new Response();

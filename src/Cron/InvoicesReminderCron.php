@@ -19,8 +19,9 @@ class InvoicesReminderCron
     public function __construct(
         private readonly ContaoFramework $framework,
         private readonly CashctrlHelper $cashctrl,
-        private readonly int $overdueNotificationId
-    ) {}
+        private readonly int $overdueNotificationId,
+    ) {
+    }
 
     public function __invoke(): void
     {
@@ -29,6 +30,7 @@ class InvoicesReminderCron
         // only send reminders on mondays
         if (1 !== (int) date('w')) {
             $this->sentryCheckIn(true);
+
             return;
         }
 
@@ -39,6 +41,7 @@ class InvoicesReminderCron
         if (null === $notification) {
             $this->sentryOrThrow('Notification ID "'.$this->overdueNotificationId.'" not found, cannot send invoice reminders');
             $this->sentryCheckIn(false);
+
             return;
         }
 
@@ -77,7 +80,7 @@ class InvoicesReminderCron
                 continue;
             }
 
-            if ($order->getStatusId() !== CashctrlHelper::STATUS_OVERDUE) {
+            if (CashctrlHelper::STATUS_OVERDUE !== $order->getStatusId()) {
                 $this->cashctrl->order->updateStatus($order->getId(), CashctrlHelper::STATUS_OVERDUE);
             }
         }

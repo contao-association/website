@@ -19,8 +19,9 @@ class RapidmailSyncCron
 
     public function __construct(
         private readonly ContaoFramework $framework,
-        private readonly RapidmailHelper $rapidmail
-    ) {}
+        private readonly RapidmailHelper $rapidmail,
+    ) {
+    }
 
     public function __invoke(): void
     {
@@ -40,7 +41,8 @@ class RapidmailSyncCron
             sleep(1);
 
             $throttle = 0;
-            foreach ($recipientsWithoutModel as $recipientId => $foreignId) {
+
+            foreach (array_keys($recipientsWithoutModel) as $recipientId) {
                 if ($throttle > 8) {
                     // Prevent API rate limit
                     sleep(1);
@@ -58,6 +60,7 @@ class RapidmailSyncCron
             sleep(1);
 
             $throttle = 0;
+
             foreach ($members as $member) {
                 if ($throttle > 8) {
                     // Prevent API rate limit
@@ -85,7 +88,7 @@ class RapidmailSyncCron
     }
 
     /**
-     * @return MemberModel[]
+     * @return array<MemberModel>
      */
     private function getMembers(): array
     {

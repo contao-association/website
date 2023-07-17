@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace App;
 
 use PayPalCheckoutSdk\Core\PayPalHttpClient;
-use PayPalCheckoutSdk\Payments\CapturesGetRequest;
 use PayPalHttp\HttpRequest;
 use Terminal42\CashctrlApi\Api\OrderBookentryEndpoint;
 use Terminal42\CashctrlApi\Entity\Journal;
@@ -17,16 +16,14 @@ class PaypalHelper
 {
     use ErrorHandlingTrait;
 
-    private PayPalHttpClient $client;
-    private CashctrlHelper $cashctrlHelper;
-    private OrderBookentryEndpoint $bookentry;
-    private array $teamMembers;
+    private readonly array $teamMembers;
 
-    public function __construct(PayPalHttpClient $client, CashctrlHelper $cashctrlHelper, OrderBookentryEndpoint $bookentry, string $teamMembers)
-    {
-        $this->client = $client;
-        $this->cashctrlHelper = $cashctrlHelper;
-        $this->bookentry = $bookentry;
+    public function __construct(
+        private readonly PayPalHttpClient $client,
+        private readonly CashctrlHelper $cashctrlHelper,
+        private readonly OrderBookentryEndpoint $bookentry,
+        string $teamMembers,
+    ) {
         $this->teamMembers = explode(',', $teamMembers);
     }
 
@@ -78,7 +75,7 @@ class PaypalHelper
     public function bookTransaction(array $transaction): Journal
     {
         if ('EUR' !== $transaction['transaction_info']['transaction_amount']['currency_code']) {
-            throw new \RuntimeException("Currency \"{$transaction['transaction_info']['transaction_amount']['currency_code']}\" is not supported");
+            throw new \RuntimeException(sprintf('Currency "%s" is not supported', $transaction['transaction_info']['transaction_amount']['currency_code']));
         }
 
         $dateAdded = $this->getDateAdded($transaction);
@@ -90,7 +87,7 @@ class PaypalHelper
         $journal->setTitle($this->getTitle($transaction));
 
         switch (true) {
-            case 0 === strpos($transaction['cart_info']['item_details'][0]['item_name'] ?? '', 'Ko-fi'):
+            case str_starts_with($transaction['cart_info']['item_details'][0]['item_name'] ?? '', 'Ko-fi'):
                 $journal->setCreditId($this->cashctrlHelper->getAccountId(1090));
                 $journal->setTitle('Ko-fi '.$transaction['transaction_info']['invoice_id'].' - '.$this->getName($transaction));
                 break;
@@ -110,6 +107,7 @@ class PaypalHelper
                 $bookEntry->setReference($journal->getReference());
                 $this->bookentry->create($bookEntry);
                 $this->bookFee($transaction, $journal);
+
                 return $journal;
 
             default:
@@ -162,7 +160,7 @@ class PaypalHelper
             return 'Rückzahlung '.$transaction['transaction_info']['paypal_reference_id'].' - '.$this->getName($transaction);
         }
 
-        if (isset($transaction['transaction_info']['invoice_id']) && !\is_numeric($transaction['transaction_info']['invoice_id'])) {
+        if (isset($transaction['transaction_info']['invoice_id']) && !is_numeric($transaction['transaction_info']['invoice_id'])) {
             return $transaction['transaction_info']['invoice_id'].' - '.$this->getName($transaction);
         }
 
@@ -196,14 +194,14 @@ class PaypalHelper
         }
 
         // Contao team members often have expenses paid through PayPal
-        if (in_array($email, $this->teamMembers, true)) {
+        if (\in_array($email, $this->teamMembers, true)) {
             return $this->cashctrlHelper->getAccountId(2120);
         }
 
         return $this->cashctrlHelper->getAccountId(2000);
     }
 
-    private function findOpenOrder(array $transaction): ?Order
+    private function findOpenOrder(array $transaction): Order|null
     {
         if (
             (float) $transaction['transaction_info']['transaction_amount']['value'] <= 0
@@ -216,7 +214,7 @@ class PaypalHelper
 
         /** @var Order $order */
         foreach ($this->cashctrlHelper->order->list()->onlyOpen() as $order) {
-            if (false !== strpos($note, $order->getNr())) {
+            if (str_contains((string) $note, $order->getNr())) {
                 return $order;
             }
         }

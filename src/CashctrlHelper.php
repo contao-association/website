@@ -46,12 +46,12 @@ use Terminal42\ContaoBuildTools\ErrorHandlingTrait;
 
 class CashctrlHelper
 {
-    public const STATUS_OPEN = 16;
-    public const STATUS_PAID = 18;
-    public const STATUS_OVERDUE = 86;
-    public const STATUS_NOTIFIED = 87;
-
     use ErrorHandlingTrait;
+
+    final public const STATUS_OPEN = 16;
+    final public const STATUS_PAID = 18;
+    final public const STATUS_OVERDUE = 86;
+    final public const STATUS_NOTIFIED = 87;
 
     private array $dateFormat = [];
     private array $accountIds = [];
@@ -74,7 +74,7 @@ class CashctrlHelper
         private readonly LoggerInterface $logger,
         private readonly array $memberships,
         private readonly string $projectDir,
-        private readonly int $paymentNotificationId
+        private readonly int $paymentNotificationId,
     ) {
     }
 
@@ -113,16 +113,17 @@ class CashctrlHelper
         return true;
     }
 
-    public function createAndSendInvoice(MemberModel $member, int $notificationId, \DateTimeImmutable $invoiceDate): ?Order
+    public function createAndSendInvoice(MemberModel $member, int $notificationId, \DateTimeImmutable $invoiceDate): Order|null
     {
         $notification = Notification::findByPk($notificationId);
 
         if (null === $notification) {
             $this->sentryOrThrow('Notification ID "'.$notificationId.'" not found, cannot send invoices');
+
             return null;
         }
 
-        $invoiceDate = $invoiceDate ?? new \DateTimeImmutable();
+        $invoiceDate ??= new \DateTimeImmutable();
         /** @noinspection CallableParameterUseCaseInTypeContextInspection */
         $invoiceDate = $invoiceDate->setTime(0, 0);
 
@@ -138,6 +139,7 @@ class CashctrlHelper
 
         if (!$this->sendInvoiceNotification($notification, $invoice, $member, ['invoice_pdf' => $pdf, 'payment_status' => $status])) {
             $this->sentryOrThrow('Unable to send invoice email to '.$member->email);
+
             return $invoice;
         }
 
@@ -182,58 +184,6 @@ class CashctrlHelper
         return true;
     }
 
-    private function createMemberInvoice(MemberModel $member, \DateTimeImmutable $invoiceDate): Order
-    {
-        $order = $this->prepareMemberInvoice($member, $invoiceDate);
-
-        $insertId = $this->order->create($order)->insertId();
-
-        return $this->order->read($insertId);
-    }
-
-    private function prepareMemberInvoice(MemberModel $member, \DateTimeImmutable $invoiceDate): Order
-    {
-        $this->setFiscalPeriod($invoiceDate);
-
-        $membership = $this->memberships[$member->membership];
-        $monthly = 'month' === $member->membership_interval && 'month' === $membership['type'] && ($membership['freeMember'] ?? false);
-
-        $invoiceDescription = sprintf(
-            '%s/%s - %s %s%s',
-            $member->id,
-            $invoiceDate->format($monthly ? 'm-Y' : 'Y'),
-            $member->firstname,
-            $member->lastname,
-            ($member->company ? ', '.$member->company : '')
-        );
-
-        $order = new Order((int) $member->cashctrl_id, 4);
-        $order->setNr($member->id.'/'.$invoiceDate->format($monthly ? 'm-Y' : 'Y'));
-        $order->setDate($invoiceDate);
-        $order->setDueDays(30);
-        $order->setDescription($invoiceDescription);
-
-        $order->addItem($this->createInvoiceItem($member->membership, $member, $invoiceDate, null, $monthly));
-
-        if ('active' !== $member->membership && !($membership['invisible'] ?? false) && $member->membership_member) {
-            $order->addItem($this->createInvoiceItem(
-                'active',
-                $member,
-                $invoiceDate,
-                ($membership['freeMember'] ?? false) ? 0 : null,
-                $monthly
-            ));
-        }
-
-        $paidUntil = $invoiceDate->add(new \DateInterval($monthly ? 'P1M' : 'P1Y'))->sub(new \DateInterval('P1D'));
-        if ($member->membership_invoiced < $paidUntil->getTimestamp()) {
-            $member->membership_invoiced = $paidUntil->getTimestamp();
-            $member->save();
-        }
-
-        return $order;
-    }
-
     public function downloadInvoice(Order $invoice, int|null $templateId = null, string|null $language = null): string
     {
         if (null !== $templateId) {
@@ -266,6 +216,7 @@ class CashctrlHelper
     public function listInvoices(int $cahctrlId): array
     {
         $invoices = [];
+
         foreach ($this->fiscalperiod->list() as $period) {
             if ($period->getStart() < new \DateTime('2021-01-01')) {
                 continue;
@@ -287,7 +238,7 @@ class CashctrlHelper
     }
 
     /**
-     * @return Order[]
+     * @return array<Order>
      */
     public function getOverdueInvoices(): array
     {
@@ -301,7 +252,7 @@ class CashctrlHelper
     }
 
     /**
-     * @return Order[]
+     * @return array<Order>
      */
     public function getLastPaidInvoices(): array
     {
@@ -319,10 +270,12 @@ class CashctrlHelper
         try {
             if (!$this->sendInvoiceNotification($notification, $order, $member)) {
                 $this->sentryOrThrow('Unable to send payment notification to '.$member->email);
+
                 return;
             }
         } catch (\Exception $e) {
             $this->sentryOrThrow('Unable to send payment notification to '.$member->email, $e);
+
             return;
         }
 
@@ -371,7 +324,7 @@ class CashctrlHelper
         return $this->orderBookentry->create($bookentry);
     }
 
-    public function getAccountId(int $accountNumber): ?int
+    public function getAccountId(int $accountNumber): int|null
     {
         if (isset($this->accountIds[$accountNumber])) {
             return $this->accountIds[$accountNumber];
@@ -388,7 +341,7 @@ class CashctrlHelper
         return null;
     }
 
-    public function bookToJournal(float $amount, \DateTimeInterface $created, int $account, string $reference, string $title, ?string $balanceTransaction): void
+    public function bookToJournal(float $amount, \DateTimeInterface $created, int $account, string $reference, string $title, string|null $balanceTransaction): void
     {
         // Make sure timezone in bookkeeping is set to Switzerland
         $created = $created->setTimezone(new \DateTimeZone('Europe/Zurich'));
@@ -415,6 +368,7 @@ class CashctrlHelper
             $this->sentryOrThrow('Missing balance_transaction to book Stripe charge '.$charge->id, null, [
                 'charge' => $charge->toArray(),
             ]);
+
             return;
         }
 
@@ -453,7 +407,59 @@ class CashctrlHelper
         }
     }
 
-    private function bookBalanceTransaction(string|BalanceTransaction $transaction, \DateTimeInterface $created, string $reference, string $title): void
+    private function createMemberInvoice(MemberModel $member, \DateTimeImmutable $invoiceDate): Order
+    {
+        $order = $this->prepareMemberInvoice($member, $invoiceDate);
+
+        $insertId = $this->order->create($order)->insertId();
+
+        return $this->order->read($insertId);
+    }
+
+    private function prepareMemberInvoice(MemberModel $member, \DateTimeImmutable $invoiceDate): Order
+    {
+        $this->setFiscalPeriod($invoiceDate);
+
+        $membership = $this->memberships[$member->membership];
+        $monthly = 'month' === $member->membership_interval && 'month' === $membership['type'] && ($membership['freeMember'] ?? false);
+
+        $invoiceDescription = sprintf(
+            '%s/%s - %s %s%s',
+            $member->id,
+            $invoiceDate->format($monthly ? 'm-Y' : 'Y'),
+            $member->firstname,
+            $member->lastname,
+            $member->company ? ', '.$member->company : ''
+        );
+
+        $order = new Order((int) $member->cashctrl_id, 4);
+        $order->setNr($member->id.'/'.$invoiceDate->format($monthly ? 'm-Y' : 'Y'));
+        $order->setDate($invoiceDate);
+        $order->setDueDays(30);
+        $order->setDescription($invoiceDescription);
+
+        $order->addItem($this->createInvoiceItem($member->membership, $member, $invoiceDate, null, $monthly));
+
+        if ('active' !== $member->membership && !($membership['invisible'] ?? false) && $member->membership_member) {
+            $order->addItem($this->createInvoiceItem(
+                'active',
+                $member,
+                $invoiceDate,
+                $membership['freeMember'] ?? false ? 0 : null,
+                $monthly
+            ));
+        }
+
+        $paidUntil = $invoiceDate->add(new \DateInterval($monthly ? 'P1M' : 'P1Y'))->sub(new \DateInterval('P1D'));
+        if ($member->membership_invoiced < $paidUntil->getTimestamp()) {
+            $member->membership_invoiced = $paidUntil->getTimestamp();
+            $member->save();
+        }
+
+        return $order;
+    }
+
+    private function bookBalanceTransaction(BalanceTransaction|string $transaction, \DateTimeInterface $created, string $reference, string $title): void
     {
         try {
             if (!$transaction instanceof BalanceTransaction) {
@@ -470,7 +476,7 @@ class CashctrlHelper
             $fee->setTitle($title);
 
             $this->addJournalEntry($fee);
-        } catch (ApiErrorException $exception) {
+        } catch (ApiErrorException) {
             // Balance transaction not found
         }
     }
@@ -531,6 +537,7 @@ class CashctrlHelper
                     } else {
                         $contact->setAddress($address);
                     }
+
                     return;
                 }
             }
@@ -541,7 +548,7 @@ class CashctrlHelper
         }
     }
 
-    private function getCategoryId(string $membership): ?int
+    private function getCategoryId(string $membership): int|null
     {
         if (!isset($this->memberships[$membership]['categoryId'])) {
             return null;
@@ -577,7 +584,7 @@ class CashctrlHelper
         return $this->dateFormat[$locale] = $GLOBALS['TL_CONFIG']['dateFormat'];
     }
 
-    private function getRootPageForLocale(string $locale): ?PageModel
+    private function getRootPageForLocale(string $locale): PageModel|null
     {
         $t = PageModel::getTable();
         $columns = ["$t.language=? AND $t.type='root'"];
@@ -590,7 +597,7 @@ class CashctrlHelper
         return PageModel::findOneBy($columns, [$locale]);
     }
 
-    private function getPaymentLink(Order $order, MemberModel $member): ?string
+    private function getPaymentLink(Order $order, MemberModel $member): string|null
     {
         $rootPage = $this->getRootPageForLocale($member->language ?: 'de');
 
@@ -612,7 +619,7 @@ class CashctrlHelper
         return $this->uriSigner->sign($url);
     }
 
-    private function setFiscalPeriod(\DateTimeInterface $date = null): void
+    private function setFiscalPeriod(\DateTimeInterface|null $date = null): void
     {
         if (null === $date) {
             $date = new \DateTime();
@@ -621,6 +628,7 @@ class CashctrlHelper
         foreach ($this->fiscalperiod->list() as $period) {
             if ($period->getStart() <= $date && $period->getEnd() >= $date) {
                 $this->fiscalperiod->switch($period->getId());
+
                 return;
             }
         }
@@ -658,7 +666,7 @@ class CashctrlHelper
             $itemName,
             (float) $price
         );
-        $item->setQuantity(('month' === $membership['type'] && !$monthly) ? 12 : 1);
+        $item->setQuantity('month' === $membership['type'] && !$monthly ? 12 : 1);
         $item->setDescription($itemDescription);
 
         return $item;
@@ -710,6 +718,7 @@ class CashctrlHelper
                 'order' => $order->toArray(),
                 'member' => $member->row(),
             ]);
+
             return false;
         }
     }
@@ -720,6 +729,7 @@ class CashctrlHelper
             switch ($charge->payment_method_details['type'] ?? '') {
                 case 'card':
                     $card = $charge->payment_method_details['card'] ?? [];
+
                     switch ($card['brand']) {
                         case 'mastercard':
                             return 'Zahlung (MasterCard '.($card['last4'] ?? '').')';

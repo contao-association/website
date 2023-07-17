@@ -20,26 +20,19 @@ class CashctrlImportCommand extends Command
 {
     protected static $defaultName = 'app:cashctrl:import';
 
-    private FiscalperiodEndpoint $fiscalperiod;
-    private AccountEndpoint $account;
-    private JournalEndpoint $journal;
-    private CurrencyEndpoint $currency;
-    private TaxEndpoint $tax;
-
     private SymfonyStyle $io;
 
-    public function __construct(FiscalperiodEndpoint $fiscalperiod, AccountEndpoint $account, JournalEndpoint $journal, CurrencyEndpoint $currency, TaxEndpoint $tax)
-    {
+    public function __construct(
+        private readonly FiscalperiodEndpoint $fiscalperiod,
+        private readonly AccountEndpoint $account,
+        private readonly JournalEndpoint $journal,
+        private readonly CurrencyEndpoint $currency,
+        private readonly TaxEndpoint $tax,
+    ) {
         parent::__construct();
-
-        $this->fiscalperiod = $fiscalperiod;
-        $this->account = $account;
-        $this->journal = $journal;
-        $this->currency = $currency;
-        $this->tax = $tax;
     }
 
-    protected function configure()
+    protected function configure(): void
     {
         parent::configure();
 
@@ -52,7 +45,7 @@ class CashctrlImportCommand extends Command
     {
         $this->io = new SymfonyStyle($input, $output);
 
-        $fp = fopen($input->getArgument('fibu3-file'), 'rb');
+        $fp = fopen($input->getArgument('fibu3-file'), 'r');
 
         $header = fgetcsv($fp);
 
@@ -63,8 +56,9 @@ class CashctrlImportCommand extends Command
         $accounts = $this->getAccounts();
 
         $data = [];
+
         while ($line = fgetcsv($fp)) {
-            [$ref, $beleg, $datum, $soll, $haben, $mwstCode, $mwstBetrag, $betrag, $betragEUR, $text] = $line;
+            [, , , $soll, $haben, $mwstCode, , $betrag, $betragEUR] = $this->mapTypes($line);
 
             if (!\array_key_exists($soll, $accounts)) {
                 throw new \RuntimeException('Kontonummer '.$soll.' in CashCtrl nicht vorhanden.');
@@ -74,8 +68,8 @@ class CashctrlImportCommand extends Command
                 throw new \RuntimeException('Kontonummer '.$haben.' in CashCtrl nicht vorhanden.');
             }
 
-            if ($betragEUR != $betrag && null === $this->getCurrencyId($soll, $haben)) {
-                throw new \RuntimeException("Währung für Konto $soll oder $haben fehlt.");
+            if ($betragEUR !== $betrag && null === $this->getCurrencyId($soll, $haben)) {
+                throw new \RuntimeException('Währung für Konto '.$soll.' oder '.$haben.' fehlt.');
             }
 
             if ($mwstCode) {
@@ -90,18 +84,18 @@ class CashctrlImportCommand extends Command
         $skipped = [];
         $errors = [];
 
-        if (!$this->io->confirm(count($data).' Buchungssätze gefunden. Import starten?')) {
-            return 1;
+        if (!$this->io->confirm(\count($data).' Buchungssätze gefunden. Import starten?')) {
+            return Command::FAILURE;
         }
 
         $this->selectFiscalPeriod();
 
-        $this->io->progressStart(count($data));
+        $this->io->progressStart(\count($data));
 
         foreach ($data as $line) {
-            [$ref, $beleg, $datum, $soll, $haben, $mwstCode, $mwstBetrag, $betrag, $betragEUR, $text] = $line;
+            [, $beleg, $datum, $soll, $haben, $mwstCode, , $betrag, $betragEUR, $text] = $this->mapTypes($line);
 
-            if ($betrag == 0 && $betragEUR == 0) {
+            if (0 === $betrag && 0 === $betragEUR) {
                 $skipped[] = $line;
                 $this->io->progressAdvance();
                 continue;
@@ -109,7 +103,7 @@ class CashctrlImportCommand extends Command
 
             $dateAdded = \DateTime::createFromFormat('d.m.Y', $datum);
 
-            if ($betrag >= 0 || ($betrag == 0 && $betragEUR > 0)) {
+            if ($betrag >= 0 || (0 === $betrag && $betragEUR > 0)) {
                 $debitId = $accounts[$soll];
                 $creditId = $accounts[$haben];
             } else {
@@ -121,7 +115,7 @@ class CashctrlImportCommand extends Command
             $entry->setTitle($text);
             $entry->setReference($beleg);
 
-            if ($betrag == 0 && $betragEUR > 0) {
+            if (0 === $betrag && $betragEUR > 0) {
                 // Währungskorrektur in EUR verbuchen, Kontowährung ignorieren
                 $entry->setAmount(abs((float) $betragEUR));
             } elseif (null !== ($currencyId = $this->getCurrencyId($soll, $haben))) {
@@ -145,17 +139,17 @@ class CashctrlImportCommand extends Command
         $this->io->progressFinish();
         $this->io->success((\count($data) - \count($skipped)).' Buchungssätze importiert, '.\count($skipped).' übersprungen!');
 
-        if (count($skipped) > 0) {
+        if (\count($skipped) > 0) {
             $this->io->writeln('Ignorierte Buchungssätze:');
             $this->io->table($header, $skipped);
         }
 
-        if (count($errors) > 0) {
+        if (\count($errors) > 0) {
             $this->io->error('Fehlerhafte Buchungssätze:');
             $this->io->table(array_merge($header, ['Message']), $errors);
         }
 
-        return 0;
+        return Command::SUCCESS;
     }
 
     private function selectFiscalPeriod(): void
@@ -167,7 +161,7 @@ class CashctrlImportCommand extends Command
         }
 
         $period = $this->io->choice('Rechnungsperiod wählen', $periods);
-        $this->fiscalperiod->switch(array_search($period, $periods));
+        $this->fiscalperiod->switch(array_search($period, $periods, true));
     }
 
     private function getAccounts(): array
@@ -191,15 +185,15 @@ class CashctrlImportCommand extends Command
         $accounts[9000] = $accounts[9200];
 
         // Wird nur von 2013 bis 2016 benötigt!
-        //$accounts[3410] = $accounts[3420]; // Konferenz
-        //$accounts[3420] = $accounts[3421]; // Camp
-        //$accounts[4610] = $accounts[4620]; // Konferenz
-        //$accounts[4620] = $accounts[4621]; // Camp
+        // $accounts[3410] = $accounts[3420]; // Konferenz
+        // $accounts[3420] = $accounts[3421]; // Camp
+        // $accounts[4610] = $accounts[4620]; // Konferenz
+        // $accounts[4620] = $accounts[4621]; // Camp
 
         return $accounts;
     }
 
-    private function getCurrencyId($soll, $haben): ?int
+    private function getCurrencyId($soll, $haben): int|null
     {
         $map = [
             1001 => 'CHF',
@@ -223,13 +217,14 @@ class CashctrlImportCommand extends Command
         static $currencies = null;
         if (null === $currencies) {
             $currencies = [];
+
             foreach ($this->currency->list() as $currency) {
                 $currencies[$currency->getCode()] = $currency->getId();
             }
         }
 
         if (!isset($currencies[$code])) {
-            throw new \RuntimeException("Währung $code fehlt in CashCtrl.");
+            throw new \RuntimeException(sprintf('Währung %s fehlt in CashCtrl.', $code));
         }
 
         return $currencies[$code];
@@ -251,14 +246,25 @@ class CashctrlImportCommand extends Command
 
         if (!isset($map[$mwstCode])) {
             $choices = [];
+
             foreach ($this->tax->list() as $tax) {
                 $choices[$tax->getId()] = $tax->getName();
             }
 
             $choice = $this->io->choice('Zuordnung für MwSt-Code "'.$mwstCode.'"', $choices);
-            $map[$mwstCode] = array_search($choice, $choices);
+            $map[$mwstCode] = array_search($choice, $choices, true);
         }
 
         return $map[$mwstCode];
+    }
+
+    /**
+     * Decode numbers in CSV to int or float values.
+     *
+     * @see https://stackoverflow.com/questions/65255283/keep-integer-and-float-types-when-converting-csv-data-to-php-arrays-with-str-get
+     */
+    private function mapTypes(array $line): array
+    {
+        return array_map(static fn ($v) => is_numeric($v) ? $v + 0 : $v, $line);
     }
 }

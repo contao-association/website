@@ -4,39 +4,31 @@ declare(strict_types=1);
 
 namespace App\Controller\FrontendModule;
 
+use App\CashctrlHelper;
+use Contao\CoreBundle\DependencyInjection\Attribute\AsFrontendModule;
 use Contao\CoreBundle\Exception\RedirectResponseException;
-use Contao\CoreBundle\ServiceAnnotation\FrontendModule;
 use Contao\MemberModel;
 use Contao\ModuleModel;
 use Contao\ModuleRegistration;
 use Contao\PageModel;
-use Contao\Versions;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
-use App\CashctrlHelper;
 
-/**
- * @FrontendModule("registration", category="user")
- */
+#[AsFrontendModule('registration', category: 'user')]
 class RegistrationController extends ModuleRegistration
 {
-    private CashctrlHelper $cashctrl;
-    private array $memberships;
-    private int $notificationId;
-
-    private ?Request $request;
+    private Request|null $request = null;
 
     /**
      * @noinspection MagicMethodsValidityInspection
      * @noinspection PhpMissingParentConstructorInspection
      */
-    public function __construct(CashctrlHelper $cashctrl, array $memberships, int $registrationNotificationId)
-    {
+    public function __construct(
+        private readonly CashctrlHelper $cashctrl,
+        private readonly array $memberships,
+        private readonly int $registrationNotificationId,
+    ) {
         // do not call parent constructor
-
-        $this->cashctrl = $cashctrl;
-        $this->memberships = $memberships;
-        $this->notificationId = $registrationNotificationId;
     }
 
     public function __invoke(Request $request, ModuleModel $model, string $section): Response
@@ -60,7 +52,7 @@ class RegistrationController extends ModuleRegistration
             throw new \RuntimeException('Unable to create new member ID '.$member->id.' in CashCtrl');
         }
 
-        $invoice = $this->cashctrl->createAndSendInvoice($member, $this->notificationId, new \DateTimeImmutable());
+        $invoice = $this->cashctrl->createAndSendInvoice($member, $this->registrationNotificationId, new \DateTimeImmutable());
 
         if (null !== $invoice) {
             $member->cashctrl_invoice = $invoice->getId();

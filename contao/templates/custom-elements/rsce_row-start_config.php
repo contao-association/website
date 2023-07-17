@@ -5,5 +5,5 @@ return [
     'types' => ['content'],
     'contentCategory' => 'Grid',
     'wrapper' => ['type' => 'start'],
-    'standardFields' => ['cssID']
+    'standardFields' => ['cssID'],
 ];
