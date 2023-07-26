@@ -607,16 +607,16 @@
         },
         {
             "name": "contao-components/ace",
-            "version": "1.23.3",
+            "version": "1.23.4",
             "source": {
                 "type": "git",
                 "url": "https://github.com/contao-components/ace.git",
-                "reference": "8a963aecb381101649bab7ebb4ff19820c618181"
+                "reference": "3103f671ef9552c295e34a20c9262d2a244dcf04"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/contao-components/ace/zipball/8a963aecb381101649bab7ebb4ff19820c618181",
-                "reference": "8a963aecb381101649bab7ebb4ff19820c618181",
+                "url": "https://api.github.com/repos/contao-components/ace/zipball/3103f671ef9552c295e34a20c9262d2a244dcf04",
+                "reference": "3103f671ef9552c295e34a20c9262d2a244dcf04",
                 "shasum": ""
             },
             "require": {
@@ -636,9 +636,9 @@
             "description": "ACE code editor integration for Contao Open Source CMS",
             "support": {
                 "issues": "https://github.com/contao-components/ace/issues",
-                "source": "https://github.com/contao-components/ace/tree/1.23.3"
+                "source": "https://github.com/contao-components/ace/tree/1.23.4"
             },
-            "time": "2023-07-11T09:07:52+00:00"
+            "time": "2023-07-21T09:34:06+00:00"
         },
         {
             "name": "contao-components/chosen",
@@ -1274,16 +1274,16 @@
         },
         {
             "name": "contao/core-bundle",
-            "version": "4.13.26",
+            "version": "4.13.28",
             "source": {
                 "type": "git",
                 "url": "https://github.com/contao/core-bundle.git",
-                "reference": "e70a741b09c92b704ce4a754d92be4da2f9768a9"
+                "reference": "4c8b87bcabe3ea9818b67e9412ea0d014f844f77"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/contao/core-bundle/zipball/e70a741b09c92b704ce4a754d92be4da2f9768a9",
-                "reference": "e70a741b09c92b704ce4a754d92be4da2f9768a9",
+                "url": "https://api.github.com/repos/contao/core-bundle/zipball/4c8b87bcabe3ea9818b67e9412ea0d014f844f77",
+                "reference": "4c8b87bcabe3ea9818b67e9412ea0d014f844f77",
                 "shasum": ""
             },
             "require": {
@@ -1480,7 +1480,7 @@
                     "type": "custom"
                 }
             ],
-            "time": "2023-07-10T10:57:14+00:00"
+            "time": "2023-07-25T07:52:58+00:00"
         },
         {
             "name": "contao/image",
@@ -1616,16 +1616,16 @@
         },
         {
             "name": "contao/installation-bundle",
-            "version": "4.13.26",
+            "version": "4.13.28",
             "source": {
                 "type": "git",
                 "url": "https://github.com/contao/installation-bundle.git",
-                "reference": "e8636def36dfa4d4523a4c4c02871205c9ea3a1f"
+                "reference": "80f829d8bebb099ea7d5524f3834d151a48cf79e"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/contao/installation-bundle/zipball/e8636def36dfa4d4523a4c4c02871205c9ea3a1f",
-                "reference": "e8636def36dfa4d4523a4c4c02871205c9ea3a1f",
+                "url": "https://api.github.com/repos/contao/installation-bundle/zipball/80f829d8bebb099ea7d5524f3834d151a48cf79e",
+                "reference": "80f829d8bebb099ea7d5524f3834d151a48cf79e",
                 "shasum": ""
             },
             "require": {
@@ -1694,20 +1694,20 @@
                     "type": "custom"
                 }
             ],
-            "time": "2023-06-06T10:56:08+00:00"
+            "time": "2023-07-21T11:12:06+00:00"
         },
         {
             "name": "contao/manager-bundle",
-            "version": "4.13.26",
+            "version": "4.13.28",
             "source": {
                 "type": "git",
                 "url": "https://github.com/contao/manager-bundle.git",
-                "reference": "c318857cd2bb9fcfa265dd2af79cbecdd2f4f2a1"
+                "reference": "ae2ed2426fdcec93f1e396b37a94eb3039eea462"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/contao/manager-bundle/zipball/c318857cd2bb9fcfa265dd2af79cbecdd2f4f2a1",
-                "reference": "c318857cd2bb9fcfa265dd2af79cbecdd2f4f2a1",
+                "url": "https://api.github.com/repos/contao/manager-bundle/zipball/ae2ed2426fdcec93f1e396b37a94eb3039eea462",
+                "reference": "ae2ed2426fdcec93f1e396b37a94eb3039eea462",
                 "shasum": ""
             },
             "require": {
@@ -1802,7 +1802,7 @@
                     "type": "custom"
                 }
             ],
-            "time": "2023-06-28T09:07:10+00:00"
+            "time": "2023-07-21T11:12:06+00:00"
         },
         {
             "name": "contao/manager-plugin",
@@ -2337,16 +2337,16 @@
         },
         {
             "name": "doctrine/dbal",
-            "version": "3.6.4",
+            "version": "3.6.5",
             "source": {
                 "type": "git",
                 "url": "https://github.com/doctrine/dbal.git",
-                "reference": "19f0dec95edd6a3c3c5ff1d188ea94c6b7fc903f"
+                "reference": "96d5a70fd91efdcec81fc46316efc5bf3da17ddf"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/doctrine/dbal/zipball/19f0dec95edd6a3c3c5ff1d188ea94c6b7fc903f",
-                "reference": "19f0dec95edd6a3c3c5ff1d188ea94c6b7fc903f",
+                "url": "https://api.github.com/repos/doctrine/dbal/zipball/96d5a70fd91efdcec81fc46316efc5bf3da17ddf",
+                "reference": "96d5a70fd91efdcec81fc46316efc5bf3da17ddf",
                 "shasum": ""
             },
             "require": {
@@ -2361,10 +2361,10 @@
             "require-dev": {
                 "doctrine/coding-standard": "12.0.0",
                 "fig/log-test": "^1",
-                "jetbrains/phpstorm-stubs": "2022.3",
-                "phpstan/phpstan": "1.10.14",
+                "jetbrains/phpstorm-stubs": "2023.1",
+                "phpstan/phpstan": "1.10.21",
                 "phpstan/phpstan-strict-rules": "^1.5",
-                "phpunit/phpunit": "9.6.7",
+                "phpunit/phpunit": "9.6.9",
                 "psalm/plugin-phpunit": "0.18.4",
                 "squizlabs/php_codesniffer": "3.7.2",
                 "symfony/cache": "^5.4|^6.0",
@@ -2429,7 +2429,7 @@
             ],
             "support": {
                 "issues": "https://github.com/doctrine/dbal/issues",
-                "source": "https://github.com/doctrine/dbal/tree/3.6.4"
+                "source": "https://github.com/doctrine/dbal/tree/3.6.5"
             },
             "funding": [
                 {
@@ -2445,7 +2445,7 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2023-06-15T07:40:12+00:00"
+            "time": "2023-07-17T09:15:50+00:00"
         },
         {
             "name": "doctrine/deprecations",
@@ -2943,16 +2943,16 @@
         },
         {
             "name": "doctrine/orm",
-            "version": "2.15.3",
+            "version": "2.15.4",
             "source": {
                 "type": "git",
                 "url": "https://github.com/doctrine/orm.git",
-                "reference": "4c3bd208018c26498e5f682aaad45fa00ea307d5"
+                "reference": "f7e4b61459692f9b747f40696e6bf72080390f2d"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/doctrine/orm/zipball/4c3bd208018c26498e5f682aaad45fa00ea307d5",
-                "reference": "4c3bd208018c26498e5f682aaad45fa00ea307d5",
+                "url": "https://api.github.com/repos/doctrine/orm/zipball/f7e4b61459692f9b747f40696e6bf72080390f2d",
+                "reference": "f7e4b61459692f9b747f40696e6bf72080390f2d",
                 "shasum": ""
             },
             "require": {
@@ -2981,14 +2981,14 @@
                 "doctrine/annotations": "^1.13 || ^2",
                 "doctrine/coding-standard": "^9.0.2 || ^12.0",
                 "phpbench/phpbench": "^0.16.10 || ^1.0",
-                "phpstan/phpstan": "~1.4.10 || 1.10.18",
+                "phpstan/phpstan": "~1.4.10 || 1.10.25",
                 "phpunit/phpunit": "^7.5 || ^8.5 || ^9.6",
                 "psr/log": "^1 || ^2 || ^3",
                 "squizlabs/php_codesniffer": "3.7.2",
                 "symfony/cache": "^4.4 || ^5.4 || ^6.0",
                 "symfony/var-exporter": "^4.4 || ^5.4 || ^6.2",
                 "symfony/yaml": "^3.4 || ^4.0 || ^5.0 || ^6.0",
-                "vimeo/psalm": "4.30.0 || 5.12.0"
+                "vimeo/psalm": "4.30.0 || 5.13.1"
             },
             "suggest": {
                 "ext-dom": "Provides support for XSD validation for XML mapping files",
@@ -3038,9 +3038,9 @@
             ],
             "support": {
                 "issues": "https://github.com/doctrine/orm/issues",
-                "source": "https://github.com/doctrine/orm/tree/2.15.3"
+                "source": "https://github.com/doctrine/orm/tree/2.15.4"
             },
-            "time": "2023-06-22T12:36:06+00:00"
+            "time": "2023-07-18T07:50:04+00:00"
         },
         {
             "name": "doctrine/persistence",
@@ -6605,16 +6605,16 @@
         },
         {
             "name": "rapidmail/rapidmail-apiv3-client-php",
-            "version": "1.1.3",
+            "version": "1.1.4",
             "source": {
                 "type": "git",
                 "url": "https://github.com/rapidmail/rapidmail-apiv3-client-php.git",
-                "reference": "486a17487a04bbae085277d93d33ac401604cbcf"
+                "reference": "19da21e05dae3c32ccd36bdeea3426ab2f997da5"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/rapidmail/rapidmail-apiv3-client-php/zipball/486a17487a04bbae085277d93d33ac401604cbcf",
-                "reference": "486a17487a04bbae085277d93d33ac401604cbcf",
+                "url": "https://api.github.com/repos/rapidmail/rapidmail-apiv3-client-php/zipball/19da21e05dae3c32ccd36bdeea3426ab2f997da5",
+                "reference": "19da21e05dae3c32ccd36bdeea3426ab2f997da5",
                 "shasum": ""
             },
             "require": {
@@ -6647,9 +6647,9 @@
             "description": "rapidmail API v3 client",
             "support": {
                 "issues": "https://github.com/rapidmail/rapidmail-apiv3-client-php/issues",
-                "source": "https://github.com/rapidmail/rapidmail-apiv3-client-php/tree/1.1.3"
+                "source": "https://github.com/rapidmail/rapidmail-apiv3-client-php/tree/1.1.4"
             },
-            "time": "2023-07-13T08:26:45+00:00"
+            "time": "2023-07-18T12:38:38+00:00"
         },
         {
             "name": "scheb/2fa-backup-code",
@@ -11316,21 +11316,22 @@
         },
         {
             "name": "symfony/psr-http-message-bridge",
-            "version": "v2.2.0",
+            "version": "v2.3.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/psr-http-message-bridge.git",
-                "reference": "28a732c05bbad801304ad5a5c674cf2970508993"
+                "reference": "3c62b814477165dbf07c9c18ddb413ccdadaa93c"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/psr-http-message-bridge/zipball/28a732c05bbad801304ad5a5c674cf2970508993",
-                "reference": "28a732c05bbad801304ad5a5c674cf2970508993",
+                "url": "https://api.github.com/repos/symfony/psr-http-message-bridge/zipball/3c62b814477165dbf07c9c18ddb413ccdadaa93c",
+                "reference": "3c62b814477165dbf07c9c18ddb413ccdadaa93c",
                 "shasum": ""
             },
             "require": {
                 "php": ">=7.2.5",
                 "psr/http-message": "^1.0 || ^2.0",
+                "symfony/deprecation-contracts": "^2.5 || ^3.0",
                 "symfony/http-foundation": "^5.4 || ^6.0"
             },
             "require-dev": {
@@ -11349,7 +11350,7 @@
             "type": "symfony-bridge",
             "extra": {
                 "branch-alias": {
-                    "dev-main": "2.2-dev"
+                    "dev-main": "2.3-dev"
                 }
             },
             "autoload": {
@@ -11384,7 +11385,7 @@
             ],
             "support": {
                 "issues": "https://github.com/symfony/psr-http-message-bridge/issues",
-                "source": "https://github.com/symfony/psr-http-message-bridge/tree/v2.2.0"
+                "source": "https://github.com/symfony/psr-http-message-bridge/tree/v2.3.0"
             },
             "funding": [
                 {
@@ -11400,7 +11401,7 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2023-04-21T08:40:19+00:00"
+            "time": "2023-07-25T14:44:36+00:00"
         },
         {
             "name": "symfony/routing",
@@ -13111,12 +13112,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/terminal42/contao-build-tools.git",
-                "reference": "6da494915060de972367dd22bb816e63ac895062"
+                "reference": "41cacfb8e6fdd96cd478a6fae99914ce4d3d5e76"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/terminal42/contao-build-tools/zipball/6da494915060de972367dd22bb816e63ac895062",
-                "reference": "6da494915060de972367dd22bb816e63ac895062",
+                "url": "https://api.github.com/repos/terminal42/contao-build-tools/zipball/41cacfb8e6fdd96cd478a6fae99914ce4d3d5e76",
+                "reference": "41cacfb8e6fdd96cd478a6fae99914ce4d3d5e76",
                 "shasum": ""
             },
             "require": {
@@ -13171,7 +13172,7 @@
                     "type": "other"
                 }
             ],
-            "time": "2023-07-11T11:13:58+00:00"
+            "time": "2023-07-19T21:55:29+00:00"
         },
         {
             "name": "terminal42/contao-conditionalformfields",
@@ -13776,7 +13777,7 @@
         },
         {
             "name": "twig/extra-bundle",
-            "version": "v3.6.1",
+            "version": "v3.7.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/twigphp/twig-extra-bundle.git",
@@ -13834,7 +13835,7 @@
                 "twig"
             ],
             "support": {
-                "source": "https://github.com/twigphp/twig-extra-bundle/tree/v3.6.1"
+                "source": "https://github.com/twigphp/twig-extra-bundle/tree/v3.7.0"
             },
             "funding": [
                 {
@@ -13850,16 +13851,16 @@
         },
         {
             "name": "twig/twig",
-            "version": "v3.6.1",
+            "version": "v3.7.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/twigphp/Twig.git",
-                "reference": "7e7d5839d4bec168dfeef0ac66d5c5a2edbabffd"
+                "reference": "5cf942bbab3df42afa918caeba947f1b690af64b"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/twigphp/Twig/zipball/7e7d5839d4bec168dfeef0ac66d5c5a2edbabffd",
-                "reference": "7e7d5839d4bec168dfeef0ac66d5c5a2edbabffd",
+                "url": "https://api.github.com/repos/twigphp/Twig/zipball/5cf942bbab3df42afa918caeba947f1b690af64b",
+                "reference": "5cf942bbab3df42afa918caeba947f1b690af64b",
                 "shasum": ""
             },
             "require": {
@@ -13905,7 +13906,7 @@
             ],
             "support": {
                 "issues": "https://github.com/twigphp/Twig/issues",
-                "source": "https://github.com/twigphp/Twig/tree/v3.6.1"
+                "source": "https://github.com/twigphp/Twig/tree/v3.7.0"
             },
             "funding": [
                 {
@@ -13917,7 +13918,7 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2023-06-08T12:52:13+00:00"
+            "time": "2023-07-26T07:16:09+00:00"
         },
         {
             "name": "ua-parser/uap-php",
