@@ -689,7 +689,7 @@ class CashctrlHelper
                     'cashctrl_order_id' => $order->getId(),
                     'auto_payment' => true,
                 ],
-                'payment_method_types' => ['card', 'sepa_debit'],
+                'payment_method_types' => ['card', 'sepa_debit', 'giropay'],
                 'off_session' => true,
                 'payment_method' => $member->stripe_payment_method,
             ]);
