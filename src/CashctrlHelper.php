@@ -21,6 +21,8 @@ use Stripe\StripeClient;
 use Symfony\Cmf\Component\Routing\RouteObjectInterface;
 use Symfony\Component\Filesystem\Filesystem;
 use Symfony\Component\HttpKernel\UriSigner;
+use Symfony\Component\Lock\Exception\ExceptionInterface;
+use Symfony\Component\Lock\LockFactory;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 use Symfony\Contracts\Translation\TranslatorInterface;
 use Terminal42\CashctrlApi\Api\AccountEndpoint;
@@ -72,6 +74,7 @@ class CashctrlHelper
         private readonly UriSigner $uriSigner,
         private readonly Filesystem $filesystem,
         private readonly LoggerInterface $logger,
+        private readonly LockFactory $lockFactory,
         private readonly array $memberships,
         private readonly string $projectDir,
         private readonly int $paymentNotificationId,
@@ -679,6 +682,18 @@ class CashctrlHelper
         }
 
         try {
+            $lock = $this->lockFactory->createLock('cashctrl_order_'.$order->getId());
+            $lock->acquire(true);
+        } catch (ExceptionInterface $exception) {
+            $this->sentryOrThrow('Failed acquiring lock for Stripe charge.', $exception, [
+                'order' => $order->toArray(),
+                'member' => $member->row(),
+            ]);
+
+            return false;
+        }
+
+        try {
             $paymentIntent = $this->stripeClient->paymentIntents->create([
                 'amount' => (int) round($order->total * 100),
                 'currency' => strtolower($order->currencyCode ?: 'eur'),
@@ -720,6 +735,8 @@ class CashctrlHelper
             ]);
 
             return false;
+        } finally {
+            $lock->release();
         }
     }
 

@@ -12,6 +12,8 @@ use Stripe\Customer;
 use Stripe\PaymentMethod;
 use Stripe\SetupIntent;
 use Stripe\StripeClient;
+use Symfony\Component\Lock\Exception\ExceptionInterface;
+use Symfony\Component\Lock\LockFactory;
 use Terminal42\CashctrlApi\Entity\Order;
 use Terminal42\ContaoBuildTools\ErrorHandlingTrait;
 
@@ -23,6 +25,7 @@ class StripeHelper
         private readonly ContaoFramework $framework,
         private readonly StripeClient $client,
         private readonly CashctrlHelper $cashctrlHelper,
+        private readonly LockFactory $lockFactory,
     ) {
     }
 
@@ -93,26 +96,37 @@ class StripeHelper
                 break;
 
             case null: // Payments from Stripe API
-                if (empty($charge->metadata->cashctrl_order_id)) {
-                    return;
-                }
-
-                $order = $this->cashctrlHelper->order->read((int) $charge->metadata->cashctrl_order_id);
-
-                if (null === $order) {
-                    $this->sentryOrThrow('Order ID "'.$charge->metadata->cashctrl_order_id.'" for Stripe charge "'.$charge->id.'" not found', null, [
+                try {
+                    $lock = $this->lockFactory->createLock('cashctrl_order_'.$charge->metadata->cashctrl_order_id);
+                    $lock->acquire(true);
+                } catch (ExceptionInterface $exception) {
+                    $this->sentryOrThrow('Failed acquiring lock for Stripe webhook.', $exception, [
                         'charge' => $charge->toArray(),
                     ]);
 
                     return;
                 }
 
-                // Ignore payment if it was charged automatically and order is already marked as paid
-                if ($order->open <= 0 && ($charge->metadata->auto_payment ?? false)) {
-                    return;
-                }
+                try {
+                    $order = $this->cashctrlHelper->order->read((int) $charge->metadata->cashctrl_order_id);
 
-                $this->cashctrlHelper->bookToOrder($charge, $order);
+                    if (null === $order) {
+                        $this->sentryOrThrow('Order ID "'.$charge->metadata->cashctrl_order_id.'" for Stripe charge "'.$charge->id.'" not found', null, [
+                            'charge' => $charge->toArray(),
+                        ]);
+
+                        return;
+                    }
+
+                    // Ignore payment if it was charged automatically and order is already marked as paid
+                    if ($order->open <= 0 && ($charge->metadata->auto_payment ?? false)) {
+                        return;
+                    }
+
+                    $this->cashctrlHelper->bookToOrder($charge, $order);
+                } finally {
+                    $lock->release();
+                }
                 break;
 
             default:
