@@ -264,60 +264,46 @@
         },
         {
             "name": "codefog/contao-haste",
-            "version": "4.25.26",
+            "version": "5.1.11",
             "source": {
                 "type": "git",
                 "url": "https://github.com/codefog/contao-haste.git",
-                "reference": "b48ed49c2b78ad05128696dbbde697ceb22ba4b6"
+                "reference": "b1a11ad68e88f2f35064a6a06eea4dff4c92b724"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/codefog/contao-haste/zipball/b48ed49c2b78ad05128696dbbde697ceb22ba4b6",
-                "reference": "b48ed49c2b78ad05128696dbbde697ceb22ba4b6",
+                "url": "https://api.github.com/repos/codefog/contao-haste/zipball/b1a11ad68e88f2f35064a6a06eea4dff4c92b724",
+                "reference": "b1a11ad68e88f2f35064a6a06eea4dff4c92b724",
                 "shasum": ""
             },
             "require": {
-                "contao-community-alliance/composer-plugin": "~2.4 || ~3.0",
-                "contao/core-bundle": "^4.4",
-                "php": "~7.0 || ~8.0"
+                "contao/core-bundle": "^4.13 || ^5.0",
+                "php": "^8.1"
             },
-            "replace": {
-                "contao-legacy/haste": "self.version"
+            "conflict": {
+                "contao/manager-plugin": "<2.0 || >=3.0"
             },
             "require-dev": {
-                "phpoffice/phpexcel": "^1.6",
-                "phpoffice/phpspreadsheet": "^1.6",
-                "phpunit/phpunit": "^9.2"
+                "contao/manager-plugin": "^2.0",
+                "phpunit/phpunit": "^9.5"
             },
-            "suggest": {
-                "phpoffice/phpspreadsheet": "Required for the Haste\\IO\\ExcelFileWriter component."
-            },
-            "type": "contao-module",
+            "type": "contao-bundle",
             "extra": {
-                "contao": {
-                    "sources": {
-                        "": "system/modules/haste"
-                    },
-                    "runonce": [
-                        "config/upgrade.php"
-                    ]
-                }
+                "contao-manager-plugin": "Codefog\\HasteBundle\\ContaoManager\\Plugin"
             },
             "autoload": {
-                "psr-0": {
-                    "Haste\\": [
-                        "library/"
-                    ]
+                "psr-4": {
+                    "Codefog\\HasteBundle\\": "src/"
                 }
             },
             "notification-url": "https://packagist.org/downloads/",
             "license": [
-                "LGPL-3.0-or-later"
+                "MIT"
             ],
             "authors": [
                 {
                     "name": "Codefog",
-                    "homepage": "http://codefog.pl"
+                    "homepage": "https://codefog.pl"
                 },
                 {
                     "name": "terminal42 gmbh",
@@ -330,8 +316,9 @@
                 "haste"
             ],
             "support": {
+                "forum": "https://community.contao.org",
                 "issues": "https://github.com/codefog/contao-haste/issues",
-                "source": "https://github.com/codefog/contao-haste/tree/4.25.26"
+                "source": "https://github.com/codefog/contao-haste"
             },
             "funding": [
                 {
@@ -339,7 +326,7 @@
                     "type": "github"
                 }
             ],
-            "time": "2023-06-15T08:07:51+00:00"
+            "time": "2023-06-06T13:14:34+00:00"
         },
         {
             "name": "composer/ca-bundle",
@@ -500,20 +487,19 @@
         },
         {
             "name": "contao-association/contao-voting",
-            "version": "2.3.3",
+            "version": "2.4.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/contao-association/contao-voting.git",
-                "reference": "cbba7db89817b4bd3bbc5e826050b662c25f3406"
+                "reference": "85a62eb9f0cc3761a06986992d87fc6fff44c035"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/contao-association/contao-voting/zipball/cbba7db89817b4bd3bbc5e826050b662c25f3406",
-                "reference": "cbba7db89817b4bd3bbc5e826050b662c25f3406",
+                "url": "https://api.github.com/repos/contao-association/contao-voting/zipball/85a62eb9f0cc3761a06986992d87fc6fff44c035",
+                "reference": "85a62eb9f0cc3761a06986992d87fc6fff44c035",
                 "shasum": ""
             },
             "require": {
-                "codefog/contao-haste": "^4.0",
                 "contao/core-bundle": "^4.13",
                 "php": "^8.1"
             },
@@ -521,7 +507,8 @@
                 "contao/manager-plugin": "<2.9 || >=3.0"
             },
             "require-dev": {
-                "contao/manager-plugin": "^2.9"
+                "contao/manager-plugin": "^2.9",
+                "terminal42/contao-build-tools": "dev-main"
             },
             "type": "contao-bundle",
             "extra": {
@@ -531,11 +518,6 @@
                 "psr-4": {
                     "ContaoAssociation\\VotingBundle\\": "src/"
                 }
-            },
-            "scripts": {
-                "cs-fixer": [
-                    "@php tools/ecs/vendor/bin/ecs check src/ --fix --ansi"
-                ]
             },
             "license": [
                 "proprietary"
@@ -551,10 +533,10 @@
                 "voting"
             ],
             "support": {
-                "source": "https://github.com/contao-association/contao-voting/tree/2.3.3",
+                "source": "https://github.com/contao-association/contao-voting/tree/2.4.0",
                 "issues": "https://github.com/contao-association/contao-voting/issues"
             },
-            "time": "2023-03-30T19:01:47+00:00"
+            "time": "2023-08-25T08:09:39+00:00"
         },
         {
             "name": "contao-community-alliance/composer-plugin",
@@ -4636,16 +4618,16 @@
         },
         {
             "name": "league/flysystem-bundle",
-            "version": "3.1.0",
+            "version": "3.2.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/thephpleague/flysystem-bundle.git",
-                "reference": "4b6e8095dbb9bed9971b4a5d8158cc6d8e720a26"
+                "reference": "c056bef0e8e0cdfb349e568d69e8337ce17ef6e1"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/thephpleague/flysystem-bundle/zipball/4b6e8095dbb9bed9971b4a5d8158cc6d8e720a26",
-                "reference": "4b6e8095dbb9bed9971b4a5d8158cc6d8e720a26",
+                "url": "https://api.github.com/repos/thephpleague/flysystem-bundle/zipball/c056bef0e8e0cdfb349e568d69e8337ce17ef6e1",
+                "reference": "c056bef0e8e0cdfb349e568d69e8337ce17ef6e1",
                 "shasum": ""
             },
             "require": {
@@ -4690,9 +4672,9 @@
             "description": "Symfony bundle integrating Flysystem into Symfony 5.4+ applications",
             "support": {
                 "issues": "https://github.com/thephpleague/flysystem-bundle/issues",
-                "source": "https://github.com/thephpleague/flysystem-bundle/tree/3.1.0"
+                "source": "https://github.com/thephpleague/flysystem-bundle/tree/3.2.0"
             },
-            "time": "2022-12-26T19:09:49+00:00"
+            "time": "2023-08-21T15:19:15+00:00"
         },
         {
             "name": "league/flysystem-local",
@@ -13448,34 +13430,29 @@
         },
         {
             "name": "terminal42/notification_center",
-            "version": "1.6.14",
+            "version": "1.7.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/terminal42/contao-notification_center.git",
-                "reference": "3415b79f545840817b70d9d02f5042a40b082fed"
+                "reference": "35b59a605da42b88b3c6cec10a8d12921bda540f"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/terminal42/contao-notification_center/zipball/3415b79f545840817b70d9d02f5042a40b082fed",
-                "reference": "3415b79f545840817b70d9d02f5042a40b082fed",
+                "url": "https://api.github.com/repos/terminal42/contao-notification_center/zipball/35b59a605da42b88b3c6cec10a8d12921bda540f",
+                "reference": "35b59a605da42b88b3c6cec10a8d12921bda540f",
                 "shasum": ""
             },
             "require": {
-                "codefog/contao-haste": "^4.14.1",
-                "contao-community-alliance/composer-plugin": "~2.4 || ~3.0",
-                "contao/core-bundle": "~4.4",
+                "codefog/contao-haste": "^5.0",
+                "contao/core-bundle": "^4.13",
                 "php": "^7.0 || ^8.0",
-                "terminal42/dcawizard": "2.*"
-            },
-            "conflict": {
-                "contao/core-bundle": "4.5.0",
-                "contao/newsletter-bundle": "<3.5 || >= 5.0"
+                "terminal42/dcawizard": "^2.5"
             },
             "replace": {
                 "contao-legacy/notification_center": "self.version"
             },
             "require-dev": {
-                "contao/newsletter-bundle": "~3.5 || ~4.1"
+                "contao/newsletter-bundle": "^4.13 || ^5.0"
             },
             "suggest": {
                 "contao/newsletter-bundle": "Send notifications using the newsletter bundle of Contao"
@@ -13533,7 +13510,7 @@
                     "type": "other"
                 }
             ],
-            "time": "2022-08-24T11:58:11+00:00"
+            "time": "2023-06-22T09:43:08+00:00"
         },
         {
             "name": "terminal42/service-annotation-bundle",
