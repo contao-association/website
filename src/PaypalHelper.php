@@ -111,8 +111,14 @@ class PaypalHelper
                 return $journal;
 
             default:
-                $journal->setCreditId($this->cashctrlHelper->getAccountId(1100));
-                $this->sentryOrThrow('PayPal-Zahlung in CashCtrl prüfen: '.$journal->getReference().' von '.$this->getName($transaction));
+                $journal->setCreditId($this->cashctrlHelper->getAccountId(1090));
+                $this->sentryOrThrow(
+                    'PayPal-Zahlung in CashCtrl prüfen: '.$journal->getReference().' von '.$this->getName($transaction),
+                    null,
+                    [
+                        'transaction' => $transaction,
+                    ]
+                );
                 break;
         }
 
