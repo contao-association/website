@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App;
 
+use Codefog\HasteBundle\StringParser;
 use Contao\Config;
 use Contao\CoreBundle\Framework\ContaoFramework;
 use Contao\CoreBundle\Security\Authentication\Token\TokenChecker;
@@ -11,7 +12,6 @@ use Contao\Date;
 use Contao\MemberModel;
 use Contao\PageModel;
 use Contao\Versions;
-use Haste\Util\StringUtil;
 use NotificationCenter\Model\Notification;
 use Psr\Log\LoggerInterface;
 use Stripe\BalanceTransaction;
@@ -75,6 +75,7 @@ class CashctrlHelper
         private readonly Filesystem $filesystem,
         private readonly LoggerInterface $logger,
         private readonly LockFactory $lockFactory,
+        private readonly StringParser $stringParser,
         private readonly array $memberships,
         private readonly string $projectDir,
         private readonly int $paymentNotificationId,
@@ -176,7 +177,7 @@ class CashctrlHelper
             $tokens['payment_link'] = $this->getPaymentLink($invoice, $member);
         }
 
-        StringUtil::flatten($member->row(), 'member', $tokens);
+        $this->stringParser->flatten($member->row(), 'member', $tokens);
 
         $result = $notification->send($tokens);
 

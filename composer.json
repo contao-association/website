@@ -20,7 +20,8 @@
         "rapidmail/rapidmail-apiv3-client-php": "^1.1",
         "stripe/stripe-php": "^8",
         "paypal/paypal-checkout-sdk": "^1.0.2",
-        "terminal42/contao-build-tools": "dev-main"
+        "terminal42/contao-build-tools": "dev-main",
+        "codefog/contao-haste": "^5.1"
     },
     "require-dev": {
         "deployer/deployer": "^7.0"

@@ -4,10 +4,10 @@ declare(strict_types=1);
 
 namespace App\EventListener\MemberLog;
 
+use Codefog\HasteBundle\Formatter;
 use Contao\CoreBundle\DependencyInjection\Attribute\AsCallback;
 use Contao\StringUtil;
 use Doctrine\DBAL\Connection;
-use Haste\Util\Format;
 use Symfony\Contracts\Translation\TranslatorInterface;
 
 #[AsCallback(table: 'tl_member_log', target: 'list.sorting.child_record')]
@@ -16,6 +16,7 @@ class MemberLogListingListener
     public function __construct(
         private readonly Connection $connection,
         private readonly TranslatorInterface $translator,
+        private readonly Formatter $formatter,
     ) {
     }
 
@@ -26,7 +27,7 @@ class MemberLogListingListener
         }
 
         if ('registration' === $row['type']) {
-            return $this->generateLine(Format::datim($row['data']), $row);
+            return $this->generateLine($this->formatter->datim($row['data']), $row);
         }
 
         if ('personal_data' === $row['type']) {
@@ -53,9 +54,9 @@ class MemberLogListingListener
                 }
 
                 $text .= '<tr>
-    <td class="tl_file_list">'.Format::dcaLabel('tl_member', $field).'</td>
-    <td class="tl_file_list">'.Format::dcaValue('tl_member', $field, $difference['old']).'</td>
-    <td class="tl_file_list">'.Format::dcaValue('tl_member', $field, $difference['new']).'</td>
+    <td class="tl_file_list">'.$this->formatter->dcaLabel('tl_member', $field).'</td>
+    <td class="tl_file_list">'.$this->formatter->dcaValue('tl_member', $field, $difference['old']).'</td>
+    <td class="tl_file_list">'.$this->formatter->dcaValue('tl_member', $field, $difference['new']).'</td>
 </tr>';
             }
 
@@ -70,7 +71,7 @@ class MemberLogListingListener
     private function generateLine(string $text, array $row): string
     {
         $type = $GLOBALS['TL_DCA']['tl_member_log']['fields']['type']['reference'][$row['type']];
-        $dateAdded = Format::datim($row['dateAdded']);
+        $dateAdded = $this->formatter->datim($row['dateAdded']);
         $user = '';
 
         if ($row['user']) {
