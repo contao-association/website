@@ -18,6 +18,7 @@ use Symfony\Component\Console\Style\SymfonyStyle;
 class RecurringInvoicesCommand extends Command
 {
     protected static $defaultName = 'app:invoices';
+
     protected static $defaultDescription = '(Re-)send recurring invoices for a given date.';
 
     public function __construct(
@@ -30,7 +31,7 @@ class RecurringInvoicesCommand extends Command
         parent::__construct();
     }
 
-    public function run(InputInterface $input, OutputInterface $output)
+    public function run(InputInterface $input, OutputInterface $output): int
     {
         $this->framework->initialize();
 
@@ -39,7 +40,7 @@ class RecurringInvoicesCommand extends Command
         if (!preg_match('/^\d{4}-\d{2}-\d{2}$/', $input->getArgument('date') ?? '')) {
             $io->error('Invalid date format');
 
-            return 1;
+            return Command::FAILURE;
         }
 
         $date = new \DateTimeImmutable($input->getArgument('date'));
@@ -47,7 +48,7 @@ class RecurringInvoicesCommand extends Command
         if ($date->format('Y-m-d') !== $input->getArgument('date')) {
             $io->error('Invalid date format');
 
-            return 1;
+            return Command::FAILURE;
         }
 
         // Find members which have been added today some time ago
@@ -72,10 +73,10 @@ class RecurringInvoicesCommand extends Command
                 AND (membership_stop='' OR membership_stop>UNIX_TIMESTAMP())
         ", [$date->format('Y-m-d'), $date->format('m-d'), $date->format('d')]);
 
-        if (false === $ids || null === ($members = MemberModel::findMultipleByIds($ids))) {
+        if ([] === $ids || null === ($members = MemberModel::findMultipleByIds($ids))) {
             $io->warning('No members found that renew on '.$date->format('F jS, Y'));
 
-            return 0;
+            return Command::SUCCESS;
         }
 
         foreach ($members as $member) {
@@ -87,7 +88,7 @@ class RecurringInvoicesCommand extends Command
                     $member->lastname,
                     $member->email,
                     $invoiced->format('F jS, Y'),
-                    $invoiced->format('Y-m-d')
+                    $invoiced->format('Y-m-d'),
                 ))
             ) {
                 continue;
@@ -105,7 +106,7 @@ class RecurringInvoicesCommand extends Command
             }
         }
 
-        return 0;
+        return Command::SUCCESS;
     }
 
     protected function configure(): void

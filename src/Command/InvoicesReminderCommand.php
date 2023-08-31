@@ -17,6 +17,7 @@ use Symfony\Component\Console\Style\SymfonyStyle;
 class InvoicesReminderCommand extends Command
 {
     protected static $defaultName = 'app:invoices:remind';
+
     protected static $defaultDescription = 'Send reminders for overdue invoices.';
 
     public function __construct(
@@ -27,7 +28,7 @@ class InvoicesReminderCommand extends Command
         parent::__construct();
     }
 
-    public function run(InputInterface $input, OutputInterface $output)
+    public function run(InputInterface $input, OutputInterface $output): int
     {
         $this->framework->initialize();
 
@@ -63,7 +64,7 @@ class InvoicesReminderCommand extends Command
                     $member->lastname,
                     $member->email,
                     $order->getNr(),
-                    $invoiceDueDate->format('Y-m-d')
+                    $invoiceDueDate->format('Y-m-d'),
                 ))
             ) {
                 continue;

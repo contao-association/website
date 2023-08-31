@@ -39,10 +39,10 @@ class MemberVersionListener
         $this->handleVersion(
             $this->connection->fetchOne(
                 "SELECT data FROM tl_version WHERE fromTable='tl_member' AND pid=? AND version<? ORDER BY version DESC LIMIT 1",
-                [$memberId, $versionNumber]
+                [$memberId, $versionNumber],
             ),
             $memberId,
-            $newData
+            $newData,
         );
     }
 
@@ -59,10 +59,10 @@ class MemberVersionListener
         $this->handleVersion(
             $this->connection->fetchOne(
                 "SELECT data FROM tl_version WHERE fromTable='tl_member' AND pid=? AND version!=? ORDER BY version DESC LIMIT 1",
-                [$memberId, $versionNumber]
+                [$memberId, $versionNumber],
             ),
             $memberId,
-            $newData
+            $newData,
         );
     }
 
@@ -70,7 +70,7 @@ class MemberVersionListener
     {
         $registrationCount = (int) $this->connection->fetchOne(
             "SELECT COUNT(*) FROM tl_member_log WHERE pid=? AND type='registration'",
-            [$memberId]
+            [$memberId],
         );
 
         if ($registrationCount > 0) {
@@ -85,7 +85,7 @@ class MemberVersionListener
                 'dateAdded' => $data['dateAdded'],
                 'type' => 'registration',
                 'data' => $data['dateAdded'],
-            ]
+            ],
         );
     }
 

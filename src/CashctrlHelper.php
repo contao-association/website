@@ -51,11 +51,15 @@ class CashctrlHelper
     use ErrorHandlingTrait;
 
     final public const STATUS_OPEN = 16;
+
     final public const STATUS_PAID = 18;
+
     final public const STATUS_OVERDUE = 86;
+
     final public const STATUS_NOTIFIED = 87;
 
     private array $dateFormat = [];
+
     private array $accountIds = [];
 
     public function __construct(
@@ -127,7 +131,6 @@ class CashctrlHelper
             return null;
         }
 
-        $invoiceDate ??= new \DateTimeImmutable();
         /** @noinspection CallableParameterUseCaseInTypeContextInspection */
         $invoiceDate = $invoiceDate->setTime(0, 0);
 
@@ -211,7 +214,7 @@ class CashctrlHelper
 
         $this->filesystem->dumpFile(
             $this->projectDir.'/'.$targetFile,
-            $this->downloadInvoice($invoice, $templateId, $language)
+            $this->downloadInvoice($invoice, $templateId, $language),
         );
 
         return $targetFile;
@@ -354,7 +357,7 @@ class CashctrlHelper
             $amount,
             $this->getAccountId($account),
             $this->getAccountId(1106),
-            $created
+            $created,
         );
         $entry->setReference($reference);
         $entry->setTitle($title);
@@ -391,7 +394,7 @@ class CashctrlHelper
             $transaction,
             $created,
             $entry->getReference(),
-            'Stripe Gebühren für '.$order->getNr()
+            'Stripe Gebühren für '.$order->getNr(),
         );
 
         // Re-fetch order with updated booking entry
@@ -433,7 +436,7 @@ class CashctrlHelper
             $invoiceDate->format($monthly ? 'm-Y' : 'Y'),
             $member->firstname,
             $member->lastname,
-            $member->company ? ', '.$member->company : ''
+            $member->company ? ', '.$member->company : '',
         );
 
         $order = new Order((int) $member->cashctrl_id, 4);
@@ -450,7 +453,7 @@ class CashctrlHelper
                 $member,
                 $invoiceDate,
                 $membership['freeMember'] ?? false ? 0 : null,
-                $monthly
+                $monthly,
             ));
         }
 
@@ -474,7 +477,7 @@ class CashctrlHelper
                 (float) ($transaction->fee / 100),
                 $this->getAccountId(1106),
                 $this->getAccountId(6842),
-                $created
+                $created,
             );
             $fee->setReference($reference);
             $fee->setTitle($title);
@@ -646,7 +649,7 @@ class CashctrlHelper
             'invoice_name.'.$subscription,
             [],
             'messages',
-            $member->language ?: 'de'
+            $member->language ?: 'de',
         );
 
         $itemDescription = $this->translator->trans(
@@ -656,7 +659,7 @@ class CashctrlHelper
                 '{to}' => $invoiceDate->add(new \DateInterval($monthly ? 'P1M' : 'P1Y'))->sub(new \DateInterval('P1D'))->format('d.m.Y'),
             ],
             'messages',
-            $member->language ?: 'de'
+            $member->language ?: 'de',
         );
 
         $membership = $this->memberships[$subscription];
@@ -668,7 +671,7 @@ class CashctrlHelper
         $item = new OrderItem(
             $membership['accountId'],
             $itemName,
-            (float) $price
+            (float) $price,
         );
         $item->setQuantity('month' === $membership['type'] && !$monthly ? 12 : 1);
         $item->setDescription($itemDescription);

@@ -13,6 +13,7 @@ use Rapidmail\ApiClient\Service\V1\Api\Recipients\Recipient\RecipientService;
 class RapidmailHelper
 {
     private readonly Client $client;
+
     private readonly int $recipientlistId;
 
     private RecipientService|null $recipients = null;
@@ -79,7 +80,7 @@ class RapidmailHelper
 
         $this->recipients()->update(
             $recipient['id'],
-            $this->compileRecipientData($member)
+            $this->compileRecipientData($member),
         );
     }
 

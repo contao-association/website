@@ -20,7 +20,7 @@ class MemberLogListingListener
     ) {
     }
 
-    public function __invoke(array $row)
+    public function __invoke(array $row): string
     {
         if ('note' === $row['type']) {
             return $this->generateLine(nl2br((string) $row['text']), $row);

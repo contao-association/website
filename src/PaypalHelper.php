@@ -117,7 +117,7 @@ class PaypalHelper
                     null,
                     [
                         'transaction' => $transaction,
-                    ]
+                    ],
                 );
                 break;
         }
@@ -141,7 +141,7 @@ class PaypalHelper
             abs($feeAmount),
             $this->cashctrlHelper->getAccountId(1040),
             $this->cashctrlHelper->getAccountId(6841),
-            $this->getDateAdded($transaction)
+            $this->getDateAdded($transaction),
         );
         $fee->setReference($journal->getReference());
         $fee->setTitle('PayPal Gebühren für '.$journal->getTitle());

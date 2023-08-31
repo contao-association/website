@@ -67,7 +67,7 @@ class PaymentsController extends AbstractFrontendModuleController
             try {
                 $session = $this->stripeClient->checkout->sessions->retrieve(
                     $request->query->get('session_id'),
-                    ['expand' => ['setup_intent']]
+                    ['expand' => ['setup_intent']],
                 );
                 $this->stripeHelper->storePaymentMethod($session);
             } catch (ApiErrorException $exception) {
@@ -101,7 +101,7 @@ class PaymentsController extends AbstractFrontendModuleController
                                 [
                                     'member' => $member->row(),
                                     'payment_method' => $paymentMethod->toArray(),
-                                ]
+                                ],
                             );
                         }
                         break;
@@ -120,7 +120,7 @@ class PaymentsController extends AbstractFrontendModuleController
                             [
                                 'member' => $member->row(),
                                 'payment_method' => $paymentMethod->toArray(),
-                            ]
+                            ],
                         );
                 }
             } catch (ApiErrorException $exception) {

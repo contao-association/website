@@ -15,6 +15,7 @@ use Symfony\Component\Console\Style\SymfonyStyle;
 class StripeImportCommand extends Command
 {
     protected static $defaultName = 'app:stripe:import';
+
     protected static $defaultDescription = 'Import Stripe transactions into CashCtrl.';
 
     public function __construct(
@@ -38,7 +39,7 @@ class StripeImportCommand extends Command
         try {
             $from = $this->getDate($input->getArgument('from'));
             $to = $this->getDate($input->getArgument('to') ?: $input->getArgument('from'));
-        } catch (\RuntimeException $exception) {
+        } catch (\RuntimeException) {
             $io->error('Invalid date format');
 
             return Command::FAILURE;

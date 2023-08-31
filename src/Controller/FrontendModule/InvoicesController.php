@@ -113,7 +113,7 @@ class InvoicesController extends AbstractFrontendModuleController
                             'orderId' => $order->getId(),
                             'cancel_url' => $this->getPageModel()->getAbsoluteUrl(),
                         ],
-                        UrlGeneratorInterface::ABSOLUTE_URL
+                        UrlGeneratorInterface::ABSOLUTE_URL,
                     );
                     $paymentHref = $this->uriSigner->sign($paymentHref);
                 }

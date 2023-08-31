@@ -33,7 +33,7 @@ class RapidmailSyncCron
 
         $recipientsWithoutModel = array_diff(
             $recipientForeignIds,
-            array_keys($members)
+            array_keys($members),
         );
 
         if (!empty($recipientsWithoutModel)) {

@@ -16,6 +16,7 @@ use Symfony\Component\Console\Style\SymfonyStyle;
 class CashctrlSyncCommand extends Command
 {
     protected static $defaultName = 'app:cashctrl:sync';
+
     protected static $defaultDescription = 'Updates all member data in Cashctrl.';
 
     public function __construct(

@@ -29,7 +29,7 @@ class PaymentPageController
     ) {
     }
 
-    public function __invoke(int $orderId, PageModel $pageModel, Request $request)
+    public function __invoke(int $orderId, PageModel $pageModel, Request $request): Response
     {
         if (!$this->uriSigner->checkRequest($request)) {
             throw new BadRequestException();

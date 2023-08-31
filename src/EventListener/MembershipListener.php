@@ -20,7 +20,7 @@ class MembershipListener
         private readonly Connection $connection,
         private readonly Security $security,
         private readonly TranslatorInterface $translator,
-        private array $memberships,
+        private readonly array $memberships,
     ) {
     }
 
@@ -115,7 +115,7 @@ class MembershipListener
                 'username' => $email,
                 'groups' => serialize($groups),
             ],
-            ['id' => $data->id]
+            ['id' => $data->id],
         );
     }
 
@@ -177,6 +177,6 @@ class MembershipListener
         $date = \DateTime::createFromFormat('U', $user->membership_invoiced);
         $date->add(new \DateInterval('P1D'));
 
-        return Date::parse('d. F Y', $date->format('U'));
+        return Date::parse('d. F Y', (int) $date->format('U'));
     }
 }

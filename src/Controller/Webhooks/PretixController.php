@@ -20,7 +20,7 @@ class PretixController
     {
     }
 
-    public function __invoke(Request $request)
+    public function __invoke(Request $request): Response
     {
         $data = json_decode($request->getContent(), true, 512, JSON_THROW_ON_ERROR);
 

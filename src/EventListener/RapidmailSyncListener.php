@@ -41,7 +41,7 @@ class RapidmailSyncListener
             ->params()
             ->newQueryParam()
             ->setRecipientlistId($this->rapidmail->getRecipientlistId())
-            ->setForeignId((int) $member->id)
+            ->setForeignId((string) $member->id)
         ;
 
         try {

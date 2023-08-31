@@ -13096,12 +13096,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/terminal42/contao-build-tools.git",
-                "reference": "b0a58240860ac4a35a793041bececcf1a2b1e921"
+                "reference": "a0e839dab1d8478578a66978621515bdeb24a51f"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/terminal42/contao-build-tools/zipball/b0a58240860ac4a35a793041bececcf1a2b1e921",
-                "reference": "b0a58240860ac4a35a793041bececcf1a2b1e921",
+                "url": "https://api.github.com/repos/terminal42/contao-build-tools/zipball/a0e839dab1d8478578a66978621515bdeb24a51f",
+                "reference": "a0e839dab1d8478578a66978621515bdeb24a51f",
                 "shasum": ""
             },
             "require": {
@@ -13157,7 +13157,7 @@
                     "type": "other"
                 }
             ],
-            "time": "2023-08-30T12:57:06+00:00"
+            "time": "2023-08-31T05:15:34+00:00"
         },
         {
             "name": "terminal42/contao-conditionalformfields",

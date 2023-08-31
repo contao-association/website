@@ -49,7 +49,7 @@ class CashctrlImportCommand extends Command
 
         $header = fgetcsv($fp);
 
-        if (false === $header || null === $header) {
+        if (false === $header) {
             throw new \RuntimeException('Ungültige Import-Datei.');
         }
 
@@ -262,6 +262,8 @@ class CashctrlImportCommand extends Command
      * Decode numbers in CSV to int or float values.
      *
      * @see https://stackoverflow.com/questions/65255283/keep-integer-and-float-types-when-converting-csv-data-to-php-arrays-with-str-get
+     *
+     * @return array<string|int>
      */
     private function mapTypes(array $line): array
     {

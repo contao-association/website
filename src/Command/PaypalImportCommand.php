@@ -14,6 +14,7 @@ use Symfony\Component\Console\Style\SymfonyStyle;
 class PaypalImportCommand extends Command
 {
     protected static $defaultName = 'app:paypal:import';
+
     protected static $defaultDescription = 'Import PayPal payments into CashCtrl.';
 
     public function __construct(private readonly PaypalHelper $paypalHelper)

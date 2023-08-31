@@ -80,7 +80,7 @@ class StripeHelper
                     1090,
                     $charge->description ?? $charge->payment_intent,
                     "Ko-fi {$charge->metadata['Ko-fi Transaction Id']} - {$charge->billing_details['name']}",
-                    $charge->balance_transaction
+                    $charge->balance_transaction,
                 );
                 break;
 
@@ -91,7 +91,7 @@ class StripeHelper
                     1105,
                     $charge->description,
                     'Pretix Bestellung '.($charge->metadata['order'] ?? ''),
-                    $charge->balance_transaction
+                    $charge->balance_transaction,
                 );
                 break;
 

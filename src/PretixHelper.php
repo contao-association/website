@@ -28,7 +28,7 @@ class PretixHelper
                     'Authorization' => 'Token '.$this->pretixToken,
                     'Accept' => 'application/json',
                 ],
-            ]
+            ],
         );
 
         return $response->toArray();
@@ -44,7 +44,7 @@ class PretixHelper
                     'Authorization' => 'Token '.$this->pretixToken,
                     'Accept' => 'application/json',
                 ],
-            ]
+            ],
         );
 
         return $response->toArray()['results'];

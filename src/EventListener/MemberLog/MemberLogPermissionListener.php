@@ -70,7 +70,7 @@ class MemberLogPermissionListener
                 'dateAdded' => $dc->activeRecord->dateAdded ?: time(),
                 'user' => $user->id,
             ],
-            ['id' => $dc->id]
+            ['id' => $dc->id],
         );
     }
 }

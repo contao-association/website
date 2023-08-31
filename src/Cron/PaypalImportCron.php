@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace App\Cron;
 
-use App\CashctrlHelper;
 use App\PaypalHelper;
 use Contao\CoreBundle\DependencyInjection\Attribute\AsCronJob;
 use Terminal42\ContaoBuildTools\ErrorHandlingTrait;
@@ -14,10 +13,8 @@ class PaypalImportCron
 {
     use ErrorHandlingTrait;
 
-    public function __construct(
-        private readonly PaypalHelper $paypalHelper,
-        private readonly CashctrlHelper $cashctrlHelper,
-    ) {
+    public function __construct(private readonly PaypalHelper $paypalHelper)
+    {
     }
 
     public function __invoke(): void

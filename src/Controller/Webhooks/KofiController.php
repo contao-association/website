@@ -21,7 +21,7 @@ class KofiController
     ) {
     }
 
-    public function __invoke(Request $request)
+    public function __invoke(Request $request): Response
     {
         $data = json_decode($request->request->get('data'), true, 512, JSON_THROW_ON_ERROR);
 
@@ -37,7 +37,7 @@ class KofiController
             (float) $data['amount'],
             $this->cashctrlHelper->getAccountId(3457),
             $this->cashctrlHelper->getAccountId(1090),
-            new \DateTime($data['timestamp'])
+            new \DateTime($data['timestamp']),
         );
         $journal->setReference($data['kofi_transaction_id']);
         $journal->setTitle($data['type'].' from Ko-fi.com - '.$data['from_name']);

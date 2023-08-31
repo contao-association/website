@@ -17,6 +17,7 @@ use Symfony\Component\Console\Style\SymfonyStyle;
 class RapidmailSyncCommand extends Command
 {
     protected static $defaultName = 'app:rapidmail:sync';
+
     protected static $defaultDescription = 'Updates recipient list in Rapidmail.';
 
     public function __construct(
@@ -41,7 +42,7 @@ class RapidmailSyncCommand extends Command
 
         $recipientsWithoutModel = array_diff(
             $recipientForeignIds,
-            array_keys($members)
+            array_keys($members),
         );
 
         if (!empty($recipientsWithoutModel)) {
