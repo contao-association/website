@@ -406,16 +406,16 @@
         },
         {
             "name": "composer/semver",
-            "version": "3.3.2",
+            "version": "3.4.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/composer/semver.git",
-                "reference": "3953f23262f2bff1919fc82183ad9acb13ff62c9"
+                "reference": "35e8d0af4486141bc745f23a29cc2091eb624a32"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/composer/semver/zipball/3953f23262f2bff1919fc82183ad9acb13ff62c9",
-                "reference": "3953f23262f2bff1919fc82183ad9acb13ff62c9",
+                "url": "https://api.github.com/repos/composer/semver/zipball/35e8d0af4486141bc745f23a29cc2091eb624a32",
+                "reference": "35e8d0af4486141bc745f23a29cc2091eb624a32",
                 "shasum": ""
             },
             "require": {
@@ -465,9 +465,9 @@
                 "versioning"
             ],
             "support": {
-                "irc": "irc://irc.freenode.org/composer",
+                "irc": "ircs://irc.libera.chat:6697/composer",
                 "issues": "https://github.com/composer/semver/issues",
-                "source": "https://github.com/composer/semver/tree/3.3.2"
+                "source": "https://github.com/composer/semver/tree/3.4.0"
             },
             "funding": [
                 {
@@ -483,20 +483,20 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2022-04-01T19:23:25+00:00"
+            "time": "2023-08-31T09:50:34+00:00"
         },
         {
             "name": "contao-association/contao-voting",
-            "version": "2.4.0",
+            "version": "2.4.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/contao-association/contao-voting.git",
-                "reference": "85a62eb9f0cc3761a06986992d87fc6fff44c035"
+                "reference": "8e8c4c1f5ea84beddd6db3f213854a94891880e3"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/contao-association/contao-voting/zipball/85a62eb9f0cc3761a06986992d87fc6fff44c035",
-                "reference": "85a62eb9f0cc3761a06986992d87fc6fff44c035",
+                "url": "https://api.github.com/repos/contao-association/contao-voting/zipball/8e8c4c1f5ea84beddd6db3f213854a94891880e3",
+                "reference": "8e8c4c1f5ea84beddd6db3f213854a94891880e3",
                 "shasum": ""
             },
             "require": {
@@ -533,10 +533,10 @@
                 "voting"
             ],
             "support": {
-                "source": "https://github.com/contao-association/contao-voting/tree/2.4.0",
+                "source": "https://github.com/contao-association/contao-voting/tree/2.4.1",
                 "issues": "https://github.com/contao-association/contao-voting/issues"
             },
-            "time": "2023-08-25T08:09:39+00:00"
+            "time": "2023-09-01T14:27:14+00:00"
         },
         {
             "name": "contao-community-alliance/composer-plugin",
@@ -882,16 +882,16 @@
         },
         {
             "name": "contao-components/jquery",
-            "version": "3.7.0",
+            "version": "3.7.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/contao-components/jquery.git",
-                "reference": "32848c0bc366c6075d7a1b1f73f524c42c1f68cb"
+                "reference": "34215fee962fc9b9831600d6b983d2f77d9e6f71"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/contao-components/jquery/zipball/32848c0bc366c6075d7a1b1f73f524c42c1f68cb",
-                "reference": "32848c0bc366c6075d7a1b1f73f524c42c1f68cb",
+                "url": "https://api.github.com/repos/contao-components/jquery/zipball/34215fee962fc9b9831600d6b983d2f77d9e6f71",
+                "reference": "34215fee962fc9b9831600d6b983d2f77d9e6f71",
                 "shasum": ""
             },
             "require": {
@@ -911,9 +911,9 @@
             "description": "jQuery integration for Contao Open Source CMS",
             "support": {
                 "issues": "https://github.com/contao-components/jquery/issues",
-                "source": "https://github.com/contao-components/jquery/tree/3.7.0"
+                "source": "https://github.com/contao-components/jquery/tree/3.7.1"
             },
-            "time": "2023-05-12T06:04:37+00:00"
+            "time": "2023-08-31T10:23:57+00:00"
         },
         {
             "name": "contao-components/jquery-ui",
@@ -13096,12 +13096,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/terminal42/contao-build-tools.git",
-                "reference": "a0e839dab1d8478578a66978621515bdeb24a51f"
+                "reference": "b62a26f7c4ba0883ec6921e926c4eab4a92b0dda"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/terminal42/contao-build-tools/zipball/a0e839dab1d8478578a66978621515bdeb24a51f",
-                "reference": "a0e839dab1d8478578a66978621515bdeb24a51f",
+                "url": "https://api.github.com/repos/terminal42/contao-build-tools/zipball/b62a26f7c4ba0883ec6921e926c4eab4a92b0dda",
+                "reference": "b62a26f7c4ba0883ec6921e926c4eab4a92b0dda",
                 "shasum": ""
             },
             "require": {
@@ -13157,7 +13157,7 @@
                     "type": "other"
                 }
             ],
-            "time": "2023-08-31T05:15:34+00:00"
+            "time": "2023-09-01T14:40:20+00:00"
         },
         {
             "name": "terminal42/contao-conditionalformfields",
