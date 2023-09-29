@@ -27,7 +27,7 @@ class MemberLogListingListener
         }
 
         if ('registration' === $row['type']) {
-            return $this->generateLine($this->formatter->datim($row['data']), $row);
+            return $this->generateLine($this->formatter->datim((int) $row['data']), $row);
         }
 
         if ('personal_data' === $row['type']) {
