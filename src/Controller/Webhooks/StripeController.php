@@ -49,7 +49,7 @@ class StripeController
                  */
                 $paymentIntent = $event->data->object;
 
-                if ('ca_9uvq9hdD9LslRRCLivQ5cDhHsmFLX023' === $paymentIntent->application) {
+                if (StripeHelper::APP_PRETIX === $paymentIntent->application) {
                     break;
                 }
 

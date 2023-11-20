@@ -21,6 +21,9 @@ class StripeHelper
 {
     use ErrorHandlingTrait;
 
+    public const APP_KOFI = 'ca_BNCWzVqBWfaL53LdFYzpoumNOsvo2936';
+    public const APP_PRETIX = 'ca_9uvq9hdD9LslRRCLivQ5cDhHsmFLX023';
+
     public function __construct(
         private readonly ContaoFramework $framework,
         private readonly StripeClient $client,
@@ -73,7 +76,7 @@ class StripeHelper
         }
 
         switch ($charge->application) {
-            case 'ca_BNCWzVqBWfaL53LdFYzpoumNOsvo2936': // Ko-fi
+            case self::APP_KOFI:
                 $this->cashctrlHelper->bookToJournal(
                     (float) ($charge->amount / 100),
                     \DateTime::createFromFormat('U', (string) $charge->created),
@@ -84,7 +87,7 @@ class StripeHelper
                 );
                 break;
 
-            case 'ca_9uvq9hdD9LslRRCLivQ5cDhHsmFLX023': // Pretix
+            case self::APP_PRETIX:
                 $this->cashctrlHelper->bookToJournal(
                     (float) ($charge->amount / 100),
                     \DateTime::createFromFormat('U', (string) $charge->created),
