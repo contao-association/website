@@ -38,6 +38,9 @@ unset(
 $GLOBALS['TL_DCA']['tl_member']['fields']['language']['options'] = ['de' => 'Deutsch', 'en' => 'English'];
 $GLOBALS['TL_DCA']['tl_member']['fields']['tstamp']['eval']['doNotLog'] = true;
 $GLOBALS['TL_DCA']['tl_member']['fields']['password']['eval']['doNotLog'] = true;
+$GLOBALS['TL_DCA']['tl_member']['fields']['trustedTokenVersion']['eval']['doNotLog'] = true;
+$GLOBALS['TL_DCA']['tl_member']['fields']['backupCodes']['eval']['doNotLog'] = true;
+$GLOBALS['TL_DCA']['tl_member']['fields']['secret']['eval']['doNotLog'] = true;
 
 $GLOBALS['TL_DCA']['tl_member']['fields']['tax_id'] = [
     'inputType' => 'text',
