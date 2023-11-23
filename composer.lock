@@ -264,16 +264,16 @@
         },
         {
             "name": "codefog/contao-haste",
-            "version": "5.1.12",
+            "version": "5.1.13",
             "source": {
                 "type": "git",
                 "url": "https://github.com/codefog/contao-haste.git",
-                "reference": "8a6084058e6aad4f135ed6cecedb492f921b9c48"
+                "reference": "25b2f0ec3d7d3199ceb3c43c1a3193a33d4eebfb"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/codefog/contao-haste/zipball/8a6084058e6aad4f135ed6cecedb492f921b9c48",
-                "reference": "8a6084058e6aad4f135ed6cecedb492f921b9c48",
+                "url": "https://api.github.com/repos/codefog/contao-haste/zipball/25b2f0ec3d7d3199ceb3c43c1a3193a33d4eebfb",
+                "reference": "25b2f0ec3d7d3199ceb3c43c1a3193a33d4eebfb",
                 "shasum": ""
             },
             "require": {
@@ -326,7 +326,7 @@
                     "type": "github"
                 }
             ],
-            "time": "2023-11-17T12:40:26+00:00"
+            "time": "2023-11-20T14:57:50+00:00"
         },
         {
             "name": "composer/ca-bundle",
@@ -589,16 +589,16 @@
         },
         {
             "name": "contao-components/ace",
-            "version": "1.31.1",
+            "version": "1.31.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/contao-components/ace.git",
-                "reference": "c12df805829c72aa41fe93b12d7c14f643f4dabc"
+                "reference": "25e4c4ddaceaaa517a0260d6f77d05564b49f698"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/contao-components/ace/zipball/c12df805829c72aa41fe93b12d7c14f643f4dabc",
-                "reference": "c12df805829c72aa41fe93b12d7c14f643f4dabc",
+                "url": "https://api.github.com/repos/contao-components/ace/zipball/25e4c4ddaceaaa517a0260d6f77d05564b49f698",
+                "reference": "25e4c4ddaceaaa517a0260d6f77d05564b49f698",
                 "shasum": ""
             },
             "require": {
@@ -618,9 +618,9 @@
             "description": "ACE code editor integration for Contao Open Source CMS",
             "support": {
                 "issues": "https://github.com/contao-components/ace/issues",
-                "source": "https://github.com/contao-components/ace/tree/1.31.1"
+                "source": "https://github.com/contao-components/ace/tree/1.31.2"
             },
-            "time": "2023-10-31T10:26:20+00:00"
+            "time": "2023-11-21T08:10:18+00:00"
         },
         {
             "name": "contao-components/chosen",
@@ -1166,16 +1166,16 @@
         },
         {
             "name": "contao-components/tinymce4",
-            "version": "5.10.8",
+            "version": "5.10.9",
             "source": {
                 "type": "git",
                 "url": "https://github.com/contao-components/tinymce4.git",
-                "reference": "a4673ae1665d82d190ca3b31c46ce9f4cc9e76f7"
+                "reference": "9c98aacad313cd94e4187f303ef88e6c8a22516d"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/contao-components/tinymce4/zipball/a4673ae1665d82d190ca3b31c46ce9f4cc9e76f7",
-                "reference": "a4673ae1665d82d190ca3b31c46ce9f4cc9e76f7",
+                "url": "https://api.github.com/repos/contao-components/tinymce4/zipball/9c98aacad313cd94e4187f303ef88e6c8a22516d",
+                "reference": "9c98aacad313cd94e4187f303ef88e6c8a22516d",
                 "shasum": ""
             },
             "require": {
@@ -1195,9 +1195,9 @@
             "description": "TinyMCE integration for Contao Open Source CMS",
             "support": {
                 "issues": "https://github.com/contao-components/tinymce4/issues",
-                "source": "https://github.com/contao-components/tinymce4/tree/5.10.8"
+                "source": "https://github.com/contao-components/tinymce4/tree/5.10.9"
             },
-            "time": "2023-10-23T09:41:08+00:00"
+            "time": "2023-11-21T08:13:29+00:00"
         },
         {
             "name": "contao/conflicts",
@@ -13051,18 +13051,20 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/terminal42/cashctrl-api.git",
-                "reference": "5eb5e6921c784d48d447bc338039c8d2a524db45"
+                "reference": "83630e4147efff2c21631993751e874ae94dd92b"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/terminal42/cashctrl-api/zipball/5eb5e6921c784d48d447bc338039c8d2a524db45",
-                "reference": "5eb5e6921c784d48d447bc338039c8d2a524db45",
+                "url": "https://api.github.com/repos/terminal42/cashctrl-api/zipball/83630e4147efff2c21631993751e874ae94dd92b",
+                "reference": "83630e4147efff2c21631993751e874ae94dd92b",
                 "shasum": ""
             },
             "require": {
                 "ext-json": "*",
                 "php": "^7.4 || ^8.0",
-                "psr/http-client": "^1.0"
+                "psr/http-client": "^1.0",
+                "psr/http-factory": "^1.0",
+                "psr/http-message": "^1.0 || ^2.0"
             },
             "suggest": {
                 "ext-dom": "To read and write custom fields."
@@ -13104,7 +13106,7 @@
                     "type": "other"
                 }
             ],
-            "time": "2023-05-26T15:19:43+00:00"
+            "time": "2023-11-23T12:52:50+00:00"
         },
         {
             "name": "terminal42/cashctrl-bundle",
@@ -13837,27 +13839,27 @@
         },
         {
             "name": "twig/extra-bundle",
-            "version": "v3.7.1",
+            "version": "v3.8.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/twigphp/twig-extra-bundle.git",
-                "reference": "f10baafe6eb0ecd615d52d5cbfb713a39f68e8f3"
+                "reference": "32807183753de0388c8e59f7ac2d13bb47311140"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/twigphp/twig-extra-bundle/zipball/f10baafe6eb0ecd615d52d5cbfb713a39f68e8f3",
-                "reference": "f10baafe6eb0ecd615d52d5cbfb713a39f68e8f3",
+                "url": "https://api.github.com/repos/twigphp/twig-extra-bundle/zipball/32807183753de0388c8e59f7ac2d13bb47311140",
+                "reference": "32807183753de0388c8e59f7ac2d13bb47311140",
                 "shasum": ""
             },
             "require": {
                 "php": ">=7.2.5",
-                "symfony/framework-bundle": "^5.4|^6.0",
-                "symfony/twig-bundle": "^5.4|^6.0",
-                "twig/twig": "^2.7|^3.0"
+                "symfony/framework-bundle": "^5.4|^6.0|^7.0",
+                "symfony/twig-bundle": "^5.4|^6.0|^7.0",
+                "twig/twig": "^3.0"
             },
             "require-dev": {
                 "league/commonmark": "^1.0|^2.0",
-                "symfony/phpunit-bridge": "^5.4|^6.3",
+                "symfony/phpunit-bridge": "^6.4|^7.0",
                 "twig/cache-extra": "^3.0",
                 "twig/cssinliner-extra": "^2.12|^3.0",
                 "twig/html-extra": "^2.12|^3.0",
@@ -13895,7 +13897,7 @@
                 "twig"
             ],
             "support": {
-                "source": "https://github.com/twigphp/twig-extra-bundle/tree/v3.7.1"
+                "source": "https://github.com/twigphp/twig-extra-bundle/tree/v3.8.0"
             },
             "funding": [
                 {
@@ -13907,30 +13909,31 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2023-07-29T15:34:56+00:00"
+            "time": "2023-11-21T14:02:01+00:00"
         },
         {
             "name": "twig/twig",
-            "version": "v3.7.1",
+            "version": "v3.8.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/twigphp/Twig.git",
-                "reference": "a0ce373a0ca3bf6c64b9e3e2124aca502ba39554"
+                "reference": "9d15f0ac07f44dc4217883ec6ae02fd555c6f71d"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/twigphp/Twig/zipball/a0ce373a0ca3bf6c64b9e3e2124aca502ba39554",
-                "reference": "a0ce373a0ca3bf6c64b9e3e2124aca502ba39554",
+                "url": "https://api.github.com/repos/twigphp/Twig/zipball/9d15f0ac07f44dc4217883ec6ae02fd555c6f71d",
+                "reference": "9d15f0ac07f44dc4217883ec6ae02fd555c6f71d",
                 "shasum": ""
             },
             "require": {
                 "php": ">=7.2.5",
                 "symfony/polyfill-ctype": "^1.8",
-                "symfony/polyfill-mbstring": "^1.3"
+                "symfony/polyfill-mbstring": "^1.3",
+                "symfony/polyfill-php80": "^1.22"
             },
             "require-dev": {
                 "psr/container": "^1.0|^2.0",
-                "symfony/phpunit-bridge": "^5.4.9|^6.3"
+                "symfony/phpunit-bridge": "^5.4.9|^6.3|^7.0"
             },
             "type": "library",
             "autoload": {
@@ -13966,7 +13969,7 @@
             ],
             "support": {
                 "issues": "https://github.com/twigphp/Twig/issues",
-                "source": "https://github.com/twigphp/Twig/tree/v3.7.1"
+                "source": "https://github.com/twigphp/Twig/tree/v3.8.0"
             },
             "funding": [
                 {
@@ -13978,7 +13981,7 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2023-08-28T11:09:02+00:00"
+            "time": "2023-11-21T18:54:41+00:00"
         },
         {
             "name": "ua-parser/uap-php",
