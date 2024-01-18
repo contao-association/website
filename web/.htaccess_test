@@ -5,6 +5,11 @@ AddHandler application/x-httpd-php82 .php
     SecFilterScanPOST Off
 </IfModule>
 
+# Use HTTP Strict Transport Security to force client to use secure connections only
+<IfModule mod_headers.c>
+    Header set Strict-Transport-Security "max-age=31536000" env=HTTPS
+</IfModule>
+
 AuthType Basic
 AuthName "Contao Association"
 AuthUserFile /home/contaoro/public_html/.htpasswd
