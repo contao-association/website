@@ -38,9 +38,15 @@ unset(
 $GLOBALS['TL_DCA']['tl_member']['fields']['language']['options'] = ['de' => 'Deutsch', 'en' => 'English'];
 $GLOBALS['TL_DCA']['tl_member']['fields']['tstamp']['eval']['doNotLog'] = true;
 $GLOBALS['TL_DCA']['tl_member']['fields']['password']['eval']['doNotLog'] = true;
-$GLOBALS['TL_DCA']['tl_member']['fields']['trustedTokenVersion']['eval']['doNotLog'] = true;
-$GLOBALS['TL_DCA']['tl_member']['fields']['backupCodes']['eval']['doNotLog'] = true;
+$GLOBALS['TL_DCA']['tl_member']['fields']['currentLogin']['eval']['doNotLog'] = true;
+$GLOBALS['TL_DCA']['tl_member']['fields']['lastLogin']['eval']['doNotLog'] = true;
+$GLOBALS['TL_DCA']['tl_member']['fields']['loginAttempts']['eval']['doNotLog'] = true;
+$GLOBALS['TL_DCA']['tl_member']['fields']['locked']['eval']['doNotLog'] = true;
+$GLOBALS['TL_DCA']['tl_member']['fields']['session']['eval']['doNotLog'] = true;
 $GLOBALS['TL_DCA']['tl_member']['fields']['secret']['eval']['doNotLog'] = true;
+$GLOBALS['TL_DCA']['tl_member']['fields']['useTwoFactor']['eval']['doNotLog'] = true;
+$GLOBALS['TL_DCA']['tl_member']['fields']['backupCodes']['eval']['doNotLog'] = true;
+$GLOBALS['TL_DCA']['tl_member']['fields']['trustedTokenVersion']['eval']['doNotLog'] = true;
 
 $GLOBALS['TL_DCA']['tl_member']['fields']['tax_id'] = [
     'inputType' => 'text',
