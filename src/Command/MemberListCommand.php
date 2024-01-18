@@ -36,7 +36,7 @@ class MemberListCommand extends Command
 
     protected function execute(InputInterface $input, OutputInterface $output): int
     {
-        $columns = $input->getOption('columns') ? explode(',', $input->getOption('columns')) : ['id', 'firstname', 'lastname', 'company', 'email', 'membership', 'language'];
+        $columns = $input->getOption('columns') ? explode(',', (string) $input->getOption('columns')) : ['id', 'firstname', 'lastname', 'company', 'email', 'membership', 'language'];
         $data = [];
 
         foreach ($this->getActiveMembers() as $member) {
@@ -61,7 +61,7 @@ class MemberListCommand extends Command
 
                 $stream = $output->getStream();
                 fputcsv($stream, array_keys($data[0]));
-                array_walk($data, fn ($row) => fputcsv($stream, $row));
+                array_walk($data, static fn ($row) => fputcsv($stream, $row));
                 break;
 
             case 'txt':

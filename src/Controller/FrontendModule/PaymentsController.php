@@ -70,7 +70,7 @@ class PaymentsController extends AbstractFrontendModuleController
                     ['expand' => ['setup_intent']],
                 );
                 $this->stripeHelper->storePaymentMethod($session);
-            } catch (ApiErrorException $exception) {
+            } catch (ApiErrorException) {
                 // Ignore if session cannot be found, stil reload the page and remove the query argument
             }
 

@@ -149,12 +149,16 @@ class InvoicesController extends AbstractFrontendModuleController
 
     private function addHarvestInvoicesForId(int $clientId, array &$invoices, string $dateFormat): void
     {
-        $response = $this->httpClient->request('GET', 'https://api.harvestapp.com/v2/invoices?client_id='.$clientId, [
-            'headers' => [
-                'Harvest-Account-Id' => $this->harvestId,
+        $response = $this->httpClient->request(
+            'GET',
+            'https://api.harvestapp.com/v2/invoices?client_id='.$clientId,
+            [
+                'headers' => [
+                    'Harvest-Account-Id' => $this->harvestId,
+                ],
+                'auth_bearer' => $this->harvestToken,
             ],
-            'auth_bearer' => $this->harvestToken,
-        ]);
+        );
 
         if (200 !== $response->getStatusCode()) {
             return;

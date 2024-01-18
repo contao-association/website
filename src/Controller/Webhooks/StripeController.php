@@ -53,16 +53,24 @@ class StripeController
                     break;
                 }
 
-                $this->sentryOrThrow('Please handle payment_intent.payment_failed', null, [
-                    'event' => $event->toArray(),
-                ]);
+                $this->sentryOrThrow(
+                    'Please handle payment_intent.payment_failed',
+                    null,
+                    [
+                        'event' => $event->toArray(),
+                    ],
+                );
                 // TODO handle failed payments
                 break;
 
             default:
-                $this->sentryOrThrow('Unsupported Stripe event: '.$event->type, null, [
-                    'event' => $event->toArray(),
-                ]);
+                $this->sentryOrThrow(
+                    'Unsupported Stripe event: '.$event->type,
+                    null,
+                    [
+                        'event' => $event->toArray(),
+                    ],
+                );
         }
 
         return new Response();

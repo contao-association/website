@@ -313,7 +313,8 @@ class CashctrlHelper
                 [
                     'order' => $order->toArray(),
                     'member' => $member->row(),
-                ]);
+                ],
+            );
         }
     }
 
@@ -372,9 +373,11 @@ class CashctrlHelper
     public function bookToOrder(Charge $charge, Order $order, bool $sendNotification = true): void
     {
         if (!$charge->balance_transaction) {
-            $this->sentryOrThrow('Missing balance_transaction to book Stripe charge '.$charge->id, null, [
-                'charge' => $charge->toArray(),
-            ]);
+            $this->sentryOrThrow(
+                'Missing balance_transaction to book Stripe charge '.$charge->id,
+                null,
+                ['charge' => $charge->toArray()],
+            );
 
             return;
         }
@@ -618,10 +621,14 @@ class CashctrlHelper
             return null;
         }
 
-        $url = $this->urlGenerator->generate(RouteObjectInterface::OBJECT_BASED_ROUTE_NAME, [
-            RouteObjectInterface::CONTENT_OBJECT => $paymentPage,
-            'orderId' => $order->getId(),
-        ], UrlGeneratorInterface::ABSOLUTE_URL);
+        $url = $this->urlGenerator->generate(
+            RouteObjectInterface::OBJECT_BASED_ROUTE_NAME,
+            [
+                RouteObjectInterface::CONTENT_OBJECT => $paymentPage,
+                'orderId' => $order->getId(),
+            ],
+            UrlGeneratorInterface::ABSOLUTE_URL,
+        );
 
         return $this->uriSigner->sign($url);
     }
@@ -689,10 +696,14 @@ class CashctrlHelper
             $lock = $this->lockFactory->createLock('cashctrl_order_'.$order->getId());
             $lock->acquire(true);
         } catch (ExceptionInterface $exception) {
-            $this->sentryOrThrow('Failed acquiring lock for Stripe charge.', $exception, [
-                'order' => $order->toArray(),
-                'member' => $member->row(),
-            ]);
+            $this->sentryOrThrow(
+                'Failed acquiring lock for Stripe charge.',
+                $exception,
+                [
+                    'order' => $order->toArray(),
+                    'member' => $member->row(),
+                ],
+            );
 
             return false;
         }
@@ -714,11 +725,15 @@ class CashctrlHelper
             ]);
 
             if (!\in_array($paymentIntent->status, ['succeeded', 'processing'], true)) {
-                $this->sentryOrThrow("Stripe PaymentIntent created with status \"{$paymentIntent->status}\"", null, [
-                    'payment_intent' => $paymentIntent->toArray(),
-                    'order' => $order->toArray(),
-                    'member' => $member->row(),
-                ]);
+                $this->sentryOrThrow(
+                    "Stripe PaymentIntent created with status \"{$paymentIntent->status}\"",
+                    null,
+                    [
+                        'payment_intent' => $paymentIntent->toArray(),
+                        'order' => $order->toArray(),
+                        'member' => $member->row(),
+                    ],
+                );
             }
 
             // Set order to "open" otherwise we can't add book entries
@@ -733,10 +748,14 @@ class CashctrlHelper
 
             return true;
         } catch (ApiErrorException $exception) {
-            $this->sentryOrThrow('Failed charging member invoice through Stripe.', $exception, [
-                'order' => $order->toArray(),
-                'member' => $member->row(),
-            ]);
+            $this->sentryOrThrow(
+                'Failed charging member invoice through Stripe.',
+                $exception,
+                [
+                    'order' => $order->toArray(),
+                    'member' => $member->row(),
+                ],
+            );
 
             return false;
         } finally {

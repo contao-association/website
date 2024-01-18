@@ -58,7 +58,7 @@
         type="submit"
         class="submit"
         value="<?= $this->submit ?>"
-        onclick="return confirm('<?= \Contao\StringUtil::specialchars($this->trans('vote_confirm', [], 'ContaoAssociationVotingBundle')) ?>')"
+        onclick="return confirm('<?= Contao\StringUtil::specialchars($this->trans('vote_confirm', [], 'ContaoAssociationVotingBundle')) ?>')"
       >
     </div>
     </div>

@@ -33,10 +33,14 @@ class PretixController
                     try {
                         $this->pretixHelper->bookOrder($data['event'], $invoices[0]);
                     } catch (\Exception $exception) {
-                        $this->sentryOrThrow($exception->getMessage(), $exception, [
-                            'data' => $data,
-                            'invoice' => $invoices[0],
-                        ]);
+                        $this->sentryOrThrow(
+                            $exception->getMessage(),
+                            $exception,
+                            [
+                                'data' => $data,
+                                'invoice' => $invoices[0],
+                            ],
+                        );
                     }
                 }
                 break;

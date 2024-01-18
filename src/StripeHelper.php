@@ -21,8 +21,9 @@ class StripeHelper
 {
     use ErrorHandlingTrait;
 
-    public const APP_KOFI = 'ca_BNCWzVqBWfaL53LdFYzpoumNOsvo2936';
-    public const APP_PRETIX = 'ca_9uvq9hdD9LslRRCLivQ5cDhHsmFLX023';
+    final public const APP_KOFI = 'ca_BNCWzVqBWfaL53LdFYzpoumNOsvo2936';
+
+    final public const APP_PRETIX = 'ca_9uvq9hdD9LslRRCLivQ5cDhHsmFLX023';
 
     public function __construct(
         private readonly ContaoFramework $framework,
@@ -103,9 +104,11 @@ class StripeHelper
                     $lock = $this->lockFactory->createLock('cashctrl_order_'.$charge->metadata->cashctrl_order_id);
                     $lock->acquire(true);
                 } catch (ExceptionInterface $exception) {
-                    $this->sentryOrThrow('Failed acquiring lock for Stripe webhook.', $exception, [
-                        'charge' => $charge->toArray(),
-                    ]);
+                    $this->sentryOrThrow(
+                        'Failed acquiring lock for Stripe webhook.',
+                        $exception,
+                        ['charge' => $charge->toArray()],
+                    );
 
                     return;
                 }
@@ -114,9 +117,11 @@ class StripeHelper
                     $order = $this->cashctrlHelper->order->read((int) $charge->metadata->cashctrl_order_id);
 
                     if (null === $order) {
-                        $this->sentryOrThrow('Order ID "'.$charge->metadata->cashctrl_order_id.'" for Stripe charge "'.$charge->id.'" not found', null, [
-                            'charge' => $charge->toArray(),
-                        ]);
+                        $this->sentryOrThrow(
+                            'Order ID "'.$charge->metadata->cashctrl_order_id.'" for Stripe charge "'.$charge->id.'" not found',
+                            null,
+                            ['charge' => $charge->toArray()],
+                        );
 
                         return;
                     }
@@ -126,16 +131,18 @@ class StripeHelper
                         return;
                     }
 
-                    $this->cashctrlHelper->bookToOrder($charge, $order, $order->getStatusId() !== CashctrlHelper::STATUS_NOTIFIED);
+                    $this->cashctrlHelper->bookToOrder($charge, $order, CashctrlHelper::STATUS_NOTIFIED !== $order->getStatusId());
                 } finally {
                     $lock->release();
                 }
                 break;
 
             default:
-                $this->sentryOrThrow("Unknown Stripe application \"$charge->application\"", null, [
-                    'charge' => $charge->toArray(),
-                ]);
+                $this->sentryOrThrow(
+                    "Unknown Stripe application \"$charge->application\"",
+                    null,
+                    ['charge' => $charge->toArray()],
+                );
         }
     }
 

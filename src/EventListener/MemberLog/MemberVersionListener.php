@@ -77,16 +77,13 @@ class MemberVersionListener
             return;
         }
 
-        $this->connection->insert(
-            'tl_member_log',
-            [
-                'pid' => $memberId,
-                'tstamp' => $data['dateAdded'],
-                'dateAdded' => $data['dateAdded'],
-                'type' => 'registration',
-                'data' => $data['dateAdded'],
-            ],
-        );
+        $this->connection->insert('tl_member_log', [
+            'pid' => $memberId,
+            'tstamp' => $data['dateAdded'],
+            'dateAdded' => $data['dateAdded'],
+            'type' => 'registration',
+            'data' => $data['dateAdded'],
+        ]);
     }
 
     private function handleVersion($versionData, int $memberId, array $newData): void
