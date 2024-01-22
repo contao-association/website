@@ -139,12 +139,12 @@ class CashctrlImportCommand extends Command
         $this->io->progressFinish();
         $this->io->success((\count($data) - \count($skipped)).' Buchungssätze importiert, '.\count($skipped).' übersprungen!');
 
-        if (\count($skipped) > 0) {
+        if ([] !== $skipped) {
             $this->io->writeln('Ignorierte Buchungssätze:');
             $this->io->table($header, $skipped);
         }
 
-        if (\count($errors) > 0) {
+        if ([] !== $errors) {
             $this->io->error('Fehlerhafte Buchungssätze:');
             $this->io->table(array_merge($header, ['Message']), $errors);
         }

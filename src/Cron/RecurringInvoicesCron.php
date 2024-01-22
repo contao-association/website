@@ -10,6 +10,7 @@ use Contao\CoreBundle\Framework\ContaoFramework;
 use Contao\MemberModel;
 use Doctrine\DBAL\Connection;
 use Psr\Log\LoggerInterface;
+use Terminal42\CashctrlApi\Entity\Order;
 use Terminal42\ContaoBuildTools\ErrorHandlingTrait;
 
 #[AsCronJob('daily')]
@@ -44,7 +45,7 @@ class RecurringInvoicesCron
                 AND (membership_stop='' OR membership_stop>UNIX_TIMESTAMP())
         ");
 
-        if (empty($ids) || null === ($members = MemberModel::findMultipleByIds($ids))) {
+        if ([] === $ids || null === ($members = MemberModel::findMultipleByIds($ids))) {
             $this->sentryCheckIn(true);
 
             return;
@@ -56,7 +57,7 @@ class RecurringInvoicesCron
                 $invoiceDate = (new \DateTimeImmutable())->setTimestamp((int) $member->membership_invoiced)->add(new \DateInterval('P1D'));
                 $invoice = $this->cashctrl->createAndSendInvoice($member, $this->invoiceNotificationId, $invoiceDate);
 
-                if (null !== $invoice) {
+                if ($invoice instanceof Order) {
                     $this->logger->info('Recurring membership invoice '.$invoice->getNr().' sent to '.$member->email);
                 }
             } catch (\Exception $e) {

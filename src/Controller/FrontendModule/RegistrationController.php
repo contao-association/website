@@ -13,6 +13,7 @@ use Contao\ModuleRegistration;
 use Contao\PageModel;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Terminal42\CashctrlApi\Entity\Order;
 
 #[AsFrontendModule('registration', category: 'user')]
 class RegistrationController extends ModuleRegistration
@@ -54,7 +55,7 @@ class RegistrationController extends ModuleRegistration
 
         $invoice = $this->cashctrl->createAndSendInvoice($member, $this->registrationNotificationId, new \DateTimeImmutable());
 
-        if (null !== $invoice) {
+        if ($invoice instanceof Order) {
             $member->cashctrl_invoice = $invoice->getId();
             $member->save();
         }

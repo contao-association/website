@@ -30,7 +30,7 @@ class MemberVersionListener
             return;
         }
 
-        if (1 === (int) $versionNumber) {
+        if (1 === $versionNumber) {
             $this->handleRegistration($memberId, $newData);
 
             return;
@@ -121,7 +121,7 @@ class MemberVersionListener
 
         $text = Input::post('member_log_note');
 
-        if (!empty($diff)) {
+        if ([] !== $diff) {
             $type = 'personal_data';
             $data = serialize($diff);
         } elseif (!empty($text)) {

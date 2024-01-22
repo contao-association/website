@@ -100,7 +100,7 @@ class PaypalHelper
                 $journal->setCreditId($this->getDebitAccount($transaction));
                 break;
 
-            case null !== ($order = $this->findOpenOrder($transaction)):
+            case ($order = $this->findOpenOrder($transaction)) instanceof Order:
                 $bookEntry = new OrderBookentry($paypalAccount, $order->getId());
                 $bookEntry->setAmount(abs($amount));
                 $bookEntry->setDate($dateAdded);

@@ -30,12 +30,12 @@ class RapidmailHelper
 
     public function isConfigured(): bool
     {
-        return !empty($this->recipientlistId);
+        return (bool) $this->recipientlistId;
     }
 
     public function recipients(): RecipientService
     {
-        if (null === $this->recipients) {
+        if (!$this->recipients instanceof RecipientService) {
             $this->recipients = $this->client->recipients();
         }
 

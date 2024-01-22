@@ -45,7 +45,7 @@ class RapidmailSyncCommand extends Command
             array_keys($members),
         );
 
-        if (!empty($recipientsWithoutModel)) {
+        if ([] !== $recipientsWithoutModel) {
             $io->writeln('Deleting recipients without matching member');
             $io->progressStart(\count($recipientsWithoutModel));
 
@@ -70,7 +70,7 @@ class RapidmailSyncCommand extends Command
             $io->progressFinish();
         }
 
-        if (!empty($members)) {
+        if ([] !== $members) {
             $io->writeln('Updating members');
             $io->progressStart(\count($members));
 

@@ -184,11 +184,7 @@ class CashctrlHelper
 
         $result = $notification->send($tokens);
 
-        if (\in_array(false, $result, true)) {
-            return false;
-        }
-
-        return true;
+        return !\in_array(false, $result, true);
     }
 
     public function downloadInvoice(Order $invoice, int|null $templateId = null, string|null $language = null): string
@@ -542,7 +538,7 @@ class CashctrlHelper
         if (null !== ($contacts = $person->getContacts())) {
             foreach ($contacts as $contact) {
                 if ($type === $contact->getType()) {
-                    if (empty($address)) {
+                    if (!$address) {
                         $person->removeContact($contact);
                     } else {
                         $contact->setAddress($address);
@@ -553,7 +549,7 @@ class CashctrlHelper
             }
         }
 
-        if (!empty($address)) {
+        if ($address) {
             $person->addContact(new PersonContact($address, $type));
         }
     }
@@ -587,7 +583,7 @@ class CashctrlHelper
 
         $page = $this->getRootPageForLocale($locale);
 
-        if (null !== $page && $page->dateFormat) {
+        if ($page instanceof PageModel && $page->dateFormat) {
             return $this->dateFormat[$locale] = $page->dateFormat;
         }
 
@@ -611,7 +607,7 @@ class CashctrlHelper
     {
         $rootPage = $this->getRootPageForLocale($member->language ?: 'de');
 
-        if (null === $rootPage) {
+        if (!$rootPage instanceof PageModel) {
             return null;
         }
 
@@ -635,7 +631,7 @@ class CashctrlHelper
 
     private function setFiscalPeriod(\DateTimeInterface|null $date = null): void
     {
-        if (null === $date) {
+        if (!$date instanceof \DateTimeInterface) {
             $date = new \DateTime();
         }
 

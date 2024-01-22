@@ -36,7 +36,7 @@ class RapidmailSyncCron
             array_keys($members),
         );
 
-        if (!empty($recipientsWithoutModel)) {
+        if ([] !== $recipientsWithoutModel) {
             // Prevent API rate limit
             sleep(1);
 
@@ -55,7 +55,7 @@ class RapidmailSyncCron
             }
         }
 
-        if (!empty($members)) {
+        if ([] !== $members) {
             // Prevent API rate limit
             sleep(1);
 

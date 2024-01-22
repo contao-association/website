@@ -14,6 +14,7 @@ use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Style\SymfonyStyle;
+use Terminal42\CashctrlApi\Entity\Order;
 
 class RecurringInvoicesCommand extends Command
 {
@@ -98,7 +99,7 @@ class RecurringInvoicesCommand extends Command
                 $this->cashctrl->syncMember($member);
                 $invoice = $this->cashctrl->createAndSendInvoice($member, $this->invoiceNotificationId, $date);
 
-                if (null !== $invoice) {
+                if ($invoice instanceof Order) {
                     $this->logger->info('Recurring membership invoice '.$invoice->getNr().' sent to '.$member->email);
                 }
             } catch (\Exception) {
