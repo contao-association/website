@@ -87,7 +87,6 @@ class RapidmailHelper
     private function compileRecipientData(MemberModel $member): RecipientCreateParam
     {
         $data = $this->recipients()->params()->newCreateParam();
-
         $data
             ->setFirstname($member->firstname)
             ->setLastname($member->lastname)

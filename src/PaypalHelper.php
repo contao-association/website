@@ -220,7 +220,7 @@ class PaypalHelper
 
         /** @var Order $order */
         foreach ($this->cashctrlHelper->order->list()->onlyOpen() as $order) {
-            if (str_contains((string) $note, $order->getNr())) {
+            if (str_contains((string) $note, (string) $order->getNr())) {
                 return $order;
             }
         }

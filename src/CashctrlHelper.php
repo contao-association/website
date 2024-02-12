@@ -202,7 +202,7 @@ class CashctrlHelper
         $year = $invoice->getDate()->format('Y');
         $quarter = ceil($invoice->getDate()->format('n') / 3);
 
-        $name = str_replace('/', '-', $invoice->getNr());
+        $name = str_replace('/', '-', (string) $invoice->getNr());
         $targetFile = 'var/invoices/'.$year.'/Q'.$quarter.'/'.$name.'.pdf';
 
         if ($this->filesystem->exists($targetFile)) {
@@ -647,6 +647,7 @@ class CashctrlHelper
         if ($createLatest) {
             $this->fiscalperiod->create((new Fiscalperiod())->setType(Fiscalperiod::TYPE_LATEST));
             $this->setFiscalPeriod($date, false);
+
             return;
         }
 

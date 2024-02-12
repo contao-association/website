@@ -23,7 +23,7 @@ class KofiController
 
     public function __invoke(Request $request): Response
     {
-        $data = json_decode($request->request->get('data'), true, 512, JSON_THROW_ON_ERROR);
+        $data = json_decode((string) $request->request->get('data'), true, 512, JSON_THROW_ON_ERROR);
 
         if (!$this->kofiToken || $data['verification_token'] !== $this->kofiToken) {
             throw new AccessDeniedHttpException('Invalid verification token.');
