@@ -35,6 +35,7 @@ use Terminal42\CashctrlApi\Api\OrderDocumentEndpoint;
 use Terminal42\CashctrlApi\Api\OrderEndpoint;
 use Terminal42\CashctrlApi\Api\PersonEndpoint;
 use Terminal42\CashctrlApi\ApiClient;
+use Terminal42\CashctrlApi\Entity\Fiscalperiod;
 use Terminal42\CashctrlApi\Entity\Journal;
 use Terminal42\CashctrlApi\Entity\Order;
 use Terminal42\CashctrlApi\Entity\OrderBookentry;
@@ -629,7 +630,7 @@ class CashctrlHelper
         return $this->uriSigner->sign($url);
     }
 
-    private function setFiscalPeriod(\DateTimeInterface|null $date = null): void
+    private function setFiscalPeriod(\DateTimeInterface|null $date = null, bool $createLatest = true): void
     {
         if (!$date instanceof \DateTimeInterface) {
             $date = new \DateTime();
@@ -641,6 +642,12 @@ class CashctrlHelper
 
                 return;
             }
+        }
+
+        if ($createLatest) {
+            $this->fiscalperiod->create((new Fiscalperiod())->setType(Fiscalperiod::TYPE_LATEST));
+            $this->setFiscalPeriod($date, false);
+            return;
         }
 
         throw new \RuntimeException('No fiscal period for current date found');
