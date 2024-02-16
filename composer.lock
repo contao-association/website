@@ -264,16 +264,16 @@
         },
         {
             "name": "codefog/contao-haste",
-            "version": "5.1.15",
+            "version": "5.1.16",
             "source": {
                 "type": "git",
                 "url": "https://github.com/codefog/contao-haste.git",
-                "reference": "809ec03595ac729a4b93faa48df53ed19d302d4b"
+                "reference": "459775ddffd63fd76d07d88526ef218af698c9df"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/codefog/contao-haste/zipball/809ec03595ac729a4b93faa48df53ed19d302d4b",
-                "reference": "809ec03595ac729a4b93faa48df53ed19d302d4b",
+                "url": "https://api.github.com/repos/codefog/contao-haste/zipball/459775ddffd63fd76d07d88526ef218af698c9df",
+                "reference": "459775ddffd63fd76d07d88526ef218af698c9df",
                 "shasum": ""
             },
             "require": {
@@ -285,7 +285,9 @@
             },
             "require-dev": {
                 "contao/manager-plugin": "^2.0",
-                "phpunit/phpunit": "^9.5"
+                "phpunit/phpunit": "^9.5",
+                "terminal42/contao-build-tools": "dev-main",
+                "terminal42/dc_multilingual": "^4.0"
             },
             "type": "contao-bundle",
             "extra": {
@@ -326,7 +328,7 @@
                     "type": "github"
                 }
             ],
-            "time": "2024-01-29T13:15:23+00:00"
+            "time": "2024-02-12T14:10:59+00:00"
         },
         {
             "name": "composer/ca-bundle",
@@ -1262,16 +1264,16 @@
         },
         {
             "name": "contao/core-bundle",
-            "version": "4.13.36",
+            "version": "4.13.37",
             "source": {
                 "type": "git",
                 "url": "https://github.com/contao/core-bundle.git",
-                "reference": "9abe1453ebbdef04cbcac5c5a1f419e483abc24a"
+                "reference": "b9e9b0d2765978c7213c92bce2948b3827b37fb8"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/contao/core-bundle/zipball/9abe1453ebbdef04cbcac5c5a1f419e483abc24a",
-                "reference": "9abe1453ebbdef04cbcac5c5a1f419e483abc24a",
+                "url": "https://api.github.com/repos/contao/core-bundle/zipball/b9e9b0d2765978c7213c92bce2948b3827b37fb8",
+                "reference": "b9e9b0d2765978c7213c92bce2948b3827b37fb8",
                 "shasum": ""
             },
             "require": {
@@ -1469,7 +1471,7 @@
                     "type": "custom"
                 }
             ],
-            "time": "2024-01-17T11:49:58+00:00"
+            "time": "2024-02-12T11:50:33+00:00"
         },
         {
             "name": "contao/image",
@@ -1605,7 +1607,7 @@
         },
         {
             "name": "contao/installation-bundle",
-            "version": "4.13.36",
+            "version": "4.13.37",
             "source": {
                 "type": "git",
                 "url": "https://github.com/contao/installation-bundle.git",
@@ -1687,7 +1689,7 @@
         },
         {
             "name": "contao/manager-bundle",
-            "version": "4.13.36",
+            "version": "4.13.37",
             "source": {
                 "type": "git",
                 "url": "https://github.com/contao/manager-bundle.git",
@@ -2326,16 +2328,16 @@
         },
         {
             "name": "doctrine/dbal",
-            "version": "3.8.1",
+            "version": "3.8.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/doctrine/dbal.git",
-                "reference": "c9ea252cdce4da324ede3d6c5913dd89f769afd2"
+                "reference": "a19a1d05ca211f41089dffcc387733a6875196cb"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/doctrine/dbal/zipball/c9ea252cdce4da324ede3d6c5913dd89f769afd2",
-                "reference": "c9ea252cdce4da324ede3d6c5913dd89f769afd2",
+                "url": "https://api.github.com/repos/doctrine/dbal/zipball/a19a1d05ca211f41089dffcc387733a6875196cb",
+                "reference": "a19a1d05ca211f41089dffcc387733a6875196cb",
                 "shasum": ""
             },
             "require": {
@@ -2419,7 +2421,7 @@
             ],
             "support": {
                 "issues": "https://github.com/doctrine/dbal/issues",
-                "source": "https://github.com/doctrine/dbal/tree/3.8.1"
+                "source": "https://github.com/doctrine/dbal/tree/3.8.2"
             },
             "funding": [
                 {
@@ -2435,7 +2437,7 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2024-02-03T17:33:49+00:00"
+            "time": "2024-02-12T18:36:36+00:00"
         },
         {
             "name": "doctrine/deprecations",
@@ -13431,16 +13433,16 @@
         },
         {
             "name": "terminal42/dcawizard",
-            "version": "3.0.1",
+            "version": "3.0.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/terminal42/contao-dcawizard.git",
-                "reference": "4d8cf9d16c40fe6c6f22ad6436ea4938797242ec"
+                "reference": "23d8581e26ef5d3754c2efb3525009829bad4c0a"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/terminal42/contao-dcawizard/zipball/4d8cf9d16c40fe6c6f22ad6436ea4938797242ec",
-                "reference": "4d8cf9d16c40fe6c6f22ad6436ea4938797242ec",
+                "url": "https://api.github.com/repos/terminal42/contao-dcawizard/zipball/23d8581e26ef5d3754c2efb3525009829bad4c0a",
+                "reference": "23d8581e26ef5d3754c2efb3525009829bad4c0a",
                 "shasum": ""
             },
             "require": {
@@ -13498,7 +13500,7 @@
                     "type": "other"
                 }
             ],
-            "time": "2023-12-11T17:01:26+00:00"
+            "time": "2024-02-12T09:34:51+00:00"
         },
         {
             "name": "terminal42/escargot",
@@ -13567,16 +13569,16 @@
         },
         {
             "name": "terminal42/notification_center",
-            "version": "1.7.6",
+            "version": "1.7.7",
             "source": {
                 "type": "git",
                 "url": "https://github.com/terminal42/contao-notification_center.git",
-                "reference": "075b285826eadcec259369b0e287740566886f2f"
+                "reference": "5e6765d2dd3221cf16d831851c9779514b67783c"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/terminal42/contao-notification_center/zipball/075b285826eadcec259369b0e287740566886f2f",
-                "reference": "075b285826eadcec259369b0e287740566886f2f",
+                "url": "https://api.github.com/repos/terminal42/contao-notification_center/zipball/5e6765d2dd3221cf16d831851c9779514b67783c",
+                "reference": "5e6765d2dd3221cf16d831851c9779514b67783c",
                 "shasum": ""
             },
             "require": {
@@ -13648,7 +13650,7 @@
                     "type": "other"
                 }
             ],
-            "time": "2024-02-12T09:37:28+00:00"
+            "time": "2024-02-13T11:57:03+00:00"
         },
         {
             "name": "terminal42/service-annotation-bundle",
