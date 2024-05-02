@@ -445,6 +445,10 @@ class CashctrlHelper
         $order->setDueDays(30);
         $order->setDescription($invoiceDescription);
 
+        if (\in_array($member->language, ['de', 'en', 'fr', 'it'])) {
+            $order->setLanguage(strtoupper($member->language));
+        }
+
         $order->addItem($this->createInvoiceItem($member->membership, $member, $invoiceDate, null, $monthly));
 
         if ('active' !== $member->membership && !($membership['invisible'] ?? false) && $member->membership_member) {
