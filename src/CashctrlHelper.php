@@ -183,7 +183,7 @@ class CashctrlHelper
 
         $this->stringParser->flatten($member->row(), 'member', $tokens);
 
-        $result = $notification->send($tokens);
+        $result = $notification->send($tokens, $member->language);
 
         return !\in_array(false, $result, true);
     }
@@ -594,14 +594,14 @@ class CashctrlHelper
     private function getRootPageForLocale(string $locale): PageModel|null
     {
         $t = PageModel::getTable();
-        $columns = ["$t.language=? AND $t.type='root'"];
+        $columns = ["$t.type='root' AND ($t.language=? OR $t.fallback='1')"];
 
         if (!$this->tokenChecker->isPreviewMode()) {
             $time = Date::floorToMinute();
             $columns[] = "$t.published='1' AND ($t.start='' OR $t.start<='$time') AND ($t.stop='' OR $t.stop>'$time')";
         }
 
-        return PageModel::findOneBy($columns, [$locale]);
+        return PageModel::findOneBy($columns, [$locale], ['order' => "$t.fallback ASC"]);
     }
 
     private function getPaymentLink(Order $order, MemberModel $member): string|null
