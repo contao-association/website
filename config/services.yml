@@ -3,7 +3,6 @@ parameters:
         support5:
             price: 5
             type: month
-            custom: false
             group: 4
             categoryId: 8
             accountId: 183
@@ -11,7 +10,6 @@ parameters:
         support10:
             price: 10
             type: month
-            custom: false
             group: 4
             categoryId: 8
             accountId: 183
@@ -21,7 +19,6 @@ parameters:
         support25:
             price: 25
             type: month
-            custom: false
             group: 4
             freeMember: true
             categoryId: 8
@@ -33,7 +30,6 @@ parameters:
         support50:
             price: 50
             type: month
-            custom: false
             group: 4
             freeMember: true
             categoryId: 8
@@ -46,7 +42,6 @@ parameters:
         sponsor:
             price: 100
             type: month
-            custom: false
             group: 5
             freeMember: true
             categoryId: 9
@@ -61,7 +56,6 @@ parameters:
         gold_sponsor:
             price: 200
             type: month
-            custom: false
             group: 6
             freeMember: true
             categoryId: 10
@@ -76,7 +70,6 @@ parameters:
         diamond_sponsor:
             price: 500
             type: month
-            custom: false
             group: 7
             freeMember: true
             categoryId: 11
@@ -91,7 +84,6 @@ parameters:
         active:
             price: 80
             type: year
-            custom: false
             group: 1
             categoryId: 5
             accountId: 43
@@ -99,19 +91,9 @@ parameters:
         passive:
             price: 50
             type: year
-            custom: false
             group: 2
             categoryId: 6
             accountId: 151
-            invisible: true
-
-        support:
-            price: 200
-            type: custom
-            custom: true
-            group: 3
-            categoryId: 7
-            accountId: 152
             invisible: true
 
         inactive:

@@ -43,12 +43,12 @@
                 <target>jährlich</target>
             </trans-unit>
             <trans-unit id="tl_member.membership_amount.0">
-                <source>Invoice Amount</source>
-                <target>Rechnungsbetrag</target>
+                <source>Voluntary donation</source>
+                <target>Freiwillige Spende</target>
             </trans-unit>
             <trans-unit id="tl_member.membership_amount.1">
-                <source>Enter an invoice amount for the subscription.</source>
-                <target>Gib einen Rechnungsbetrag für dein Abonnement ein.</target>
+                <source>Enter an optional donation for each invoice period.</source>
+                <target>Gib eine optionale Spende pro Rechnungsperiode ein.</target>
             </trans-unit>
             <trans-unit id="tl_member.membership_start.0">
                 <source>Subscription start date</source>

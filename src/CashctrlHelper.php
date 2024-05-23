@@ -461,6 +461,16 @@ class CashctrlHelper
             ));
         }
 
+        if ($member->membership_amount > 0) {
+            $order->addItem(
+                (new OrderItem(
+                    $this->getAccountId(3450),
+                    $this->translator->trans('donation.item', [], 'messages', $member->language ?: 'de'),
+                    (float) $member->membership_amount,
+                ))->setQuantity(1)
+            );
+        }
+
         $paidUntil = $invoiceDate->add(new \DateInterval($monthly ? 'P1M' : 'P1Y'))->sub(new \DateInterval('P1D'));
         if ($member->membership_invoiced < $paidUntil->getTimestamp()) {
             $member->membership_invoiced = $paidUntil->getTimestamp();
@@ -680,7 +690,7 @@ class CashctrlHelper
         $membership = $this->memberships[$subscription];
 
         if (null === $price) {
-            $price = $membership['custom'] ? $member->membership_amount : $membership['price'];
+            $price = $membership['price'];
         }
 
         $item = new OrderItem(

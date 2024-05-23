@@ -63,13 +63,13 @@ class MembershipListener
                 return $this->getPayment($user);
 
             case 'amount':
-                return $this->formatAmount($user->membership, (string) $user->membership_amount);
+                return $this->formatAmount($user->membership);
 
             case 'title':
                 return $this->translator->trans('membership.'.$user->membership);
 
             case 'label':
-                return $this->getMembershipLabel($user->membership, (string) $user->membership_amount);
+                return $this->getMembershipLabel($user->membership, $user);
 
             case 'member':
                 $isActive = 'active' === $user->membership || (!($this->memberships[$user->membership]['invisible'] ?? false) && $user->membership_member);
@@ -90,6 +90,25 @@ class MembershipListener
         }
 
         return false;
+    }
+
+    #[AsCallback(table: 'tl_member', target: 'config.onload')]
+    public function adjustDca(): void
+    {
+        $user = $this->security->getUser();
+
+        if (!$user instanceof FrontendUser) {
+            return;
+        }
+
+        $id = 'donation.year';
+        $config = $this->memberships[$user->membership];
+
+        if ('month' === $config['type'] && ($config['freeMember'] ?? false) && 'month' === $user->membership_interval) {
+            $id = 'donation.month';
+        }
+
+        $GLOBALS['TL_DCA']['tl_member']['fields']['membership_amount']['label'] = [$this->translator->trans($id)];
     }
 
     #[AsCallback(table: 'tl_member', target: 'config.onsubmit')]
@@ -129,23 +148,21 @@ class MembershipListener
         $template->membershipConfig = $this->memberships[$user->membership] ?? [];
     }
 
-    private function getMembershipLabel(string $membership, string|null $amount = null): string
+    private function getMembershipLabel(string $membership, FrontendUser|null $user = null): string
     {
-        return $this->translator->trans('membership.'.$membership).' '.$this->formatAmount($membership, $amount);
+        return $this->translator->trans('membership.'.$membership).' '.$this->formatAmount($membership, $user);
     }
 
-    private function formatAmount(string $membership, string|null $amount = null): string
+    private function formatAmount(string $membership, FrontendUser|null $user = null): string
     {
         $config = $this->memberships[$membership];
 
-        if (null !== $amount && ($config['custom'] ?? false)) {
-            $price = number_format((float) $amount, 2, '.', "'");
-
-            return $this->translator->trans('membership_year', ['{price}' => $price]);
-        }
-
         if (!isset($config['price'])) {
             return '';
+        }
+
+        if ($user) {
+            return $this->getPayment($user, 'membership');
         }
 
         $price = number_format($config['price'], 2, '.', "'");
@@ -153,23 +170,25 @@ class MembershipListener
         return $this->translator->trans('membership_'.$config['type'], ['{price}' => $price]);
     }
 
-    private function getPayment(FrontendUser $user): string
+    private function getPayment(FrontendUser $user, string $label = 'payment'): string
     {
         $config = $this->memberships[$user->membership];
-        $transId = 'payment_yearly';
+        $transId = $label.'_year';
         $price = $config['price'];
 
-        if ($config['custom'] ?? false) {
-            $price = $user->membership_amount;
-        } elseif ('month' === $config['type']) {
+        if ('month' === $config['type']) {
             if (($config['freeMember'] ?? false) && 'month' === $user->membership_interval) {
-                $transId = 'payment_monthly';
+                $transId = $label.'_month';
             } else {
                 $price = 12 * $config['price'];
             }
         }
 
-        return $this->translator->trans($transId, ['{amount}' => number_format((float) $price, 2, '.', "'")]);
+        if ($user->membership_amount > 0) {
+            $price += $user->membership_amount;
+        }
+
+        return $this->translator->trans($transId, ['{price}' => number_format((float) $price, 2, '.', "'")]);
     }
 
     private function getRenewDate(FrontendUser $user): string

@@ -33,10 +33,10 @@
                 <source>yearly</source>
             </trans-unit>
             <trans-unit id="tl_member.membership_amount.0">
-                <source>Invoice Amount</source>
+                <source>Voluntary donation</source>
             </trans-unit>
             <trans-unit id="tl_member.membership_amount.1">
-                <source>Enter an invoice amount for the subscription.</source>
+                <source>Enter an optional donation for each invoice period.</source>
             </trans-unit>
             <trans-unit id="tl_member.membership_start.0">
                 <source>Subscription start date</source>
