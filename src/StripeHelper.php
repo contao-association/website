@@ -6,6 +6,7 @@ namespace App;
 
 use Contao\CoreBundle\Framework\ContaoFramework;
 use Contao\MemberModel;
+use Oneup\ContaoSentryBundle\ErrorHandlingTrait;
 use Stripe\Charge;
 use Stripe\Checkout\Session;
 use Stripe\Customer;
@@ -15,7 +16,6 @@ use Stripe\StripeClient;
 use Symfony\Component\Lock\Exception\ExceptionInterface;
 use Symfony\Component\Lock\LockFactory;
 use Terminal42\CashctrlApi\Entity\Order;
-use Terminal42\ContaoBuildTools\ErrorHandlingTrait;
 
 class StripeHelper
 {

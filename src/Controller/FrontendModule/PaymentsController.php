@@ -13,6 +13,7 @@ use Contao\MemberModel;
 use Contao\ModuleModel;
 use Contao\PageModel;
 use Contao\Template;
+use Oneup\ContaoSentryBundle\ErrorHandlingTrait;
 use Stripe\Card;
 use Stripe\Exception\ApiErrorException;
 use Stripe\StripeClient;
@@ -20,7 +21,6 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Security\Core\Security;
 use Symfony\Contracts\Translation\TranslatorInterface;
-use Terminal42\ContaoBuildTools\ErrorHandlingTrait;
 
 #[AsFrontendModule(category: 'user')]
 class PaymentsController extends AbstractFrontendModuleController

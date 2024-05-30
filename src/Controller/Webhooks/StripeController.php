@@ -5,12 +5,12 @@ declare(strict_types=1);
 namespace App\Controller\Webhooks;
 
 use App\StripeHelper;
+use Oneup\ContaoSentryBundle\ErrorHandlingTrait;
 use Stripe\PaymentIntent;
 use Stripe\Webhook;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
-use Terminal42\ContaoBuildTools\ErrorHandlingTrait;
 
 #[Route(path: '/_webhooks/stripe', methods: ['POST'])]
 class StripeController

@@ -8,7 +8,6 @@ use Contao\ManagerPlugin\Bundle\BundlePluginInterface;
 use Contao\ManagerPlugin\Bundle\Config\BundleConfig;
 use Contao\ManagerPlugin\Bundle\Config\ConfigInterface;
 use Contao\ManagerPlugin\Bundle\Parser\ParserInterface;
-use Sentry\SentryBundle\SentryBundle;
 use Terminal42\CashctrlBundle\Terminal42CashctrlBundle;
 
 class Plugin implements BundlePluginInterface
@@ -22,7 +21,6 @@ class Plugin implements BundlePluginInterface
     {
         return [
             BundleConfig::create(Terminal42CashctrlBundle::class),
-            BundleConfig::create(SentryBundle::class)->setLoadInDevelopment(false),
         ];
     }
 }

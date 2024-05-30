@@ -9,7 +9,7 @@ use Contao\CoreBundle\DependencyInjection\Attribute\AsCronJob;
 use Contao\CoreBundle\Framework\ContaoFramework;
 use Contao\MemberModel;
 use NotificationCenter\Model\Notification;
-use Terminal42\ContaoBuildTools\ErrorHandlingTrait;
+use Oneup\ContaoSentryBundle\ErrorHandlingTrait;
 
 #[AsCronJob('0 9 1-7,15-21 * *')] // run job two weeks per month, PHP code will make sure it only sends on mondays
 class InvoicesReminderCron

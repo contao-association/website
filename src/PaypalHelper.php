@@ -4,13 +4,13 @@ declare(strict_types=1);
 
 namespace App;
 
+use Oneup\ContaoSentryBundle\ErrorHandlingTrait;
 use PayPalCheckoutSdk\Core\PayPalHttpClient;
 use PayPalHttp\HttpRequest;
 use Terminal42\CashctrlApi\Api\OrderBookentryEndpoint;
 use Terminal42\CashctrlApi\Entity\Journal;
 use Terminal42\CashctrlApi\Entity\Order;
 use Terminal42\CashctrlApi\Entity\OrderBookentry;
-use Terminal42\ContaoBuildTools\ErrorHandlingTrait;
 
 class PaypalHelper
 {

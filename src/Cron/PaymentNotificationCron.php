@@ -9,7 +9,7 @@ use Contao\CoreBundle\DependencyInjection\Attribute\AsCronJob;
 use Contao\CoreBundle\Framework\ContaoFramework;
 use Contao\MemberModel;
 use NotificationCenter\Model\Notification;
-use Terminal42\ContaoBuildTools\ErrorHandlingTrait;
+use Oneup\ContaoSentryBundle\ErrorHandlingTrait;
 
 #[AsCronJob('hourly')]
 class PaymentNotificationCron

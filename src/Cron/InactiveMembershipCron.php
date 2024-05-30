@@ -8,7 +8,7 @@ use Contao\CoreBundle\DependencyInjection\Attribute\AsCronJob;
 use Contao\CoreBundle\Framework\ContaoFramework;
 use Contao\Versions;
 use Doctrine\DBAL\Connection;
-use Terminal42\ContaoBuildTools\ErrorHandlingTrait;
+use Oneup\ContaoSentryBundle\ErrorHandlingTrait;
 
 #[AsCronJob('daily')]
 class InactiveMembershipCron

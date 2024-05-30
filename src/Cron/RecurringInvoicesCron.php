@@ -9,9 +9,9 @@ use Contao\CoreBundle\DependencyInjection\Attribute\AsCronJob;
 use Contao\CoreBundle\Framework\ContaoFramework;
 use Contao\MemberModel;
 use Doctrine\DBAL\Connection;
+use Oneup\ContaoSentryBundle\ErrorHandlingTrait;
 use Psr\Log\LoggerInterface;
 use Terminal42\CashctrlApi\Entity\Order;
-use Terminal42\ContaoBuildTools\ErrorHandlingTrait;
 
 #[AsCronJob('daily')]
 class RecurringInvoicesCron

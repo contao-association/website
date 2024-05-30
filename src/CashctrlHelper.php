@@ -13,6 +13,7 @@ use Contao\MemberModel;
 use Contao\PageModel;
 use Contao\Versions;
 use NotificationCenter\Model\Notification;
+use Oneup\ContaoSentryBundle\ErrorHandlingTrait;
 use Psr\Log\LoggerInterface;
 use Stripe\BalanceTransaction;
 use Stripe\Charge;
@@ -45,7 +46,6 @@ use Terminal42\CashctrlApi\Entity\PersonAddress;
 use Terminal42\CashctrlApi\Entity\PersonContact;
 use Terminal42\CashctrlApi\Exception\RuntimeException;
 use Terminal42\CashctrlApi\Result;
-use Terminal42\ContaoBuildTools\ErrorHandlingTrait;
 
 class CashctrlHelper
 {

@@ -6,7 +6,7 @@ namespace App\Cron;
 
 use App\PaypalHelper;
 use Contao\CoreBundle\DependencyInjection\Attribute\AsCronJob;
-use Terminal42\ContaoBuildTools\ErrorHandlingTrait;
+use Oneup\ContaoSentryBundle\ErrorHandlingTrait;
 
 #[AsCronJob('daily')]
 class PaypalImportCron
