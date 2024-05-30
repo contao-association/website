@@ -36,7 +36,7 @@ class InvoicesReminderCron
 
         $this->framework->initialize();
 
-        $notification = Notification::findByPk($this->overdueNotificationId);
+        $notification = Notification::findById($this->overdueNotificationId);
 
         if (null === $notification) {
             $this->sentryOrThrow('Notification ID "'.$this->overdueNotificationId.'" not found, cannot send invoice reminders');

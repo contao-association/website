@@ -34,7 +34,7 @@ class InvoicesReminderCommand extends Command
 
         $io = new SymfonyStyle($input, $output);
 
-        $notification = Notification::findByPk($this->overdueNotificationId);
+        $notification = Notification::findById($this->overdueNotificationId);
 
         if (null === $notification) {
             $io->error('Notification ID "'.$this->overdueNotificationId.'" not found, cannot send invoice reminders');

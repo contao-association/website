@@ -30,7 +30,7 @@ class RapidmailSyncListener
             return;
         }
 
-        $member = MemberModel::findByPk($memberId);
+        $member = MemberModel::findById($memberId);
 
         if (null === $member) {
             throw new \InvalidArgumentException(sprintf('Member ID "%s" was not found.', $memberId));

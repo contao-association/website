@@ -13,7 +13,7 @@ $GLOBALS['TL_DCA']['tl_member']['list']['sorting']['fields'] = ['membership_star
 
 unset(
     $GLOBALS['TL_DCA']['tl_member']['list']['global_operations'],
-    $GLOBALS['TL_DCA']['tl_member']['list']['operations']['copy']
+    $GLOBALS['TL_DCA']['tl_member']['list']['operations']['copy'],
 );
 
 $GLOBALS['TL_DCA']['tl_member']['list']['operations']['log'] = [
@@ -31,7 +31,7 @@ $GLOBALS['TL_DCA']['tl_member']['subpalettes']['listing'] = 'listing_name,listin
 unset(
     $GLOBALS['TL_DCA']['tl_member']['fields']['assignDir'],
     $GLOBALS['TL_DCA']['tl_member']['fields']['homeDir'],
-    $GLOBALS['TL_DCA']['tl_member']['fields']['language']['options_callback']
+    $GLOBALS['TL_DCA']['tl_member']['fields']['language']['options_callback'],
 );
 
 $GLOBALS['TL_DCA']['tl_member']['fields']['language']['options'] = ['de' => 'Deutsch', 'en' => 'English'];

@@ -43,7 +43,7 @@ class PaymentsController extends AbstractFrontendModuleController
             return new Response();
         }
 
-        $member = MemberModel::findByPk($user->id);
+        $member = MemberModel::findById($user->id);
 
         if (null === $member) {
             return new Response();
@@ -131,7 +131,7 @@ class PaymentsController extends AbstractFrontendModuleController
             }
         }
 
-        $jumpTo = PageModel::findByPk($model->jumpTo);
+        $jumpTo = PageModel::findById($model->jumpTo);
         if ($jumpTo instanceof PageModel) {
             $template->linkHref = $jumpTo->getFrontendUrl();
             $template->linkTitle = $jumpTo->pageTitle ?: $jumpTo->title;

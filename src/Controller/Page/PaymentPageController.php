@@ -107,7 +107,7 @@ class PaymentPageController
         $targetPage = null;
 
         if ($pageModel->jumpTo > 0) {
-            $targetPage = PageModel::findByPk($pageModel->jumpTo);
+            $targetPage = PageModel::findById($pageModel->jumpTo);
         }
 
         if (null === $targetPage) {

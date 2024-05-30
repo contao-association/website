@@ -25,7 +25,7 @@ class CashctrlSyncListener
             throw new \InvalidArgumentException(sprintf('Invalid call to sync table "%s" with Cashctrl.', $table));
         }
 
-        $member = MemberModel::findByPk($memberId);
+        $member = MemberModel::findById($memberId);
 
         if (null === $member) {
             throw new \InvalidArgumentException(sprintf('Member ID "%s" was not found.', $memberId));

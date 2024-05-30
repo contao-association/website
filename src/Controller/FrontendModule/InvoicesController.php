@@ -51,7 +51,7 @@ class InvoicesController extends AbstractFrontendModuleController
             return new Response();
         }
 
-        $member = MemberModel::findByPk($user->id);
+        $member = MemberModel::findById($user->id);
 
         if (null === $member) {
             return new Response();

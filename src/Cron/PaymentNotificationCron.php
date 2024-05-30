@@ -29,7 +29,7 @@ class PaymentNotificationCron
 
         $this->framework->initialize();
 
-        $notification = Notification::findByPk($this->paymentNotificationId);
+        $notification = Notification::findById($this->paymentNotificationId);
 
         if (null === $notification) {
             $this->sentryOrThrow('Notification ID "'.$this->paymentNotificationId.'" not found, cannot send payment notification');

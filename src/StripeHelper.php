@@ -155,7 +155,7 @@ class StripeHelper
 
         $this->framework->initialize();
 
-        $member = MemberModel::findByPk((int) $session->metadata->contao_member_id);
+        $member = MemberModel::findById((int) $session->metadata->contao_member_id);
 
         if (null === $member) {
             $this->sentryOrThrow('Member ID "'.$session->metadata->contao_member_id.'" for Stripe checkout session "'.$session->id.'" not found');

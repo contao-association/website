@@ -124,7 +124,7 @@ class CashctrlHelper
 
     public function createAndSendInvoice(MemberModel $member, int $notificationId, \DateTimeImmutable $invoiceDate): Order|null
     {
-        $notification = Notification::findByPk($notificationId);
+        $notification = Notification::findById($notificationId);
 
         if (null === $notification) {
             $this->sentryOrThrow('Notification ID "'.$notificationId.'" not found, cannot send invoices');
@@ -404,7 +404,7 @@ class CashctrlHelper
             $this->framework->initialize();
 
             $member = MemberModel::findOneBy('cashctrl_id', $order->getAssociateId());
-            $notification = Notification::findByPk($this->paymentNotificationId);
+            $notification = Notification::findById($this->paymentNotificationId);
 
             if (null === $member || null === $notification) {
                 $this->order->updateStatus($order->getId(), self::STATUS_PAID);
@@ -445,7 +445,7 @@ class CashctrlHelper
         $order->setDueDays(30);
         $order->setDescription($invoiceDescription);
 
-        if (\in_array($member->language, ['de', 'en', 'fr', 'it'])) {
+        if (\in_array($member->language, ['de', 'en', 'fr', 'it'], true)) {
             $order->setLanguage(strtoupper($member->language));
         }
 
@@ -467,7 +467,7 @@ class CashctrlHelper
                     $this->getAccountId(3450),
                     $this->translator->trans('donation.item', [], 'messages', $member->language ?: 'de'),
                     (float) $member->membership_amount,
-                ))->setQuantity(1)
+                ))->setQuantity(1),
             );
         }
 
