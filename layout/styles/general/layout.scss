@@ -1,217 +1,234 @@
-body, form, figure {
-  margin  : 0;
-  padding : 0;
+body,
+form,
+figure {
+    margin: 0;
+    padding: 0;
 }
 
 img {
-  border : 0;
+    border: 0;
 }
 
-header, footer, nav, section, aside, article, figure, figcaption {
-  display : block;
+header,
+footer,
+nav,
+section,
+aside,
+article,
+figure,
+figcaption {
+    display: block;
 }
 
 body {
-  font-size : 100.01%;
+    font-size: 100.01%;
 }
 
-select, input, textarea {
-  font-size : 99%
+select,
+input,
+textarea {
+    font-size: 99%;
 }
 
-#container, .inside {
-  position : relative;
+#container,
+.inside {
+    position: relative;
 }
 
 .text-center {
-  text-align: center;
+    text-align: center;
 }
+
 .left-auto {
-  @media (min-width: 768px) {
-    margin-left: auto;
-  }
+    @media (width >= 768px) {
+        margin-left: auto;
+    }
 }
+
 .right-auto {
-  margin-right: auto;
+    margin-right: auto;
 }
+
 .center {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
 }
 
 #main .inside {
-  min-height : 1px;
+    min-height: 1px;
 }
 
 .float_left {
-  float : left;
+    float: left;
 }
 
 .float_right {
-  float : right;
+    float: right;
 }
 
 .block {
-  overflow : hidden;
+    overflow: hidden;
 }
 
-.clear, #clear {
-  height      : .1px;
-  font-size   : .1px;
-  line-height : .1px;
-  clear       : both;
+.clear,
+#clear {
+    clear: both;
+    height: 0.1px;
+    font-size: 0.1px;
+    line-height: 0.1px;
 }
 
 .invisible {
-  border   : 0;
-  clip     : rect(0 0 0 0);
-  height   : 1px;
-  margin   : -1px;
-  overflow : hidden;
-  padding  : 0;
-  position : absolute;
-  width    : 1px;
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    margin: -1px;
+    padding: 0;
+    overflow: hidden;
+    border: 0;
+    clip: rect(0 0 0 0);
 }
 
 img {
-  max-width : 100%;
-  height    : auto;
+    max-width: 100%;
+    height: auto;
 }
 
 body {
-  font                    : 1.8rem 'Open Sans', sans-serif;
-  color                   : #333333;
-  font-weight             : 300;
-  background              : #f7f7f9;
+    color: #333;
+    font:
+        1.8rem 'Open Sans',
+        sans-serif;
+    font-weight: 300;
+    background: #f7f7f9;
 }
 
-h1, h2, h3, h4, h5, h6 {
-  color       : #505050;
-  font-weight : 400
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+    color: #505050;
+    font-weight: 400;
 }
 
 h1 {
-  margin     : .67em 0;
-  text-align : center;
-  font-size  : 1.8em;
+    margin: 0.67em 0;
+    font-size: 1.8em;
+    text-align: center;
 
-  @media (min-width: 480px) {
-    font-size  : 2em;
-  }
+    @media (width >= 480px) {
+        font-size: 2em;
+    }
 }
 
 h1 + p,
 h1 + .ce_text {
-  text-align : center;
-  max-width: 800px;
-  margin: 0 auto;
+    max-width: 800px;
+    margin: 0 auto;
+    text-align: center;
 }
 
 h2 {
-  margin-bottom : 15px;
-  //font-size     : 27px;
+    margin-bottom: 15px;
 }
 
-h3 {
-  //font-size : 21px
-}
-
-strong, b {
-  font-weight : 400;
+strong,
+b {
+    font-weight: 400;
 }
 
 p {
-  margin : 10px 0;
+    margin: 10px 0;
 }
 
 a {
-  text-decoration : none;
-  color           : #eb8623;
+    color: #eb8623;
+    text-decoration: none;
 
-  @include hfa() {
-    color : #cb5f06;
-  }
+    @include hfa {
+        color: #cb5f06;
+    }
 }
 
 blockquote {
-  margin: 2em 0 3em 4em;
+    margin: 2em 0 3em 4em;
 }
 
 hr {
-  width: 100%;
-  display: block;
-  border-color: $border-color;
-  margin-top : 30px;
-  margin-bottom: 30px;
+    display: block;
+    width: 100%;
+    margin-top: 30px;
+    margin-bottom: 30px;
+    border-color: $border-color;
 }
 
 /* Full with Sections: */
 
 .mod_article .inner {
-  margin: 0 auto;
-  max-width: 1170px;
-  padding-left: 15px;
-  padding-right: 15px;
+    max-width: 1170px;
+    margin: 0 auto;
+    padding-right: 15px;
+    padding-left: 15px;
 }
+
 .mod_article {
-  margin-bottom : 40px;
-}
-div[class^="mod_"] {
-  width: 100%;
-}
-.row div[class^="ce_"], .row div[class^="mod_"] {
-  padding-right: 15px;
-  padding-left: 15px;
+    margin-bottom: 40px;
 }
 
+div[class^='mod_'] {
+    width: 100%;
+}
 
-//.ce_text, .ce_headline {
-//  text-align: center;
-//}
+.row div[class^='ce_'],
+.row div[class^='mod_'] {
+    padding-right: 15px;
+    padding-left: 15px;
+}
 
 #header {
-  margin : 30px 36px 10px;
+    margin: 30px 36px 10px;
 }
 
 .ce_hyperlink {
+    img {
+        display: block;
+        width: 100%;
+    }
 
-  img {
-    width   : 100%;
-    display : block
-  }
+    a {
+        @include button-default;
+    }
 
-  a {
-    @include button-default;
-  }
-
-  &.subscription a {
-    padding-top: 10px;
-    padding-bottom: 10px;
-  }
+    &.subscription a {
+        padding-top: 10px;
+        padding-bottom: 10px;
+    }
 }
 
 .mod_payments {
-  margin-top: 0 !important;
+    margin-top: 0 !important;
 
-  .formbody {
-    display: flex;
-    gap: 20px;
-    margin-top: 30px;
-  }
+    .formbody {
+        display: flex;
+        gap: 20px;
+        margin-top: 30px;
+    }
 }
 
+@media (width <= 991px) {
+    .mod_article {
+        overflow: visible;
+    }
 
-@media (max-width : 991px) {
-  .mod_article {
-    overflow : visible
-  }
-  .mod_article::before {
-    content : "";
-    display : table
-  }
+    .mod_article::before {
+        display: table;
+        content: '';
+    }
 }
 
 a.button,
@@ -223,9 +240,9 @@ button,
 a.more,
 .pagination a.last,
 .pagination a.first {
-  @include button-default;
+    @include button-default;
 
-  @include hfa() {
-    text-decoration: none;
-  }
+    @include hfa {
+        text-decoration: none;
+    }
 }

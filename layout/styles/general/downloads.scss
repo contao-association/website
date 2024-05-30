@@ -1,33 +1,35 @@
 .ce_download,
 .ce_downloads {
-  background: #fff;
-  padding: 15px;
-  border: 1px solid $border-color;
-  border-radius : 5px;
+    padding: 15px;
+    background: #fff;
+    border: 1px solid $border-color;
+    border-radius: 5px;
 
-  @media (min-width: 768px) {
-    padding: 30px;
-  }
-  @media (min-width: 992px) {
-    width: 50%;
-  }
-  ul {
-    margin: 0;
-    padding: 0;
-    list-style-type: none;
-  }
+    @media (width >= 768px) {
+        padding: 30px;
+    }
 
-  li {
-    margin-bottom: 1rem;
-  }
+    @media (width >= 992px) {
+        width: 50%;
+    }
 
-  a,
-  a:hover {
-    text-decoration: none;
-  }
+    ul {
+        margin: 0;
+        padding: 0;
+        list-style-type: none;
+    }
 
-  .dl-above-txt {
-      color: $grey-dark;
-      display: block;
-  }
+    li {
+        margin-bottom: 1rem;
+    }
+
+    a,
+    a:hover {
+        text-decoration: none;
+    }
+
+    .dl-above-txt {
+        display: block;
+        color: $grey-dark;
+    }
 }
