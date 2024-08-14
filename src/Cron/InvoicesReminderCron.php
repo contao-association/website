@@ -64,7 +64,7 @@ class InvoicesReminderCron
             $member = MemberModel::findOneBy('cashctrl_id', $order->getAssociateId());
 
             if (null === $member) {
-                $this->sentryOrThrow('Invoice '.$order->getNr().' does not belong to a member ('.$order->getAssociateId().'/'.$order->associateName.')');
+                $this->sentryOrThrow('Cannot send reminder for invoice '.$order->getNr().', it does not belong to a member ('.$order->getAssociateId().'/'.$order->associateName.')');
                 continue;
             }
 
