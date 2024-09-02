@@ -6,18 +6,16 @@ namespace App\Command;
 
 use App\CashctrlHelper;
 use App\StripeHelper;
+use Symfony\Component\Console\Attribute\AsCommand;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Style\SymfonyStyle;
 
+#[AsCommand('app:stripe:import', 'Import Stripe transactions into CashCtrl.')]
 class StripeImportCommand extends Command
 {
-    protected static $defaultName = 'app:stripe:import';
-
-    protected static $defaultDescription = 'Import Stripe transactions into CashCtrl.';
-
     public function __construct(
         private readonly StripeHelper $stripeHelper,
         private readonly CashctrlHelper $cashctrlHelper,

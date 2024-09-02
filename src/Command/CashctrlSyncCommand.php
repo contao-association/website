@@ -7,18 +7,16 @@ namespace App\Command;
 use App\CashctrlHelper;
 use Contao\CoreBundle\Framework\ContaoFramework;
 use Contao\MemberModel;
+use Symfony\Component\Console\Attribute\AsCommand;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Style\SymfonyStyle;
 
+#[AsCommand('app:cashctrl:sync', 'Updates all member data in Cashctrl.')]
 class CashctrlSyncCommand extends Command
 {
-    protected static $defaultName = 'app:cashctrl:sync';
-
-    protected static $defaultDescription = 'Updates all member data in Cashctrl.';
-
     public function __construct(
         private readonly ContaoFramework $framework,
         private readonly CashctrlHelper $cashctrl,

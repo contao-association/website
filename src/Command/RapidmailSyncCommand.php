@@ -9,17 +9,15 @@ use Contao\CoreBundle\Framework\ContaoFramework;
 use Contao\MemberModel;
 use Rapidmail\ApiClient\Exception\ApiException;
 use Rapidmail\ApiClient\Service\Response\HalResponse;
+use Symfony\Component\Console\Attribute\AsCommand;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Style\SymfonyStyle;
 
+#[AsCommand('app:rapidmail:sync', 'Updates recipient list in Rapidmail.')]
 class RapidmailSyncCommand extends Command
 {
-    protected static $defaultName = 'app:rapidmail:sync';
-
-    protected static $defaultDescription = 'Updates recipient list in Rapidmail.';
-
     public function __construct(
         private readonly ContaoFramework $framework,
         private readonly RapidmailHelper $rapidmail,

@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Command;
 
 use Doctrine\DBAL\Connection;
+use Symfony\Component\Console\Attribute\AsCommand;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
@@ -12,12 +13,9 @@ use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Output\StreamOutput;
 use Symfony\Component\Console\Style\SymfonyStyle;
 
+#[AsCommand('app:member-list', 'Generate a list of active Association members')]
 class MemberListCommand extends Command
 {
-    protected static $defaultName = 'app:member-list';
-
-    protected static $defaultDescription = 'Generate a list of active Association members';
-
     public function __construct(
         private readonly Connection $connection,
         private readonly array $memberships,

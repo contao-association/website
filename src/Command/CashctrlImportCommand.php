@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Command;
 
+use Symfony\Component\Console\Attribute\AsCommand;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
@@ -16,10 +17,9 @@ use Terminal42\CashctrlApi\Api\JournalEndpoint;
 use Terminal42\CashctrlApi\Api\TaxEndpoint;
 use Terminal42\CashctrlApi\Entity\Journal;
 
+#[AsCommand('app:cashctrl:import')]
 class CashctrlImportCommand extends Command
 {
-    protected static $defaultName = 'app:cashctrl:import';
-
     private SymfonyStyle $io;
 
     public function __construct(

@@ -8,18 +8,16 @@ use App\CashctrlHelper;
 use Contao\CoreBundle\Framework\ContaoFramework;
 use Contao\MemberModel;
 use NotificationCenter\Model\Notification;
+use Symfony\Component\Console\Attribute\AsCommand;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Style\SymfonyStyle;
 
+#[AsCommand('app:invoices:remind', 'Send reminders for overdue invoices.')]
 class InvoicesReminderCommand extends Command
 {
-    protected static $defaultName = 'app:invoices:remind';
-
-    protected static $defaultDescription = 'Send reminders for overdue invoices.';
-
     public function __construct(
         private readonly ContaoFramework $framework,
         private readonly CashctrlHelper $cashctrl,

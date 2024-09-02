@@ -9,6 +9,7 @@ use Contao\CoreBundle\Framework\ContaoFramework;
 use Contao\MemberModel;
 use Doctrine\DBAL\Connection;
 use Psr\Log\LoggerInterface;
+use Symfony\Component\Console\Attribute\AsCommand;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
@@ -16,12 +17,9 @@ use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Style\SymfonyStyle;
 use Terminal42\CashctrlApi\Entity\Order;
 
+#[AsCommand('app:invoices', '(Re-)send recurring invoices for a given date.')]
 class RecurringInvoicesCommand extends Command
 {
-    protected static $defaultName = 'app:invoices';
-
-    protected static $defaultDescription = '(Re-)send recurring invoices for a given date.';
-
     public function __construct(
         private readonly ContaoFramework $framework,
         private readonly Connection $connection,
