@@ -53,7 +53,7 @@ class InvoicesReminderCron
                 continue;
             }
 
-            $dueDate = clone $order->getDate();
+            $dueDate = \DateTime::createFromInterface($order->getDate());
             $dueDate->add(new \DateInterval('P'.(int) $order->getDueDays().'D'));
 
             if ($dueDate > $minDueDate) {

@@ -52,7 +52,7 @@ class InvoicesReminderCommand extends Command
                 continue;
             }
 
-            $invoiceDueDate = clone $order->getDate();
+            $invoiceDueDate = \DateTime::createFromInterface($order->getDate());
             $invoiceDueDate->add(new \DateInterval('P'.(int) $order->getDueDays().'D'));
 
             if (

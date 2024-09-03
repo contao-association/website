@@ -103,7 +103,7 @@ class CashctrlImportCommand extends Command
 
             $dateAdded = \DateTime::createFromFormat('d.m.Y', $datum);
 
-            if ($betrag >= 0 || (0 === $betrag && $betragEUR > 0)) {
+            if ($betrag > 0 || (0 === $betrag && $betragEUR > 0)) {
                 $debitId = $accounts[$soll];
                 $creditId = $accounts[$haben];
             } else {
@@ -169,7 +169,7 @@ class CashctrlImportCommand extends Command
         $accounts = [];
 
         foreach ($this->account->list() as $account) {
-            $accounts[$account->getNumber()] = $account->getId();
+            $accounts[(int) $account->getNumber()] = $account->getId();
         }
 
         // Add manual account mapping
@@ -193,7 +193,7 @@ class CashctrlImportCommand extends Command
         return $accounts;
     }
 
-    private function getCurrencyId($soll, $haben): int|null
+    private function getCurrencyId(int $soll, int $haben): int|null
     {
         $map = [
             1001 => 'CHF',

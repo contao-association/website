@@ -158,7 +158,7 @@ class CashctrlHelper
 
     public function sendInvoiceNotification(Notification $notification, Order $invoice, MemberModel $member, array $tokens = []): bool
     {
-        $invoiceDueDate = clone $invoice->getDate();
+        $invoiceDueDate = \DateTime::createFromInterface($invoice->getDate());
         $invoiceDueDate->add(new \DateInterval('P'.(int) $invoice->getDueDays().'D'));
 
         $tokens = array_merge($tokens, [
@@ -346,7 +346,7 @@ class CashctrlHelper
         return null;
     }
 
-    public function bookToJournal(float $amount, \DateTimeInterface $created, int $account, string $reference, string $title, string|null $balanceTransaction): void
+    public function bookToJournal(float $amount, \DateTime $created, int $account, string $reference, string $title, string|null $balanceTransaction): void
     {
         // Make sure timezone in bookkeeping is set to Switzerland
         $created = $created->setTimezone(new \DateTimeZone('Europe/Zurich'));
@@ -668,7 +668,7 @@ class CashctrlHelper
         throw new \RuntimeException('No fiscal period for current date found');
     }
 
-    private function createInvoiceItem(string $subscription, MemberModel $member, \DateTimeImmutable $invoiceDate, $price = null, bool $monthly = false): OrderItem
+    private function createInvoiceItem(string $subscription, MemberModel $member, \DateTimeImmutable $invoiceDate, int|float|null $price = null, bool $monthly = false): OrderItem
     {
         $itemName = $this->translator->trans(
             'invoice_name.'.$subscription,

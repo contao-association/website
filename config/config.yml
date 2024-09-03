@@ -1,6 +1,3 @@
-imports:
-    - { resource: mailer.php }
-
 contao:
     legacy_routing: false
     search:

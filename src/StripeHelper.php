@@ -36,7 +36,7 @@ class StripeHelper
     /**
      * Retrieve Stripe charges for given day.
      *
-     * @return \Generator|array<Charge>
+     * @return \Generator<Charge>
      */
     public function getCharges(\DateTimeInterface $from, \DateTimeInterface $to): \Generator
     {

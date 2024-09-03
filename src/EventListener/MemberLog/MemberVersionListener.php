@@ -86,7 +86,7 @@ class MemberVersionListener
         ]);
     }
 
-    private function handleVersion($versionData, int $memberId, array $newData): void
+    private function handleVersion(string|false $versionData, int $memberId, array $newData): void
     {
         if (false === $versionData) {
             return;
