@@ -12,7 +12,6 @@ use Contao\Date;
 use Contao\MemberModel;
 use Contao\PageModel;
 use Contao\Versions;
-use NotificationCenter\Model\Notification;
 use Oneup\ContaoSentryBundle\ErrorHandlingTrait;
 use Psr\Log\LoggerInterface;
 use Stripe\BalanceTransaction;
@@ -46,6 +45,7 @@ use Terminal42\CashctrlApi\Entity\PersonAddress;
 use Terminal42\CashctrlApi\Entity\PersonContact;
 use Terminal42\CashctrlApi\Exception\RuntimeException;
 use Terminal42\CashctrlApi\Result;
+use Terminal42\NotificationCenterBundle\NotificationCenter;
 
 class CashctrlHelper
 {
@@ -81,6 +81,7 @@ class CashctrlHelper
         private readonly LoggerInterface $logger,
         private readonly LockFactory $lockFactory,
         private readonly StringParser $stringParser,
+        private readonly NotificationCenter $notificationCenter,
         private readonly array $memberships,
         private readonly string $projectDir,
         private readonly int $paymentNotificationId,
@@ -124,14 +125,6 @@ class CashctrlHelper
 
     public function createAndSendInvoice(MemberModel $member, int $notificationId, \DateTimeImmutable $invoiceDate): Order|null
     {
-        $notification = Notification::findById($notificationId);
-
-        if (null === $notification) {
-            $this->sentryOrThrow('Notification ID "'.$notificationId.'" not found, cannot send invoices');
-
-            return null;
-        }
-
         /** @noinspection CallableParameterUseCaseInTypeContextInspection */
         $invoiceDate = $invoiceDate->setTime(0, 0);
 
@@ -145,7 +138,7 @@ class CashctrlHelper
         // Archive invoice AFTER Stripe payment, so the PDF includes the payment information
         $pdf = $this->archiveInvoice($invoice, 'ch' === $member->country ? 1011 : 1013, $member->language ?: 'de');
 
-        if (!$this->sendInvoiceNotification($notification, $invoice, $member, ['invoice_pdf' => $pdf, 'payment_status' => $status])) {
+        if (!$this->sendInvoiceNotification($notificationId, $invoice, $member, ['invoice_pdf' => $pdf, 'payment_status' => $status])) {
             $this->sentryOrThrow('Unable to send invoice email to '.$member->email);
 
             return $invoice;
@@ -156,7 +149,7 @@ class CashctrlHelper
         return $invoice;
     }
 
-    public function sendInvoiceNotification(Notification $notification, Order $invoice, MemberModel $member, array $tokens = []): bool
+    public function sendInvoiceNotification(int $notificationId, Order $invoice, MemberModel $member, array $tokens = []): bool
     {
         $invoiceDueDate = \DateTime::createFromInterface($invoice->getDate());
         $invoiceDueDate->add(new \DateInterval('P'.(int) $invoice->getDueDays().'D'));
@@ -183,9 +176,9 @@ class CashctrlHelper
 
         $this->stringParser->flatten($member->row(), 'member', $tokens);
 
-        $result = $notification->send($tokens, $member->language);
+        $receipts = $this->notificationCenter->sendNotification($notificationId, $tokens, $member->language);
 
-        return !\in_array(false, $result, true);
+        return $receipts->wereAllDelivered();
     }
 
     public function downloadInvoice(Order $invoice, int|null $templateId = null, string|null $language = null): string
@@ -269,10 +262,10 @@ class CashctrlHelper
         ;
     }
 
-    public function notifyInvoicePaid(Order $order, MemberModel $member, Notification $notification): void
+    public function notifyInvoicePaid(Order $order, MemberModel $member, int $notificationId): void
     {
         try {
-            if (!$this->sendInvoiceNotification($notification, $order, $member)) {
+            if (!$this->sendInvoiceNotification($notificationId, $order, $member)) {
                 $this->sentryOrThrow('Unable to send payment notification to '.$member->email);
 
                 return;
@@ -404,12 +397,11 @@ class CashctrlHelper
             $this->framework->initialize();
 
             $member = MemberModel::findOneBy('cashctrl_id', $order->getAssociateId());
-            $notification = Notification::findById($this->paymentNotificationId);
 
-            if (null === $member || null === $notification) {
+            if (null === $member) {
                 $this->order->updateStatus($order->getId(), self::STATUS_PAID);
             } else {
-                $this->notifyInvoicePaid($order, $member, $notification);
+                $this->notifyInvoicePaid($order, $member, $this->paymentNotificationId);
             }
         }
     }

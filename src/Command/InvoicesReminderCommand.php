@@ -7,7 +7,6 @@ namespace App\Command;
 use App\CashctrlHelper;
 use Contao\CoreBundle\Framework\ContaoFramework;
 use Contao\MemberModel;
-use NotificationCenter\Model\Notification;
 use Symfony\Component\Console\Attribute\AsCommand;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputArgument;
@@ -31,14 +30,6 @@ class InvoicesReminderCommand extends Command
         $this->framework->initialize();
 
         $io = new SymfonyStyle($input, $output);
-
-        $notification = Notification::findById($this->overdueNotificationId);
-
-        if (null === $notification) {
-            $io->error('Notification ID "'.$this->overdueNotificationId.'" not found, cannot send invoice reminders');
-
-            return -1;
-        }
 
         foreach ($this->cashctrl->getOverdueInvoices() as $order) {
             $member = MemberModel::findOneBy('cashctrl_id', $order->getAssociateId());
@@ -71,7 +62,7 @@ class InvoicesReminderCommand extends Command
             try {
                 $pdf = $this->cashctrl->archiveInvoice($order);
 
-                if (!$this->cashctrl->sendInvoiceNotification($notification, $order, $member, ['invoice_pdf' => $pdf])) {
+                if (!$this->cashctrl->sendInvoiceNotification($this->overdueNotificationId, $order, $member, ['invoice_pdf' => $pdf])) {
                     $io->error('Unable to send invoice reminder to '.$member->email);
                     continue;
                 }

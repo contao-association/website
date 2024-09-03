@@ -8,7 +8,6 @@ use App\CashctrlHelper;
 use Contao\CoreBundle\DependencyInjection\Attribute\AsCronJob;
 use Contao\CoreBundle\Framework\ContaoFramework;
 use Contao\MemberModel;
-use NotificationCenter\Model\Notification;
 use Oneup\ContaoSentryBundle\ErrorHandlingTrait;
 
 #[AsCronJob('hourly')]
@@ -29,15 +28,6 @@ class PaymentNotificationCron
 
         $this->framework->initialize();
 
-        $notification = Notification::findById($this->paymentNotificationId);
-
-        if (null === $notification) {
-            $this->sentryOrThrow('Notification ID "'.$this->paymentNotificationId.'" not found, cannot send payment notification');
-            $this->sentryCheckIn(false);
-
-            return;
-        }
-
         foreach ($this->cashctrl->getLastPaidInvoices() as $order) {
             if (!$order->isClosed) {
                 continue;
@@ -49,7 +39,7 @@ class PaymentNotificationCron
                 continue;
             }
 
-            $this->cashctrl->notifyInvoicePaid($order, $member, $notification);
+            $this->cashctrl->notifyInvoicePaid($order, $member, $this->paymentNotificationId);
         }
 
         $this->sentryCheckIn(true);

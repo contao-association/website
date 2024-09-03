@@ -8,7 +8,6 @@ use App\CashctrlHelper;
 use Contao\CoreBundle\DependencyInjection\Attribute\AsCronJob;
 use Contao\CoreBundle\Framework\ContaoFramework;
 use Contao\MemberModel;
-use NotificationCenter\Model\Notification;
 use Oneup\ContaoSentryBundle\ErrorHandlingTrait;
 
 #[AsCronJob('0 9 1-7,15-21 * *')] // run job two weeks per month, PHP code will make sure it only sends on mondays
@@ -36,15 +35,6 @@ class InvoicesReminderCron
 
         $this->framework->initialize();
 
-        $notification = Notification::findById($this->overdueNotificationId);
-
-        if (null === $notification) {
-            $this->sentryOrThrow('Notification ID "'.$this->overdueNotificationId.'" not found, cannot send invoice reminders');
-            $this->sentryCheckIn(false);
-
-            return;
-        }
-
         $minDueDate = new \DateTimeImmutable('-2 weeks');
 
         foreach ($this->cashctrl->getOverdueInvoices() as $order) {
@@ -71,7 +61,7 @@ class InvoicesReminderCron
             try {
                 $pdf = $this->cashctrl->archiveInvoice($order);
 
-                if (!$this->cashctrl->sendInvoiceNotification($notification, $order, $member, ['invoice_pdf' => $pdf])) {
+                if (!$this->cashctrl->sendInvoiceNotification($this->overdueNotificationId, $order, $member, ['invoice_pdf' => $pdf])) {
                     $this->sentryOrThrow('Unable to send invoice reminder to '.$member->email);
                     continue;
                 }

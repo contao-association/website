@@ -10,7 +10,7 @@
         "contao/conflicts": "*@dev",
         "contao/manager-bundle": "4.13.*",
         "contao-association/contao-voting": "^2.3",
-        "terminal42/notification_center": "^1.4",
+        "terminal42/notification_center": "^2.0",
         "terminal42/contao-conditionalformfields": "^3.0",
         "terminal42/contao-fineuploader": "^3.3",
         "madeyourday/contao-rocksolid-custom-elements": "^2.2",
@@ -37,7 +37,6 @@
         "allow-plugins": {
             "contao/manager-plugin": true,
             "contao-components/installer": true,
-            "contao-community-alliance/composer-plugin": true,
             "terminal42/contao-build-tools": true,
             "php-http/discovery": false
         }

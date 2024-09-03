@@ -2,9 +2,6 @@
 <xliff version="1.1">
     <file source-language="en">
         <body>
-            <trans-unit id="tl_nc_notification.type.association">
-                <source>Contao Association</source>
-            </trans-unit>
             <trans-unit id="tl_nc_notification.type.cashctrl.0">
                 <source>CashCtrl Rechnungssystem</source>
             </trans-unit>
