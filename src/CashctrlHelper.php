@@ -749,11 +749,9 @@ class CashctrlHelper
             // Set order to "open" otherwise we can't add book entries
             $this->order->updateStatus($order->getId(), self::STATUS_OPEN);
 
-            foreach ($paymentIntent->charges as $charge) {
-                // Only book transaction if it was "immediate" (e.g. credit card) but not SEPA etc.
-                if ($charge->balance_transaction) {
-                    $this->bookToOrder($charge, $order, false);
-                }
+            // Only book transaction if it was "immediate" (e.g. credit card) but not SEPA etc.
+            if (($charge = $paymentIntent->latest_charge) && $charge->balance_transaction) {
+                $this->bookToOrder($charge, $order, false);
             }
 
             return true;

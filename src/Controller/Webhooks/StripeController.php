@@ -36,7 +36,7 @@ class StripeController
                  */
                 $paymentIntent = $event->data->object;
 
-                foreach ($paymentIntent->charges as $charge) {
+                if ($charge = $paymentIntent->latest_charge) {
                     $this->stripeHelper->importCharge($charge);
                 }
                 break;
