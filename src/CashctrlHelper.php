@@ -750,8 +750,14 @@ class CashctrlHelper
             $this->order->updateStatus($order->getId(), self::STATUS_OPEN);
 
             // Only book transaction if it was "immediate" (e.g. credit card) but not SEPA etc.
-            if (($charge = $paymentIntent->latest_charge) && $charge->balance_transaction) {
-                $this->bookToOrder($charge, $order, false);
+            if ($charge = $paymentIntent->latest_charge) {
+                if (\is_string($charge)) {
+                    $charge = $this->stripeClient->charges->retrieve($charge);
+                }
+
+                if ($charge->balance_transaction) {
+                    $this->bookToOrder($charge, $order, false);
+                }
             }
 
             return true;

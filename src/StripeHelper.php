@@ -66,8 +66,12 @@ class StripeHelper
         return $result->data;
     }
 
-    public function importCharge(Charge $charge): void
+    public function importCharge(Charge|string $charge): void
     {
+        if (\is_string($charge)) {
+            $charge = $this->client->charges->retrieve($charge);
+        }
+
         if (!$charge->paid) {
             return;
         }
