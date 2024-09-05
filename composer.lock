@@ -13398,16 +13398,16 @@
         },
         {
             "name": "terminal42/notification_center",
-            "version": "2.0.13",
+            "version": "2.0.15",
             "source": {
                 "type": "git",
                 "url": "https://github.com/terminal42/contao-notification_center.git",
-                "reference": "502652996083080efd1e6dc49a08204016424996"
+                "reference": "d98990a47b833123a6729681f4b73bc49ce927a2"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/terminal42/contao-notification_center/zipball/502652996083080efd1e6dc49a08204016424996",
-                "reference": "502652996083080efd1e6dc49a08204016424996",
+                "url": "https://api.github.com/repos/terminal42/contao-notification_center/zipball/d98990a47b833123a6729681f4b73bc49ce927a2",
+                "reference": "d98990a47b833123a6729681f4b73bc49ce927a2",
                 "shasum": ""
             },
             "require": {
@@ -13489,7 +13489,7 @@
                     "type": "other"
                 }
             ],
-            "time": "2024-07-31T06:59:37+00:00"
+            "time": "2024-09-05T09:21:45+00:00"
         },
         {
             "name": "terminal42/service-annotation-bundle",
