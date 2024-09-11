@@ -45,6 +45,7 @@ use Terminal42\CashctrlApi\Entity\PersonAddress;
 use Terminal42\CashctrlApi\Entity\PersonContact;
 use Terminal42\CashctrlApi\Exception\RuntimeException;
 use Terminal42\CashctrlApi\Result;
+use Terminal42\NotificationCenterBundle\BulkyItem\FileItem;
 use Terminal42\NotificationCenterBundle\NotificationCenter;
 
 class CashctrlHelper
@@ -196,18 +197,15 @@ class CashctrlHelper
         $quarter = ceil($invoice->getDate()->format('n') / 3);
 
         $name = str_replace('/', '-', (string) $invoice->getNr());
-        $targetFile = 'var/invoices/'.$year.'/Q'.$quarter.'/'.$name.'.pdf';
+        $targetFile = $this->projectDir.'/var/invoices/'.$year.'/Q'.$quarter.'/'.$name.'.pdf';
 
-        if ($this->filesystem->exists($targetFile)) {
-            return $targetFile;
+        if (!$this->filesystem->exists($targetFile)) {
+            $this->filesystem->dumpFile($targetFile, $this->downloadInvoice($invoice, $templateId, $language));
         }
 
-        $this->filesystem->dumpFile(
-            $this->projectDir.'/'.$targetFile,
-            $this->downloadInvoice($invoice, $templateId, $language),
+        return $this->notificationCenter->getBulkyGoodsStorage()->store(
+            FileItem::fromPath($targetFile, basename($targetFile), 'application/pdf', (int) filesize($targetFile)),
         );
-
-        return $targetFile;
     }
 
     public function listInvoices(int $cahctrlId): array
