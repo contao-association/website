@@ -1137,16 +1137,16 @@
         },
         {
             "name": "contao/core-bundle",
-            "version": "4.13.47",
+            "version": "4.13.49",
             "source": {
                 "type": "git",
                 "url": "https://github.com/contao/core-bundle.git",
-                "reference": "81c2ba91c3629512165dd132e567c18d8f8ee32b"
+                "reference": "0870231618d5782bee0ded99e2d225e2366de8c8"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/contao/core-bundle/zipball/81c2ba91c3629512165dd132e567c18d8f8ee32b",
-                "reference": "81c2ba91c3629512165dd132e567c18d8f8ee32b",
+                "url": "https://api.github.com/repos/contao/core-bundle/zipball/0870231618d5782bee0ded99e2d225e2366de8c8",
+                "reference": "0870231618d5782bee0ded99e2d225e2366de8c8",
                 "shasum": ""
             },
             "require": {
@@ -1346,7 +1346,7 @@
                     "type": "custom"
                 }
             ],
-            "time": "2024-08-23T07:36:12+00:00"
+            "time": "2024-09-17T06:19:17+00:00"
         },
         {
             "name": "contao/image",
@@ -1482,7 +1482,7 @@
         },
         {
             "name": "contao/installation-bundle",
-            "version": "4.13.47",
+            "version": "4.13.49",
             "source": {
                 "type": "git",
                 "url": "https://github.com/contao/installation-bundle.git",
@@ -1564,7 +1564,7 @@
         },
         {
             "name": "contao/manager-bundle",
-            "version": "4.13.47",
+            "version": "4.13.49",
             "source": {
                 "type": "git",
                 "url": "https://github.com/contao/manager-bundle.git",
@@ -6560,16 +6560,16 @@
         },
         {
             "name": "rapidmail/rapidmail-apiv3-client-php",
-            "version": "1.1.5",
+            "version": "1.1.6",
             "source": {
                 "type": "git",
                 "url": "https://github.com/rapidmail/rapidmail-apiv3-client-php.git",
-                "reference": "b354bf8973132271340098e885e4a1da8e86e8b9"
+                "reference": "d6cef48229256791cd5fc7d033e81eaf617f826e"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/rapidmail/rapidmail-apiv3-client-php/zipball/b354bf8973132271340098e885e4a1da8e86e8b9",
-                "reference": "b354bf8973132271340098e885e4a1da8e86e8b9",
+                "url": "https://api.github.com/repos/rapidmail/rapidmail-apiv3-client-php/zipball/d6cef48229256791cd5fc7d033e81eaf617f826e",
+                "reference": "d6cef48229256791cd5fc7d033e81eaf617f826e",
                 "shasum": ""
             },
             "require": {
@@ -6602,9 +6602,9 @@
             "description": "rapidmail API v3 client",
             "support": {
                 "issues": "https://github.com/rapidmail/rapidmail-apiv3-client-php/issues",
-                "source": "https://github.com/rapidmail/rapidmail-apiv3-client-php/tree/1.1.5"
+                "source": "https://github.com/rapidmail/rapidmail-apiv3-client-php/tree/1.1.6"
             },
-            "time": "2024-07-15T10:54:20+00:00"
+            "time": "2024-09-11T08:46:22+00:00"
         },
         {
             "name": "scheb/2fa-backup-code",
@@ -7455,16 +7455,16 @@
         },
         {
             "name": "stripe/stripe-php",
-            "version": "v15.8.0",
+            "version": "v15.9.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/stripe/stripe-php.git",
-                "reference": "5ed133fa45987771f80ad300be2316c05832f6a7"
+                "reference": "dc9726ac0cfbba7b3c97e2cf6042f2c090551cdb"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/stripe/stripe-php/zipball/5ed133fa45987771f80ad300be2316c05832f6a7",
-                "reference": "5ed133fa45987771f80ad300be2316c05832f6a7",
+                "url": "https://api.github.com/repos/stripe/stripe-php/zipball/dc9726ac0cfbba7b3c97e2cf6042f2c090551cdb",
+                "reference": "dc9726ac0cfbba7b3c97e2cf6042f2c090551cdb",
                 "shasum": ""
             },
             "require": {
@@ -7508,9 +7508,9 @@
             ],
             "support": {
                 "issues": "https://github.com/stripe/stripe-php/issues",
-                "source": "https://github.com/stripe/stripe-php/tree/v15.8.0"
+                "source": "https://github.com/stripe/stripe-php/tree/v15.9.0"
             },
-            "time": "2024-08-29T21:58:14+00:00"
+            "time": "2024-09-12T22:05:50+00:00"
         },
         {
             "name": "symfony-cmf/routing",
