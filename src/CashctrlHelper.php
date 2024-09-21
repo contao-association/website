@@ -47,6 +47,7 @@ use Terminal42\CashctrlApi\Exception\RuntimeException;
 use Terminal42\CashctrlApi\Result;
 use Terminal42\NotificationCenterBundle\BulkyItem\FileItem;
 use Terminal42\NotificationCenterBundle\NotificationCenter;
+use Terminal42\NotificationCenterBundle\Parcel\Stamp\BulkyItemsStamp;
 
 class CashctrlHelper
 {
@@ -177,7 +178,13 @@ class CashctrlHelper
 
         $this->stringParser->flatten($member->row(), 'member', $tokens);
 
-        $receipts = $this->notificationCenter->sendNotification($notificationId, $tokens, $member->language);
+        $stamps = $this->notificationCenter->createBasicStampsForNotification($notificationId, $tokens, $member->language);
+
+        if (isset($tokens['invoice_pdf'])) {
+            $stamps = $stamps->with(new BulkyItemsStamp([$tokens['invoice_pdf']]));
+        }
+
+        $receipts = $this->notificationCenter->sendNotificationWithStamps($notificationId, $stamps);
 
         return $receipts->wereAllDelivered();
     }
