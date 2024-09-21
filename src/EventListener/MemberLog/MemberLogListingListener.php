@@ -65,7 +65,7 @@ class MemberLogListingListener
             return $this->generateLine($text, $row);
         }
 
-        throw new \RuntimeException(sprintf('Unknown log type "%s"', $row['type']));
+        throw new \RuntimeException(\sprintf('Unknown log type "%s"', $row['type']));
     }
 
     private function generateLine(string $text, array $row): string

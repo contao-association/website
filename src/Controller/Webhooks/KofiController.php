@@ -30,7 +30,7 @@ class KofiController
         }
 
         if ('EUR' !== strtoupper((string) $data['currency'])) {
-            throw new BadRequestHttpException(sprintf('Currency "%s" is not supported', $data['currency']));
+            throw new BadRequestHttpException(\sprintf('Currency "%s" is not supported', $data['currency']));
         }
 
         $journal = new Journal(

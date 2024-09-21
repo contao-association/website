@@ -23,7 +23,7 @@ class RapidmailSyncListener
     public function __invoke(string $table, $memberId): void
     {
         if ('tl_member' !== $table) {
-            throw new \InvalidArgumentException(sprintf('Invalid call to sync table "%s" with Rapidmail.', $table));
+            throw new \InvalidArgumentException(\sprintf('Invalid call to sync table "%s" with Rapidmail.', $table));
         }
 
         if (!$this->rapidmail->isConfigured()) {
@@ -33,7 +33,7 @@ class RapidmailSyncListener
         $member = MemberModel::findById($memberId);
 
         if (null === $member) {
-            throw new \InvalidArgumentException(sprintf('Member ID "%s" was not found.', $memberId));
+            throw new \InvalidArgumentException(\sprintf('Member ID "%s" was not found.', $memberId));
         }
 
         $queryParams = $this->rapidmail

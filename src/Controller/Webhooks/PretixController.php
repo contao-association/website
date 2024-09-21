@@ -46,7 +46,7 @@ class PretixController
                 break;
 
             default:
-                throw new BadRequestHttpException(sprintf('Unsupported Pretix action "%s"', $data['action']));
+                throw new BadRequestHttpException(\sprintf('Unsupported Pretix action "%s"', $data['action']));
         }
 
         return new Response();

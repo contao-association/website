@@ -48,7 +48,7 @@ class StripeImportCommand extends Command
         foreach ($this->stripeHelper->getCharges($from, $to) as $charge) {
             switch ($charge->application) {
                 case 'ca_BNCWzVqBWfaL53LdFYzpoumNOsvo2936': // Ko-fi
-                    $message = sprintf(
+                    $message = \sprintf(
                         'Ko-fi donation from %s (%s %s on %s)',
                         $charge->billing_details['name'],
                         strtoupper((string) $charge->currency),
@@ -58,7 +58,7 @@ class StripeImportCommand extends Command
                     break;
 
                 case 'ca_9uvq9hdD9LslRRCLivQ5cDhHsmFLX023': // Pretix
-                    $message = sprintf(
+                    $message = \sprintf(
                         'Pretix Bestellung %s (%s %s on %s)',
                         $charge->metadata['order'],
                         strtoupper((string) $charge->currency),
@@ -79,7 +79,7 @@ class StripeImportCommand extends Command
                         continue 2;
                     }
 
-                    $message = sprintf(
+                    $message = \sprintf(
                         'CashCtrl order %s from %s (%s %s on %s)',
                         $order->getNr(),
                         $order->associateName,

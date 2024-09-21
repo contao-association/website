@@ -77,7 +77,7 @@ class StripeHelper
         }
 
         if ('eur' !== $charge->currency) {
-            throw new \RuntimeException(sprintf('Stripe currency "%s" is not supported.', $charge->currency));
+            throw new \RuntimeException(\sprintf('Stripe currency "%s" is not supported.', $charge->currency));
         }
 
         switch ($charge->application) {
@@ -186,12 +186,12 @@ class StripeHelper
     public function createOrUpdateCustomer(MemberModel $member): Customer
     {
         $data = [
-            'name' => $member->company ?: sprintf('%s %s', $member->firstname, $member->lastname),
+            'name' => $member->company ?: \sprintf('%s %s', $member->firstname, $member->lastname),
             'email' => $member->email,
             'address' => [
                 'city' => $member->city,
                 'country' => $member->country,
-                'line1' => $member->company ? sprintf('%s %s', $member->firstname, $member->lastname) : $member->street,
+                'line1' => $member->company ? \sprintf('%s %s', $member->firstname, $member->lastname) : $member->street,
                 'line2' => $member->company ? $member->street : '',
                 'postal_code' => $member->postal,
             ],

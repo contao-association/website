@@ -81,7 +81,7 @@ class RecurringInvoicesCommand extends Command
         foreach ($members as $member) {
             $invoiced = (new \DateTime())->setTimestamp((int) $member->membership_invoiced);
             if (
-                !$io->confirm(sprintf(
+                !$io->confirm(\sprintf(
                     'Invoicing %s %s (%s), membership invoiced until %s (%s). Continue?',
                     $member->firstname,
                     $member->lastname,

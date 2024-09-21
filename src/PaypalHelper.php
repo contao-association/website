@@ -75,7 +75,7 @@ class PaypalHelper
     public function bookTransaction(array $transaction): Journal
     {
         if ('EUR' !== $transaction['transaction_info']['transaction_amount']['currency_code']) {
-            throw new \RuntimeException(sprintf('Currency "%s" is not supported', $transaction['transaction_info']['transaction_amount']['currency_code']));
+            throw new \RuntimeException(\sprintf('Currency "%s" is not supported', $transaction['transaction_info']['transaction_amount']['currency_code']));
         }
 
         $dateAdded = $this->getDateAdded($transaction);

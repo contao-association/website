@@ -89,7 +89,7 @@ class PretixHelper
             return $this->cashctrlHelper->getAccountId(3420);
         }
 
-        throw new \RuntimeException(sprintf('Cannot determine account for Pretix invoice "%s"', $invoice['number']));
+        throw new \RuntimeException(\sprintf('Cannot determine account for Pretix invoice "%s"', $invoice['number']));
     }
 
     private function getTotal(array $invoice): float

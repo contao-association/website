@@ -1,4 +1,3 @@
-
 <!-- indexer::stop -->
 <div class="<?= $this->class ?> two-factor block"<?= $this->cssID ?><?php if ($this->style): ?> style="<?= $this->style ?>"<?php endif; ?>>
 

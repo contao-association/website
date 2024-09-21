@@ -420,7 +420,7 @@ class CashctrlHelper
         $membership = $this->memberships[$member->membership];
         $monthly = 'month' === $member->membership_interval && 'month' === $membership['type'] && ($membership['freeMember'] ?? false);
 
-        $invoiceDescription = sprintf(
+        $invoiceDescription = \sprintf(
             '%s/%s - %s %s%s',
             $member->id,
             $invoiceDate->format($monthly ? 'm-Y' : 'Y'),
@@ -658,7 +658,7 @@ class CashctrlHelper
         throw new \RuntimeException('No fiscal period for current date found');
     }
 
-    private function createInvoiceItem(string $subscription, MemberModel $member, \DateTimeImmutable $invoiceDate, int|float|null $price = null, bool $monthly = false): OrderItem
+    private function createInvoiceItem(string $subscription, MemberModel $member, \DateTimeImmutable $invoiceDate, float|int|null $price = null, bool $monthly = false): OrderItem
     {
         $itemName = $this->translator->trans(
             'invoice_name.'.$subscription,

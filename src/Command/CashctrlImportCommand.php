@@ -224,7 +224,7 @@ class CashctrlImportCommand extends Command
         }
 
         if (!isset($currencies[$code])) {
-            throw new \RuntimeException(sprintf('Währung %s fehlt in CashCtrl.', $code));
+            throw new \RuntimeException(\sprintf('Währung %s fehlt in CashCtrl.', $code));
         }
 
         return $currencies[$code];

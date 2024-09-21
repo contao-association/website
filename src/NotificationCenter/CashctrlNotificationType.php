@@ -15,7 +15,7 @@ class CashctrlNotificationType implements NotificationTypeInterface
 {
     public const NAME = 'cashctrl';
 
-    public function __construct(private TokenDefinitionFactoryInterface $factory)
+    public function __construct(private readonly TokenDefinitionFactoryInterface $factory)
     {
     }
 

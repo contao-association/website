@@ -47,7 +47,7 @@ class InvoicesReminderCommand extends Command
             $invoiceDueDate->add(new \DateInterval('P'.(int) $order->getDueDays().'D'));
 
             if (
-                !$io->confirm(sprintf(
+                !$io->confirm(\sprintf(
                     'Sending reminder for %s %s (%s), invoices %s was due on %s. Continue?',
                     $member->firstname,
                     $member->lastname,
