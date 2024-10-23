@@ -108,19 +108,6 @@
       <td class="bg--sponsor">✓</td>
     </tr>
     <tr>
-      <th>
-        #supporter Kanal auf Slack
-        <p class="explain">Wir laden dich bzw. deine Mitarbeiter in den #supporter-Kanal im Contao Slack ein (Anzahl Personen).</p>
-      </th>
-      <td class="bg--supporter">✗</td>
-      <td class="bg--supporter">✗</td>
-      <td class="bg--supporter">✗</td>
-      <td class="bg--supporter"><span class="explain">1 Pers.</span></td>
-      <td class="bg--sponsor"><span class="explain">2 Pers.</span></td>
-      <td class="bg--sponsor"><span class="explain">3 Pers.</span></td>
-      <td class="bg--sponsor"><span class="explain">3 Pers.</span></td>
-    </tr>
-    <tr>
       <td class="bg--sponsor" colspan="5"></td>
       <td class="bg--sponsor explain" colspan="3">Nur für Sponsoren</td>
     </tr>
