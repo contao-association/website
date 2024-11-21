@@ -7,12 +7,10 @@ namespace App\Controller;
 use Doctrine\DBAL\Connection;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpKernel\Attribute\AsController;
 use Symfony\Component\Routing\Annotation\Route;
-use Terminal42\ServiceAnnotationBundle\Annotation\ServiceTag;
 
-/**
- * @ServiceTag("controller.service_arguments")
- */
+#[AsController]
 class SupporterController
 {
     public function __construct(
