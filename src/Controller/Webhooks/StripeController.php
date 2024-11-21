@@ -6,6 +6,7 @@ namespace App\Controller\Webhooks;
 
 use App\StripeHelper;
 use Oneup\ContaoSentryBundle\ErrorHandlingTrait;
+use Stripe\Charge;
 use Stripe\PaymentIntent;
 use Stripe\Webhook;
 use Symfony\Component\HttpFoundation\Request;
@@ -25,20 +26,21 @@ class StripeController
 
     public function __invoke(Request $request): Response
     {
-        $event = Webhook::constructEvent($request->getContent(), $request->headers->get('Stripe-Signature', ''), $this->stripeSecret);
+        try {
+            $event = Webhook::constructEvent($request->getContent(), $request->headers->get('Stripe-Signature', ''), $this->stripeSecret);
+        } catch (\Exception) {
+            return new Response(null, Response::HTTP_BAD_REQUEST);
+        }
 
         switch ($event->type) {
-            case 'payment_intent.succeeded':
+            case 'charge.succeeded':
                 /**
-                 * @var PaymentIntent $paymentIntent
+                 * @var Charge $charge
                  *
                  * @noinspection PhpPossiblePolymorphicInvocationInspection
                  */
-                $paymentIntent = $event->data->object;
-
-                if ($charge = $paymentIntent->latest_charge) {
-                    $this->stripeHelper->importCharge($charge);
-                }
+                $charge = $event->data->object;
+                $this->stripeHelper->importCharge($charge);
                 break;
 
             case 'payment_intent.payment_failed':
