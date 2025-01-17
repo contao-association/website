@@ -16,6 +16,8 @@ class PaypalHelper
 {
     use ErrorHandlingTrait;
 
+    private const KOFI_SUBSCRIPTIONS = ['B-9S104756L95095513'];
+
     private readonly array $teamMembers;
 
     public function __construct(
@@ -72,10 +74,18 @@ class PaypalHelper
         return $transactions;
     }
 
-    public function bookTransaction(array $transaction): Journal
+    public function bookTransaction(array $transaction): void
     {
         if ('EUR' !== $transaction['transaction_info']['transaction_amount']['currency_code']) {
-            throw new \RuntimeException(\sprintf('Currency "%s" is not supported', $transaction['transaction_info']['transaction_amount']['currency_code']));
+            $this->sentryOrThrow(
+                sprintf('PayPal error: currency "%s" is not supported', $transaction['transaction_info']['transaction_amount']['currency_code']),
+                null,
+                [
+                    'transaction' => $transaction,
+                ]
+            );
+
+            return;
         }
 
         $dateAdded = $this->getDateAdded($transaction);
@@ -107,26 +117,27 @@ class PaypalHelper
                 $bookEntry->setReference($journal->getReference());
                 $this->bookentry->create($bookEntry);
                 $this->bookFee($transaction, $journal);
-
-                return $journal;
+                return;
 
             default:
                 $journal->setCreditId($this->cashctrlHelper->getAccountId(1090));
-                $this->sentryOrThrow(
-                    'PayPal-Zahlung in CashCtrl prüfen: '.$journal->getReference().' von '.$this->getName($transaction),
-                    null,
-                    [
-                        'transaction' => $transaction,
-                    ],
-                );
+                $isKofi = \in_array($transaction['transaction_info']['paypal_reference_id'] ?? null, self::KOFI_SUBSCRIPTIONS, true);
+
+                if (!$isKofi) {
+                    $this->sentryOrThrow(
+                        'PayPal-Zahlung in CashCtrl prüfen: '.$journal->getReference().' von '.$this->getName($transaction),
+                        null,
+                        [
+                            'transaction' => $transaction,
+                        ],
+                    );
+                }
                 break;
         }
 
         $this->cashctrlHelper->addJournalEntry($journal);
 
         $this->bookFee($transaction, $journal);
-
-        return $journal;
     }
 
     private function bookFee(array $transaction, Journal $journal): void
