@@ -7,6 +7,7 @@ namespace App\Command;
 use App\CashctrlHelper;
 use Contao\CoreBundle\Framework\ContaoFramework;
 use Contao\MemberModel;
+use Doctrine\DBAL\ArrayParameterType;
 use Doctrine\DBAL\Connection;
 use Psr\Log\LoggerInterface;
 use Symfony\Component\Console\Attribute\AsCommand;
@@ -25,6 +26,7 @@ class RecurringInvoicesCommand extends Command
         private readonly Connection $connection,
         private readonly CashctrlHelper $cashctrl,
         private readonly LoggerInterface $logger,
+        private readonly array $memberships,
         private readonly int $invoiceNotificationId,
     ) {
         parent::__construct();
@@ -55,27 +57,51 @@ class RecurringInvoicesCommand extends Command
             return Command::FAILURE;
         }
 
+        [$monthly, $yearly] = [
+            array_keys(array_filter($this->memberships, static fn (array $m) => 'month' === ($m['type'] ?? null) && ($m['freeMember'] ?? false))),
+            array_keys(array_filter($this->memberships, static fn (array $m) => 'month' !== ($m['type'] ?? null) || !($m['freeMember'] ?? false))),
+        ];
+
         // Find members which have been added today some time ago
         // @see http://stackoverflow.com/a/2218577
-        $ids = $this->connection->fetchFirstColumn("
+        $ids = $this->connection->fetchFirstColumn(<<<SQL
             SELECT id
             FROM tl_member
             WHERE
-                DATE_FORMAT(FROM_UNIXTIME(membership_start),'%Y-%m-%d') != ?
+                DATE_FORMAT(FROM_UNIXTIME(membership_start),'%Y-%m-%d') != :today
                 AND (
                     (
-                        membership_interval != 'month'
-                        AND DATE_FORMAT(FROM_UNIXTIME(membership_start),'%m-%d') = ?
+                        membership IN (:yearly)
+                        AND DATE_FORMAT(FROM_UNIXTIME(membership_start),'%m-%d') = :currentMonth
                     ) OR (
-                        membership_interval = 'month'
-                        AND DATE_FORMAT(FROM_UNIXTIME(membership_start),'%d') = ?
+                        membership IN (:monthly) AND (
+                            (
+                                membership_interval != 'month'
+                                AND DATE_FORMAT(FROM_UNIXTIME(membership_start),'%m-%d') = :currentMonth
+                            ) OR (
+                                membership_interval = 'month'
+                                AND DATE_FORMAT(FROM_UNIXTIME(membership_start),'%d') = :currentDay
+                            )
+                        )
                     )
                 )
                 AND disable=''
                 AND (start='' OR start<=UNIX_TIMESTAMP())
                 AND (stop='' OR stop>UNIX_TIMESTAMP())
                 AND (membership_stop='' OR membership_stop>UNIX_TIMESTAMP())
-        ", [$date->format('Y-m-d'), $date->format('m-d'), $date->format('d')]);
+            SQL,
+            [
+                'today' => $date->format('Y-m-d'),
+                'currentMonth' => $date->format('m-d'),
+                'currentDay' => $date->format('d'),
+                'yearly' => $yearly,
+                'monthly' => $monthly,
+            ],
+            [
+                'yearly' => ArrayParameterType::STRING,
+                'monthly' => ArrayParameterType::STRING,
+            ]
+        );
 
         if ([] === $ids || null === ($members = MemberModel::findMultipleByIds($ids))) {
             $io->warning('No members found that renew on '.$date->format('F jS, Y'));
