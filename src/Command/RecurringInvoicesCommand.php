@@ -30,7 +30,12 @@ class RecurringInvoicesCommand extends Command
         parent::__construct();
     }
 
-    public function run(InputInterface $input, OutputInterface $output): int
+    protected function configure(): void
+    {
+        $this->addArgument('date', InputArgument::REQUIRED, 'Date to create the invoices for (Y-m-d).');
+    }
+
+    protected function execute(InputInterface $input, OutputInterface $output): int
     {
         $this->framework->initialize();
 
@@ -106,10 +111,5 @@ class RecurringInvoicesCommand extends Command
         }
 
         return Command::SUCCESS;
-    }
-
-    protected function configure(): void
-    {
-        $this->addArgument('date', InputArgument::REQUIRED, 'Date to create the invoices for (Y-m-d).');
     }
 }

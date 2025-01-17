@@ -7,6 +7,7 @@ namespace App\Command;
 use App\CashctrlHelper;
 use Contao\CoreBundle\Framework\ContaoFramework;
 use Contao\MemberModel;
+use Contao\System;
 use Symfony\Component\Console\Attribute\AsCommand;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputArgument;
@@ -25,7 +26,12 @@ class InvoicesReminderCommand extends Command
         parent::__construct();
     }
 
-    public function run(InputInterface $input, OutputInterface $output): int
+    protected function configure(): void
+    {
+        $this->addArgument('member', InputArgument::OPTIONAL, 'Send invoice reminders for a specific member ID');
+    }
+
+    protected function execute(InputInterface $input, OutputInterface $output): int
     {
         $this->framework->initialize();
 
@@ -77,10 +83,5 @@ class InvoicesReminderCommand extends Command
         }
 
         return 0;
-    }
-
-    protected function configure(): void
-    {
-        $this->addArgument('member', InputArgument::OPTIONAL, 'Send invoice reminders for a specific member ID');
     }
 }
