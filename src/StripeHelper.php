@@ -135,7 +135,9 @@ class StripeHelper
                         return;
                     }
 
-                    $this->cashctrlHelper->bookToOrder($charge, $order, CashctrlHelper::STATUS_NOTIFIED !== $order->getStatusId());
+                    if ($charge->balance_transaction) {
+                        $this->cashctrlHelper->bookToOrder($charge, $order, CashctrlHelper::STATUS_NOTIFIED !== $order->getStatusId());
+                    }
                 } finally {
                     $lock->release();
                 }

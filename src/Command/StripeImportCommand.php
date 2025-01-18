@@ -46,6 +46,10 @@ class StripeImportCommand extends Command
         $io->title('Importing Stripe charges from '.$from->format('d.m.Y').' to '.$to->format('d.m.Y'));
 
         foreach ($this->stripeHelper->getCharges($from, $to) as $charge) {
+            if (!$charge->paid) {
+                continue;
+            }
+
             switch ($charge->application) {
                 case 'ca_BNCWzVqBWfaL53LdFYzpoumNOsvo2936': // Ko-fi
                     $message = \sprintf(

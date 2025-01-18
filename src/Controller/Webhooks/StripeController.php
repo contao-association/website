@@ -34,6 +34,7 @@ class StripeController
 
         switch ($event->type) {
             case 'charge.succeeded':
+            case 'charge.updated':
                 /**
                  * @var Charge $charge
                  *
