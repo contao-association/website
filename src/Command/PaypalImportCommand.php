@@ -47,8 +47,26 @@ class PaypalImportCommand extends Command
         $io->progressStart(\count($transactions));
 
         foreach ($transactions as $transaction) {
+            $name = ($transaction['payer_info']['payer_name']['alternate_full_name'] ?? '');
+
+            switch (true) {
+                case str_starts_with($transaction['cart_info']['item_details'][0]['item_name'] ?? '', 'Ko-fi'):
+                    $message = 'Ko-fi '.$transaction['transaction_info']['invoice_id'].' von '.$name;
+                    break;
+
+                case ($transaction['transaction_info']['transaction_note'] ?? null):
+                    $message = 'Rechnung '.$transaction['transaction_info']['transaction_note'].' von '.$name;
+                    break;
+
+                default:
+                    $message = 'PayPal-Zahlung '.$transaction['transaction_info']['transaction_id'].' von '.$name;
+                    break;
+            }
+
             try {
-                $this->paypalHelper->bookTransaction($transaction);
+                if ($io->confirm($message)) {
+                    $this->paypalHelper->bookTransaction($transaction);
+                }
             } catch (\RuntimeException $exception) {
                 $io->error('Error for transaction '.$transaction['transaction_info']['transaction_id'].' :'.$exception->getMessage());
                 continue;
