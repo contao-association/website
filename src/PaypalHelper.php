@@ -201,7 +201,7 @@ class PaypalHelper
         $email = $transaction['payer_info']['email_address'] ?? '';
 
         // Software License
-        if (\in_array($email, ['paypal@rapidmail.de', 'gold@ko-fi.com'], true)) {
+        if (\in_array($email, ['paypal@rapidmail.de', 'payments@meisterlabs.com', 'gold@ko-fi.com'], true)) {
             return $this->cashctrlHelper->getAccountId(6573);
         }
 
