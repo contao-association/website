@@ -8,6 +8,7 @@ use App\CashctrlHelper;
 use Contao\CoreBundle\DependencyInjection\Attribute\AsCronJob;
 use Contao\CoreBundle\Framework\ContaoFramework;
 use Contao\MemberModel;
+use Contao\System;
 use Doctrine\DBAL\Connection;
 use Oneup\ContaoSentryBundle\ErrorHandlingTrait;
 use Psr\Log\LoggerInterface;
@@ -32,6 +33,7 @@ class RecurringInvoicesCron
         $this->sentryCheckIn();
 
         $this->framework->initialize();
+        System::loadLanguageFile('default');
 
         $ids = $this->connection->fetchFirstColumn("
             SELECT id

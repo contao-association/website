@@ -34,6 +34,7 @@ class InvoicesReminderCommand extends Command
     protected function execute(InputInterface $input, OutputInterface $output): int
     {
         $this->framework->initialize();
+        System::loadLanguageFile('default');
 
         $io = new SymfonyStyle($input, $output);
 

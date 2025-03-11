@@ -7,6 +7,7 @@ namespace App\Command;
 use App\RapidmailHelper;
 use Contao\CoreBundle\Framework\ContaoFramework;
 use Contao\MemberModel;
+use Contao\System;
 use Rapidmail\ApiClient\Exception\ApiException;
 use Rapidmail\ApiClient\Service\Response\HalResponse;
 use Symfony\Component\Console\Attribute\AsCommand;
@@ -117,6 +118,7 @@ class RapidmailSyncCommand extends Command
     private function getMembers(): array
     {
         $this->framework->initialize();
+        System::loadLanguageFile('default');
 
         $collection = MemberModel::findAll();
 

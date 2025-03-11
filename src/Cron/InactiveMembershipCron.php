@@ -6,6 +6,7 @@ namespace App\Cron;
 
 use Contao\CoreBundle\DependencyInjection\Attribute\AsCronJob;
 use Contao\CoreBundle\Framework\ContaoFramework;
+use Contao\System;
 use Contao\Versions;
 use Doctrine\DBAL\Connection;
 use Oneup\ContaoSentryBundle\ErrorHandlingTrait;
@@ -26,6 +27,7 @@ class InactiveMembershipCron
         $this->sentryCheckIn();
 
         $this->framework->initialize();
+        System::loadLanguageFile('default');
 
         $ids = $this->connection->fetchFirstColumn("
             SELECT id

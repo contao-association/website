@@ -7,6 +7,7 @@ namespace App\Command;
 use App\CashctrlHelper;
 use Contao\CoreBundle\Framework\ContaoFramework;
 use Contao\MemberModel;
+use Contao\System;
 use Symfony\Component\Console\Attribute\AsCommand;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputArgument;
@@ -32,6 +33,7 @@ class CashctrlSyncCommand extends Command
     protected function execute(InputInterface $input, OutputInterface $output): int
     {
         $this->framework->initialize();
+        System::loadLanguageFile('default');
 
         if ($ids = $input->getArgument('member_ids')) {
             $members = MemberModel::findBy(['tl_member.id IN ('.implode(',', array_map('intval', explode(',', (string) $ids))).')'], []);

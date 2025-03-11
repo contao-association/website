@@ -8,6 +8,7 @@ use App\RapidmailHelper;
 use Contao\CoreBundle\DependencyInjection\Attribute\AsCronJob;
 use Contao\CoreBundle\Framework\ContaoFramework;
 use Contao\MemberModel;
+use Contao\System;
 use Oneup\ContaoSentryBundle\ErrorHandlingTrait;
 use Rapidmail\ApiClient\Exception\ApiException;
 use Rapidmail\ApiClient\Service\Response\HalResponse;
@@ -93,6 +94,7 @@ class RapidmailSyncCron
     private function getMembers(): array
     {
         $this->framework->initialize();
+        System::loadLanguageFile('default');
 
         $collection = MemberModel::findAll();
 

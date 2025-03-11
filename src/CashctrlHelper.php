@@ -11,6 +11,7 @@ use Contao\CoreBundle\Security\Authentication\Token\TokenChecker;
 use Contao\Date;
 use Contao\MemberModel;
 use Contao\PageModel;
+use Contao\System;
 use Contao\Versions;
 use Oneup\ContaoSentryBundle\ErrorHandlingTrait;
 use Psr\Log\LoggerInterface;
@@ -400,6 +401,7 @@ class CashctrlHelper
 
         if ($sendNotification && $order->open <= 0) {
             $this->framework->initialize();
+            System::loadLanguageFile('default');
 
             $member = MemberModel::findOneBy('cashctrl_id', $order->getAssociateId());
 

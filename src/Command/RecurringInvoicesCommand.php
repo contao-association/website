@@ -7,6 +7,7 @@ namespace App\Command;
 use App\CashctrlHelper;
 use Contao\CoreBundle\Framework\ContaoFramework;
 use Contao\MemberModel;
+use Contao\System;
 use Doctrine\DBAL\ArrayParameterType;
 use Doctrine\DBAL\Connection;
 use Psr\Log\LoggerInterface;
@@ -40,6 +41,7 @@ class RecurringInvoicesCommand extends Command
     protected function execute(InputInterface $input, OutputInterface $output): int
     {
         $this->framework->initialize();
+        System::loadLanguageFile('default');
 
         $io = new SymfonyStyle($input, $output);
 

@@ -8,6 +8,7 @@ use App\CashctrlHelper;
 use Contao\CoreBundle\DependencyInjection\Attribute\AsCronJob;
 use Contao\CoreBundle\Framework\ContaoFramework;
 use Contao\MemberModel;
+use Contao\System;
 use Oneup\ContaoSentryBundle\ErrorHandlingTrait;
 
 #[AsCronJob('hourly')]
@@ -27,6 +28,7 @@ class PaymentNotificationCron
         $this->sentryCheckIn();
 
         $this->framework->initialize();
+        System::loadLanguageFile('default');
 
         foreach ($this->cashctrl->getLastPaidInvoices() as $order) {
             if (!$order->isClosed) {

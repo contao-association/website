@@ -6,6 +6,7 @@ namespace App;
 
 use Contao\CoreBundle\Framework\ContaoFramework;
 use Contao\MemberModel;
+use Contao\System;
 use Oneup\ContaoSentryBundle\ErrorHandlingTrait;
 use Stripe\Charge;
 use Stripe\Checkout\Session;
@@ -160,6 +161,7 @@ class StripeHelper
         }
 
         $this->framework->initialize();
+        System::loadLanguageFile('default');
 
         $member = MemberModel::findById((int) $session->metadata->contao_member_id);
 
