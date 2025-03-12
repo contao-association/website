@@ -7,6 +7,7 @@ namespace App;
 use Symfony\Contracts\HttpClient\HttpClientInterface;
 use Terminal42\CashctrlApi\Api\TaxEndpoint;
 use Terminal42\CashctrlApi\Entity\Journal;
+use Terminal42\CashctrlApi\Entity\JournalItem;
 
 class PretixHelper
 {
@@ -18,11 +19,11 @@ class PretixHelper
     ) {
     }
 
-    public function getOrder(string $organizer, string $event, string $code): array
+    public function getEvents(string $organizer): \Generator
     {
         $response = $this->httpClient->request(
             'GET',
-            "https://pretix.eu/api/v1/organizers/$organizer/events/$event/orders/$code",
+            "https://pretix.eu/api/v1/organizers/$organizer/events/?ordering=date_from",
             [
                 'headers' => [
                     'Authorization' => 'Token '.$this->pretixToken,
@@ -31,23 +32,40 @@ class PretixHelper
             ],
         );
 
-        return $response->toArray();
+        $data = $response->toArray();
+
+        foreach ($data['results'] as $event) {
+            yield $event;
+        }
     }
 
-    public function getInvoices(string $organizer, string $event, string $code): array
+    public function getInvoices(string $organizer, string $event, string|null $code = null): \Generator
     {
-        $response = $this->httpClient->request(
-            'GET',
-            "https://pretix.eu/api/v1/organizers/$organizer/events/$event/invoices?order=$code",
-            [
-                'headers' => [
-                    'Authorization' => 'Token '.$this->pretixToken,
-                    'Accept' => 'application/json',
-                ],
-            ],
-        );
+        $url = "https://pretix.eu/api/v1/organizers/$organizer/events/$event/invoices?ordering=date";
 
-        return $response->toArray()['results'];
+        if (null !== $code) {
+            $url .= "&order=$code";
+        }
+
+        while ($url) {
+            $response = $this->httpClient->request(
+                'GET',
+                $url,
+                [
+                    'headers' => [
+                        'Authorization' => 'Token '.$this->pretixToken,
+                        'Accept' => 'application/json',
+                    ],
+                ],
+            );
+
+            $data = $response->toArray();
+            $url = $data['next'];
+
+            foreach ($data['results'] as $invoice) {
+                yield $invoice;
+            }
+        }
     }
 
     public function bookOrder(string $event, array $invoice): void
@@ -60,23 +78,65 @@ class PretixHelper
         $creditAccount = $this->getAccountForInvoice($invoice);
         $debitAccount = $this->cashctrlHelper->getAccountId(1105);
         $dateAdded = new \DateTime($invoice['date']);
+        $amount = $this->getInvoiceTotal($invoice);
 
-        $journal = new Journal($this->getTotal($invoice), $creditAccount, $debitAccount, $dateAdded);
-        $journal->setReference(strtoupper($event).'-'.$invoice['order']);
-        $journal->setTitle("{$invoice['number']} - ".$this->getName($invoice));
+        if ($amount < 0) {
+            $oldDebitAccount = $debitAccount;
+            $debitAccount = $creditAccount;
+            $creditAccount = $oldDebitAccount;
+            $amount = abs($amount);
+        }
+
+        $journal = new Journal($amount, $creditAccount, $debitAccount, $dateAdded);
+        $journal->setReference($invoice['number']);
+        $journal->setTitle(strtoupper($event).'-'.$invoice['order'].' - '.$this->getInvoiceName($invoice));
 
         if ($taxId = $this->getTaxId($invoice)) {
             $journal->setTaxId($taxId);
         }
 
-        $this->cashctrlHelper->addJournalEntry($journal);
-
-        if (!$taxId && ($taxAmount = $this->getTaxTotal($invoice)) > 0) {
-            $taxJournal = new Journal($taxAmount, $this->cashctrlHelper->getAccountId(2201), $creditAccount, $dateAdded);
-            $taxJournal->setReference($journal->getReference());
-            $taxJournal->setTitle($journal->getTitle());
-            $this->cashctrlHelper->addJournalEntry($taxJournal);
+        if (!$taxId && ($taxAmount = $this->getTaxTotal($invoice)) <> 0) {
+            if ($taxAmount < 0) {
+                $taxAmount = abs($taxAmount);
+                $journal
+                    ->addItem((new JournalItem($creditAccount))->setCredit($amount))
+                    ->addItem((new JournalItem($debitAccount))->setDebit(number_format($amount - $taxAmount, 2, '.', '')))
+                    ->addItem((new JournalItem($this->cashctrlHelper->getAccountId(2201)))->setDebit(number_format($taxAmount, 2, '.', '')))
+                ;
+            } else {
+                $journal
+                    ->addItem((new JournalItem($debitAccount))->setDebit($amount))
+                    ->addItem((new JournalItem($creditAccount))->setCredit(number_format($amount - $taxAmount, 2, '.', '')))
+                    ->addItem((new JournalItem($this->cashctrlHelper->getAccountId(2201)))->setCredit(number_format($taxAmount, 2, '.', '')))
+                ;
+            }
         }
+
+        $this->cashctrlHelper->addJournalEntry($journal);
+    }
+
+    public function getInvoiceTotal(array $invoice): float
+    {
+        $total = 0;
+
+        foreach ($invoice['lines'] as $line) {
+            $total += $line['gross_value'];
+        }
+
+        return $total;
+    }
+
+    public function getInvoiceName(array $invoice): string
+    {
+        if (!empty($invoice['invoice_to_name'])) {
+            return $invoice['invoice_to_name'];
+        }
+
+        if (!empty($invoice['invoice_to_company'])) {
+            return $invoice['invoice_to_company'];
+        }
+
+        return $invoice['invoice_to'];
     }
 
     private function getAccountForInvoice(array $invoice): int
@@ -90,17 +150,6 @@ class PretixHelper
         }
 
         throw new \RuntimeException(\sprintf('Cannot determine account for Pretix invoice "%s"', $invoice['number']));
-    }
-
-    private function getTotal(array $invoice): float
-    {
-        $total = 0;
-
-        foreach ($invoice['lines'] as $line) {
-            $total += $line['gross_value'];
-        }
-
-        return $total;
     }
 
     private function getTaxId(array $invoice): int|null
@@ -137,18 +186,5 @@ class PretixHelper
         }
 
         return (float) $tax;
-    }
-
-    private function getName(array $invoice): string
-    {
-        if (!empty($invoice['invoice_to_name'])) {
-            return $invoice['invoice_to_name'];
-        }
-
-        if (!empty($invoice['invoice_to_company'])) {
-            return $invoice['invoice_to_company'];
-        }
-
-        return $invoice['invoice_to'];
     }
 }

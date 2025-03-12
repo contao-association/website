@@ -27,7 +27,8 @@ class PretixController
         switch ($data['action']) {
             case 'pretix.event.order.placed':
             case 'pretix.event.order.approved':
-                $invoices = $this->pretixHelper->getInvoices($data['organizer'], $data['event'], $data['code']);
+            case 'pretix.event.order.canceled':
+                $invoices = iterator_to_array($this->pretixHelper->getInvoices($data['organizer'], $data['event'], $data['code']));
 
                 if (1 === \count($invoices)) {
                     try {
