@@ -38,6 +38,7 @@ use Terminal42\CashctrlApi\Api\PersonEndpoint;
 use Terminal42\CashctrlApi\ApiClient;
 use Terminal42\CashctrlApi\Entity\Fiscalperiod;
 use Terminal42\CashctrlApi\Entity\Journal;
+use Terminal42\CashctrlApi\Entity\JournalItem;
 use Terminal42\CashctrlApi\Entity\Order;
 use Terminal42\CashctrlApi\Entity\OrderBookentry;
 use Terminal42\CashctrlApi\Entity\OrderItem;
@@ -345,25 +346,51 @@ class CashctrlHelper
         return null;
     }
 
-    public function bookToJournal(float $amount, \DateTime $created, int $account, string $reference, string $title, string|null $balanceTransaction): void
+    public function bookToJournal(int $amount, \DateTime $created, int $account, string $reference, string $title, string|null $balanceTransaction): void
     {
         // Make sure timezone in bookkeeping is set to Switzerland
         $created = $created->setTimezone(new \DateTimeZone('Europe/Zurich'));
+        $refund = $amount < 0;
+        $amount = (int) abs($amount);
+        $creditAccount = $this->getAccountId($account);
+        $debitAccount = $this->getAccountId(1106);
 
-        $entry = new Journal(
-            $amount,
-            $this->getAccountId($account),
-            $this->getAccountId(1106),
+        $journal = new Journal(
+            $amount / 100,
+            $refund ? $debitAccount : $creditAccount,
+            $refund ? $creditAccount : $debitAccount,
             $created,
         );
-        $entry->setReference($reference);
-        $entry->setTitle($title);
-
-        $this->addJournalEntry($entry);
+        $journal->setReference($reference);
+        $journal->setTitle($title);
 
         if ($balanceTransaction) {
-            $this->bookBalanceTransaction($balanceTransaction, $created, $reference, 'Stripe Gebühren für '.$title);
+            try {
+                $transaction = $this->stripeClient->balanceTransactions->retrieve($balanceTransaction);
+
+                $journal->setReference($transaction->id);
+
+                if ($transaction->fee > 0) {
+                    if ($refund) {
+                        $journal
+                            ->addItem((new JournalItem($debitAccount, $title))->setDebit(number_format($amount / 100, 2, '.', '')))
+                            ->addItem((new JournalItem($creditAccount, $title))->setCredit(number_format(($amount - $transaction->fee) / 100, 2, '.', '')))
+                            ->addItem((new JournalItem($this->getAccountId(6842), 'Gebühren für '.$title))->setCredit(number_format($transaction->fee / 100, 2, '.', '')))
+                        ;
+                    } else {
+                        $journal
+                            ->addItem((new JournalItem($creditAccount, $title))->setCredit(number_format($amount / 100, 2, '.', '')))
+                            ->addItem((new JournalItem($debitAccount, $title))->setDebit(number_format(($amount - $transaction->fee) / 100, 2, '.', '')))
+                            ->addItem((new JournalItem($this->getAccountId(6842), 'Gebühren für '.$title))->setDebit(number_format($transaction->fee / 100, 2, '.', '')))
+                        ;
+                    }
+                }
+            } catch (ApiErrorException) {
+                // Balance transaction not found
+            }
         }
+
+        $this->addJournalEntry($journal);
     }
 
     public function bookToOrder(Charge $charge, Order $order, bool $sendNotification = true): void
