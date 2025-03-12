@@ -24,6 +24,9 @@ class MembershipListener
     ) {
     }
 
+    /**
+     * @param DataContainer|null $dc
+     */
     #[AsCallback(table: 'tl_member', target: 'fields.membership.options')]
     public function getMembershipOptions($dc = null): array
     {

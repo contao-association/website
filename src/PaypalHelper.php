@@ -78,11 +78,11 @@ class PaypalHelper
     {
         if ('EUR' !== $transaction['transaction_info']['transaction_amount']['currency_code']) {
             $this->sentryOrThrow(
-                sprintf('PayPal error: currency "%s" is not supported', $transaction['transaction_info']['transaction_amount']['currency_code']),
+                \sprintf('PayPal error: currency "%s" is not supported', $transaction['transaction_info']['transaction_amount']['currency_code']),
                 null,
                 [
                     'transaction' => $transaction,
-                ]
+                ],
             );
 
             return;
@@ -117,6 +117,7 @@ class PaypalHelper
                 $bookEntry->setReference($journal->getReference());
                 $this->bookentry->create($bookEntry);
                 $this->bookFee($transaction, $journal);
+
                 return;
 
             default:

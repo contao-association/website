@@ -1,8 +1,11 @@
 <?php
 
+use Contao\DataContainer;
+use Contao\DC_Table;
+
 $GLOBALS['TL_DCA']['tl_member_log'] = [
     'config' => [
-        'dataContainer' => 'Table',
+        'dataContainer' => DC_Table::class,
         'ptable' => 'tl_member',
         'closed' => true,
         'notEditable' => true,
@@ -17,10 +20,10 @@ $GLOBALS['TL_DCA']['tl_member_log'] = [
     ],
     'list' => [
         'sorting' => [
-            'mode' => 4,
+            'mode' => DataContainer::MODE_PARENT,
             'fields' => ['dateAdded DESC'],
             'headerFields' => ['company', 'firstname', 'lastname', 'email'],
-            'flag' => 8,
+            'flag' => DataContainer::SORT_MONTH_DESC,
             'panelLayout' => 'filter;search,limit',
         ],
         'operations' => [
@@ -46,7 +49,7 @@ $GLOBALS['TL_DCA']['tl_member_log'] = [
         ],
         'dateAdded' => [
             'label' => &$GLOBALS['TL_LANG']['tl_member_log']['dateAdded'],
-            'flag' => 8,
+            'flag' => DataContainer::SORT_MONTH_DESC,
             'sql' => 'int(10) unsigned NOT NULL default 0',
         ],
         'user' => [

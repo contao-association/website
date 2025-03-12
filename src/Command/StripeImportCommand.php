@@ -107,12 +107,12 @@ class StripeImportCommand extends Command
             }
 
             if ($refund) {
-                $message = sprintf(
+                $message = \sprintf(
                     'STORNO: %s %s on %s for %s',
                     strtoupper((string) $refund->currency),
                     number_format($refund->amount / 100, 2, '.', "'"),
                     \DateTime::createFromFormat('U', (string) $refund->created)->format('d.m.Y'),
-                    $message
+                    $message,
                 );
             }
 

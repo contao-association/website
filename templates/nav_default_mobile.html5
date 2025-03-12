@@ -1,13 +1,13 @@
 <?php $itemUniqueIDLevel = uniqid(); ?>
 <ul class="<?= $this->level ?>">
-    <?php foreach($this->items as $item): ?>
+    <?php foreach ($this->items as $item): ?>
         <?php $itemUniqueID = uniqid(); ?>
-        <?php if($item['isActive']): ?>
+        <?php if ($item['isActive']): ?>
             <li class="<?= $item['class'] ?>">
                 <strong class="<?= $item['class'] ?>"<?php if (!empty($item['subitems'])) echo ' aria-haspopup="true"'; ?> itemprop="name">
                     <span><?= $item['link'] ?></span>
                 </strong>
-                <?php if(!empty($item['subitems'])): ?>
+                <?php if (!empty($item['subitems'])): ?>
                     <input type="radio" name="<?= $itemUniqueIDLevel; ?>" id="<?= $itemUniqueID; ?>" checked="checked" />
                     <label for="<?= $itemUniqueID; ?>"><span></span></label>
                     <?= $item['subitems'] ?>
@@ -18,8 +18,8 @@
                 <a href="<?= $item['href'] ?: './' ?>" aria-label="<?= $item['pageTitle'] ?: $item['title'] ?>"<?php if ($item['class']) echo ' class="'.$item['class'].'"'; ?><?php if ('' !== $item['accesskey']) echo ' accesskey="'.$item['accesskey'].'"'; ?><?php if ($item['tabindex']) echo ' tabindex="'.$item['tabindex'].'"'; ?><?= $item['target'] ?><?= $item['rel'] ?><?php if (!empty($item['subitems'])) echo ' aria-haspopup="true"'; ?> itemprop="url">
                     <span itemprop="name"><?= $item['link'] ?></span>
                 </a>
-                <?php if(!empty($item['subitems'])): ?>
-                    <input type="radio" name="<?= $itemUniqueIDLevel; ?>" id="<?= $itemUniqueID; ?>" <?=str_contains((string) $item['class'], 'trail') ? 'checked="checked"' : ''; ?> />
+                <?php if (!empty($item['subitems'])): ?>
+                    <input type="radio" name="<?= $itemUniqueIDLevel; ?>" id="<?= $itemUniqueID; ?>" <?= str_contains((string) $item['class'], 'trail') ? 'checked="checked"' : ''; ?> />
                     <label for="<?= $itemUniqueID; ?>"><span></span></label>
                     <?= $item['subitems'] ?>
                 <?php endif; ?>
