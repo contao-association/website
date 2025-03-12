@@ -54,7 +54,7 @@ class PaypalImportCommand extends Command
                     $message = 'Ko-fi '.$transaction['transaction_info']['invoice_id'].' von '.$name;
                     break;
 
-                case ($transaction['transaction_info']['transaction_note'] ?? null):
+                case $transaction['transaction_info']['transaction_note'] ?? null:
                     $message = 'Rechnung '.$transaction['transaction_info']['transaction_note'].' von '.$name;
                     break;
 

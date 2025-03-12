@@ -355,7 +355,7 @@ class CashctrlHelper
         // Make sure timezone in bookkeeping is set to Switzerland
         $created = $created->setTimezone(new \DateTimeZone('Europe/Zurich'));
         $refund = $amount < 0;
-        $amount = (int) abs($amount);
+        $amount = abs($amount);
         $creditAccount = $this->getAccountId($account);
         $debitAccount = $this->getAccountId(1106);
 

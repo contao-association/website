@@ -169,25 +169,23 @@ class StripeHelper
             throw new \RuntimeException(\sprintf('Stripe currency "%s" is not supported.', $refund->currency));
         }
 
-        switch ($charge->application) {
-            case self::APP_PRETIX:
-                $this->cashctrlHelper->bookToJournal(
-                    $refund->amount * -1,
-                    \DateTime::createFromFormat('U', (string) $refund->created),
-                    1105,
-                    $charge->metadata['order'] ?? $charge->description,
-                    $charge->description.' - Rückerstattung (Stripe)',
-                    $refund->balance_transaction,
-                );
-                break;
-
-            default:
-                $this->sentryOrThrow(
-                    "Unknown Stripe application \"$charge->application\" for refund",
-                    null,
-                    ['refund' => $refund->toArray(), 'charge' => $charge->toArray()],
-                );
+        if (self::APP_PRETIX !== $charge->application) {
+            $this->sentryOrThrow(
+                "Unknown Stripe application \"$charge->application\" for refund",
+                null,
+                ['refund' => $refund->toArray(), 'charge' => $charge->toArray()],
+            );
+            return;
         }
+
+        $this->cashctrlHelper->bookToJournal(
+            $refund->amount * -1,
+            \DateTime::createFromFormat('U', (string) $refund->created),
+            1105,
+            $charge->metadata['order'] ?? $charge->description,
+            $charge->description.' - Rückerstattung (Stripe)',
+            $refund->balance_transaction,
+        );
     }
 
     public function storePaymentMethod(Session $session): void

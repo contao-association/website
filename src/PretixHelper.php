@@ -95,7 +95,7 @@ class PretixHelper
             $journal->setTaxId($taxId);
         }
 
-        if (!$taxId && ($taxAmount = $this->getTaxTotal($invoice)) <> 0) {
+        if (!$taxId && ($taxAmount = $this->getTaxTotal($invoice)) !== 0) {
             if ($taxAmount < 0) {
                 $taxAmount = abs($taxAmount);
                 $journal

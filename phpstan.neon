@@ -1,3 +1,5 @@
 parameters:
     ignoreErrors:
         - '#no value type specified in iterable type#'
+        - '#Access to an undefined property Stripe\\StripeObject::#'
+        - '#Cannot access property \$transaction_details on array\|object\|string.#'
