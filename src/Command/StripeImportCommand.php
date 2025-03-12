@@ -6,6 +6,7 @@ namespace App\Command;
 
 use App\CashctrlHelper;
 use App\StripeHelper;
+use Stripe\Refund;
 use Symfony\Component\Console\Attribute\AsCommand;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputArgument;
@@ -46,6 +47,13 @@ class StripeImportCommand extends Command
         $io->title('Importing Stripe charges from '.$from->format('d.m.Y').' to '.$to->format('d.m.Y'));
 
         foreach ($this->stripeHelper->getCharges($from, $to) as $charge) {
+            $refund = null;
+
+            if ($charge instanceof Refund) {
+                $refund = $charge;
+                $charge = $this->stripeHelper->client->charges->retrieve($refund->charge);
+            }
+
             if (!$charge->paid) {
                 continue;
             }
@@ -56,17 +64,17 @@ class StripeImportCommand extends Command
                         'Ko-fi donation from %s (%s %s on %s)',
                         $charge->billing_details['name'],
                         strtoupper((string) $charge->currency),
-                        $charge->amount / 100,
+                        number_format($charge->amount / 100, 2, '.', "'"),
                         \DateTime::createFromFormat('U', (string) $charge->created)->format('d.m.Y'),
                     );
                     break;
 
                 case 'ca_9uvq9hdD9LslRRCLivQ5cDhHsmFLX023': // Pretix
                     $message = \sprintf(
-                        'Pretix Bestellung %s (%s %s on %s)',
-                        $charge->metadata['order'],
+                        'Pretix order %s (%s %s on %s)',
+                        $charge->description,
                         strtoupper((string) $charge->currency),
-                        $charge->amount / 100,
+                        number_format($charge->amount / 100, 2, '.', "'"),
                         \DateTime::createFromFormat('U', (string) $charge->created)->format('d.m.Y'),
                     );
                     break;
@@ -98,9 +106,23 @@ class StripeImportCommand extends Command
                     continue 2;
             }
 
+            if ($refund) {
+                $message = sprintf(
+                    'STORNO: %s %s on %s for %s',
+                    strtoupper((string) $refund->currency),
+                    number_format($refund->amount / 100, 2, '.', "'"),
+                    \DateTime::createFromFormat('U', (string) $refund->created)->format('d.m.Y'),
+                    $message
+                );
+            }
+
             if ($io->confirm($message)) {
                 try {
-                    $this->stripeHelper->importCharge($charge);
+                    if ($refund) {
+                        $this->stripeHelper->importRefund($refund, $charge);
+                    } else {
+                        $this->stripeHelper->importCharge($charge);
+                    }
                 } catch (\Exception $exception) {
                     $io->error($exception->getMessage());
                 }

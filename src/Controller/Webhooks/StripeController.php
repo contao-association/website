@@ -44,6 +44,16 @@ class StripeController
                 $this->stripeHelper->importCharge($charge);
                 break;
 
+            case 'refund.updated':
+                $this->sentryOrThrow(
+                    'Please handle refund.updated',
+                    null,
+                    [
+                        'event' => $event->toArray(),
+                    ],
+                );
+                break;
+
             case 'payment_intent.payment_failed':
                 /**
                  * @var PaymentIntent $paymentIntent

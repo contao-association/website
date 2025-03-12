@@ -12,6 +12,7 @@ use Stripe\Charge;
 use Stripe\Checkout\Session;
 use Stripe\Customer;
 use Stripe\PaymentMethod;
+use Stripe\Refund;
 use Stripe\SetupIntent;
 use Stripe\StripeClient;
 use Symfony\Component\Lock\Exception\ExceptionInterface;
@@ -28,7 +29,7 @@ class StripeHelper
 
     public function __construct(
         private readonly ContaoFramework $framework,
-        private readonly StripeClient $client,
+        public readonly StripeClient $client,
         private readonly CashctrlHelper $cashctrlHelper,
         private readonly LockFactory $lockFactory,
     ) {
@@ -37,7 +38,7 @@ class StripeHelper
     /**
      * Retrieve Stripe charges for given day.
      *
-     * @return \Generator<Charge>
+     * @return \Generator<Charge|Refund>
      */
     public function getCharges(\DateTimeInterface $from, \DateTimeInterface $to): \Generator
     {
@@ -48,7 +49,16 @@ class StripeHelper
             ],
         ]);
 
-        return $charges->autoPagingIterator();
+        yield from $charges->autoPagingIterator();
+
+        $refunds = $this->client->refunds->all([
+            'created' => [
+                'gte' => strtotime('today 00:00:00', $from->getTimestamp()),
+                'lte' => strtotime('today 23:59:59', $to->getTimestamp()),
+            ],
+        ]);
+
+        yield from $refunds->autoPagingIterator();
     }
 
     /**
@@ -84,7 +94,7 @@ class StripeHelper
         switch ($charge->application) {
             case self::APP_KOFI:
                 $this->cashctrlHelper->bookToJournal(
-                    (float) ($charge->amount / 100),
+                    $charge->amount,
                     \DateTime::createFromFormat('U', (string) $charge->created),
                     1090,
                     $charge->description ?? $charge->payment_intent,
@@ -95,11 +105,11 @@ class StripeHelper
 
             case self::APP_PRETIX:
                 $this->cashctrlHelper->bookToJournal(
-                    (float) ($charge->amount / 100),
+                    $charge->amount,
                     \DateTime::createFromFormat('U', (string) $charge->created),
                     1105,
-                    $charge->description,
-                    'Pretix Bestellung '.($charge->metadata['order'] ?? ''),
+                    $charge->metadata['order'] ?? $charge->description,
+                    $charge->description.' - Zahlung (Stripe)',
                     $charge->balance_transaction,
                 );
                 break;
@@ -146,9 +156,36 @@ class StripeHelper
 
             default:
                 $this->sentryOrThrow(
-                    "Unknown Stripe application \"$charge->application\"",
+                    "Unknown Stripe application \"$charge->application\" for charge",
                     null,
                     ['charge' => $charge->toArray()],
+                );
+        }
+    }
+
+    public function importRefund(Refund $refund, Charge $charge): void
+    {
+        if ('eur' !== $refund->currency) {
+            throw new \RuntimeException(\sprintf('Stripe currency "%s" is not supported.', $refund->currency));
+        }
+
+        switch ($charge->application) {
+            case self::APP_PRETIX:
+                $this->cashctrlHelper->bookToJournal(
+                    $refund->amount * -1,
+                    \DateTime::createFromFormat('U', (string) $refund->created),
+                    1105,
+                    $charge->metadata['order'] ?? $charge->description,
+                    $charge->description.' - Rückerstattung (Stripe)',
+                    $refund->balance_transaction,
+                );
+                break;
+
+            default:
+                $this->sentryOrThrow(
+                    "Unknown Stripe application \"$charge->application\" for refund",
+                    null,
+                    ['refund' => $refund->toArray(), 'charge' => $charge->toArray()],
                 );
         }
     }
