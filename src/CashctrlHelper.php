@@ -45,6 +45,10 @@ use Terminal42\CashctrlApi\Entity\OrderItem;
 use Terminal42\CashctrlApi\Entity\Person;
 use Terminal42\CashctrlApi\Entity\PersonAddress;
 use Terminal42\CashctrlApi\Entity\PersonContact;
+use Terminal42\CashctrlApi\Enum\AddressType;
+use Terminal42\CashctrlApi\Enum\FiscalperiodType;
+use Terminal42\CashctrlApi\Enum\OrderType;
+use Terminal42\CashctrlApi\Enum\PersonContactType;
 use Terminal42\CashctrlApi\Exception\RuntimeException;
 use Terminal42\CashctrlApi\Result;
 use Terminal42\NotificationCenterBundle\BulkyItem\FileItem;
@@ -262,7 +266,7 @@ class CashctrlHelper
     {
         return $this->order
             ->list()
-            ->ofType(OrderListFilter::TYPE_SALES)
+            ->ofType(OrderType::Sales)
             ->withStatus(self::STATUS_PAID)
             ->sortBy('lastUpdated', 'DESC')
             ->get()
@@ -545,20 +549,20 @@ class CashctrlHelper
         $person->setCustomfield(2, date('Y-m-d', (int) $member->dateAdded));
         $person->setCustomfield(3, $member->stop ? date('Y-m-d', (int) $member->stop) : '');
 
-        $invoiceAddress = $this->findAddress($person, PersonAddress::TYPE_MAIN);
+        $invoiceAddress = $this->findAddress($person, AddressType::Main);
         $invoiceAddress->setAddress($member->street);
         $invoiceAddress->setZip($member->postal);
         $invoiceAddress->setCity($member->city);
         $invoiceAddress->setCountry($member->country);
 
-        $this->setContact($person, PersonContact::TYPE_EMAIL_WORK, (string) $member->email);
-        $this->setContact($person, PersonContact::TYPE_PHONE_WORK, (string) $member->phone);
-        $this->setContact($person, PersonContact::TYPE_MOBILE_WORK, (string) $member->mobile);
-        $this->setContact($person, PersonContact::TYPE_FAX, (string) $member->fax);
-        $this->setContact($person, PersonContact::TYPE_WEBSITE, (string) $member->website);
+        $this->setContact($person, PersonContactType::EmailWork, (string) $member->email);
+        $this->setContact($person, PersonContactType::PhoneWork, (string) $member->phone);
+        $this->setContact($person, PersonContactType::MobileWork, (string) $member->mobile);
+        $this->setContact($person, PersonContactType::Fax, (string) $member->fax);
+        $this->setContact($person, PersonContactType::Website, (string) $member->website);
     }
 
-    private function findAddress(Person $person, string $type): PersonAddress
+    private function findAddress(Person $person, AddressType $type): PersonAddress
     {
         if (null !== ($addresses = $person->getAddresses())) {
             foreach ($addresses as $address) {
@@ -574,7 +578,7 @@ class CashctrlHelper
         return $address;
     }
 
-    private function setContact(Person $person, string $type, string $address): void
+    private function setContact(Person $person, PersonContactType $type, string $address): void
     {
         if (null !== ($contacts = $person->getContacts())) {
             foreach ($contacts as $contact) {
@@ -685,7 +689,7 @@ class CashctrlHelper
         }
 
         if ($createLatest) {
-            $this->fiscalperiod->create((new Fiscalperiod())->setType(Fiscalperiod::TYPE_LATEST));
+            $this->fiscalperiod->create((new Fiscalperiod())->setType(FiscalperiodType::Latest));
             $this->setFiscalPeriod($date, false);
 
             return;
