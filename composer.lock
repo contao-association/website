@@ -464,16 +464,16 @@
         },
         {
             "name": "contao-components/ace",
-            "version": "1.39.0",
+            "version": "1.39.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/contao-components/ace.git",
-                "reference": "49ba114dbb51548be956fe8db203a36eab22e6d6"
+                "reference": "b2328b14938fc92a6c5077fa23b4913357b2b444"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/contao-components/ace/zipball/49ba114dbb51548be956fe8db203a36eab22e6d6",
-                "reference": "49ba114dbb51548be956fe8db203a36eab22e6d6",
+                "url": "https://api.github.com/repos/contao-components/ace/zipball/b2328b14938fc92a6c5077fa23b4913357b2b444",
+                "reference": "b2328b14938fc92a6c5077fa23b4913357b2b444",
                 "shasum": ""
             },
             "require": {
@@ -493,9 +493,9 @@
             "description": "ACE code editor integration for Contao Open Source CMS",
             "support": {
                 "issues": "https://github.com/contao-components/ace/issues",
-                "source": "https://github.com/contao-components/ace/tree/1.39.0"
+                "source": "https://github.com/contao-components/ace/tree/1.39.1"
             },
-            "time": "2025-02-25T11:52:01+00:00"
+            "time": "2025-03-21T07:51:51+00:00"
         },
         {
             "name": "contao-components/chosen",
@@ -1080,12 +1080,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/contao/conflicts.git",
-                "reference": "7b021324e62ea890e5d3fe3c192fade92840f737"
+                "reference": "32c8b612d47fa21799e16eb0d1069d830e7b6809"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/contao/conflicts/zipball/7b021324e62ea890e5d3fe3c192fade92840f737",
-                "reference": "7b021324e62ea890e5d3fe3c192fade92840f737",
+                "url": "https://api.github.com/repos/contao/conflicts/zipball/32c8b612d47fa21799e16eb0d1069d830e7b6809",
+                "reference": "32c8b612d47fa21799e16eb0d1069d830e7b6809",
                 "shasum": ""
             },
             "conflict": {
@@ -1111,7 +1111,7 @@
                 "symfony/web-profiler-bundle": "6.1.* <6.1.2",
                 "twig/intl-extra": "3.9.0",
                 "twig/twig": "2.7.0 || 3.9.0 || 3.10.0 || 3.10.1",
-                "web-auth/webauthn-symfony-bundle": "5.1.* <5.1.3"
+                "web-auth/webauthn-symfony-bundle": "5.1.* <5.1.3 || 5.2.0"
             },
             "default-branch": true,
             "type": "metapackage",
@@ -1135,20 +1135,20 @@
                     "type": "custom"
                 }
             ],
-            "time": "2025-03-10T11:28:17+00:00"
+            "time": "2025-03-24T08:11:35+00:00"
         },
         {
             "name": "contao/core-bundle",
-            "version": "4.13.53",
+            "version": "4.13.54",
             "source": {
                 "type": "git",
                 "url": "https://github.com/contao/core-bundle.git",
-                "reference": "776e087e80345ab393aa22459519f0df117733c6"
+                "reference": "300a1bc4f4a3f74b91e4f69f41b4295839fc5e5a"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/contao/core-bundle/zipball/776e087e80345ab393aa22459519f0df117733c6",
-                "reference": "776e087e80345ab393aa22459519f0df117733c6",
+                "url": "https://api.github.com/repos/contao/core-bundle/zipball/300a1bc4f4a3f74b91e4f69f41b4295839fc5e5a",
+                "reference": "300a1bc4f4a3f74b91e4f69f41b4295839fc5e5a",
                 "shasum": ""
             },
             "require": {
@@ -1179,6 +1179,7 @@
                 "doctrine/orm": "^2.10",
                 "doctrine/persistence": "^2.0",
                 "dragonmantank/cron-expression": "^2.3",
+                "enshrined/svg-sanitize": "^0.21",
                 "ext-dom": "*",
                 "ext-filter": "*",
                 "ext-gd": "*",
@@ -1349,7 +1350,7 @@
                     "type": "custom"
                 }
             ],
-            "time": "2025-02-18T09:56:39+00:00"
+            "time": "2025-03-18T07:33:27+00:00"
         },
         {
             "name": "contao/image",
@@ -1490,7 +1491,7 @@
         },
         {
             "name": "contao/installation-bundle",
-            "version": "4.13.53",
+            "version": "4.13.54",
             "source": {
                 "type": "git",
                 "url": "https://github.com/contao/installation-bundle.git",
@@ -1572,7 +1573,7 @@
         },
         {
             "name": "contao/manager-bundle",
-            "version": "4.13.53",
+            "version": "4.13.54",
             "source": {
                 "type": "git",
                 "url": "https://github.com/contao/manager-bundle.git",
@@ -2367,16 +2368,16 @@
         },
         {
             "name": "doctrine/doctrine-bundle",
-            "version": "2.13.2",
+            "version": "2.13.3",
             "source": {
                 "type": "git",
                 "url": "https://github.com/doctrine/DoctrineBundle.git",
-                "reference": "2363c43d9815a11657e452625cd64172d5587486"
+                "reference": "aac7562c96d117e16cbadfe41bef17d2fc760f74"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/doctrine/DoctrineBundle/zipball/2363c43d9815a11657e452625cd64172d5587486",
-                "reference": "2363c43d9815a11657e452625cd64172d5587486",
+                "url": "https://api.github.com/repos/doctrine/DoctrineBundle/zipball/aac7562c96d117e16cbadfe41bef17d2fc760f74",
+                "reference": "aac7562c96d117e16cbadfe41bef17d2fc760f74",
                 "shasum": ""
             },
             "require": {
@@ -2467,7 +2468,7 @@
             ],
             "support": {
                 "issues": "https://github.com/doctrine/DoctrineBundle/issues",
-                "source": "https://github.com/doctrine/DoctrineBundle/tree/2.13.2"
+                "source": "https://github.com/doctrine/DoctrineBundle/tree/2.13.3"
             },
             "funding": [
                 {
@@ -2483,7 +2484,7 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2025-01-15T11:12:38+00:00"
+            "time": "2025-03-16T10:55:20+00:00"
         },
         {
             "name": "doctrine/event-manager",
@@ -3140,16 +3141,16 @@
         },
         {
             "name": "egulias/email-validator",
-            "version": "4.0.3",
+            "version": "4.0.4",
             "source": {
                 "type": "git",
                 "url": "https://github.com/egulias/EmailValidator.git",
-                "reference": "b115554301161fa21467629f1e1391c1936de517"
+                "reference": "d42c8731f0624ad6bdc8d3e5e9a4524f68801cfa"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/egulias/EmailValidator/zipball/b115554301161fa21467629f1e1391c1936de517",
-                "reference": "b115554301161fa21467629f1e1391c1936de517",
+                "url": "https://api.github.com/repos/egulias/EmailValidator/zipball/d42c8731f0624ad6bdc8d3e5e9a4524f68801cfa",
+                "reference": "d42c8731f0624ad6bdc8d3e5e9a4524f68801cfa",
                 "shasum": ""
             },
             "require": {
@@ -3195,7 +3196,7 @@
             ],
             "support": {
                 "issues": "https://github.com/egulias/EmailValidator/issues",
-                "source": "https://github.com/egulias/EmailValidator/tree/4.0.3"
+                "source": "https://github.com/egulias/EmailValidator/tree/4.0.4"
             },
             "funding": [
                 {
@@ -3203,7 +3204,52 @@
                     "type": "github"
                 }
             ],
-            "time": "2024-12-27T00:36:43+00:00"
+            "time": "2025-03-06T22:45:56+00:00"
+        },
+        {
+            "name": "enshrined/svg-sanitize",
+            "version": "0.21.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/darylldoyle/svg-sanitizer.git",
+                "reference": "5e477468fac5c5ce933dce53af3e8e4e58dcccc9"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/darylldoyle/svg-sanitizer/zipball/5e477468fac5c5ce933dce53af3e8e4e58dcccc9",
+                "reference": "5e477468fac5c5ce933dce53af3e8e4e58dcccc9",
+                "shasum": ""
+            },
+            "require": {
+                "ext-dom": "*",
+                "ext-libxml": "*",
+                "php": "^7.1 || ^8.0"
+            },
+            "require-dev": {
+                "phpunit/phpunit": "^6.5 || ^8.5"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "enshrined\\svgSanitize\\": "src"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "GPL-2.0-or-later"
+            ],
+            "authors": [
+                {
+                    "name": "Daryll Doyle",
+                    "email": "daryll@enshrined.co.uk"
+                }
+            ],
+            "description": "An SVG sanitizer for PHP",
+            "support": {
+                "issues": "https://github.com/darylldoyle/svg-sanitizer/issues",
+                "source": "https://github.com/darylldoyle/svg-sanitizer/tree/0.21.0"
+            },
+            "time": "2025-01-13T09:32:25+00:00"
         },
         {
             "name": "friendsofsymfony/http-cache",
@@ -3772,16 +3818,16 @@
         },
         {
             "name": "jean85/pretty-package-versions",
-            "version": "2.1.0",
+            "version": "2.1.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/Jean85/pretty-package-versions.git",
-                "reference": "3c4e5f62ba8d7de1734312e4fff32f67a8daaf10"
+                "reference": "4d7aa5dab42e2a76d99559706022885de0e18e1a"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/Jean85/pretty-package-versions/zipball/3c4e5f62ba8d7de1734312e4fff32f67a8daaf10",
-                "reference": "3c4e5f62ba8d7de1734312e4fff32f67a8daaf10",
+                "url": "https://api.github.com/repos/Jean85/pretty-package-versions/zipball/4d7aa5dab42e2a76d99559706022885de0e18e1a",
+                "reference": "4d7aa5dab42e2a76d99559706022885de0e18e1a",
                 "shasum": ""
             },
             "require": {
@@ -3791,8 +3837,9 @@
             "require-dev": {
                 "friendsofphp/php-cs-fixer": "^3.2",
                 "jean85/composer-provided-replaced-stub-package": "^1.0",
-                "phpstan/phpstan": "^1.4",
+                "phpstan/phpstan": "^2.0",
                 "phpunit/phpunit": "^7.5|^8.5|^9.6",
+                "rector/rector": "^2.0",
                 "vimeo/psalm": "^4.3 || ^5.0"
             },
             "type": "library",
@@ -3825,9 +3872,9 @@
             ],
             "support": {
                 "issues": "https://github.com/Jean85/pretty-package-versions/issues",
-                "source": "https://github.com/Jean85/pretty-package-versions/tree/2.1.0"
+                "source": "https://github.com/Jean85/pretty-package-versions/tree/2.1.1"
             },
-            "time": "2024-11-18T16:19:46+00:00"
+            "time": "2025-03-19T14:43:43+00:00"
         },
         {
             "name": "knplabs/knp-menu",
@@ -14348,12 +14395,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/terminal42/contao-build-tools.git",
-                "reference": "5fe5651294a100eda315861c974cf64e010dfaf0"
+                "reference": "fb6534120c1ee13c3fa46c7cb661ea3fa2baaa7d"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/terminal42/contao-build-tools/zipball/5fe5651294a100eda315861c974cf64e010dfaf0",
-                "reference": "5fe5651294a100eda315861c974cf64e010dfaf0",
+                "url": "https://api.github.com/repos/terminal42/contao-build-tools/zipball/fb6534120c1ee13c3fa46c7cb661ea3fa2baaa7d",
+                "reference": "fb6534120c1ee13c3fa46c7cb661ea3fa2baaa7d",
                 "shasum": ""
             },
             "require": {
@@ -14412,7 +14459,7 @@
                     "type": "other"
                 }
             ],
-            "time": "2025-03-12T09:46:10+00:00"
+            "time": "2025-03-20T11:57:41+00:00"
         }
     ],
     "aliases": [],

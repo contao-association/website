@@ -175,6 +175,7 @@ class StripeHelper
                 null,
                 ['refund' => $refund->toArray(), 'charge' => $charge->toArray()],
             );
+
             return;
         }
 

@@ -68,31 +68,31 @@ class RecurringInvoicesCommand extends Command
         // @see http://stackoverflow.com/a/2218577
         $ids = $this->connection->fetchFirstColumn(
             <<<'SQL'
-                SELECT id
-                FROM tl_member
-                WHERE
-                    DATE_FORMAT(FROM_UNIXTIME(membership_start),'%Y-%m-%d') != :today
-                    AND (
-                        (
-                            membership IN (:yearly)
-                            AND DATE_FORMAT(FROM_UNIXTIME(membership_start),'%m-%d') = :currentMonth
-                        ) OR (
-                            membership IN (:monthly) AND (
-                                (
-                                    membership_interval != 'month'
-                                    AND DATE_FORMAT(FROM_UNIXTIME(membership_start),'%m-%d') = :currentMonth
-                                ) OR (
-                                    membership_interval = 'month'
-                                    AND DATE_FORMAT(FROM_UNIXTIME(membership_start),'%d') = :currentDay
+                    SELECT id
+                    FROM tl_member
+                    WHERE
+                        DATE_FORMAT(FROM_UNIXTIME(membership_start),'%Y-%m-%d') != :today
+                        AND (
+                            (
+                                membership IN (:yearly)
+                                AND DATE_FORMAT(FROM_UNIXTIME(membership_start),'%m-%d') = :currentMonth
+                            ) OR (
+                                membership IN (:monthly) AND (
+                                    (
+                                        membership_interval != 'month'
+                                        AND DATE_FORMAT(FROM_UNIXTIME(membership_start),'%m-%d') = :currentMonth
+                                    ) OR (
+                                        membership_interval = 'month'
+                                        AND DATE_FORMAT(FROM_UNIXTIME(membership_start),'%d') = :currentDay
+                                    )
                                 )
                             )
                         )
-                    )
-                    AND disable=''
-                    AND (start='' OR start<=UNIX_TIMESTAMP())
-                    AND (stop='' OR stop>UNIX_TIMESTAMP())
-                    AND (membership_stop='' OR membership_stop>UNIX_TIMESTAMP())
-            SQL,
+                        AND disable=''
+                        AND (start='' OR start<=UNIX_TIMESTAMP())
+                        AND (stop='' OR stop>UNIX_TIMESTAMP())
+                        AND (membership_stop='' OR membership_stop>UNIX_TIMESTAMP())
+                SQL,
             [
                 'today' => $date->format('Y-m-d'),
                 'currentMonth' => $date->format('m-d'),

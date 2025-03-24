@@ -28,7 +28,6 @@ use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 use Symfony\Contracts\Translation\TranslatorInterface;
 use Terminal42\CashctrlApi\Api\AccountEndpoint;
 use Terminal42\CashctrlApi\Api\Filter\ListFilter;
-use Terminal42\CashctrlApi\Api\Filter\OrderListFilter;
 use Terminal42\CashctrlApi\Api\FiscalperiodEndpoint;
 use Terminal42\CashctrlApi\Api\JournalEndpoint;
 use Terminal42\CashctrlApi\Api\OrderBookentryEndpoint;
@@ -252,7 +251,7 @@ class CashctrlHelper
     {
         return $this->order
             ->list()
-            ->ofType(OrderListFilter::TYPE_SALES)
+            ->ofType(OrderType::Sales)
             ->onlyOverdue()
             ->sortBy('lastUpdated')
             ->get()

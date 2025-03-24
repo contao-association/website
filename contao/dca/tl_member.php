@@ -3,6 +3,8 @@
 use App\EventListener\MemberLogoListener;
 use Contao\CoreBundle\EventListener\Widget\HttpUrlListener;
 use Contao\DataContainer;
+use Contao\System;
+use Symfony\Component\HttpFoundation\Request;
 
 $GLOBALS['TL_DCA']['tl_member']['config']['closed'] = true;
 $GLOBALS['TL_DCA']['tl_member']['config']['notCopyable'] = true;
