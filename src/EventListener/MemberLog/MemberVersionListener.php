@@ -111,9 +111,9 @@ class MemberVersionListener
                 continue;
             }
 
-            if ($newData[$k] !== $v) {
+            if (($newData[$k] ?? null) !== $v) {
                 $diff[$k] = [
-                    'new' => $newData[$k],
+                    'new' => $newData[$k] ?? null,
                     'old' => $v,
                 ];
             }
