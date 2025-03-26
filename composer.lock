@@ -1080,12 +1080,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/contao/conflicts.git",
-                "reference": "32c8b612d47fa21799e16eb0d1069d830e7b6809"
+                "reference": "7e1dacc1b0112f8a4977bd93ac79db0a27e97278"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/contao/conflicts/zipball/32c8b612d47fa21799e16eb0d1069d830e7b6809",
-                "reference": "32c8b612d47fa21799e16eb0d1069d830e7b6809",
+                "url": "https://api.github.com/repos/contao/conflicts/zipball/7e1dacc1b0112f8a4977bd93ac79db0a27e97278",
+                "reference": "7e1dacc1b0112f8a4977bd93ac79db0a27e97278",
                 "shasum": ""
             },
             "conflict": {
@@ -1111,7 +1111,7 @@
                 "symfony/web-profiler-bundle": "6.1.* <6.1.2",
                 "twig/intl-extra": "3.9.0",
                 "twig/twig": "2.7.0 || 3.9.0 || 3.10.0 || 3.10.1",
-                "web-auth/webauthn-symfony-bundle": "5.1.* <5.1.3 || 5.2.0"
+                "web-auth/webauthn-symfony-bundle": "5.1.* <5.1.3 || 5.2.0 || 5.2.1"
             },
             "default-branch": true,
             "type": "metapackage",
@@ -1135,7 +1135,7 @@
                     "type": "custom"
                 }
             ],
-            "time": "2025-03-24T08:11:35+00:00"
+            "time": "2025-03-24T12:11:55+00:00"
         },
         {
             "name": "contao/core-bundle",
@@ -13123,12 +13123,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/terminal42/cashctrl-api.git",
-                "reference": "8969963971039bdd7ce72c9212a0918942f8a0fc"
+                "reference": "aea9128388a7650481c29ba04c6b4c1d79a8a26d"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/terminal42/cashctrl-api/zipball/8969963971039bdd7ce72c9212a0918942f8a0fc",
-                "reference": "8969963971039bdd7ce72c9212a0918942f8a0fc",
+                "url": "https://api.github.com/repos/terminal42/cashctrl-api/zipball/aea9128388a7650481c29ba04c6b4c1d79a8a26d",
+                "reference": "aea9128388a7650481c29ba04c6b4c1d79a8a26d",
                 "shasum": ""
             },
             "require": {
@@ -13182,7 +13182,7 @@
                     "type": "other"
                 }
             ],
-            "time": "2025-03-12T11:45:41+00:00"
+            "time": "2025-03-25T08:44:34+00:00"
         },
         {
             "name": "terminal42/cashctrl-bundle",
