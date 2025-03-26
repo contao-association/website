@@ -13,7 +13,7 @@ use Contao\Image;
 use Contao\Input;
 use Contao\StringUtil;
 use Doctrine\DBAL\Connection;
-use Symfony\Component\Security\Core\Security;
+use Symfony\Bundle\SecurityBundle\Security;
 
 class MemberLogPermissionListener
 {

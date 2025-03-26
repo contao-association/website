@@ -11,7 +11,7 @@ use Contao\Date;
 use Contao\FrontendUser;
 use Contao\Template;
 use Doctrine\DBAL\Connection;
-use Symfony\Component\Security\Core\Security;
+use Symfony\Bundle\SecurityBundle\Security;
 use Symfony\Contracts\Translation\TranslatorInterface;
 
 class MembershipListener
@@ -112,6 +112,7 @@ class MembershipListener
         }
 
         $GLOBALS['TL_DCA']['tl_member']['fields']['membership_amount']['label'] = [$this->translator->trans($id)];
+        $GLOBALS['TL_DCA']['tl_member']['fields']['listing']['label'] = ['', $this->translator->trans('tl_member.listing.1', [], 'contao_tl_member')];
     }
 
     #[AsCallback(table: 'tl_member', target: 'config.onsubmit')]

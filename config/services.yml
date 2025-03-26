@@ -107,10 +107,10 @@ services:
         bind:
             $memberships: '%memberships%'
             $projectDir: '%kernel.project_dir%'
-            $registrationNotificationId: '%env(REGISTRATION_NOTIFICATION)%'
-            $invoiceNotificationId: '%env(INVOICE_NOTIFICATION)%'
-            $paymentNotificationId: '%env(PAYMENT_NOTIFICATION)%'
-            $overdueNotificationId: '%env(OVERDUE_NOTIFICATION)%'
+            $registrationNotificationId: '%env(int:REGISTRATION_NOTIFICATION)%'
+            $invoiceNotificationId: '%env(int:INVOICE_NOTIFICATION)%'
+            $paymentNotificationId: '%env(int:PAYMENT_NOTIFICATION)%'
+            $overdueNotificationId: '%env(int:OVERDUE_NOTIFICATION)%'
 
     App\:
         resource: ../src

@@ -23,9 +23,9 @@ class StripeHelper
 {
     use ErrorHandlingTrait;
 
-    final public const APP_KOFI = 'ca_BNCWzVqBWfaL53LdFYzpoumNOsvo2936';
+    final public const string APP_KOFI = 'ca_BNCWzVqBWfaL53LdFYzpoumNOsvo2936';
 
-    final public const APP_PRETIX = 'ca_9uvq9hdD9LslRRCLivQ5cDhHsmFLX023';
+    final public const string APP_PRETIX = 'ca_9uvq9hdD9LslRRCLivQ5cDhHsmFLX023';
 
     public function __construct(
         private readonly ContaoFramework $framework,

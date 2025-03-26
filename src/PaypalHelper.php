@@ -16,7 +16,7 @@ class PaypalHelper
 {
     use ErrorHandlingTrait;
 
-    private const KOFI_SUBSCRIPTIONS = ['B-9S104756L95095513'];
+    private const array KOFI_SUBSCRIPTIONS = ['B-9S104756L95095513'];
 
     private readonly array $teamMembers;
 

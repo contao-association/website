@@ -10,7 +10,7 @@ use Contao\CoreBundle\DependencyInjection\Attribute\AsCallback;
 use Contao\Input;
 use Contao\StringUtil;
 use Doctrine\DBAL\Connection;
-use Symfony\Component\Security\Core\Security;
+use Symfony\Bundle\SecurityBundle\Security;
 
 class MemberVersionListener
 {

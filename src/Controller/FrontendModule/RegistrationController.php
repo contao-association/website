@@ -45,6 +45,7 @@ class RegistrationController extends ModuleRegistration
         return new Response($buffer);
     }
 
+    #[\Override]
     protected function createNewUser($arrData): void
     {
         $member = $this->createMember($arrData);

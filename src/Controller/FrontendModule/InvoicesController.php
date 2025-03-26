@@ -16,12 +16,12 @@ use Contao\MemberModel;
 use Contao\ModuleModel;
 use Contao\PageModel;
 use Contao\Template;
+use Symfony\Bundle\SecurityBundle\Security;
 use Symfony\Cmf\Component\Routing\RouteObjectInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\HttpKernel\UriSigner;
+use Symfony\Component\HttpFoundation\UriSigner;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
-use Symfony\Component\Security\Core\Security;
 use Symfony\Contracts\HttpClient\HttpClientInterface;
 use Symfony\Contracts\Translation\TranslatorInterface;
 use Terminal42\CashctrlApi\ApiClient;
@@ -43,7 +43,7 @@ class InvoicesController extends AbstractFrontendModuleController
     ) {
     }
 
-    protected function getResponse(Template $template, ModuleModel $model, Request $request): Response|null
+    protected function getResponse(Template $template, ModuleModel $model, Request $request): Response
     {
         $user = $this->security->getUser();
 

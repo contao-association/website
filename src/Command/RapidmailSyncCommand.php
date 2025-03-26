@@ -26,6 +26,7 @@ class RapidmailSyncCommand extends Command
         parent::__construct();
     }
 
+    #[\Override]
     public function isEnabled(): bool
     {
         return $this->rapidmail->isConfigured();

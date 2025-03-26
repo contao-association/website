@@ -1,5 +1,4 @@
 contao:
-    legacy_routing: false
     search:
         default_indexer:
             enable: false
@@ -7,10 +6,6 @@ contao:
         two_factor:
             enforce_backend: true
     localconfig:
-        licenseAccepted: true
-        disableCron: true
-
-        installPassword: "%env(INSTALL_PASSWORD)%"
         adminEmail: association@contao.org
         dateFormat: "d.m.Y"
         datimFormat: "d.m.Y H:i"
@@ -24,8 +19,3 @@ contao:
 framework:
     assets:
         json_manifest_path: '%kernel.project_dir%/web/layout/manifest.json'
-
-terminal42_cashctrl:
-    subdomain: '%env(CASHCTRL_SUBDOMAIN)%'
-    api_key: '%env(CASHCTRL_APIKEY)%'
-    throttle: true

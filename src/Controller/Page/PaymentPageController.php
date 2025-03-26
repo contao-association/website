@@ -14,7 +14,7 @@ use Symfony\Component\HttpFoundation\Exception\BadRequestException;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\HttpKernel\UriSigner;
+use Symfony\Component\HttpFoundation\UriSigner;
 use Symfony\Contracts\Translation\TranslatorInterface;
 
 #[AsPage(path: '{orderId}', requirements: ['orderId' => '\d+'], contentComposition: false)]

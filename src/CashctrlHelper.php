@@ -21,7 +21,7 @@ use Stripe\Exception\ApiErrorException;
 use Stripe\StripeClient;
 use Symfony\Cmf\Component\Routing\RouteObjectInterface;
 use Symfony\Component\Filesystem\Filesystem;
-use Symfony\Component\HttpKernel\UriSigner;
+use Symfony\Component\HttpFoundation\UriSigner;
 use Symfony\Component\Lock\Exception\ExceptionInterface;
 use Symfony\Component\Lock\LockFactory;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
@@ -58,13 +58,13 @@ class CashctrlHelper
 {
     use ErrorHandlingTrait;
 
-    final public const STATUS_OPEN = 16;
+    final public const int STATUS_OPEN = 16;
 
-    final public const STATUS_PAID = 18;
+    final public const int STATUS_PAID = 18;
 
-    final public const STATUS_OVERDUE = 86;
+    final public const int STATUS_OVERDUE = 86;
 
-    final public const STATUS_NOTIFIED = 87;
+    final public const int STATUS_NOTIFIED = 87;
 
     private array $dateFormat = [];
 

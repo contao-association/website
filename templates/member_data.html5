@@ -1,3 +1,12 @@
+<?php
+$personal = $this->categories[$this->personalDetails];
+$membership = $this->categories['membershipDetails'];
+$contact = $this->categories[$this->contactDetails];
+$address = $this->categories[$this->addressDetails];
+$listing = $this->categories['listingDetails'];
+$captcha = $this->categories[$this->captchaDetails] ?? [];
+?>
+
 <!-- indexer::stop -->
 <div class="<?= $this->class ?> block"<?= $this->cssID ?><?php if ($this->style): ?> style="<?= $this->style ?>"<?php endif; ?>>
 
@@ -12,7 +21,7 @@
 <form id="<?= $this->formId ?>" method="post" enctype="<?= $this->enctype ?>">
   <div class="formbody">
     <input type="hidden" name="FORM_SUBMIT" value="<?= $this->formId ?>">
-    <input type="hidden" name="REQUEST_TOKEN" value="{{request_token}}">
+    <input type="hidden" name="REQUEST_TOKEN" value="<?= $this->requestToken ?>">
 
     <fieldset>
       <div class="row">
@@ -31,8 +40,8 @@
       </div>
       <div class="row">
         <div class="col-xs-12 col-sm-6">
-          <?= $this->contact['email'] ?>
-          <?= $this->personal['language'] ?>
+          <?= $contact['email'] ?>
+          <?= $personal['language'] ?>
         </div>
         <div class="col-xs-12 col-sm-6">
           <div class="widget widget-text">
@@ -48,7 +57,7 @@
               </div>
             </div>
           </div>
-          <?= $this->membership['membership_amount'] ?>
+          <?= $membership['membership_amount'] ?>
         </div>
       </div>
     </fieldset>
@@ -57,21 +66,21 @@
       <div class="col-xs-12 col-sm-6">
         <fieldset>
           <legend><?= $this->trans('member_address', [], 'messages') ?></legend>
-          <?= $this->address['company'] ?>
-          <?= $this->address['street'] ?>
-          <?= $this->address['postal'] ?>
-          <?= $this->address['city'] ?>
-          <?= $this->address['country'] ?>
+          <?= $address['company'] ?>
+          <?= $address['street'] ?>
+          <?= $address['postal'] ?>
+          <?= $address['city'] ?>
+          <?= $address['country'] ?>
         </fieldset>
       </div>
       <div class="col-xs-12 col-sm-6">
         <fieldset>
           <legend><?= $this->trans('member_details', [], 'messages') ?></legend>
-          <?= $this->personal['gender'] ?>
-          <?= $this->personal['dateOfBirth'] ?>
-          <?= $this->contact['phone'] ?>
-          <?= $this->contact['website'] ?>
-          <?= $this->address['tax_id'] ?>
+          <?= $personal['gender'] ?>
+          <?= $personal['dateOfBirth'] ?>
+          <?= $contact['phone'] ?>
+          <?= $contact['website'] ?>
+          <?= $address['tax_id'] ?>
         </fieldset>
       </div>
     </div>
@@ -79,20 +88,20 @@
     <?php if ($this->membershipConfig['listing']['name'] ?? false): ?>
     <fieldset>
       <legend><?= $this->trans('tl_member.listing.0', [], 'contao_tl_member') ?></legend>
-      <?= $this->listing['listing'] ?>
+      <?= $listing['listing'] ?>
       <div class="row">
         <div class="col-xs-12 col-sm-6">
-          <?= $this->listing['listing_name'] ?>
+          <?= $listing['listing_name'] ?>
         </div>
         <div class="col-xs-12 col-sm-6">
           <?php if ($this->membershipConfig['listing']['link'] ?? false): ?>
-            <?= $this->listing['listing_link'] ?>
+            <?= $listing['listing_link'] ?>
           <?php endif; ?>
         </div>
       </div>
 
       <?php if ($this->membershipConfig['listing']['logo'] ?? false): ?>
-      <?= $this->listing['listing_logo'] ?>
+      <?= $listing['listing_logo'] ?>
       <?php endif; ?>
 
       <div class="widget">
@@ -103,7 +112,7 @@
     </fieldset>
     <?php endif; ?>
 
-    <?= $this->captcha ?>
+    <?= $captcha['captcha'] ?? '' ?>
     <div class="submit_container widget widget-submit text-center">
       <button type="submit" class="submit"><?= $this->slabel ?></button>
     </div>

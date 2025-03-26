@@ -1,0 +1,59 @@
+{% extends "@Contao/content_element/_base.html.twig" %}
+{% trans_default_domain 'ContaoAssociationVotingBundle' %}
+
+{% block content %}
+
+    {% if canVote %}
+        <form id="{{ formId }}" method="post">
+        <div class="formbody">
+        <input type="hidden" name="FORM_SUBMIT" value="{{ formId }}">
+        <input type="hidden" name="REQUEST_TOKEN" value="{{ contao.request_token }}">
+    {% endif %}
+
+    {% if hasVoted %}
+        <p class="voted">{{ 'has_voted'|trans }}</p>
+    {% endif %}
+
+    <div class="summary">
+        <p class="period"><strong>{{ 'period'|trans }}:</strong>{{ period }}</p>
+        <p class="total">{{ 'total_enquiries'|trans({ total: totalEnquiries }) }}</p>
+    </div>
+
+    <div class="enquiries">
+        {% for enquiry in enquiries %}
+            <div class="enquiry {{ enquiry.class|default }}{% if canVote %} can-vote{% endif %}">
+                <div class="text">
+                    <h3>
+                        {% if enquiry.description %}<a href="{{ enquiry.href }}" target="_blank">{% endif %}
+                            {{ enquiry.name }}
+                            {% if enquiry.description %}</a>{% endif %}
+                    </h3>
+
+                    <p>{{ enquiry.teaser }}</p>
+                </div>
+
+                <div class="more">
+                    {% if enquiry.description %}
+                        <a href="{{ enquiry.href }}" title="{{ 'enquiry_title'|trans({ name: enquiry.name }) }}" target="_blank">{{ 'enquiry_details'|trans }}</a>
+                    {% endif %}
+                </div>
+
+                {% if canVote %}
+                    <div class="vote">
+                        {{ enquiry.widget.parse()|raw }}
+                    </div>
+                {% endif %}
+            </div>
+        {% endfor %}
+    </div>
+
+    {% if canVote %}
+
+        <div class="submit_container">
+            <input type="submit" class="submit" value="{{ 'MSC.voting_vote'|trans([], 'contao_default') }}" onclick="return confirm('{{ 'vote_confirm'|trans|e('html_attr') }}')">
+        </div>
+        </div>
+        </form>
+    {% endif %}
+
+{% endblock %}

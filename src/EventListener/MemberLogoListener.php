@@ -15,7 +15,7 @@ use Symfony\Component\Filesystem\Path;
 #[Autoconfigure(bind: ['$projectDir' => '%kernel.project_dir%'])]
 class MemberLogoListener
 {
-    final public const UPLOAD_DIR = 'files/sponsors';
+    final public const string UPLOAD_DIR = 'files/sponsors';
 
     public function __construct(
         private readonly Filesystem $filesystem,

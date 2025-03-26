@@ -17,9 +17,9 @@ use Oneup\ContaoSentryBundle\ErrorHandlingTrait;
 use Stripe\Card;
 use Stripe\Exception\ApiErrorException;
 use Stripe\StripeClient;
+use Symfony\Bundle\SecurityBundle\Security;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\Security\Core\Security;
 use Symfony\Contracts\Translation\TranslatorInterface;
 
 #[AsFrontendModule(category: 'user')]
@@ -35,7 +35,7 @@ class PaymentsController extends AbstractFrontendModuleController
     ) {
     }
 
-    protected function getResponse(Template $template, ModuleModel $model, Request $request): Response|null
+    protected function getResponse(Template $template, ModuleModel $model, Request $request): Response
     {
         $user = $this->security->getUser();
 
