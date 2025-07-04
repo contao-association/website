@@ -115,6 +115,7 @@ class PaypalHelper
                 $bookEntry->setAmount(abs($amount));
                 $bookEntry->setDate($dateAdded);
                 $bookEntry->setReference($journal->getReference());
+                $bookEntry->setDescription($journal->getTitle());
                 $this->bookentry->create($bookEntry);
                 $this->bookFee($transaction, $journal);
 
