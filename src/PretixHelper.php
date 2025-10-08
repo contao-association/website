@@ -79,17 +79,19 @@ class PretixHelper
         $debitAccount = $this->cashctrlHelper->getAccountId(1105);
         $dateAdded = new \DateTime($invoice['date']);
         $amount = $this->getInvoiceTotal($invoice);
+        $suffix = '';
 
         if ($amount < 0) {
             $oldDebitAccount = $debitAccount;
             $debitAccount = $creditAccount;
             $creditAccount = $oldDebitAccount;
             $amount = abs($amount);
+            $suffix = ' (Storno)';
         }
 
         $journal = new Journal($amount, $creditAccount, $debitAccount, $dateAdded);
         $journal->setReference($invoice['number']);
-        $journal->setTitle(strtoupper($event).'-'.$invoice['order'].' - '.$this->getInvoiceName($invoice));
+        $journal->setTitle(strtoupper($event).'-'.$invoice['order'].' - '.$this->getInvoiceName($invoice).$suffix);
 
         if ($taxId = $this->getTaxId($invoice)) {
             $journal->setTaxId($taxId);

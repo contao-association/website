@@ -47,14 +47,20 @@ class PretixImportCommand extends Command
         $io->title('Importing Pretix invoices from '.$events[$slug]);
 
         foreach ($this->pretixHelper->getInvoices($organizer, $slug, $input->getArgument('order')) as $invoice) {
+            $total = $this->pretixHelper->getInvoiceTotal($invoice);
+
             $message = \sprintf(
                 'Invoice %s from %s (%s %s on %s)',
                 $invoice['number'],
                 $this->pretixHelper->getInvoiceName($invoice),
                 'EUR',
-                number_format($this->pretixHelper->getInvoiceTotal($invoice), 2, '.', "'"),
+                number_format($total, 2, '.', "'"),
                 (new \DateTime($invoice['date']))->format('d.m.Y'),
             );
+
+            if ($total < 0) {
+                $message = 'STORNO: '.$message;
+            }
 
             if ($all) {
                 $io->text('- '.$message);
