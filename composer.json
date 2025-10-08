@@ -9,7 +9,7 @@
         "ext-json": "*",
         "contao/conflicts": "*@dev",
         "contao/manager-bundle": "5.3.*",
-        "contao-association/contao-voting": "dev-main as 2.5.0",
+        "contao-association/contao-voting": "^2.5",
         "terminal42/notification_center": "^2.0",
         "terminal42/contao-conditionalformfields": "^3.0",
         "terminal42/contao-fineuploader": "^3.3",
