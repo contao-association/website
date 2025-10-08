@@ -15,9 +15,17 @@
 }
 
 div[class^='ce_'] + div[class^='ce_'],
+div[class^='ce_'] + div[class*='content-'],
 div[class^='ce_'] + div[class^='mod_'],
+div[class^='ce_'] + div[class*='module-'],
+div[class*='content-'] + div[class^='ce_'],
+div[class*='content-'] + div[class*='content-'],
+div[class*='content-'] + div[class^='mod_'],
+div[class*='content-'] + div[class*='module-'],
+div[class^='mod_'] + div[class^='ce_'],
+div[class^='mod_'] + div[class*='content-'],
 div[class^='mod_'] + div[class^='mod_'],
-div[class^='mod_'] + div[class^='ce_'] {
+div[class^='mod_'] + div[class*='module-'] {
     margin-top: 30px;
 }
 

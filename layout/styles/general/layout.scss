@@ -180,12 +180,15 @@ hr {
     margin-bottom: 40px;
 }
 
-div[class^='mod_'] {
+div[class^='mod_'],
+div[class^='module-'] {
     width: 100%;
 }
 
 .row div[class^='ce_'],
-.row div[class^='mod_'] {
+.row div[class^='content-'],
+.row div[class^='mod_'],
+.row div[class^='module-'] {
     padding-right: 15px;
     padding-left: 15px;
 }
@@ -194,7 +197,7 @@ div[class^='mod_'] {
     margin: 30px 36px 10px;
 }
 
-.ce_hyperlink {
+.content-hyperlink {
     img {
         display: block;
         width: 100%;
