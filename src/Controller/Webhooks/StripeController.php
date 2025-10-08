@@ -8,6 +8,7 @@ use App\StripeHelper;
 use Oneup\ContaoSentryBundle\ErrorHandlingTrait;
 use Stripe\Charge;
 use Stripe\PaymentIntent;
+use Stripe\Refund;
 use Stripe\Webhook;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -45,19 +46,18 @@ class StripeController
                 break;
 
             case 'refund.updated':
-                $this->sentryOrThrow(
-                    'Please handle refund.updated',
-                    null,
-                    [
-                        'event' => $event->toArray(),
-                    ],
-                );
+                /**
+                 * @var Refund $refund
+                 * @noinspection PhpPossiblePolymorphicInvocationInspection
+                 */
+                $refund = $event->data->object;
+                $charge = $this->stripeHelper->client->charges->retrieve($refund->charge);
+                $this->stripeHelper->importRefund($refund, $charge);
                 break;
 
             case 'payment_intent.payment_failed':
                 /**
                  * @var PaymentIntent $paymentIntent
-                 *
                  * @noinspection PhpPossiblePolymorphicInvocationInspection
                  */
                 $paymentIntent = $event->data->object;
