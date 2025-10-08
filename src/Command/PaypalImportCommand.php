@@ -44,6 +44,12 @@ class PaypalImportCommand extends Command
 
         $transactions = $this->paypalHelper->getTransactions($startDate, $endDate);
 
+        if ([] === $transactions) {
+            $io->success('No transactions for this date.');
+
+            return Command::SUCCESS;
+        }
+
         $io->progressStart(\count($transactions));
 
         foreach ($transactions as $transaction) {

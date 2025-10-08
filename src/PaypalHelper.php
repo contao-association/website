@@ -42,6 +42,11 @@ class PaypalHelper
         $request->headers['Content-Type'] = 'application/json';
 
         $result = $this->client->execute($request);
+
+        if ($result->result->total_items < 1) {
+            return [];
+        }
+
         $data = json_decode(json_encode($result->result->transaction_details, JSON_THROW_ON_ERROR), true, 512, JSON_THROW_ON_ERROR);
         $transactions = [];
 
