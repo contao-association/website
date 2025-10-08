@@ -6,9 +6,9 @@
 /system/
 /var/
 /vendor/
-/web/*
-!/web/.well-known/
-!/web/.htaccess_*
+/public/*
+!/public/.well-known/
+!/public/.htaccess_*
 /.env.*
 /composer.phar
 /contao-manager/

@@ -7,7 +7,7 @@ use Terminal42\ContaoBuildTools\Deployer;
 (new Deployer('s001.cyon.net', 'contaoro', 'php83'))
     ->addTarget('test', '/home/contaoro/public_html/test.members.contao.org', 'pkill lsphp')
     ->addTarget('prod', '/home/contaoro/public_html/members.contao.org', 'pkill lsphp')
-    ->addUploadPaths('web/.well-known')
+    ->addUploadPaths('public/.well-known')
     ->addSharedDirs('var/invoices')
     ->buildAssets()
     ->run()

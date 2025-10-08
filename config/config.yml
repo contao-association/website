@@ -18,4 +18,4 @@ contao:
 
 framework:
     assets:
-        json_manifest_path: '%kernel.project_dir%/web/layout/manifest.json'
+        json_manifest_path: '%kernel.project_dir%/public/layout/manifest.json'

@@ -41,7 +41,7 @@
         }
     },
     "extra": {
-        "public-dir": "web",
+        "public-dir": "public",
         "contao-component-dir": "assets"
     },
     "scripts": {
