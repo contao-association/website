@@ -36,6 +36,10 @@ unset(
     $GLOBALS['TL_DCA']['tl_member']['fields']['language']['options_callback'],
 );
 
+/** CashCtrl Limitations */
+$GLOBALS['TL_DCA']['tl_member']['fields']['firstname']['eval']['maxlength'] = 40;
+$GLOBALS['TL_DCA']['tl_member']['fields']['lastname']['eval']['maxlength'] = 40;
+
 $GLOBALS['TL_DCA']['tl_member']['fields']['language']['options'] = ['de' => 'Deutsch', 'en' => 'English'];
 $GLOBALS['TL_DCA']['tl_member']['fields']['tstamp']['eval']['doNotLog'] = true;
 $GLOBALS['TL_DCA']['tl_member']['fields']['password']['eval']['doNotLog'] = true;
