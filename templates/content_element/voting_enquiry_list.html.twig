@@ -29,7 +29,7 @@
                             {% if enquiry.description %}</a>{% endif %}
                     </h3>
 
-                    <p>{{ enquiry.teaser }}</p>
+                    {{ enquiry.teaser|csp_inline_styles|insert_tag|encode_email|raw }}
                 </div>
 
                 <div class="more">
