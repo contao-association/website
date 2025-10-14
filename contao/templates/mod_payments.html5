@@ -7,7 +7,7 @@
   <form method="post">
     <div class="formbody">
       <input type="hidden" name="FORM_SUBMIT" value="stripe_payment">
-      <input type="hidden" name="REQUEST_TOKEN" value="{{request_token}}">
+      <input type="hidden" name="REQUEST_TOKEN" value="<?= $this->requestToken ?>">
       <button name="action" value="setup">Zahlungsdaten ändern</button>
       <button name="action" value="delete">Zahlungsdaten löschen</button>
       <?php if (!empty($this->linkHref)): ?>
@@ -22,7 +22,7 @@
   <form method="post">
     <div class="formbody">
       <input type="hidden" name="FORM_SUBMIT" value="stripe_payment">
-      <input type="hidden" name="REQUEST_TOKEN" value="{{request_token}}">
+      <input type="hidden" name="REQUEST_TOKEN" value="<?= $this->requestToken ?>">
       <button name="action" value="setup">Zahlungsdaten hinterlegen</button>
       <?php if (!empty($this->linkHref)): ?>
         <a href="<?= $this->linkHref ?>" class="button"><?= $this->linkTitle ?></a>
