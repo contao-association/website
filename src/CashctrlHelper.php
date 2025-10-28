@@ -296,7 +296,7 @@ class CashctrlHelper
             $objVersions->initialize();
 
             $member->cashctrl_invoice = 0;
-            $member->disable = '';
+            $member->disable = 0;
             $member->save();
 
             $objVersions->create(true);
