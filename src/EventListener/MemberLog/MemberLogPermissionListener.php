@@ -67,7 +67,7 @@ class MemberLogPermissionListener
             'tl_member_log',
             [
                 'type' => 'note',
-                'dateAdded' => $dc->activeRecord->dateAdded ?: time(),
+                'dateAdded' => $dc->getCurrentRecord()['dateAdded'] ?? time(),
                 'user' => $user->id,
             ],
             ['id' => $dc->id],

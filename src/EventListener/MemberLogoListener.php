@@ -25,7 +25,7 @@ class MemberLogoListener
 
     public function __invoke(mixed $value, DataContainer|FrontendUser $dc): mixed
     {
-        $currentFile = $dc instanceof FrontendUser ? $dc->listing_logo : $dc->activeRecord->listing_logo;
+        $currentFile = $dc instanceof FrontendUser ? $dc->listing_logo : ($dc->getCurrentRecord()['listing_logo'] ?? null);
 
         if (empty($value)) {
             if ($currentFile && $this->filesystem->exists(Path::join($this->projectDir, $currentFile))) {

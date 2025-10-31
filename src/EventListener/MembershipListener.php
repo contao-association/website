@@ -118,9 +118,15 @@ class MembershipListener
     #[AsCallback(table: 'tl_member', target: 'config.onsubmit')]
     public function updateMember(DataContainer|FrontendUser $data): void
     {
-        $email = $data instanceof DataContainer ? $data->activeRecord->email : $data->email;
-        $level = $data instanceof DataContainer ? $data->activeRecord->membership : $data->membership;
-        $activeMember = $data instanceof DataContainer ? $data->activeRecord->membership_member : $data->membership_member;
+        if ($data instanceof DataContainer) {
+            $current = $data->getCurrentRecord();
+        } else {
+            $current = $data->getData();
+        }
+
+        $email = $current['email'];
+        $level = $current['membership'];
+        $activeMember = $current['membership_member'];
 
         $groups = [];
 
