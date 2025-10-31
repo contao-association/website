@@ -15,7 +15,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Terminal42\CashctrlApi\Entity\Order;
 
-#[AsFrontendModule('registration', category: 'user')]
+#[AsFrontendModule('registration', category: 'user', priority: 1)]
 class RegistrationController extends ModuleRegistration
 {
     private Request|null $request = null;
