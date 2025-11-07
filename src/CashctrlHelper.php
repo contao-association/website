@@ -143,7 +143,7 @@ class CashctrlHelper
         }
 
         // Archive invoice AFTER Stripe payment, so the PDF includes the payment information
-        $pdf = $this->archiveInvoice($invoice, 'ch' === $member->country ? 1011 : 1013, $member->language ?: 'de');
+        $pdf = $this->archiveInvoice($invoice, 'CH' === $member->country ? 1011 : 1013, $member->language ?: 'de');
 
         if (!$this->sendInvoiceNotification($notificationId, $invoice, $member, ['invoice_pdf' => $pdf, 'payment_status' => $status])) {
             $this->sentryOrThrow('Unable to send invoice email to '.$member->email);
