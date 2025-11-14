@@ -961,16 +961,16 @@
         },
         {
             "name": "contao-components/swiper",
-            "version": "11.2.10",
+            "version": "12.0.3",
             "source": {
                 "type": "git",
                 "url": "https://github.com/contao-components/swiper.git",
-                "reference": "5d8da897acb7716c5e2508b7fc3a53e9e5cb3ab8"
+                "reference": "6edda46ebff5be6f184a2b5f82cf0ba8b7e67505"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/contao-components/swiper/zipball/5d8da897acb7716c5e2508b7fc3a53e9e5cb3ab8",
-                "reference": "5d8da897acb7716c5e2508b7fc3a53e9e5cb3ab8",
+                "url": "https://api.github.com/repos/contao-components/swiper/zipball/6edda46ebff5be6f184a2b5f82cf0ba8b7e67505",
+                "reference": "6edda46ebff5be6f184a2b5f82cf0ba8b7e67505",
                 "shasum": ""
             },
             "require": {
@@ -990,9 +990,9 @@
             "description": "The most modern mobile touch slider",
             "support": {
                 "issues": "https://github.com/contao-components/swiper/issues",
-                "source": "https://github.com/contao-components/swiper/tree/11.2.10"
+                "source": "https://github.com/contao-components/swiper/tree/12.0.3"
             },
-            "time": "2025-07-02T08:21:38+00:00"
+            "time": "2025-10-24T11:13:43+00:00"
         },
         {
             "name": "contao-components/tablesort",
@@ -1199,16 +1199,16 @@
         },
         {
             "name": "contao/core-bundle",
-            "version": "5.3.40",
+            "version": "5.3.41",
             "source": {
                 "type": "git",
                 "url": "https://github.com/contao/core-bundle.git",
-                "reference": "9acb64db47bd75f86370a8a22b7780da3b068190"
+                "reference": "b17300d8c8fff0c696865fc95cfabec4f3e42bf9"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/contao/core-bundle/zipball/9acb64db47bd75f86370a8a22b7780da3b068190",
-                "reference": "9acb64db47bd75f86370a8a22b7780da3b068190",
+                "url": "https://api.github.com/repos/contao/core-bundle/zipball/b17300d8c8fff0c696865fc95cfabec4f3e42bf9",
+                "reference": "b17300d8c8fff0c696865fc95cfabec4f3e42bf9",
                 "shasum": ""
             },
             "require": {
@@ -1229,7 +1229,7 @@
                 "contao-components/mootools": "^1.6.0.1",
                 "contao-components/simplemodal": "^3.0",
                 "contao-components/swipe": "^2.0.3",
-                "contao-components/swiper": "^11.0",
+                "contao-components/swiper": "^11.0 || ^12.0",
                 "contao-components/tablesort": "^4.0",
                 "contao-components/tablesorter": "^2.1",
                 "contao-components/tinymce4": "^5.0 || ^6.0",
@@ -1415,7 +1415,7 @@
                     "type": "other"
                 }
             ],
-            "time": "2025-09-30T08:42:13+00:00"
+            "time": "2025-11-13T12:35:13+00:00"
         },
         {
             "name": "contao/image",
@@ -1556,7 +1556,7 @@
         },
         {
             "name": "contao/manager-bundle",
-            "version": "5.3.40",
+            "version": "5.3.41",
             "source": {
                 "type": "git",
                 "url": "https://github.com/contao/manager-bundle.git",
@@ -5866,16 +5866,16 @@
         },
         {
             "name": "php-feed-io/feed-io",
-            "version": "v6.1.2",
+            "version": "v6.2.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/php-feed-io/feed-io.git",
-                "reference": "d82d09b92148612657e8203906a6f0b95a194ce7"
+                "reference": "2ce072d4b20188bf8ecdaed40ee60ea739287102"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/php-feed-io/feed-io/zipball/d82d09b92148612657e8203906a6f0b95a194ce7",
-                "reference": "d82d09b92148612657e8203906a6f0b95a194ce7",
+                "url": "https://api.github.com/repos/php-feed-io/feed-io/zipball/2ce072d4b20188bf8ecdaed40ee60ea739287102",
+                "reference": "2ce072d4b20188bf8ecdaed40ee60ea739287102",
                 "shasum": ""
             },
             "require": {
@@ -5938,7 +5938,7 @@
             ],
             "support": {
                 "issues": "https://github.com/php-feed-io/feed-io/issues",
-                "source": "https://github.com/php-feed-io/feed-io/tree/v6.1.2"
+                "source": "https://github.com/php-feed-io/feed-io/tree/v6.2.0"
             },
             "funding": [
                 {
@@ -5946,7 +5946,7 @@
                     "type": "github"
                 }
             ],
-            "time": "2025-09-29T06:16:27+00:00"
+            "time": "2025-11-13T18:44:34+00:00"
         },
         {
             "name": "php-http/client-common",
