@@ -48,6 +48,7 @@ class StripeController
             case 'refund.updated':
                 /**
                  * @var Refund $refund
+                 *
                  * @noinspection PhpPossiblePolymorphicInvocationInspection
                  */
                 $refund = $event->data->object;
@@ -58,6 +59,7 @@ class StripeController
             case 'payment_intent.payment_failed':
                 /**
                  * @var PaymentIntent $paymentIntent
+                 *
                  * @noinspection PhpPossiblePolymorphicInvocationInspection
                  */
                 $paymentIntent = $event->data->object;

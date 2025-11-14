@@ -1,12 +1,12 @@
 <?php $GLOBALS['TL_JAVASCRIPT'][] = 'bundles/terminal42conditionalformfields/conditionalformfields.js'; ?>
 
 <?php
-  $personal = $this->categories[$this->personalDetails];
-  $membership = $this->categories['membershipDetails'];
-  $contact = $this->categories[$this->contactDetails];
-  $login = $this->categories[$this->loginDetails];
-  $address = $this->categories[$this->addressDetails];
-  $captcha = $this->categories[$this->captchaDetails];
+$personal = $this->categories[$this->personalDetails];
+$membership = $this->categories['membershipDetails'];
+$contact = $this->categories[$this->contactDetails];
+$login = $this->categories[$this->loginDetails];
+$address = $this->categories[$this->addressDetails];
+$captcha = $this->categories[$this->captchaDetails];
 ?>
 <!-- indexer::stop -->
 <div class="<?= $this->class ?> block"<?= $this->cssID ?><?php if ($this->style): ?> style="<?= $this->style ?>"<?php endif; ?>>

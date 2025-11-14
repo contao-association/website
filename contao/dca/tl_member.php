@@ -3,8 +3,6 @@
 use App\EventListener\MemberLogoListener;
 use Contao\CoreBundle\EventListener\Widget\HttpUrlListener;
 use Contao\DataContainer;
-use Contao\System;
-use Symfony\Component\HttpFoundation\Request;
 
 $GLOBALS['TL_DCA']['tl_member']['config']['closed'] = true;
 $GLOBALS['TL_DCA']['tl_member']['config']['notCopyable'] = true;
@@ -36,7 +34,7 @@ unset(
     $GLOBALS['TL_DCA']['tl_member']['fields']['language']['options_callback'],
 );
 
-/** CashCtrl Limitations */
+/* CashCtrl Limitations */
 $GLOBALS['TL_DCA']['tl_member']['fields']['firstname']['eval']['maxlength'] = 40;
 $GLOBALS['TL_DCA']['tl_member']['fields']['lastname']['eval']['maxlength'] = 40;
 

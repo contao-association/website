@@ -36,7 +36,7 @@ class CashctrlSyncCommand extends Command
         System::loadLanguageFile('default');
 
         if ($ids = $input->getArgument('member_ids')) {
-            $members = MemberModel::findBy(['tl_member.id IN ('.implode(',', array_map('intval', explode(',', (string) $ids))).')'], []);
+            $members = MemberModel::findBy(['tl_member.id IN ('.implode(',', array_map(intval(...), explode(',', (string) $ids))).')'], []);
         } else {
             $members = MemberModel::findAll();
         }
