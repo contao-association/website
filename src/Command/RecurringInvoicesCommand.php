@@ -88,7 +88,7 @@ class RecurringInvoicesCommand extends Command
                                 )
                             )
                         )
-                        AND disable=''
+                        AND disable=0
                         AND (start='' OR start<=UNIX_TIMESTAMP())
                         AND (stop='' OR stop>UNIX_TIMESTAMP())
                         AND (membership_stop='' OR membership_stop>UNIX_TIMESTAMP())

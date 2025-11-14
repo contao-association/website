@@ -84,7 +84,7 @@ class SupporterController
         return $this->connection->executeQuery("
             SELECT *
             FROM tl_member
-            WHERE disable=''
+            WHERE disable=0
               AND membership!='inactive'
               AND (start='' OR start<UNIX_TIMESTAMP())
               AND (stop='' OR stop>UNIX_TIMESTAMP())

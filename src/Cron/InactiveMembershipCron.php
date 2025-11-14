@@ -39,7 +39,7 @@ class InactiveMembershipCron
         ");
 
         foreach ($ids as $id) {
-            $this->connection->executeStatement("UPDATE tl_member SET membership='inactive', stop='', disable='' WHERE id=?", [$id]);
+            $this->connection->executeStatement("UPDATE tl_member SET membership='inactive', stop='', disable=0 WHERE id=?", [$id]);
 
             $version = new Versions('tl_member', $id);
             $version->setEditUrl("contao/main.php?do=member&act=edit&id=$id");
