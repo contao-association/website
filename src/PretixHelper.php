@@ -147,7 +147,10 @@ class PretixHelper
             return $this->cashctrlHelper->getAccountId(3421);
         }
 
-        if (str_starts_with((string) $invoice['number'], 'CK20')) {
+        if (
+            str_starts_with((string) $invoice['number'], 'CK20')
+            || str_starts_with((string) $invoice['number'], 'SUMMIT')
+        ) {
             return $this->cashctrlHelper->getAccountId(3420);
         }
 
