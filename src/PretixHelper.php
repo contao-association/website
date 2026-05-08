@@ -174,7 +174,10 @@ class PretixHelper
         }
 
         foreach ($this->taxEndpoint->list() as $tax) {
-            if ((float) $rate === (float) $tax->getPercentage()) {
+            if (
+                (float) $rate === (float) $tax->currentPercentage
+                && false === $tax->getComponents()[0]->isInputTax
+            ) {
                 return $tax->getId();
             }
         }

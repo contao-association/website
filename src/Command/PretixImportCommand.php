@@ -16,9 +16,8 @@ use Symfony\Component\Console\Style\SymfonyStyle;
 #[AsCommand('app:pretix:import', 'Import Pretix transactions into CashCtrl.')]
 class PretixImportCommand extends Command
 {
-    public function __construct(
-        private readonly PretixHelper $pretixHelper,
-    ) {
+    public function __construct(private readonly PretixHelper $pretixHelper)
+    {
         parent::__construct();
     }
 
