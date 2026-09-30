@@ -718,9 +718,7 @@ class CashctrlHelper
 
         $membership = $this->memberships[$subscription];
 
-        if (null === $price) {
-            $price = $membership['price'];
-        }
+        $price ??= $membership['price'];
 
         $item = new OrderItem(
             $membership['accountId'],

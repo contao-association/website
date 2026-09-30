@@ -110,9 +110,7 @@ class PaymentPageController
             $targetPage = PageModel::findById($pageModel->jumpTo);
         }
 
-        if (null === $targetPage) {
-            $targetPage = PageModel::findFirstPublishedRegularByPid($pageModel->id);
-        }
+        $targetPage ??= PageModel::findFirstPublishedRegularByPid($pageModel->id);
 
         if (null === $targetPage) {
             throw new \RuntimeException('Confirmation page for payment page ID '.$pageModel->id.' not found');

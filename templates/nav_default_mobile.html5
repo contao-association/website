@@ -8,8 +8,8 @@
                     <span><?= $item['link'] ?></span>
                 </strong>
                 <?php if (!empty($item['subitems'])): ?>
-                    <input type="radio" name="<?= $itemUniqueIDLevel; ?>" id="<?= $itemUniqueID; ?>" checked="checked" />
-                    <label for="<?= $itemUniqueID; ?>"><span></span></label>
+                    <input type="radio" name="<?= $itemUniqueIDLevel ?>" id="<?= $itemUniqueID ?>" checked="checked" />
+                    <label for="<?= $itemUniqueID ?>"><span></span></label>
                     <?= $item['subitems'] ?>
                 <?php endif; ?>
             </li>
@@ -19,8 +19,8 @@
                     <span itemprop="name"><?= $item['link'] ?></span>
                 </a>
                 <?php if (!empty($item['subitems'])): ?>
-                    <input type="radio" name="<?= $itemUniqueIDLevel; ?>" id="<?= $itemUniqueID; ?>" <?= str_contains((string) $item['class'], 'trail') ? 'checked="checked"' : ''; ?> />
-                    <label for="<?= $itemUniqueID; ?>"><span></span></label>
+                    <input type="radio" name="<?= $itemUniqueIDLevel ?>" id="<?= $itemUniqueID ?>" <?= str_contains((string) $item['class'], 'trail') ? 'checked="checked"' : '' ?> />
+                    <label for="<?= $itemUniqueID ?>"><span></span></label>
                     <?= $item['subitems'] ?>
                 <?php endif; ?>
             </li>

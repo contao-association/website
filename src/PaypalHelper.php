@@ -43,6 +43,7 @@ class PaypalHelper
 
         $result = $this->client->execute($request);
 
+        /** @phpstan-ignore-next-line */
         if ($result->result->total_items < 1) {
             return [];
         }
