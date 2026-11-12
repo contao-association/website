@@ -1228,16 +1228,16 @@
         },
         {
             "name": "contao/core-bundle",
-            "version": "5.3.53",
+            "version": "5.3.54",
             "source": {
                 "type": "git",
                 "url": "https://github.com/contao/core-bundle.git",
-                "reference": "7eb49f11e38b2ca1140c4b9e7decfbaee41a13ba"
+                "reference": "cdfa0ec908629e014fc97fd6dae8c95972a591f7"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/contao/core-bundle/zipball/7eb49f11e38b2ca1140c4b9e7decfbaee41a13ba",
-                "reference": "7eb49f11e38b2ca1140c4b9e7decfbaee41a13ba",
+                "url": "https://api.github.com/repos/contao/core-bundle/zipball/cdfa0ec908629e014fc97fd6dae8c95972a591f7",
+                "reference": "cdfa0ec908629e014fc97fd6dae8c95972a591f7",
                 "shasum": ""
             },
             "require": {
@@ -1444,8 +1444,8 @@
                     "type": "other"
                 }
             ],
-            "time": "2026-11-06T11:40:54+00:00",
-            "published-time": "2026-11-06T11:41:56+00:00"
+            "time": "2026-11-11T07:32:58+00:00",
+            "published-time": "2026-11-11T07:39:36+00:00"
         },
         {
             "name": "contao/image",
@@ -1588,7 +1588,7 @@
         },
         {
             "name": "contao/manager-bundle",
-            "version": "5.3.53",
+            "version": "5.3.54",
             "source": {
                 "type": "git",
                 "url": "https://github.com/contao/manager-bundle.git",
@@ -1690,7 +1690,7 @@
                 }
             ],
             "time": "2026-09-28T10:08:25+00:00",
-            "published-time": "2026-11-06T11:42:01+00:00"
+            "published-time": "2026-11-11T07:39:36+00:00"
         },
         {
             "name": "contao/manager-plugin",
@@ -2251,21 +2251,22 @@
                     "type": "tidelift"
                 }
             ],
+            "abandoned": true,
             "time": "2025-01-01T22:12:03+00:00",
             "published-time": "2025-01-01T22:13:20+00:00"
         },
         {
             "name": "doctrine/dbal",
-            "version": "3.10.6",
+            "version": "3.10.7",
             "source": {
                 "type": "git",
                 "url": "https://github.com/doctrine/dbal.git",
-                "reference": "c95589d775a0b2e543467d40f8c3ecccf586f2b4"
+                "reference": "92156a662c2e177a1c9305711a0ef3ee94dcdd2c"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/doctrine/dbal/zipball/c95589d775a0b2e543467d40f8c3ecccf586f2b4",
-                "reference": "c95589d775a0b2e543467d40f8c3ecccf586f2b4",
+                "url": "https://api.github.com/repos/doctrine/dbal/zipball/92156a662c2e177a1c9305711a0ef3ee94dcdd2c",
+                "reference": "92156a662c2e177a1c9305711a0ef3ee94dcdd2c",
                 "shasum": ""
             },
             "require": {
@@ -2284,11 +2285,11 @@
                 "doctrine/coding-standard": "14.0.0",
                 "fig/log-test": "^1",
                 "jetbrains/phpstorm-stubs": "2023.1",
-                "phpstan/phpstan": "2.1.30",
+                "phpstan/phpstan": "2.3.4",
                 "phpstan/phpstan-strict-rules": "^2",
-                "phpunit/phpunit": "9.6.34",
-                "slevomat/coding-standard": "8.27.1",
-                "squizlabs/php_codesniffer": "4.0.1",
+                "phpunit/phpunit": "9.6.36",
+                "slevomat/coding-standard": "8.31.1",
+                "squizlabs/php_codesniffer": "4.0.4",
                 "symfony/cache": "^5.4|^6.0|^7.0|^8.0",
                 "symfony/console": "^4.4|^5.4|^6.0|^7.0|^8.0"
             },
@@ -2350,7 +2351,7 @@
             ],
             "support": {
                 "issues": "https://github.com/doctrine/dbal/issues",
-                "source": "https://github.com/doctrine/dbal/tree/3.10.6"
+                "source": "https://github.com/doctrine/dbal/tree/3.10.7"
             },
             "funding": [
                 {
@@ -2366,25 +2367,25 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2026-07-21T12:57:49+00:00",
-            "published-time": "2026-07-21T15:52:04+00:00"
+            "time": "2026-11-08T21:35:21+00:00",
+            "published-time": "2026-11-10T09:08:56+00:00"
         },
         {
             "name": "doctrine/deprecations",
-            "version": "1.1.6",
+            "version": "1.2.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/doctrine/deprecations.git",
-                "reference": "d4fe3e6fd9bb9e72557a19674f44d8ac7db4c6ca"
+                "reference": "d2e16653a734c8784c1851ad68b02f997b53ca82"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/doctrine/deprecations/zipball/d4fe3e6fd9bb9e72557a19674f44d8ac7db4c6ca",
-                "reference": "d4fe3e6fd9bb9e72557a19674f44d8ac7db4c6ca",
+                "url": "https://api.github.com/repos/doctrine/deprecations/zipball/d2e16653a734c8784c1851ad68b02f997b53ca82",
+                "reference": "d2e16653a734c8784c1851ad68b02f997b53ca82",
                 "shasum": ""
             },
             "require": {
-                "php": "^7.1 || ^8.0"
+                "php": "^7.4 || ^8.0"
             },
             "conflict": {
                 "phpunit/phpunit": "<=7.5 || >=14"
@@ -2413,10 +2414,10 @@
             "homepage": "https://www.doctrine-project.org/",
             "support": {
                 "issues": "https://github.com/doctrine/deprecations/issues",
-                "source": "https://github.com/doctrine/deprecations/tree/1.1.6"
+                "source": "https://github.com/doctrine/deprecations/tree/1.2.0"
             },
-            "time": "2026-02-07T07:09:04+00:00",
-            "published-time": "2026-02-07T07:10:09+00:00"
+            "time": "2026-11-11T10:04:49+00:00",
+            "published-time": "2026-11-11T10:12:24+00:00"
         },
         {
             "name": "doctrine/doctrine-bundle",
@@ -5810,16 +5811,16 @@
         },
         {
             "name": "paragonie/constant_time_encoding",
-            "version": "v3.1.3",
+            "version": "v3.1.4",
             "source": {
                 "type": "git",
                 "url": "https://github.com/paragonie/constant_time_encoding.git",
-                "reference": "d5b01a39b3415c2cd581d3bd3a3575c1ebbd8e77"
+                "reference": "5efef6e6cb43e088ccab7d0c1e2f2ab25b9e8b54"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/paragonie/constant_time_encoding/zipball/d5b01a39b3415c2cd581d3bd3a3575c1ebbd8e77",
-                "reference": "d5b01a39b3415c2cd581d3bd3a3575c1ebbd8e77",
+                "url": "https://api.github.com/repos/paragonie/constant_time_encoding/zipball/5efef6e6cb43e088ccab7d0c1e2f2ab25b9e8b54",
+                "reference": "5efef6e6cb43e088ccab7d0c1e2f2ab25b9e8b54",
                 "shasum": ""
             },
             "require": {
@@ -5875,8 +5876,8 @@
                 "issues": "https://github.com/paragonie/constant_time_encoding/issues",
                 "source": "https://github.com/paragonie/constant_time_encoding"
             },
-            "time": "2025-09-24T15:06:41+00:00",
-            "published-time": "2025-09-24T15:07:11+00:00"
+            "time": "2026-11-06T20:31:19+00:00",
+            "published-time": "2026-11-06T20:39:39+00:00"
         },
         {
             "name": "paypal/paypal-checkout-sdk",
@@ -7411,16 +7412,16 @@
         },
         {
             "name": "sentry/sentry",
-            "version": "4.36.0",
+            "version": "4.37.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/getsentry/sentry-php.git",
-                "reference": "7df5eefacff197c0aae0925a4848e3f91719d37c"
+                "reference": "635a94908528ca5c4f0804640a0ec578e51639b3"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/getsentry/sentry-php/zipball/7df5eefacff197c0aae0925a4848e3f91719d37c",
-                "reference": "7df5eefacff197c0aae0925a4848e3f91719d37c",
+                "url": "https://api.github.com/repos/getsentry/sentry-php/zipball/635a94908528ca5c4f0804640a0ec578e51639b3",
+                "reference": "635a94908528ca5c4f0804640a0ec578e51639b3",
                 "shasum": ""
             },
             "require": {
@@ -7492,7 +7493,7 @@
             ],
             "support": {
                 "issues": "https://github.com/getsentry/sentry-php/issues",
-                "source": "https://github.com/getsentry/sentry-php/tree/4.36.0"
+                "source": "https://github.com/getsentry/sentry-php/tree/4.37.0"
             },
             "funding": [
                 {
@@ -7504,8 +7505,8 @@
                     "type": "custom"
                 }
             ],
-            "time": "2026-11-05T16:26:18+00:00",
-            "published-time": "2026-11-05T16:31:53+00:00"
+            "time": "2026-11-11T15:29:22+00:00",
+            "published-time": "2026-11-11T15:35:52+00:00"
         },
         {
             "name": "sentry/sentry-symfony",
@@ -7824,16 +7825,16 @@
         },
         {
             "name": "spomky-labs/otphp",
-            "version": "11.5.0",
+            "version": "11.5.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/Spomky-Labs/otphp.git",
-                "reference": "877683d6352b80cdc7020fd43a725629c2524435"
+                "reference": "16866d2206d6f0c0421294357da23a28b78852f7"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/Spomky-Labs/otphp/zipball/877683d6352b80cdc7020fd43a725629c2524435",
-                "reference": "877683d6352b80cdc7020fd43a725629c2524435",
+                "url": "https://api.github.com/repos/Spomky-Labs/otphp/zipball/16866d2206d6f0c0421294357da23a28b78852f7",
+                "reference": "16866d2206d6f0c0421294357da23a28b78852f7",
                 "shasum": ""
             },
             "require": {
@@ -7878,7 +7879,7 @@
             ],
             "support": {
                 "issues": "https://github.com/Spomky-Labs/otphp/issues",
-                "source": "https://github.com/Spomky-Labs/otphp/tree/11.5.0"
+                "source": "https://github.com/Spomky-Labs/otphp/tree/11.5.1"
             },
             "funding": [
                 {
@@ -7890,8 +7891,8 @@
                     "type": "patreon"
                 }
             ],
-            "time": "2026-06-06T23:41:24+00:00",
-            "published-time": "2026-06-06T23:50:57+00:00"
+            "time": "2026-11-07T17:39:42+00:00",
+            "published-time": "2026-11-07T17:56:33+00:00"
         },
         {
             "name": "stripe/stripe-php",
@@ -14259,16 +14260,16 @@
         },
         {
             "name": "terminal42/escargot",
-            "version": "2.0.0",
+            "version": "2.0.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/terminal42/escargot.git",
-                "reference": "b2df7f8e1c394f462a276ba35020ec3bae783dd4"
+                "reference": "8eb491fd3614d755c5f9782079fbb4c76d483048"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/terminal42/escargot/zipball/b2df7f8e1c394f462a276ba35020ec3bae783dd4",
-                "reference": "b2df7f8e1c394f462a276ba35020ec3bae783dd4",
+                "url": "https://api.github.com/repos/terminal42/escargot/zipball/8eb491fd3614d755c5f9782079fbb4c76d483048",
+                "reference": "8eb491fd3614d755c5f9782079fbb4c76d483048",
                 "shasum": ""
             },
             "require": {
@@ -14321,8 +14322,8 @@
                 "issues": "https://github.com/terminal42/escargot/issues",
                 "source": "https://github.com/terminal42/escargot"
             },
-            "time": "2026-10-12T11:04:03+00:00",
-            "published-time": "2026-10-12T11:05:47+00:00"
+            "time": "2026-11-10T12:57:24+00:00",
+            "published-time": "2026-11-10T13:15:59+00:00"
         },
         {
             "name": "terminal42/notification_center",
@@ -15187,12 +15188,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/terminal42/contao-build-tools.git",
-                "reference": "bcd8eca9c7f9cc2269f5c4fad824b230ab7942a3"
+                "reference": "744da0669d6b42f6e100f3c1a2434a492250e0a3"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/terminal42/contao-build-tools/zipball/bcd8eca9c7f9cc2269f5c4fad824b230ab7942a3",
-                "reference": "bcd8eca9c7f9cc2269f5c4fad824b230ab7942a3",
+                "url": "https://api.github.com/repos/terminal42/contao-build-tools/zipball/744da0669d6b42f6e100f3c1a2434a492250e0a3",
+                "reference": "744da0669d6b42f6e100f3c1a2434a492250e0a3",
                 "shasum": ""
             },
             "require": {
@@ -15249,8 +15250,8 @@
                     "type": "other"
                 }
             ],
-            "time": "2026-10-06T13:36:19+00:00",
-            "published-time": "2026-10-06T14:12:15+00:00"
+            "time": "2026-11-07T07:51:55+00:00",
+            "published-time": "2026-11-07T07:52:02+00:00"
         }
     ],
     "aliases": [],
